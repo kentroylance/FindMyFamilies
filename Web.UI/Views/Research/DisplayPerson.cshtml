@@ -1,0 +1,137 @@
+@using System
+@using FindMyFamilies.Helper
+@model FindMyFamilies.Data.PersonDO
+
+    <div class="panel-body">                                                      
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <div class="col-sm-2">
+                    <b>ID:</b>
+                </div>
+                <div class="col-sm-10 text-primary">
+                    @Html.Raw("<a style=\"color: rgb(0,0,255)\" href=\"" + AncestryHelper.PersonUrl(Model) + "\" target=\"_tab\">" + Model.Id + "</a>")
+                </div>
+                <div class="col-sm-2">
+                    <b>Name:</b>
+                </div>
+                <div class="col-sm-10">
+                    @Html.Raw("<a style=\"color: rgb(0,0,255)\" href=\"" + AncestryHelper.PersonUrl(Model) + "\" target=\"_tab\">" + Model.Fullname + "</a>  " +  Model.LifeSpan + AncestryHelper.GetYearsLived(Model))
+                </div>
+                <div class="col-sm-2">
+                    <b>Spouse:</b>
+                </div>
+                <div class="col-sm-10">
+                    @if (!Model.Spouse.IsEmpty) {
+                        @Html.Raw("<a style=\"color: rgb(0,0,255)\" href=\"" + AncestryHelper.PersonUrl(Model.Spouse) + "\" target=\"_tab\">" + Model.Spouse.Fullname + "</a>  " + Model.Spouse.LifeSpan + AncestryHelper.GetYearsLived(Model.Spouse))
+                    } else {
+                        @Html.Raw("&nbsp;")
+                    }
+                </div>
+                <div class="col-sm-2">
+                    <b>Father:</b>
+                </div>
+                <div class="col-sm-10">
+                    @if (!Model.Father.IsEmpty) {
+                        @Html.Raw("<a style=\"color: rgb(0,0,255)\" href=\"" + AncestryHelper.PersonUrl(Model.Father) + "\" target=\"_tab\">" + Model.Father.Fullname + "</a>  " + Model.Father.LifeSpan + AncestryHelper.GetYearsLived(Model.Father))
+                    } else {
+                        @Html.Raw("&nbsp;")
+                    }
+                </div>
+                <div class="col-sm-2">
+                    <b>Mother:</b>
+                </div>
+                <div class="col-sm-10">
+                    @if (!Model.Mother.IsEmpty) {
+                        @Html.Raw("<a style=\"color: rgb(0,0,255)\" href=\"" + AncestryHelper.PersonUrl(Model.Mother) + "\" target=\"_tab\">" + Model.Mother.Fullname + "</a>  " + Model.Mother.LifeSpan + AncestryHelper.GetYearsLived(Model.Mother))
+                    } else {
+                        @Html.Raw("&nbsp;")
+                    }
+                </div>
+                <div class="col-sm-2">
+                    <b>Birth:</b>
+                </div>
+                <div class="col-sm-10">
+                    @if (Model.BirthDate != null) {
+                        @Html.Raw(String.Format("{0:MMM d, yyyy}", Model.BirthDate))
+                    } else {
+                        if (Model.BirthYear > 0) {
+                            @Html.Raw(Model.BirthYear)
+                        } else {
+                            @Html.Raw("&nbsp;")
+                        }
+                    }
+                </div>
+                 @if (!string.IsNullOrEmpty(Model.BirthPlace)) {
+                    @Html.Raw("<div class=\"col-sm-2\">");
+                         @Html.Raw("&nbsp;")
+                    @Html.Raw("</div>");
+                    @Html.Raw("<div class=\"col-sm-10\">")
+                         @Html.Raw(Model.BirthPlace)
+                    @Html.Raw("</div>")
+                 } 
+
+                <div class="col-sm-2">
+                    <b>Death:</b>
+                </div>
+                <div class="col-sm-10">
+                    @if (Model.DeathDate != null) {
+                        @Html.Raw(String.Format("{0:MMM d, yyyy}", Model.DeathDate))
+                    } else {
+                        if (Model.DeathYear > 0) {
+                            @Html.Raw(Model.DeathYear)
+                        } else {
+                            @Html.Raw("&nbsp;")
+                        }
+                    }
+                    
+                </div>
+                 @if (!string.IsNullOrEmpty(Model.DeathPlace)) {
+                    @Html.Raw("<div class=\"col-sm-2\">");
+                         @Html.Raw("&nbsp;")
+                    @Html.Raw("</div>");
+                    @Html.Raw("<div class=\"col-sm-10\">")
+                         @Html.Raw(Model.DeathPlace)
+                    @Html.Raw("</div>")
+                 } 
+                <div class="col-sm-2">
+                    <b>Marriage</b>
+                </div>
+                <div class="col-sm-10">
+                    @if (Model.MarriageDate != null) {
+                        @Html.Raw(String.Format("{0:MMM d, yyyy}", Model.MarriageDate))
+                    } else {
+                        if (Model.MarriageYear > 0) {
+                            @Html.Raw(Model.MarriageYear)
+                        } else {
+                            @Html.Raw("&nbsp;")
+                        }
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+<div class="pull-left">
+    <a href="@AncestryHelper.TreeUrl(Model)" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" target="_tab"><i class="fa cus-FamilySearch"></i>&nbsp;Tree</a>
+    <a href="@AncestryHelper.PersonUrl(Model)" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" target="_tab"><i class="fa cus-FamilySearch"></i>&nbsp;Person</a>
+    <a href="#" id="close" class="btn-u btn-brd btn-brd-hover rounded btn-u-green"><i class="cus-cancel"></i>&nbsp; Close</a>
+</div>
+
+
+<script type="text/javascript">
+    var self = this;
+
+    $(document).ready(function () {
+        $('#close').on('click', function (e) {
+            $("#displayPersonForm").dialog("close");
+        });
+    });
+
+    $('#displayPersonForm').parent().position({
+        my: "center",
+        at: "center",
+        of: window
+    });
+
+</script>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<messages>
+	<message key="StatusCreating" value="Creating record(s)" />
+	<message key="StatusFinishedCreating" value="Record(s) created successfully" />
+	<message key="StatusDeleting" value="Deleting record(s)" />
+	<message key="StatusFinishedDeleting" value="Record(s) deleted successfully" />
+	<message key="StatusUpdating" value="Updating record(s)" />
+	<message key="StatusFinishedUpdating" value="Record(s) updated successfully" />
+	<message key="QuestionTitleSave" value="Save" />
+	<message key="QuestionSaveChanges" value="Save changes?" />
+	<message key="QuestionTitleDelete" value="Delete" />
+	<message key="QuestionDelete" value="Are you sure you want to delete this record?" />
+	<message key="QuestionTitleInsert" value="Insert" />
+	<message key="QuestionInsert" value="Are you sure you want to Create New record?" />
+	<message key="InfoFieldRequired" value="Field is required" />
+	<message key="InfoTextInvalid" value="Invalid text value" />
+	<message key="InfoListItemAlreadyExist" value="Item already present in the list" />
+	<message key="InfoListItemNotFound" value="Item does not exist in the list" />
+	<message key="InfoDateInvalidDate" value="Invalid date value" />
+	<message key="InfoNumericExceedMaximum" value="Value exceeds the maximum limit" />
+	<message key="InfoNumericLessThenMinimum" value="Value is less then minimum limit" />
+	<message key="InfoInvalidParameter" value="Invalid parameter" />
+	<message key="InfoEmptyParameter" value="Parameter is empty" />
+	<message key="InfoCannotDeleteKey" value="Cannot Delete the Record Because it is used by other Records" />
+	<message key="InfoCannotFindKey" value="Cannot find the key" />
+	<message key="InfoCannotLoadXml" value="Cannot load xml" />
+	<message key="InfoCannotPerformReflection" value="Cannot perform reflection" />
+	<message key="InfoInvalidNumberRange" value="Invalid Number range" />
+	<message key="InfoInvalidFormat" value="Invalid format" />
+	<message key="InfoInvalidSql" value="Invalid Sql" />
+	<message key="InfoInvalidPrimaryKey" value="Invalid Primary key" />
+	<message key="InfoEmptySecurity" value="Username and Password are empty" />
+	<message key="InfoEmptyUserName" value="Username is empty" />
+	<message key="InfoEmptyPassword" value="Password is empty" />
+	<message key="InfoCannotLogin" value="Cannot Login" />
+	<message key="InfoCannotLoadValidation" value="Cannot load the validation file" />
+	<message key="InfoCannotLoadServices" value="Cannot load services" />
+	<message key="InfoCannotLoadLists" value="Cannot load lists" />
+	<message key="InfoCannotFindValidation" value="Cannot find validation" />
+	<message key="InfoCannotFindList" value="Cannot find the list" />
+	<message key="InfoEmptyRequiredField" value="Required field is empty or invalid" />
+	<message key="InfoExceedsFieldLength" value="String value is to long" />
+	<message key="InfoEmptyRequest" value="Request object is empty" />
+	<message key="InfoCannotChangeMailingAddress" value="You cannot change the Mailing Address Name	" />
+	<message key="InfoCannotDeleteMailingAddress" value="Cannot delete Mailing Address" />
+	<message key="InfoCannotDeleteMailingAddressDueToAssociation" value="Cannot delete Address it is associated with :" />
+	<message key="InfoCannotDeleteMemberDueToAssociation" value="Cannot delete Member it is used by some other Module :" />
+	<message key="InfoCreateMailingAddressFirst" value="Please create Mailing Address First which is Default Address" />
+	<message key="InfoLoginIDShouldBeUnique" value="Login ID is already in use, Please Change it" />
+	<message key="CustomfieldsReadAllByCategoryError" value="Cannot read all custom fields by category" />
+	<message key="IssueReadActionByIssueError" value="Cannot read issue action by issue" />
+	<message key="SecurityCreateFormRightsByMemberError" value="Cannot create form rights by member" />
+	<message key="SecurityCreateFormRightsByGroupError" value="Cannot create form rights by group" />
+	<message key="SecurityDeleteControlRightsByFormRightError" value="Cannot delete control rights by form rights" />
+	<message key="SecurityDeleteMemberGroupByGroupError" value="Cannot delete member group by group" />
+	<message key="SecurityDeleteGroupFormByGroupError" value="Cannot delete group form by group" />
+	<message key="SecurityDeleteAllGroupMenusByGroupError" value="Cannot delete all group menus by group" />
+	<message key="SecurityReadFormRightsByMemberError" value="Cannot read form rights by member" />
+	<message key="SecurityReadAllFormRightsByMemberError" value="Cannot read all form rights by member" />
+	<message key="SecurityReadAllMenusByMemberError" value="Cannot read all menus by member" />
+	<message key="SecurityReadAllRightsError" value="Cannot read all rights" />
+	<message key="SecurityReadAllGroupsError" value="Cannot read all groups" />
+	<message key="SecurityReadAllMenuByGroupError" value="Cannot read all menus by group" />
+	<message key="SecurityReadAllPopupMenuError" value="Cannot read all popup menus" />
+	<message key="SecurityReadAllControlsByParentControlError" value="Cannot read all controls by parent control" />
+	<message key="SecurityReadAllControlsByFormError" value="Cannot read all controls by form" />
+	<message key="SecurityReadAllMenusByParentMenuError" value="Cannot read all menus by parent menu" />
+	<message key="SecurityReadAllByMemberMenuError" value="Cannot read security by member menu" />
+	<message key="SecurityReadGroupByMemberError" value="Cannot read group by member" />
+	<message key="SecurityReadControlDataByControlError" value="Cannot read control data" />
+	<message key="SecurityReadByGroupMenuError" value="Cannot read security by group menu" />
+	<message key="SecurityReadByMenuFormRightError" value="Cannot read security by menu and form right " />
+	<message key="SecurityReadFormRightByGroupError" value="Cannot read form right by group" />
+	<message key="TranslationReadMasterByTypeError" value="Cannot read translation master by type" />
+	<message key="TranslationReadMasterByDisplayNameError" value="Cannot read translation master by display name" />
+	<message key="TranslationReadByNameError" value="Cannot read translation by name" />
+	<message key="TranslationReadDetailByDisplayNameError" value="Cannot read translation detail by display name" />
+	<message key="BankReadByMemberIDError" value="Cannot read the bank records" />
+	<message key="EventReadByDateError" value="CannotReadEventByDate " />
+	<message key="SecurityReadByMemberError" value="Cannot Read By Member" />
+	<message key="SecurityReadByMemberMenuError" value="Cannot Read By Member Menu Error" />
+	<message key="SecurityReadByControlError" value="Cannot Read By Control Error" />
+	<message key="SecurityReadAllByFormError" value="Cannot Read All By Form Error" />
+	<message key="SecurityReadAllByParentControlError" value="Cannot Read All By Parent Control Error" />
+	<message key="SecurityReadAllByMemberError" value="Cannot Read All By Member Error" />
+	<message key="SecurityReadControlRightByMemberFormError" value="Cannot Read Control Right By Member Form Name Error" />
+	<message key="EventReadByMemberError" value="EventReadByMemberError" />
+	<message key="MsgCreating" value="Creating " />
+	<message key="MsgFinishedCreating" value="Finished Creating" />
+	<message key="MsgDeleting" value="Deleting" />
+	<message key="MsgFinishedDeleting" value="Finished Deleting" />
+	<message key="MsgUpdating" value="Updating" />
+	<message key="MsgFinishedUpdating" value="Finished Updating" />
+	<message key="MsgMemberSaveChanges" value="Do you want to save changes before creating a new Member?" />
+	<message key="MsgBoxTitleSaveChanges" value="Save changes?" />
+	<message key="MsgMemberSaveEditedChanges" value="Do you want to save changes before editing another?" />
+	<message key="CannotReadZipCode" value="cannot read zip codes" />
+	<message key="MsgPrepareOnlineMode" value="Preparing for online mode! Please wait" />
+	<message key="MsgPrepareOfflineMode" value="Preparing for offline mode! Please wait" />
+	<message key="MsgCannotReadMemberByContactItem" value="Can not Read Member By Contact Item"></message>
+	<message key="MsgCannotReadContactItemByMember" value="Can not Read Contact Item By Member"></message>
+	<message key="MsgCannotReadContactItemByContact" value="Can not Read Contact Item By Contact"></message>
+	<message key="MsgCannotReadMemberContactByContactOwner" value="Can not Read Member Contact By Contact Owner"></message>
+	<message key="MsgCannotReadMemberByAddressAndMember" value="Can not Read Member By Address And Member"></message>
+	<message key="MsgCannotReadContactItemMemberByMember" value="Can not Read Contact Item Member By Member"></message>
+	<message key="MsgCannotReadContactItemMemberByContactItem" value="Can not Read Contact Item Member By Contact Item"></message>
+	<message key="MsgCannotReadContactItemByFirstNameAndContactOwner" value="Can not Read Contact Item By First Name And Contact Owner"></message>
+	<message key="CannotCreateSynchronize" value="Can not Create Synchronize"></message>
+	<message key="CannotUpdateSynchronize" value="Can not Update Synchronize"></message>
+	<message key="CannotDeleteSynchronize" value="Can not Delete Synchronize"></message>
+	<message key="CannotReadSynchronize" value="Can not Read Synchronize"></message>
+	<message key="CannotReadContact" value="Can not Read Contact"></message>
+	<message key="MsgOpenSearch" value="Open Search "></message>
+	<message key="MsgCloseSearch" value="Close Search"></message>
+	<message key="MsgThisIsAlreadyPresentInList" value="this is already present in list"></message>
+	<message key="MsgPleaseSelectAnyFieldToSearch" value="Please select any field to Search "></message>
+	<message key="MsgPleaseEnterTextToSearch" value="Please enter Text to Search "></message>
+	<message key="MsgPleaseSelectAnyItemFromCombo" value="Please select any Item from Combo "></message>
+	<message key="CannotDeleteTranslationSystemData" value="Cannot delete default system data translation.Defualt system translations are required for the system to function" />
+	<message key="QuestionDeleteTranslationSystemData" value="This is a system data translation. Application may not function properly if you proceed. Continue anyway?" />
+	<message key="CannotDeleteParentEvent" value="Cannot Delete Parent Event. Associated Bookings Exists." />
+	<message key="MsgNoGuestFound" value="Please Add Guest Before Booking." />
+	<message key="MsgBookingAlreadyCreated" value="Booking Already Exists." />
+	<message key="MsgDeleteGuest" value="Please Select the Guest Before Deletion." />
+	<message key="MsgBookingGuest" value="Please Select the Guest Before Booking." />
+	<message key="MsgGuestAlreadyAdded" value="Guest Already Added." />
+    <message key="ReadReportsByReportBy" value="Cannot Read Report By Report"/>
+    <message key="ReadReportsList" value="Cannot Read Report List"/>
+</messages>

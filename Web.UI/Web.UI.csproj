@@ -1,0 +1,1433 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2835FDBA-96BA-4D5C-850D-A909BB12F4E3}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FindMyFamiles.Web</RootNamespace>
+    <AssemblyName>FindMyFamiles.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>c577b73f</NuGetPackageImportStamp>
+    <TransformOnBuild>true</TransformOnBuild>
+    <TransformOutOfDateOnly>false</TransformOutOfDateOnly>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BundleTransformer.Core">
+      <HintPath>..\packages\BundleTransformer.Core.1.8.23\lib\net40\BundleTransformer.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EcmaScript.NET">
+      <HintPath>..\packages\EcmaScript.Net.1.0.1.0\lib\net20\EcmaScript.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="elmahappender_log4net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\elmahappender_log4net.1.0.0.0\lib\net45\elmahappender_log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="protobuf-net">
+      <HintPath>..\packages\Protobuf\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.30506.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Tavis.UriTemplates">
+      <HintPath>..\packages\Tavis.UriTemplates.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\LogPaths.xml" />
+    <Content Include="Build\build.js" />
+    <Content Include="Build\r.js" />
+    <Content Include="Content\css\app\finder.css" />
+    <Content Include="Content\css\app\FindPerson.css" />
+    <Content Include="Content\css\index-sprite.css" />
+    <Content Include="Content\css\index.png" />
+    <Content Include="Content\css\lib\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\css\research-sprite.css" />
+    <Content Include="Content\css\research.png" />
+    <Content Include="Content\css\style.css" />
+    <Content Include="Content\css\vendor\formValidation.css" />
+    <Content Include="Content\css\vendor\formValidation.min.css" />
+    <Content Include="Content\css\vendor\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\css\vendor\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\css\vendor\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\css\vendor\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\css\vendor\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\css\vendor\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\css\vendor\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\css\vendor\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\css\vendor\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\css\vendor\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\css\vendor\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\css\vendor\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\css\vendor\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\css\vendor\jquery-ui-1.11.4.css" />
+    <Content Include="Content\css\view\Research\fmf16-icons.css" />
+    <Content Include="Content\css\view\Research\fmf24-icons.css" />
+    <Content Include="Content\css\view\Research\fmf64-icons.css" />
+    <Content Include="Content\css\app\Research.css" />
+    <Content Include="Content\css\research.css" />
+    <Content Include="Content\css\index.css" />
+    <Content Include="Content\css\lib\common\bootstrap3.2.0.css" />
+    <Content Include="Content\css\lib\common\bootstrap3.2.0.js" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\css\font-awesome.css" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\css\font-awesome.min.css" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\css\lib\common\font-awesome.min.css" />
+    <Content Include="Content\css\lib\common\jquery-ui-1.11.2.css" />
+    <Content Include="Content\css\lib\common\jquery.fancybox.css" />
+    <Content Include="Content\css\lib\index\layerslider.css" />
+    <Content Include="Content\css\lib\research\bootstrap-table.min.css" />
+    <Content Include="Content\css\main.css" />
+    <Content Include="Content\css\searchAncestry.css" />
+    <Content Include="Content\css\app.css" />
+    <Content Include="Content\css\bootstrap-spinedit.css" />
+    <Content Include="Content\css\finder.css" />
+    <Content Include="Content\css\custom-style.css" />
+    <Content Include="Content\css\custom.css" />
+    <Content Include="Content\css\dialog.css" />
+    <Content Include="Content\css\jquery-ui-1.11.2.min.css" />
+    <Content Include="Content\css\jquery-ui-1.10.4.min.css" />
+    <Content Include="Content\css\jquery.timepicker.css" />
+    <Content Include="Content\css\searchAncestry.min.css">
+      <DependentUpon>searchAncestry.css</DependentUpon>
+    </Content>
+    <Content Include="Content\css\vendor\bootstrap-table.min.css" />
+    <Content Include="Content\css\vendor\bootstrap3.2.0.css" />
+    <Content Include="Content\css\vendor\bootstrap3.2.0.js" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\css\font-awesome.css" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\css\font-awesome.min.css" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\css\vendor\jquery.fancybox.css" />
+    <Content Include="Content\css\vendor\layerslider.css" />
+    <Content Include="Content\font\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\images\15.png" />
+    <Content Include="Content\images\16.png" />
+    <Content Include="Content\images\17.png" />
+    <Content Include="Content\images\4.jpg" />
+    <Content Include="Content\images\5.png" />
+    <Content Include="Content\images\9.jpg" />
+    <Content Include="Content\images\About-2.png" />
+    <Content Include="Content\images\About.png" />
+    <Content Include="Content\images\accent.png" />
+    <Content Include="Content\images\accept.png" />
+    <Content Include="Content\images\Ancestry.png" />
+    <Content Include="Content\images\appsbrowser.png" />
+    <Content Include="Content\images\Back.png" />
+    <Content Include="Content\images\bg-black.png" />
+    <Content Include="Content\images\bg2-old.jpg" />
+    <Content Include="Content\images\bg2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\bg3.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\bg5.jpg" />
+    <Content Include="Content\images\BillionGraves.png" />
+    <Content Include="Content\images\breadcrumbs.png" />
+    <Content Include="Content\images\browsesubmit.png" />
+    <Content Include="Content\images\bullet-blue.gif" />
+    <Content Include="Content\images\bullet.png" />
+    <Content Include="Content\images\Calendar.png" />
+    <Content Include="Content\images\cancel.png" />
+    <Content Include="Content\images\Clean.png" />
+    <Content Include="Content\images\Clear.png" />
+    <Content Include="Content\images\Clock-2.png" />
+    <Content Include="Content\images\Clock.png" />
+    <Content Include="Content\images\Close.png" />
+    <Content Include="Content\images\clue.png" />
+    <Content Include="Content\images\compass.png" />
+    <Content Include="Content\images\Computer2.png" />
+    <Content Include="Content\images\Control-Check Box.png" />
+    <Content Include="Content\images\Cross.png" />
+    <Content Include="Content\images\csg-5526842e96b7d.png" />
+    <Content Include="Content\images\csg-552694a785d33.png" />
+    <Content Include="Content\images\csg-55746a6b19bfc.png" />
+    <Content Include="Content\images\Database-Search.png" />
+    <Content Include="Content\images\Datasheet-View.png" />
+    <Content Include="Content\images\Date-Time-2.png" />
+    <Content Include="Content\images\Date-Time.png" />
+    <Content Include="Content\images\dates.png" />
+    <Content Include="Content\images\delete.png" />
+    <Content Include="Content\images\duplicates.png" />
+    <Content Include="Content\images\error.png" />
+    <Content Include="Content\images\exclamation.png" />
+    <Content Include="Content\images\Execute.png" />
+    <Content Include="Content\images\faces.jpg" />
+    <Content Include="Content\images\family.png" />
+    <Content Include="Content\images\FamilySearch.png" />
+    <Content Include="Content\images\FamilySearch2.png" />
+    <Content Include="Content\images\find.png" />
+    <Content Include="Content\images\findagrave.png" />
+    <Content Include="Content\images\FindAGrave1.png" />
+    <Content Include="Content\images\findmyfamiliesbottom.png" />
+    <Content Include="Content\images\findmyfamiliestop.png" />
+    <Content Include="Content\images\findmyfamilies_new1-3.png" />
+    <Content Include="Content\images\findmyfamilies_new1-4.png" />
+    <Content Include="Content\images\findmyfamilies_new1.1.png" />
+    <Content Include="Content\images\findmyfamilies_new1.png" />
+    <Content Include="Content\images\FindMyPast.png" />
+    <Content Include="Content\images\Folder List.png" />
+    <Content Include="Content\images\Form.png" />
+    <Content Include="Content\images\gear.png" />
+    <Content Include="Content\images\gearfind.png" />
+    <Content Include="Content\images\gearrun.png" />
+    <Content Include="Content\images\greybackground.jpg" />
+    <Content Include="Content\images\Help-2.png" />
+    <Content Include="Content\images\help.png" />
+    <Content Include="Content\images\helpabout.png" />
+    <Content Include="Content\images\hint.png" />
+    <Content Include="Content\images\history.png" />
+    <Content Include="Content\images\HTML-View-Preview.png" />
+    <Content Include="Content\images\img1.jpg" />
+    <Content Include="Content\images\important.png" />
+    <Content Include="Content\images\Information-2.png" />
+    <Content Include="Content\images\information.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\Internet-Download.png" />
+    <Content Include="Content\images\MyHeritage.png" />
+    <Content Include="Content\images\network.png" />
+    <Content Include="Content\images\no.png" />
+    <Content Include="Content\images\notification.png" />
+    <Content Include="Content\images\ok.png" />
+    <Content Include="Content\images\place.png" />
+    <Content Include="Content\images\Previous.png" />
+    <Content Include="Content\images\Query-Load.png" />
+    <Content Include="Content\images\Query.png" />
+    <Content Include="Content\images\question.png" />
+    <Content Include="Content\images\Refresh.png" />
+    <Content Include="Content\images\Report-2.png" />
+    <Content Include="Content\images\Report.png" />
+    <Content Include="Content\images\Reports.png" />
+    <Content Include="Content\images\report_magnify.png" />
+    <Content Include="Content\images\Research.png" />
+    <Content Include="Content\images\reset.png" />
+    <Content Include="Content\images\Reset24.png" />
+    <Content Include="Content\images\Reset32.png" />
+    <Content Include="Content\images\retrieve.png" />
+    <Content Include="Content\images\Save.png" />
+    <Content Include="Content\images\Search.png" />
+    <Content Include="Content\images\submit.png" />
+    <Content Include="Content\images\Summary.png" />
+    <Content Include="Content\images\Table.png" />
+    <Content Include="Content\images\table_save.png" />
+    <Content Include="Content\images\Task-Information.png" />
+    <Content Include="Content\images\temple.png" />
+    <Content Include="Content\images\timer.png" />
+    <Content Include="Content\images\Timesheet.png" />
+    <Content Include="Content\images\Tip-2.png" />
+    <Content Include="Content\images\Tip.png" />
+    <Content Include="Content\images\tools.jpg" />
+    <Content Include="Content\images\Tree View-Search.png" />
+    <Content Include="Content\images\up.png" />
+    <Content Include="Content\images\user.png" />
+    <Content Include="Content\images\Users.png" />
+    <Content Include="Content\images\Warning.png" />
+    <Content Include="Content\images\Waste Bin.png" />
+    <Content Include="Content\images\webbrowse.png" />
+    <Content Include="Content\images\Wizard.png" />
+    <Content Include="Content\images\Work Sheet-Auto Format.png" />
+    <Content Include="Content\images\Work Sheet.png" />
+    <Content Include="Content\js\lib\jqueryUiOptions.js" />
+    <Content Include="Content\js\vendor\formvalidation\formValidation.js" />
+    <Content Include="Content\js\vendor\formvalidation\formValidation.min.js" />
+    <Content Include="Content\js\vendor\formvalidation\formValidation.popular.js" />
+    <Content Include="Content\js\vendor\formvalidation\formValidation.popular.min.js" />
+    <Content Include="Content\js\vendor\formvalidation\framework\bootstrap.js" />
+    <Content Include="Content\js\vendor\formvalidation\framework\bootstrap.min.js" />
+    <Content Include="Content\js\vendor\formvalidation\framework\foundation.js" />
+    <Content Include="Content\js\vendor\formvalidation\framework\foundation.min.js" />
+    <Content Include="Content\js\vendor\formvalidation\framework\pure.js" />
+    <Content Include="Content\js\vendor\formvalidation\framework\pure.min.js" />
+    <Content Include="Content\js\vendor\formvalidation\framework\semantic.js" />
+    <Content Include="Content\js\vendor\formvalidation\framework\semantic.min.js" />
+    <Content Include="Content\js\vendor\formvalidation\framework\uikit.js" />
+    <Content Include="Content\js\vendor\formvalidation\framework\uikit.min.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\ar_MA.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\be_FR.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\be_NL.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\bg_BG.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\ca_ES.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\cs_CZ.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\da_DK.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\de_DE.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\en_US.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\es_CL.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\es_ES.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\eu_ES.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\fa_IR.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\fi_FI.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\fr_FR.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\gr_EL.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\he_IL.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\hi_IN.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\hu_HU.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\id_ID.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\it_IT.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\ja_JP.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\nl_NL.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\no_NO.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\pl_PL.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\pt_BR.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\pt_PT.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\ro_RO.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\ru_RU.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\sk_SK.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\sq_AL.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\sr_RS.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\sv_SE.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\th_TH.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\tr_TR.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\ua_UA.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\vi_VN.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\zh_CN.js" />
+    <Content Include="Content\js\vendor\formvalidation\language\zh_TW.js" />
+    <Content Include="Content\js\vendor\jquery.spin.js" />
+    <Content Include="Content\js\vendor\spin.min.js" />
+    <Content Include="Content\js\vendor\string.js" />
+    <Content Include="Content\js\vendor\string.min.js" />
+    <Content Include="Content\js\views\Research\findPerson.js" />
+    <Content Include="Content\js\views\Research\findPersonController.js" />
+    <Content Include="Content\js\views\Research\researchController.js" />
+    <Content Include="Content\js\views\Research\possibleDupliates.js" />
+    <Content Include="Content\js\views\Research\startingPointEvents.js" />
+    <Content Include="Content\js\lib\constants.js" />
+    <Content Include="Content\js\views\Research\research.js" />
+    <Content Include="Content\js\views\shared\_layoutController.js" />
+    <Content Include="Content\js\views\shared\person.js" />
+    <Content Include="Content\js\views\Research\retrieve.js" />
+    <Content Include="Content\js\views\Research\startingPoint.js" />
+    <Content Include="Content\js\lib\cookie.js" />
+    <Content Include="Content\js\lib\dialog.js" />
+    <Content Include="Content\js\lib\fancybox.js" />
+    <Content Include="Content\js\lib\jquery\jquery.log.js" />
+    <Content Include="Content\js\lib\jquery\package.js" />
+    <Content Include="Content\js\lib\knockout\knockout.require.js" />
+    <Content Include="Content\js\lib\knockout\package.js" />
+    <Content Include="Content\js\lib\msgBox.js" />
+    <Content Include="Content\js\lib\system.js" />
+    <Content Include="Content\js\views\shared\user.js" />
+    <Content Include="Content\js\main.js" />
+    <Content Include="Content\js\vendor\back-to-top.js" />
+    <Content Include="Content\js\vendor\bootstrap-table.min.js" />
+    <Content Include="Content\js\vendor\bootstrap3.2.0.js" />
+    <Content Include="Content\js\vendor\bootstrap\bootstrap.js" />
+    <Content Include="Content\js\vendor\css-builder.js" />
+    <Content Include="Content\js\vendor\css.js" />
+    <Content Include="Content\js\vendor\css.min.js" />
+    <Content Include="Content\js\vendor\domReady.js" />
+    <Content Include="Content\js\vendor\greensock.js" />
+    <Content Include="Content\js\vendor\html5shiv.js" />
+    <Content Include="Content\js\vendor\i18n.js" />
+    <Content Include="Content\js\vendor\jquery-ui-1.11.2.js" />
+    <Content Include="Content\js\vendor\jquery.fancybox.pack.js" />
+    <Content Include="Content\js\vendor\jquery.lazyload.js" />
+    <Content Include="Content\js\vendor\jquery.scrollstop.js" />
+    <Content Include="Content\js\vendor\jquery1.11.1.js" />
+    <Content Include="Content\js\vendor\jquery\jquery.cookie.js" />
+    <Content Include="Content\js\vendor\jquery\jquery.js" />
+    <Content Include="Content\js\vendor\knockout\knockout.js" />
+    <Content Include="Content\js\vendor\knockout\knockout.postbox.js" />
+    <Content Include="Content\js\vendor\layerslider.kreaturamedia.jquery.js" />
+    <Content Include="Content\js\vendor\layerslider.transitions.js" />
+    <Content Include="Content\js\lib\lazyRequire.js" />
+    <Content Include="Content\js\vendor\normalize.js" />
+    <Content Include="Content\js\vendor\require.css.js" />
+    <Content Include="Content\js\vendor\require.js" />
+    <Content Include="Content\js\vendor\respond.js" />
+    <Content Include="Content\js\vendor\text.js" />
+    <Content Include="Content\js\vendor\underscore-min.js" />
+    <Content Include="Content\js\views\home\indexController.js" />
+    <Content Include="Content\js\views\Research\DateProblems.js" />
+    <Content Include="Content\js\views\Research\DateProblemsReport.js" />
+    <Content Include="Content\js\views\Research\FindClues.js" />
+    <Content Include="Content\js\views\Research\FindCluesReport.js" />
+    <Content Include="Content\js\views\Research\Hints.js" />
+    <Content Include="Content\js\views\Research\HintsReport.js" />
+    <Content Include="Content\js\views\Research\IncompleteOrdinances.js" />
+    <Content Include="Content\js\views\Research\IncompleteOrdinancesReport.js" />
+    <Content Include="Content\js\views\Research\person.js" />
+    <Content Include="Content\js\views\Research\PersonUrlOptions.js" />
+    <Content Include="Content\js\views\Research\PlaceProblems.js" />
+    <Content Include="Content\js\views\Research\PlaceProblemsReport.js" />
+    <Content Include="Content\js\views\Research\PossibleDuplicates1.js" />
+    <Content Include="Content\js\views\Research\PossibleDuplicatesReport.js" />
+    <Content Include="Content\js\views\Research\ResearchFamily.js" />
+    <Content Include="Content\js\views\Research\retrieveController.js" />
+    <Content Include="Content\js\views\Research\startingPointController.js" />
+    <Content Include="Content\js\views\Research\startingPointReport.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\css\doc.css" />
+    <Content Include="Content\LayerSlider\documentation\assets\css\font.css" />
+    <Content Include="Content\LayerSlider\documentation\assets\font\km-docs.svg" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\bg.jpg" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\examplebg.jpg" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\icon-duplicate.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\icon-eye.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\icon-handle.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\icon-highlight.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\icon-lock.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\icon-restore.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\icon-trash.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\illustration-advanced-settings.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\illustration-auto-update.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\illustration-dynamic-layer.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\illustration-export.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\illustration-google-fonts.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\illustration-import.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\illustration-layers.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\illustration-permissions.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\illustration-sample-sliders.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\illustration-shortcode-tool.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\illustration-shortcode.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\illustration-slider-settings.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\illustration-slides.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\illustration-widgets.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\play.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\sample_slide_1.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\sample_slide_2.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\img\zigzag.png" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\doc.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\html5.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\jquery.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\layerslider.transition.gallery.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\index.html" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\scripts\shAutoloader.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\scripts\shBrushCss.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\scripts\shBrushJScript.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\scripts\shBrushPhp.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\scripts\shBrushPlain.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\scripts\shBrushSql.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\scripts\shBrushXml.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\scripts\shCore.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\scripts\shLegacy.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\src\shAutoloader.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\src\shCore.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\src\shLegacy.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\styles\shCoreKreatura.css" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\styles\shThemeKreatura.css" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\brushes\sass.html" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\brushes_tests.html" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\cases\001_basic.html" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\cases\002_brushes.html" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\cases\003_script_tag.html" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\cases\004_url_parsing.html" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\cases\005_no_gutter.html" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\cases\006_pad_line_numbers.html" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\cases\007_collapse.html" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\cases\007_collapse_interaction.html" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\cases\008_first_line.html" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\cases\009_class_name.html" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\cases\010_highlight.html" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\cases\011_smart_tabs.html" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\cases\012_server_side.html" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\cases\013_html_script.html" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\cases\014_legacy.html" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\commonjs_tests.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\js\jquery-1.4.2.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\js\qunit.css" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\js\qunit.js" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\syntaxhighlighter_tests.html" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\theme_tests.html" />
+    <Content Include="Content\LayerSlider\documentation\documentation.html" />
+    <Content Include="Content\LayerSlider\examples\api-demo.html" />
+    <Content Include="Content\LayerSlider\examples\carousel-demo-slider.html" />
+    <Content Include="Content\LayerSlider\examples\content-slider.html" />
+    <Content Include="Content\LayerSlider\examples\full-size-example.html" />
+    <Content Include="Content\LayerSlider\examples\full-width-demo-slider.html" />
+    <Content Include="Content\LayerSlider\examples\previous-version-2d-demo-slider.html" />
+    <Content Include="Content\LayerSlider\examples\previous-version-3d-demo-slider.html" />
+    <Content Include="Content\LayerSlider\examples\responsive-demo-slider.html" />
+    <Content Include="Content\LayerSlider\examples\simplest-example.html" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\3d-bg.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\455293175_1280.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\a-l-1.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\a-l-2.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\a-l-3.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\a-l-4.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\a-l-5.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\a-l-6.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\a-l-7.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\abyss-bg-mask.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\abyss-bg.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\acorn.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\arrow-up.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\autumn-bg.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bbb-bg-mask.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bbb-bg.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bbb-clouds-close.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bbb-clouds-far.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bg-fishes-far.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bg-fishes-mid.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bg.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bg1.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bg2.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bg21.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bg3.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bg31.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bg4.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bg41.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bg5.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bg51.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bg6a.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bg6b.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bg7a.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bg7b.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bi-colored-butterfly-source_ijc.gif" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\big-cube.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\big-fish-close.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\bokeh.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\brench.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\circle.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\clownfish.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\computer.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\coral.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\cs1.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\cs2.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\cs3.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\cubes-bg.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\cubes-blur.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\d1.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\d2.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\easy.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\feature-android.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\feature-html5.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\feature-ios.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\feature-layers.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\feature-mobile.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\feature-options.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\feature-performance.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\feature-responsive.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\feature-slideshow.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\feature-vimeo.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\feature-wordpress.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\feature-youtube.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\fish-showcase-1.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\fish-showcase-2.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\fish-showcase-3.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\fw-1.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\guitars.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\html5-color.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\jellyfish-blur.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\jellyfish.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\l1.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\l2.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\l3.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\ladybug.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\layerslider-on-cellphone.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\layerslider-on-computer.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\layerslider-on-tablet.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\left.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\ls5box.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\med-fish-close.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\med-fish-mid.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\mid-cube-blur.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\mouse.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\phone.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\right.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\s-l-1.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\s-l-2.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\s-l-3.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\s-l-4.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\s-l-5.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\s-l-6.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\s-l-7.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\s1.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\s1.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\s2.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\s2.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\sample_sliders.txt" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\sample_transitions.js" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\sayhello.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\shark.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\slide-a-1.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\slide-a-2.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\slide-a-3.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\slide-a-4.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\slide-a-5.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\slide-a-6.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\slide-b-1.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\slide-b-2.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\slide-b-3.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\slide-b-4.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\slide-b-5.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\slide-b-bg.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\slide-d-5-1.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\slide-d-5-2.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\slide-d-5-3.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\slide-d-5-4.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\slide-d-5-5.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\slide-d-5-6.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\small-cube-blur.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\small-cube.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\small-fish-close.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\small-fish-far.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\small-fish-mid.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\summer-bg.jpg" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\tablet.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\tile-1.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\tile-2.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\tile-3.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\tile-4.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\tile-5.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\tile-6.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\tile-7.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\tile-8.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\tile-9.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\tucan.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\vfeatures.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\vimeo-color.png" />
+    <Content Include="Content\LayerSlider\examples\sliderimages\youtube-color.png" />
+    <Content Include="Content\LayerSlider\layerslider\css\blank.gif" />
+    <Content Include="Content\LayerSlider\layerslider\css\layerslider.css" />
+    <Content Include="Content\LayerSlider\layerslider\js\greensock.js" />
+    <Content Include="Content\LayerSlider\layerslider\js\jquery.js" />
+    <Content Include="Content\LayerSlider\layerslider\js\layerslider.kreaturamedia.jquery.js" />
+    <Content Include="Content\LayerSlider\layerslider\js\layerslider.transitions.js" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlessdark3d\loading.gif" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlessdark3d\nothumb.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlessdark3d\shadow.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlessdark3d\skin.css" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlessdark3d\skin.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlessdark\loading.gif" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlessdark\nothumb.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlessdark\shadow.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlessdark\skin.css" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlessdark\skin.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlesslight3d\loading.gif" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlesslight3d\nothumb.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlesslight3d\shadow.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlesslight3d\skin.css" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlesslight3d\skin.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlesslight\loading.gif" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlesslight\nothumb.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlesslight\shadow.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlesslight\skin.css" />
+    <Content Include="Content\LayerSlider\layerslider\skins\borderlesslight\skin.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\carousel\loading.gif" />
+    <Content Include="Content\LayerSlider\layerslider\skins\carousel\nothumb.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\carousel\skin.css" />
+    <Content Include="Content\LayerSlider\layerslider\skins\carousel\skin.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\darkskin\loading.gif" />
+    <Content Include="Content\LayerSlider\layerslider\skins\darkskin\nothumb.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\darkskin\skin.css" />
+    <Content Include="Content\LayerSlider\layerslider\skins\darkskin\skin.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\defaultskin\loading.gif" />
+    <Content Include="Content\LayerSlider\layerslider\skins\defaultskin\nothumb.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\defaultskin\skin.css" />
+    <Content Include="Content\LayerSlider\layerslider\skins\defaultskin\skin.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\fullwidthdark\loading.gif" />
+    <Content Include="Content\LayerSlider\layerslider\skins\fullwidthdark\nothumb.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\fullwidthdark\skin.css" />
+    <Content Include="Content\LayerSlider\layerslider\skins\fullwidthdark\skin.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\fullwidth\loading.gif" />
+    <Content Include="Content\LayerSlider\layerslider\skins\fullwidth\nothumb.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\fullwidth\skin.css" />
+    <Content Include="Content\LayerSlider\layerslider\skins\fullwidth\skin.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\glass\loading.gif" />
+    <Content Include="Content\LayerSlider\layerslider\skins\glass\nothumb.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\glass\shadow.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\glass\skin.css" />
+    <Content Include="Content\LayerSlider\layerslider\skins\glass\skin.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\lightskin\loading.gif" />
+    <Content Include="Content\LayerSlider\layerslider\skins\lightskin\nothumb.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\lightskin\skin.css" />
+    <Content Include="Content\LayerSlider\layerslider\skins\lightskin\skin.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\minimal\loading.gif" />
+    <Content Include="Content\LayerSlider\layerslider\skins\minimal\nothumb.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\minimal\skin.css" />
+    <Content Include="Content\LayerSlider\layerslider\skins\minimal\skin.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\noskin\loading.gif" />
+    <Content Include="Content\LayerSlider\layerslider\skins\noskin\nothumb.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\noskin\skin.css" />
+    <Content Include="Content\LayerSlider\layerslider\skins\noskin\skin.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\v5\loading.gif" />
+    <Content Include="Content\LayerSlider\layerslider\skins\v5\nothumb.png" />
+    <Content Include="Content\LayerSlider\layerslider\skins\v5\skin.css" />
+    <Content Include="Content\LayerSlider\layerslider\skins\v5\skin.png" />
+    <Content Include="Content\LayerSlider\start_here.html" />
+    <Content Include="Content\logmanager.css" />
+    <Content Include="Content\LogManager\bootstrap-responsive.css" />
+    <Content Include="Content\LogManager\bootstrap-responsive.min.css" />
+    <Content Include="Content\LogManager\bootstrap.css" />
+    <Content Include="Content\LogManager\bootstrap.min.css" />
+    <Content Include="Content\LogManager\images\glyphicons-halflings-white.png" />
+    <Content Include="Content\LogManager\images\glyphicons-halflings.png" />
+    <Content Include="Content\LogManager\logmanager.css" />
+    <Content Include="Content\LogManager\Site.css" />
+    <Content Include="Content\LogManager\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\LogManager\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\LogManager\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\LogManager\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\LogManager\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\LogManager\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\LogManager\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\LogManager\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\LogManager\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\LogManager\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\LogManager\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\LogManager\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\LogManager\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\LogManager\themes\base\jquery-ui.css" />
+    <Content Include="Content\LogManager\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\LogManager\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\LogManager\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\LogManager\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\LogManager\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\LogManager\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\LogManager\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\LogManager\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\LogManager\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\LogManager\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\LogManager\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\LogManager\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\LogManager\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\LogManager\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\LogManager\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\LogManager\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\LogManager\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\LogManager\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\LogManager\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\LogManager\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\LogManager\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\LogManager\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\LogManager\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\LogManager\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\LogManager\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\LogManager\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\LogManager\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\LogManager\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\LogManager\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\LogManager\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\LogManager\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\LogManager\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\LogManager\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\LogManager\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\LogManager\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\LogManager\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\LogManager\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\LogManager\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\LogManager\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\LogManager\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\Template\css\app.css" />
+    <Content Include="Content\Template\css\blocks.css" />
+    <Content Include="Content\Template\css\custom.css" />
+    <Content Include="Content\Template\css\footers\footer-default.css" />
+    <Content Include="Content\Template\css\footers\footer-v1.css" />
+    <Content Include="Content\Template\css\footers\footer-v2.css" />
+    <Content Include="Content\Template\css\footers\footer-v3.css" />
+    <Content Include="Content\Template\css\footers\footer-v4.css" />
+    <Content Include="Content\Template\css\footers\footer-v5.css" />
+    <Content Include="Content\Template\css\footers\footer-v6.css" />
+    <Content Include="Content\Template\css\footers\footer-v7.css" />
+    <Content Include="Content\Template\css\headers\header-default.css" />
+    <Content Include="Content\Template\css\headers\header-v1.css" />
+    <Content Include="Content\Template\css\headers\header-v2.css" />
+    <Content Include="Content\Template\css\headers\header-v3.css" />
+    <Content Include="Content\Template\css\headers\header-v4.css" />
+    <Content Include="Content\Template\css\headers\header-v5.css" />
+    <Content Include="Content\Template\css\ie8.css" />
+    <Content Include="Content\Template\css\pages\blog.css" />
+    <Content Include="Content\Template\css\pages\blog_magazine.css" />
+    <Content Include="Content\Template\css\pages\blog_masonry_3col.css" />
+    <Content Include="Content\Template\css\pages\feature_timeline1.css" />
+    <Content Include="Content\Template\css\pages\feature_timeline2.css" />
+    <Content Include="Content\Template\css\pages\page_404_error.css" />
+    <Content Include="Content\Template\css\pages\page_404_error1.css" />
+    <Content Include="Content\Template\css\pages\page_404_error2.css" />
+    <Content Include="Content\Template\css\pages\page_404_error3.css" />
+    <Content Include="Content\Template\css\pages\page_about.css" />
+    <Content Include="Content\Template\css\pages\page_clients.css" />
+    <Content Include="Content\Template\css\pages\page_coming_soon.css" />
+    <Content Include="Content\Template\css\pages\page_contact.css" />
+    <Content Include="Content\Template\css\pages\page_error3_404.css" />
+    <Content Include="Content\Template\css\pages\page_error4_404.css" />
+    <Content Include="Content\Template\css\pages\page_faq1.css" />
+    <Content Include="Content\Template\css\pages\page_invoice.css" />
+    <Content Include="Content\Template\css\pages\page_job.css" />
+    <Content Include="Content\Template\css\pages\page_job_inner.css" />
+    <Content Include="Content\Template\css\pages\page_job_inner1.css" />
+    <Content Include="Content\Template\css\pages\page_job_inner2.css" />
+    <Content Include="Content\Template\css\pages\page_log_reg_v1.css" />
+    <Content Include="Content\Template\css\pages\page_log_reg_v2.css" />
+    <Content Include="Content\Template\css\pages\page_one.css" />
+    <Content Include="Content\Template\css\pages\page_pricing copy.css" />
+    <Content Include="Content\Template\css\pages\page_pricing.css" />
+    <Content Include="Content\Template\css\pages\page_promo.css" />
+    <Content Include="Content\Template\css\pages\page_search.css" />
+    <Content Include="Content\Template\css\pages\page_search_inner.css" />
+    <Content Include="Content\Template\css\pages\page_search_inner_tables.css" />
+    <Content Include="Content\Template\css\pages\portfolio-v1.css" />
+    <Content Include="Content\Template\css\pages\portfolio-v2.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing-bg-colored.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing-dark.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing-light.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing-medium-dark.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing-medium-light.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing-mega-v1.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing-mega-v2.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing-mega-v3.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing-rounded.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing-zoom.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing_accord.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing_v1.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing_v2.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing_v3.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing_v4.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing_v5.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing_v6.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing_v7.css" />
+    <Content Include="Content\Template\css\pages\pricing\pricing_v8.css" />
+    <Content Include="Content\Template\css\pages\profile.css" />
+    <Content Include="Content\Template\css\plugins.css" />
+    <Content Include="Content\Template\css\plugins\animate.css" />
+    <Content Include="Content\Template\css\plugins\box-shadows.css" />
+    <Content Include="Content\Template\css\plugins\brand-buttons\brand-buttons-inversed.css" />
+    <Content Include="Content\Template\css\plugins\brand-buttons\brand-buttons.css" />
+    <Content Include="Content\Template\css\plugins\brand-buttons\css\brand-buttons-inversed.min.css" />
+    <Content Include="Content\Template\css\plugins\brand-buttons\css\brand-buttons.min.css" />
+    <Content Include="Content\Template\css\plugins\hover-effect\css\custom-hover-effects.css" />
+    <Content Include="Content\Template\css\plugins\hover-effect\css\hover-min.css" />
+    <Content Include="Content\Template\css\plugins\hover-effect\css\hover.css" />
+    <Content Include="Content\Template\css\plugins\hover-effect\license.txt" />
+    <Content Include="Content\Template\css\plugins\style-switcher.css" />
+    <Content Include="Content\Template\css\style.css" />
+    <Content Include="Content\Template\css\theme-colors\aqua.css" />
+    <Content Include="Content\Template\css\theme-colors\blue.css" />
+    <Content Include="Content\Template\css\theme-colors\brown.css" />
+    <Content Include="Content\Template\css\theme-colors\dark-blue.css" />
+    <Content Include="Content\Template\css\theme-colors\dark-red.css" />
+    <Content Include="Content\Template\css\theme-colors\default.css" />
+    <Content Include="Content\Template\css\theme-colors\light-green.css" />
+    <Content Include="Content\Template\css\theme-colors\light.css" />
+    <Content Include="Content\Template\css\theme-colors\orange.css" />
+    <Content Include="Content\Template\css\theme-colors\purple.css" />
+    <Content Include="Content\Template\css\theme-colors\red.css" />
+    <Content Include="Content\Template\css\theme-colors\teal.css" />
+    <Content Include="Content\Template\css\theme-skins\dark.css" />
+    <Content Include="Content\Template\img\bg-black.png" />
+    <Content Include="Content\Template\img\bg-black1.png" />
+    <Content Include="Content\Template\img\bg-green.png" />
+    <Content Include="Content\Template\img\bg-white.png" />
+    <Content Include="Content\Template\img\breadcrumbs.png" />
+    <Content Include="Content\Template\img\icons\social\amazon.png" />
+    <Content Include="Content\Template\img\icons\social\behance.png" />
+    <Content Include="Content\Template\img\icons\social\blogger.png" />
+    <Content Include="Content\Template\img\icons\social\deviantart.png" />
+    <Content Include="Content\Template\img\icons\social\dribbble.png" />
+    <Content Include="Content\Template\img\icons\social\dropbox.png" />
+    <Content Include="Content\Template\img\icons\social\evernote.png" />
+    <Content Include="Content\Template\img\icons\social\facebook.png" />
+    <Content Include="Content\Template\img\icons\social\forrst.png" />
+    <Content Include="Content\Template\img\icons\social\github.png" />
+    <Content Include="Content\Template\img\icons\social\googleplus.png" />
+    <Content Include="Content\Template\img\icons\social\instagram.png" />
+    <Content Include="Content\Template\img\icons\social\jolicloud.png" />
+    <Content Include="Content\Template\img\icons\social\last-fm.png" />
+    <Content Include="Content\Template\img\icons\social\linkedin.png" />
+    <Content Include="Content\Template\img\icons\social\picasa.png" />
+    <Content Include="Content\Template\img\icons\social\pintrest.png" />
+    <Content Include="Content\Template\img\icons\social\rss.png" />
+    <Content Include="Content\Template\img\icons\social\skype.png" />
+    <Content Include="Content\Template\img\icons\social\spotify.png" />
+    <Content Include="Content\Template\img\icons\social\stumbleupon.png" />
+    <Content Include="Content\Template\img\icons\social\tumblr.png" />
+    <Content Include="Content\Template\img\icons\social\twitter.png" />
+    <Content Include="Content\Template\img\icons\social\vimeo.png" />
+    <Content Include="Content\Template\img\icons\social\vk.png" />
+    <Content Include="Content\Template\img\icons\social\wordpress.png" />
+    <Content Include="Content\Template\img\icons\social\xing.png" />
+    <Content Include="Content\Template\img\icons\social\yahoo.png" />
+    <Content Include="Content\Template\img\icons\social\youtube.png" />
+    <Content Include="Content\Template\img\overlay-icon.png" />
+    <Content Include="Content\Template\img\patterns\15.png" />
+    <Content Include="Content\Template\img\user.jpg" />
+    <Content Include="Content\Template\js\app.js" />
+    <Content Include="Content\Template\js\custom.js" />
+    <Content Include="Content\Template\js\plugins\revolution-slider.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="findmyfamilies.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="findmyfamilies.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global.asax" />
+    <Content Include="App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="BundleTransformer.Configuration.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Content\Site.less" />
+    <Content Include="Images\15.png" />
+    <Content Include="Images\16.png" />
+    <Content Include="Images\17.png" />
+    <Content Include="Images\5.png" />
+    <Content Include="Images\9.jpg" />
+    <Content Include="Images\About-2.png" />
+    <Content Include="Images\About.png" />
+    <Content Include="Images\accept.png" />
+    <Content Include="Images\Ancestry.png" />
+    <Content Include="Images\appsbrowser.png" />
+    <Content Include="Images\Back.png" />
+    <Content Include="Images\bg-black.png" />
+    <Content Include="Images\bg2-old.jpg" />
+    <Content Include="Images\BillionGraves.png" />
+    <Content Include="Images\breadcrumbs.png" />
+    <Content Include="Images\browsesubmit.png" />
+    <Content Include="Images\bullet-blue.gif" />
+    <Content Include="Images\Calendar.png" />
+    <Content Include="Images\cancel.png" />
+    <Content Include="Images\Clean.png" />
+    <Content Include="Images\Clear.png" />
+    <Content Include="Images\Clock-2.png" />
+    <Content Include="Images\Clock.png" />
+    <Content Include="Images\Close.png" />
+    <Content Include="Images\clue.png" />
+    <Content Include="Images\compass.png" />
+    <Content Include="Images\Control-Check Box.png" />
+    <Content Include="Images\Cross.png" />
+    <Content Include="Images\csg-5526842e96b7d.png" />
+    <Content Include="Images\csg-552694a785d33.png" />
+    <Content Include="Images\csg-55746a6b19bfc.png" />
+    <Content Include="Images\Database-Search.png" />
+    <Content Include="Images\Datasheet-View.png" />
+    <Content Include="Images\Date-Time-2.png" />
+    <Content Include="Images\Date-Time.png" />
+    <Content Include="Images\dates.png" />
+    <Content Include="Images\delete.png" />
+    <Content Include="Images\duplicates.png" />
+    <Content Include="Images\error.png" />
+    <Content Include="Images\exclamation.png" />
+    <Content Include="Images\Execute.png" />
+    <Content Include="Images\faces.jpg" />
+    <Content Include="Images\family.png" />
+    <Content Include="Images\FamilySearch.png" />
+    <Content Include="Images\FamilySearch2.png" />
+    <Content Include="Images\find.png" />
+    <Content Include="Images\findagrave.png" />
+    <Content Include="Images\FindAGrave1.png" />
+    <Content Include="Images\findmyfamilies_new1-3.png" />
+    <Content Include="Images\findmyfamilies_new1-4.png" />
+    <Content Include="Images\findmyfamilies_new1.1.png" />
+    <Content Include="Images\FindMyPast.png" />
+    <Content Include="Images\Folder List.png" />
+    <Content Include="Images\Form.png" />
+    <Content Include="Images\gear.png" />
+    <Content Include="Images\gearfind.png" />
+    <Content Include="Images\gearrun.png" />
+    <Content Include="Images\Help-2.png" />
+    <Content Include="Images\help.png" />
+    <Content Include="Images\helpabout.png" />
+    <Content Include="Images\hint.png" />
+    <Content Include="Images\history.png" />
+    <Content Include="Images\HTML-View-Preview.png" />
+    <Content Include="Images\img1.jpg" />
+    <Content Include="Images\important.png" />
+    <Content Include="Images\Information-2.png" />
+    <Content Include="Images\information.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Internet-Download.png" />
+    <Content Include="Images\MyHeritage.png" />
+    <Content Include="Images\network.png" />
+    <Content Include="Images\no.png" />
+    <Content Include="Images\notification.png" />
+    <Content Include="Images\ok.png" />
+    <Content Include="Images\place.png" />
+    <Content Include="Images\Previous.png" />
+    <Content Include="Images\question.png" />
+    <Content Include="Images\reset.png" />
+    <Content Include="Images\Reset24.png" />
+    <Content Include="Images\Reset32.png" />
+    <Content Include="Images\retrieve.png" />
+    <Content Include="FindMyFamilies.DataAccess.dataSources.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="findmyfamilies.log">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\4.jpg" />
+    <Content Include="Images\accent.png" />
+    <Content Include="Images\bg2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\bg3.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\bg5.jpg" />
+    <Content Include="Images\bullet.png" />
+    <Content Include="Images\Computer2.png" />
+    <Content Include="Images\findmyfamiliesbottom.png" />
+    <Content Include="Images\findmyfamiliestop.png" />
+    <Content Include="Images\findmyfamilies_new1.png" />
+    <Content Include="Images\greybackground.jpg" />
+    <Content Include="Images\Query-Load.png" />
+    <Content Include="Images\Query.png" />
+    <Content Include="Images\Refresh.png" />
+    <Content Include="Images\Report-2.png" />
+    <Content Include="Images\Report.png" />
+    <Content Include="Images\Reports.png" />
+    <Content Include="Images\report_magnify.png" />
+    <Content Include="Images\Research.png" />
+    <Content Include="Images\Save.png" />
+    <Content Include="Images\Search.png" />
+    <Content Include="Images\submit.png" />
+    <Content Include="Images\Summary.png" />
+    <Content Include="Images\Table.png" />
+    <Content Include="Images\table_save.png" />
+    <Content Include="Images\Task-Information.png" />
+    <Content Include="Images\temple.png" />
+    <Content Include="Images\timer.png" />
+    <Content Include="Images\Timesheet.png" />
+    <Content Include="Images\Tip-2.png" />
+    <Content Include="Images\Tip.png" />
+    <Content Include="Images\tools.jpg" />
+    <Content Include="Images\Tree View-Search.png" />
+    <Content Include="Images\up.png" />
+    <Content Include="Images\user.png" />
+    <Content Include="Images\Users.png" />
+    <Content Include="Images\Warning.png" />
+    <Content Include="Images\Waste Bin.png" />
+    <Content Include="Images\webbrowse.png" />
+    <Content Include="Images\Wizard.png" />
+    <Content Include="Images\Work Sheet-Auto Format.png" />
+    <Content Include="Images\Work Sheet.png" />
+    <Content Include="Messages.FindMyFamilies.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MessagesBase.findmyfamilies.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Person.pdf" />
+    <Content Include="Content\Easy Steps to Descendancy Research.pdf" />
+    <Content Include="Content\Template\css\plugins\brand-buttons\.gitignore" />
+    <Content Include="Content\Template\css\plugins\brand-buttons\.travis.yml" />
+    <Content Include="Content\Template\css\plugins\brand-buttons\SASS\brand-buttons-inversed.scss" />
+    <Content Include="Content\Template\css\plugins\brand-buttons\SASS\brand-buttons.scss" />
+    <Content Include="Content\Template\css\plugins\brand-buttons\SASS\_mixins.scss" />
+    <Content Include="Content\Template\css\plugins\brand-buttons\SASS\_variables.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\.gitignore" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_border-fade.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_box-shadow-inset.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_box-shadow-outset.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_bubble-bottom.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_bubble-float-bottom.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_bubble-float-left.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_bubble-float-right.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_bubble-float-top.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_bubble-left.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_bubble-right.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_bubble-top.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_curl-bottom-left.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_curl-bottom-right.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_curl-top-left.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_curl-top-right.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_float-shadow.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_float.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_glow.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_grow-rotate.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_grow.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_hang.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_hollow.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_hover-shadow.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_hover.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_outline-inward.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_outline-outward.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_pop.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_pulse-grow.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_pulse-shrink.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_pulse.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_push.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_rotate.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_round-corners.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_shadow-radial.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_shrink.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_sink.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_skew-forward.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_skew.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_trim.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_wobble-bottom.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_wobble-horizontal.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_wobble-top.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\effects\_wobble-vertical.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\hover.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\_defaults.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\_hacks.scss" />
+    <Content Include="Content\Template\css\plugins\hover-effect\scss\_options.scss" />
+    <Content Include="Content\LayerSlider\.DS_Store" />
+    <Content Include="Content\LayerSlider\documentation\.DS_Store" />
+    <Content Include="Content\LayerSlider\documentation\assets\.DS_Store" />
+    <Content Include="Content\LayerSlider\documentation\assets\font\km-docs.eot" />
+    <Content Include="Content\LayerSlider\documentation\assets\font\km-docs.ttf" />
+    <Content Include="Content\LayerSlider\documentation\assets\font\km-docs.woff" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\.DS_Store" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\.DS_Store" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\compass\config.rb" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\compass\shCore.scss" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\compass\shCoreDefault.scss" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\compass\shCoreDjango.scss" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\compass\shCoreEclipse.scss" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\compass\shCoreEmacs.scss" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\compass\shCoreFadeToGrey.scss" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\compass\shCoreMDUltra.scss" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\compass\shCoreMidnight.scss" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\compass\shCoreRDark.scss" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\compass\shThemeDefault.scss" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\compass\shThemeDjango.scss" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\compass\shThemeEclipse.scss" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\compass\shThemeEmacs.scss" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\compass\shThemeFadeToGrey.scss" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\compass\shThemeMDUltra.scss" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\compass\shThemeMidnight.scss" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\compass\shThemeRDark.scss" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\compass\_theme_template.scss" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\LGPL-LICENSE" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\MIT-LICENSE" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\.rvmrc" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\webrick.rb" />
+    <Content Include="Content\LayerSlider\documentation\assets\js\syntaxhighlighter\tests\webrick.sh" />
+    <Content Include="Content\LayerSlider\examples\.DS_Store" />
+    <Content Include="Content\LayerSlider\layerslider\.DS_Store" />
+    <Content Include="Content\LayerSlider\layerslider\js\.DS_Store" />
+    <Content Include="Content\LayerSlider\sources\.DS_Store" />
+    <Content Include="Content\LayerSlider\sources\js\.DS_Store" />
+    <Content Include="Content\LayerSlider\sources\psd\nothumb.psd" />
+    <Content Include="Content\LayerSlider\sources\psd\skins.psd" />
+    <Content Include="Images\Person.pdf" />
+    <Content Include="Content\font\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\font\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\font\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\fonts\FontAwesome.otf" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\less\animated.less" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\less\bordered-pulled.less" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\less\core.less" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\less\fixed-width.less" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\less\font-awesome.less" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\less\icons.less" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\less\larger.less" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\less\list.less" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\less\mixins.less" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\less\path.less" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\less\rotated-flipped.less" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\less\stacked.less" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\less\variables.less" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\scss\_animated.scss" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\scss\_bordered-pulled.scss" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\scss\_core.scss" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\scss\_fixed-width.scss" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\scss\_icons.scss" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\scss\_larger.scss" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\scss\_list.scss" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\scss\_mixins.scss" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\scss\_path.scss" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\scss\_rotated-flipped.scss" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\scss\_stacked.scss" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\scss\_variables.scss" />
+    <Content Include="Content\css\lib\common\font-awesome-4.3.0\scss\font-awesome.scss" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\fonts\FontAwesome.otf" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\less\animated.less" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\less\bordered-pulled.less" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\less\core.less" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\less\fixed-width.less" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\less\font-awesome.less" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\less\icons.less" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\less\larger.less" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\less\list.less" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\less\mixins.less" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\less\path.less" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\less\rotated-flipped.less" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\less\stacked.less" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\less\variables.less" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\scss\font-awesome.scss" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\scss\_animated.scss" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\scss\_bordered-pulled.scss" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\scss\_core.scss" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\scss\_fixed-width.scss" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\scss\_icons.scss" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\scss\_larger.scss" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\scss\_list.scss" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\scss\_mixins.scss" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\scss\_path.scss" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\scss\_rotated-flipped.scss" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\scss\_stacked.scss" />
+    <Content Include="Content\css\vendor\font-awesome-4.3.0\scss\_variables.scss" />
+    <Content Include="Content\images\Person.pdf" />
+    <Content Include="Content\js\vendor\formvalidation\.DS_Store" />
+    <Content Include="Content\css\lib\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\css\lib\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\css\lib\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Properties\PublishProfiles\File System.pubxml" />
+    <None Include="Properties\PublishProfiles\findmyfamilies.com - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\FindMyFamilies.com.pubxml" />
+    <Content Include="Validation.Server.Base.FindMyFamilies.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Error\AccessDenied.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Shared\EmailSubscribe.cshtml" />
+    <Content Include="SqlClient.CommandsBase.findmyfamilies.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Home\LogGrid.cshtml" />
+    <Content Include="Views\Home\Logomatic.cshtml" />
+    <Content Include="Views\Shared\LogManagerError.cshtml" />
+    <Content Include="Views\Shared\LogManagerLayout.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Home\Error\AccessDenied.cshtml" />
+    <Content Include="Views\Home\Error\Index.cshtml" />
+    <Content Include="Views\Home\Error\NotFound.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Research\DateProblems.cshtml" />
+    <Content Include="Views\Research\DateProblemsReport.cshtml" />
+    <Content Include="Views\Research\DisplayPerson.cshtml" />
+    <Content Include="Views\Research\FindClues.cshtml" />
+    <Content Include="Views\Research\FindCluesHelp.cshtml" />
+    <Content Include="Views\Research\FindCluesReport.cshtml" />
+    <Content Include="Views\Research\FindPerson.cshtml" />
+    <Content Include="Views\Research\Hints.cshtml" />
+    <Content Include="Views\Research\HintsReport.cshtml" />
+    <Content Include="Views\Research\IncompleteOrdinances.cshtml" />
+    <Content Include="Views\Research\IncompleteOrdinancesReport.cshtml" />
+    <Content Include="Views\Research\PersonUrlOptions.cshtml" />
+    <Content Include="Views\Research\PersonUrls.cshtml" />
+    <Content Include="Views\Research\PlaceProblems.cshtml" />
+    <Content Include="Views\Research\PlaceProblemsReport.cshtml" />
+    <Content Include="Views\Research\PossibleDuplicates.cshtml" />
+    <Content Include="Views\Research\PossibleDuplicatesReport.cshtml" />
+    <Content Include="Views\Research\Research.cshtml" />
+    <Content Include="Views\Research\ResearchFamily.cshtml" />
+    <Content Include="Views\Research\Retrieve.cshtml" />
+    <Content Include="Views\Research\StartingPoint.cshtml" />
+    <Content Include="Views\Research\StartingPointReport.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\" />
+    <Folder Include="Content\css\bootstrap\" />
+    <Folder Include="Content\css\icons\" />
+    <Folder Include="Content\css\view\Error\" />
+    <Folder Include="Content\css\view\Home\Error\" />
+    <Folder Include="Content\css\view\Shared\" />
+    <Folder Include="Content\js\views\Error\" />
+    <Folder Include="Content\js\views\home\Error\" />
+    <Folder Include="Content\Template\img\banners\" />
+    <Folder Include="Content\Template\img\bg\" />
+    <Folder Include="Content\Template\img\blur\" />
+    <Folder Include="Content\Template\img\clients2\" />
+    <Folder Include="Content\Template\img\clients3\" />
+    <Folder Include="Content\Template\img\clients\" />
+    <Folder Include="Content\Template\img\headers\" />
+    <Folder Include="Content\Template\img\icons\flat\" />
+    <Folder Include="Content\Template\img\job\" />
+    <Folder Include="Content\Template\img\main\" />
+    <Folder Include="Content\Template\img\masonry\" />
+    <Folder Include="Content\Template\img\mockup\" />
+    <Folder Include="Content\Template\img\new\" />
+    <Folder Include="Content\Template\img\portfolio\" />
+    <Folder Include="Content\Template\img\posts\" />
+    <Folder Include="Content\Template\img\sliders\elastislide\" />
+    <Folder Include="Content\Template\img\sliders\layer\" />
+    <Folder Include="Content\Template\img\team\" />
+    <Folder Include="Content\Template\img\testimonials\" />
+    <Folder Include="Content\Template\img\thumb\" />
+    <Folder Include="Content\Template\img\timeline\" />
+    <Folder Include="Content\Template\img\transparent\" />
+    <Folder Include="Content\Template\js\forms\" />
+    <Folder Include="Content\Template\js\pages\" />
+    <Folder Include="ErrorLogs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Web.Core\Web.Core.csproj">
+      <Project>{b1b84768-581d-44f6-a905-cbd1e51b2dec}</Project>
+      <Name>Web.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>53130</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:4356/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

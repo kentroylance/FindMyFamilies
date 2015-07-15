@@ -1,0 +1,92 @@
+<div class="panel-body">
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="findCluesReportId" class="col-sm-2 control-label">Retrieved:</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <select class="form-control" id="findCluesReportId"></select>
+                    <span class="input-group-btn">
+                        <a href="#" id="findCluesRetrieveButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fmf24-retrieve" style="font-size:22px; vertical-align: middle"></i> Retrieve</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="findCluesResearchType" class="col-sm-2 control-label">Research:</label>
+            <div class="col-sm-10">
+                <input id="findCluesResearchType" type="text" class="form-control" style="width:120px" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="findCluesPersonId" class="col-sm-2 control-label">Name:</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <input id="findCluesPersonId" type="text" class="form-control" style="width:400px" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="findCluesGeneration" class="col-sm-2 control-label">Generations:</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <input id="findCluesGeneration" type="text" class="form-control" style="width:40px" disabled>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+            <label for="findCluesSearchCriteria" class="col-sm-2 control-label">Criteria:<span class="fa fmf16-Help" rel="criteriaTooltip" title="Anyone of these or all can be used to determine if an ancestor meets a certain criteria"></span></label>
+            <div class="col-sm-10">
+                <select class="form-control" id="findCluesSearchCriteria"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="findCluesGapInChildren" class="col-sm-2 control-label">Child Gap:<span class="fa fmf16-Help" rel="gapTooltip" title="Gap is used when checking if the gap in years between children is to long"></span></label>
+            <div class="col-sm-10">
+                <select class="form-control select2Digit" id="findCluesGapInChildren">
+                    <option selected>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="findCluesAgeLimit" class="col-sm-2 control-label">Age Limit:<span class="fa fmf16-Help" rel="ageTooltip" title="Age limit is used when determining if they lived long enough to be married or have children"></span></label>
+            <div class="col-sm-10">
+                <select class="form-control select2Digit" id="findCluesAgeLimit">
+                    <option selected>18</option>
+                    <option>19</option>
+                    <option>20</option>
+                    <option>21</option>
+                    <option>22</option>
+                    <option>23</option>
+                    <option>24</option>
+                    <option>25</option>
+                    <option>26</option>
+                    <option>27</option>
+                    <option>28</option>
+                    <option>29</option>
+                    <option>30</option>
+                    <option>31</option>
+                </select>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div id="findCluesSpinner" style="position: fixed; top: 50%; left: 50%"></div>
+
+<script type="text/javascript">
+    $(function () {
+        var scriptTag = document.createElement("script");
+        scriptTag.src = "/Views/Home/Research/FindClues/FindClues.js";
+        document.head.appendChild(scriptTag);
+    });
+</script>
+
+@*<script type="text/javascript" src="~/Views/Home/Research/FindClues/FindClues.js"></script>*@

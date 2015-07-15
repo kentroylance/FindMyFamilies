@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+
+<messages>
+	<message key="NextIDCannotCreate" value="Cannot Create a NextID"/>
+	<message key="NextIDCannotRead" value="Cannot Read NextID"/>
+	<message key="NextIDCannotReadAll" value="Cannot Read All NextIDs"/>
+	<message key="NextIDCannotUpdate" value="Cannot Update NextID"/>
+	<message key="NextIDCannotDelete" value="Cannot Delete NextID"/>
+	<message key="NextIDCannotReadByPage" value="Cannot Read  NextID"/>
+	<message key="ReportCannotCreate" value="Cannot Create a Report"/>
+	<message key="ReportCannotRead" value="Cannot Read Report"/>
+	<message key="ReportCannotReadAll" value="Cannot Read All Reports"/>
+	<message key="ReportCannotUpdate" value="Cannot Update Report"/>
+	<message key="ReportCannotDelete" value="Cannot Delete Report"/>
+	<message key="ReportCannotReadByPage" value="Cannot Read  Report"/>
+    <message key="ReportCannotReadByReportBy" value="Cannot Read Reports By Report By"/>
+    <message key="TranslationCannotCreate" value="Cannot Create a Translation"/>
+	<message key="TranslationCannotRead" value="Cannot Read Translation"/>
+	<message key="TranslationCannotReadAll" value="Cannot Read All Translations"/>
+	<message key="TranslationCannotReadAllList" value="Cannot Read All Translations"/>
+	<message key="TranslationCannotUpdate" value="Cannot Update Translation"/>
+	<message key="TranslationCannotDelete" value="Cannot Delete Translation"/>
+	<message key="TranslationCannotReadByPage" value="Cannot Read  Translation"/>
+	<message key="TranslationDetailCannotCreate" value="Cannot Create a TranslationDetail"/>
+	<message key="TranslationDetailCannotRead" value="Cannot Read TranslationDetail"/>
+	<message key="TranslationDetailCannotReadAll" value="Cannot Read All TranslationDetails"/>
+	<message key="TranslationDetailCannotReadAllList" value="Cannot Read All TranslationDetails"/>
+	<message key="TranslationDetailCannotUpdate" value="Cannot Update TranslationDetail"/>
+	<message key="TranslationDetailCannotDelete" value="Cannot Delete TranslationDetail"/>
+	<message key="TranslationDetailCannotReadByPage" value="Cannot Read  TranslationDetail"/>
+	<message key="TranslationMasterCannotCreate" value="Cannot Create a TranslationMaster"/>
+	<message key="TranslationMasterCannotRead" value="Cannot Read TranslationMaster"/>
+	<message key="TranslationMasterCannotReadAll" value="Cannot Read All TranslationMasters"/>
+	<message key="TranslationMasterCannotReadAllList" value="Cannot Read All TranslationMasters"/>
+	<message key="TranslationMasterCannotUpdate" value="Cannot Update TranslationMaster"/>
+	<message key="TranslationMasterCannotDelete" value="Cannot Delete TranslationMaster"/>
+	<message key="TranslationMasterCannotReadByPage" value="Cannot Read  TranslationMaster"/>
+	<message key="EmailCannotCreate" value="Cannot Create a Email"/>
+	<message key="EmailCannotRead" value="Cannot Read Email"/>
+	<message key="EmailCannotReadAll" value="Cannot Read All Emails"/>
+	<message key="EmailCannotReadAllList" value="Cannot Read All Emails"/>
+	<message key="EmailCannotUpdate" value="Cannot Update Email"/>
+	<message key="EmailCannotDelete" value="Cannot Delete Email"/>
+	<message key="EmailCannotReadByPage" value="Cannot Read  Email"/>
+	<message key="AddressCannotCreate" value="Cannot Create a Address"/>
+	<message key="AddressCannotRead" value="Cannot Read Address"/>
+	<message key="AddressCannotReadAll" value="Cannot Read All Addresss"/>
+	<message key="AddressCannotUpdate" value="Cannot Update Address"/>
+	<message key="AddressCannotDelete" value="Cannot Delete Address"/>
+	<message key="AddressCannotReadByPage" value="Cannot Read  Address"/>
+	<message key="MemberCannotCreate" value="Cannot Create a Member"/>
+	<message key="MemberCannotRead" value="Cannot Read Member"/>
+	<message key="MemberCannotReadAll" value="Cannot Read All Members"/>
+	<message key="MemberCannotUpdate" value="Cannot Update Member"/>
+	<message key="MemberCannotDelete" value="Cannot Delete Member"/>
+	<message key="MemberCannotReadByPage" value="Cannot Read  Member"/>
+	<message key="FindPersonOptionsCannotCreate" value="Cannot Create a FindPersonOptions"/>
+	<message key="FindPersonOptionsCannotRead" value="Cannot Read FindPersonOptions"/>
+	<message key="FindPersonOptionsCannotReadAll" value="Cannot Read All FindPersonOptionss"/>
+	<message key="FindPersonOptionsCannotUpdate" value="Cannot Update FindPersonOptions"/>
+	<message key="FindPersonOptionsCannotDelete" value="Cannot Delete FindPersonOptions"/>
+	<message key="FindPersonOptionsCannotReadByPage" value="Cannot Read  FindPersonOptions"/>
+</messages>

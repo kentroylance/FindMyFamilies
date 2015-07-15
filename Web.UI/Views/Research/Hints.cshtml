@@ -1,0 +1,71 @@
+<div class="panel-body">
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="hintsReportId" class="col-sm-2 control-label">Retrieved:</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <select class="form-control" id="hintsReportId">
+                        <option value="0">Select</option>
+                    </select>
+                    <span class="input-group-btn">
+                        <a href="#" id="hintsRetrieveButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fmf24-retrieve" style="font-size:16px; vertical-align: middle; margin-top : -0.255em"></i> Retrieve</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="hintsResearchType" class="col-sm-2 control-label">Research:</label>
+            <div class="col-sm-10">
+                <select class="form-control researchType" id="hintsResearchType">
+                    <option>Ancestors</option>
+                    <option>Descendants</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="hintsPersonId" class="col-sm-2 control-label">Name:</label>
+            <div class="col-sm-7">
+                <div class="input-group">
+                    <select class="form-control" id="hintsPersonId"></select>
+                    <span class="input-group-btn">
+                            <a href="#" id="hintsFindPersonButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fmf24-Search" style =" font-size: 22px; vertical-align: middle; margin-top : -0.255em"></i> Find</a>
+	                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="hintsGeneration" class="col-sm-2 control-label">Generations:</label>
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <div id="hintsGenerationDiv"></div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" >Sort By:</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <div class="radio">
+                        <label><input type="radio" id="hintsTopScore" name="optradio">Top Score</label>&nbsp;&nbsp;
+                        <label><input type="radio" id="hintsCount" name="optradio">Count</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div id="hintsSpinner" style="position: fixed; top: 50%; left: 50%"></div>
+
+<script type="text/javascript">
+    $(function () {
+        var scriptTag = document.createElement("script");
+        scriptTag.src = "/Views/Home/Research/Hints/Hints.js";
+        document.head.appendChild(scriptTag);
+    });
+</script>
+
+
+@*<script type="text/javascript" src="~/Views/Home/Research/Hints/Hints.js"></script>*@
+
+

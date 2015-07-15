@@ -1,0 +1,65 @@
+﻿<div class="panel-body">                                                      
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="possibleDuplicatesReportId" class="col-sm-2 control-label">Retrieved:</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <select class="form-control" id="possibleDuplicatesReportId">
+                        <option value="0">Select</option>
+                    </select>
+                    <span class="input-group-btn">
+                        <a href="#" id="possibleDuplicatesRetrieveButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fmf24-retrieve" style="font-size:22px; vertical-align: middle"></i> Retrieve</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="possibleDuplicatesResearchType" class="col-sm-2 control-label">Research:</label>
+            <div class="col-sm-10">
+                <select class="form-control researchType" id="possibleDuplicatesResearchType">
+                    <option>Ancestors</option>
+                    <option>Descendants</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="possibleDuplicatesPersonId" class="col-sm-2 control-label">Name:</label>
+            <div class="col-sm-7">
+                <div class="input-group">
+                    <input id="possibleDuplicatesPersonId" type="text" class="form-control" disabled>
+                    <span class="input-group-btn">
+                            <a href="#" id="possibleDuplicatesFindPersonButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fmf24-Search" style =" font-size: 22px; vertical-align: middle; margin-top : -0.225em"></i> Find</a>
+	                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="possibleDuplicatesGeneration" class="col-sm-2 control-label">Generations:</label>
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <div id="possibleDuplicatesGenerationDiv"></div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="includePossibleDuplicates" class="col-sm-2 control-label">&nbsp;</label>
+            <div class="col-sm-10">
+                <input id="includePossibleDuplicates" type="checkbox" /><label for="includePossibleDuplicates">&nbsp;<span style="font-weight: normal">Possible Duplicates</span></label>&nbsp;&nbsp;<br/>
+                <input id="includePossibleMatches" type="checkbox" /><label for="includePossibleMatches">&nbsp;<span style="font-weight: normal">Possible Matches</span></label>&nbsp;&nbsp;
+            </div>
+        </div>
+    </form>
+</div>
+<div id="possibleDuplicatesSpinner" style="position: fixed; top: 50%; left: 50%"></div>
+
+
+<script type="text/javascript">
+    $(function () {
+        var scriptTag = document.createElement("script");
+        scriptTag.src = "/Views/Home/Research/PossibleDuplicates/PossibleDuplicates.js";
+        document.head.appendChild(scriptTag);
+    });
+</script>
+
+@*<script type="text/javascript" src="~/Views/Home/Research/PossibleDuplicates/PossibleDuplicates.js"></script>*@

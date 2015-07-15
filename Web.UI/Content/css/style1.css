@@ -1,0 +1,211 @@
+@import url(headers/header-default.css);
+@import url(footers/footer-default.css);
+
+body { 
+   color: #333; 
+   font-size: 13px;
+   line-height: 1.6;
+}
+
+li a { 
+   color: #555;
+}
+
+a {
+   color: #72c02c;
+   text-decoration: none;  
+}
+
+/*Boxed Layout
+------------------------------------*/
+.wrapper {
+  background: #fff;
+}
+
+.boxed-layout {
+  padding: 0;
+  box-shadow: 0 0 5px #ccc;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  background: url(../img/patterns/15.png) repeat;
+}
+
+/*Main Styles
+------------------------------------*/
+/*Purchase Block*/
+.purchase {
+	padding: 25px 0 30px;
+	border-bottom: solid 1px #eee;
+	background: url(../img/breadcrumbs.png) repeat;
+}
+.purchase p {
+	margin-bottom: 0;
+}
+.purchase span {
+	color: #666;
+	display: block;
+	font-size: 24px;
+	line-height: 35px;
+	font-weight: normal;
+	margin-bottom: 12px;
+	font-family: 'Open Sans', sans-serif; 	
+}
+
+.purchase .btn-buy {
+	text-align: center;
+}
+
+.purchase .btn-buy a {
+	margin-top: 27px;
+}
+
+.purchase .btn-buy a i {
+	margin-right: 5px;
+}
+
+@media (max-width: 992px) {
+	.purchase {
+		text-align: center;
+	}
+
+	.purchase span {
+		font-size: 22px;
+		line-height: 29px;
+	}
+
+	.purchase .btn-buy a {
+		margin-top: 25px;
+		font-size: 16px;
+	}
+}
+
+/*Service*/
+.service {
+	overflow: hidden; 
+	margin-bottom: 10px;
+	padding: 15px 15px 10px;
+}
+.service:hover {
+	background: #fcfcfc;
+	box-shadow: 0 0 5px #ddd;
+    -webkit-transition: box-shadow 0.2s ease-in-out;
+    -moz-transition: box-shadow 0.2s ease-in-out;
+    -o-transition: box-shadow 0.2s ease-in-out;
+    transition: box-shadow 0.2s ease-in-out;
+}
+.service:hover i {
+	color: #656565;
+}
+
+.service .desc {
+	padding: 0 15px; 
+	overflow: hidden;
+}
+.service .desc h4 {
+	font-size: 22px;
+	line-height: 25px;
+}
+
+.service .service-icon {
+	float: left;
+	padding: 10px;
+	color: #72c02c;
+	font-size: 35px;  
+	text-align: center;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+.service .service-icon.icon-cogs {
+	font-size: 37px;
+}
+.service .service-icon.icon-plane {
+	font-size: 43px;
+}
+
+/*Footer*/
+.footer {
+	color: #dadada;
+	background: #585f69;
+	padding: 20px 0 30px;
+}
+
+.footer.margin-top-0 {
+	margin-top: 0;
+}
+
+.footer p,
+.footer a {
+	font-size: 14px;
+} 
+.footer p {
+	color: #dadada;
+} 
+
+.footer a {
+	color: #72c02c;
+}
+.footer a:hover {
+	color: #a8f85f;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+.footer h2, 
+.footer h3,
+.footer h4 {
+	color: #e4e4e4;
+	background: none;
+	text-shadow: none;
+}
+
+/*Copyright*/
+.copyright {
+	font-size: 12px;
+	padding: 11px 0 7px;
+	background: #3e4753;
+	border-top: solid 1px #777;	
+}
+
+.copyright p {
+	color: #dadada;
+	margin-top: 12px;
+}
+
+.copyright a {
+	margin: 0 5px;
+	color: #72c02c;
+}
+.copyright a:hover {
+	color: #a8f85f;
+}
+
+.copyright a img {
+	margin-top: 5px;
+}
+
+/*Bootstrap Testimonials
+------------------------------------*/
+.testimonials-bs {
+  padding: 50px 0;
+  background: url(../img/bg/16.jpg) 50% 0 repeat fixed;  
+}
+
+.testimonials-bs .headline-center-v2 span.author {
+  color: #777;
+  font-size: 14px;
+}
+
+.fmf-spinner {
+    background: white;
+    color: black;
+    width: 220px;
+    height: 220px;
+    margin: 0 20px;
+    float: left;
+    border-radius: 10px;
+    position: relative;
+}

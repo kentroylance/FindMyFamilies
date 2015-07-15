@@ -1,0 +1,38 @@
+/* icons */
+[class^="fmf16-"],
+[class*=" fmf16-"] {
+  display: inline-block;
+  width: 17px;
+  height: 16px;
+  *margin-right: .3em;
+  line-height: 14px;
+  vertical-align: text-top;
+  background-image: url("/Content/images/csg-55746a6b19bfc.png");
+  background-position: 14px 14px;
+  background-repeat: no-repeat;
+}
+[class^="fmf16-"]:last-child,
+[class*=" fmf16-"]:last-child {
+  *margin-left: 0;
+}
+
+.fmf16-About{ background-position: 0 0;  } 
+.fmf16-Ancestry{ background-position: -21px 0;  } 
+.fmf16-BillionGraves{ background-position: -42px 0;  } 
+.fmf16-Clues{ background-position: -63px 0;  } 
+.fmf16-Dates{ background-position: -84px 0;  } 
+.fmf16-Duplicates{ background-position: -105px 0;  } 
+.fmf16-Family{ background-position: -126px 0;  } 
+.fmf16-FamilySearch{ background-position: -147px 0;  } 
+.fmf16-FindAGrave{ background-position: -168px 0;  } 
+.fmf16-FindMyFamilies{ background-position: -189px 0;  } 
+.fmf16-FindMyPast{ background-position: -210px 0;  } 
+.fmf16-Google{ background-position: -231px 0;  } 
+.fmf16-Help{ background-position: -252px 0;  } 
+.fmf16-Hint{ background-position: -273px 0;  } 
+.fmf16-Information{ background-position: -294px 0;  } 
+.fmf16-MyHeritage{ background-position: -315px 0;  } 
+.fmf16-Places{ background-position: -336px 0;  } 
+.fmf16-Puzilla{ background-position: -357px 0;  } 
+.fmf16-Retrieve{ background-position: -377px 0;  } 
+.fmf16-StartingPoint{ background-position: -398px 0;  } 

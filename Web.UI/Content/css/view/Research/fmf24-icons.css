@@ -1,0 +1,36 @@
+/* icons */
+[class^="fmf24-"],
+[class*=" fmf24-"] {
+  display: inline-block;
+  width: 25px;
+  height: 24px;
+  *margin-right: .3em;
+  line-height: 22px;
+  vertical-align: text-top;
+  background-image: url("/Content/images/csg-552694a785d33.png");
+  background-position: 22px 22px;
+  background-repeat: no-repeat;
+}
+[class^="fmf24-"]:last-child,
+[class*=" fmf24-"]:last-child {
+  *margin-left: 0;
+}
+
+/* icons code below */
+.fmf24-Clean{ background-position: 0 0;  } 
+.fmf24-Search{ background-position: -29px 0;  } 
+.fmf24-clue{ background-position: -58px 0;  } 
+.fmf24-compass{ background-position: -87px 0;  } 
+.fmf24-dates{ background-position: -116px 0;  } 
+.fmf24-duplicates{ background-position: -145px 0;  } 
+.fmf24-exclamation{ background-position: -174px 0;  } 
+.fmf24-execute{ background-position: -203px 0;  } 
+.fmf24-family{ background-position: -232px 0;  } 
+.fmf24-hint{ background-position: -261px 0;  } 
+.fmf24-place{ background-position: -290px 0;  } 
+.fmf24-question{ background-position: -319px 0;  } 
+.fmf24-report{ background-position: -348px 0;  } 
+.fmf24-reset{ background-position: -377px 0;  } 
+.fmf24-retrieve{ background-position: -406px 0;  } 
+.fmf24-temple{ background-position: -435px 0;  } 
+.fmf24-warning{ background-position: -464px 0;  } 

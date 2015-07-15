@@ -1,0 +1,54 @@
+﻿<div class="panel-body">
+
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="personUrlOptionsYearRange" class="col-sm-5 control-label">Year Range:</label>
+            <div class="col-sm-4">
+                <select class="form-control select2Digit" id="personUrlOptionsYearRange">
+                    <option>0</option>
+                    <option>1</option>
+                    <option selected>2</option>
+                    <option>5</option>
+                    <option>10</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="personUrlOptionsMaidenName" class="col-sm-5 control-label">&nbsp;</label>
+            <div class="col-sm-7">
+                <div class="input-group">
+                    <input id="personUrlOptionsMaidenName" type="checkbox" /><label for="personUrlOptionsMaidenName">&nbsp;<span style="font-weight: normal">Maiden Name</span></label>&nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="personUrlOptionsMiddleName" class="col-sm-5 control-label">&nbsp;</label>
+            <div class="col-sm-7">
+                <div class="input-group">
+                    <input id="personUrlOptionsMiddleName" type="checkbox" /><label for="personUrlOptionsMiddleName">&nbsp;<span style="font-weight: normal">Middle Name</span></label>&nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="personUrlOptionsPlace" class="col-sm-5 control-label">&nbsp;</label>
+            <div class="col-sm-7">
+                <div class="input-group">
+                    <input id="personUrlOptionsPlace" type="checkbox" /><label for="personUrlOptionsPlace">&nbsp;<span style="font-weight: normal">Place</span></label>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="personUrlOptionsSpinner" style="position: fixed; top: 50%; left: 50%"></div>
+
+<script type="text/javascript">
+    $(function () {
+        var scriptTag = document.createElement("script");
+        scriptTag.src = "/Views/Home/Research/ResearchFamily/PersonUrlOptions.js";
+        document.head.appendChild(scriptTag);
+    });
+</script>
+
+@*<script type="text/javascript" src="~/Views/Home/Research/ResearchFamily/PersonUrlOptions.js"></script>*@
+

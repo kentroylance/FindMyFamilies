@@ -1,0 +1,176 @@
+﻿@using System.Security.Policy
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Meta -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- findmyfamilies icon -->
+    <link rel="shortcut icon" href="~/findmyfamilies.ico">
+
+    <!-- CSS Global Compulsory -->
+    <link rel="stylesheet" type="text/css" href="@Url.StyleSheet("main.css")" />
+    @RenderSection("styles", required: false)
+    @RenderModuleConfig()
+    @*    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.17/require.min.js"></script>*@
+    <script type="text/javascript" src="@Url.Script("vendor/require.js")"></script>
+</head>
+
+
+<body class="boxed-layout container" id="homepage">
+    <div class="wrapper">
+        <!--=== Header ===-->
+        <div class="header">
+            <!-- Topbar -->
+            <div class="topbar">
+                <div class="container">
+                    <!-- Topbar Navigation -->
+                    <ul class="loginbar pull-right">
+                        <li id="loginInfo"><a href="#" id="displayPerson"></a></li>
+                        <li id="loginInfoDivider" class="topbar-devider"></li>
+                        <li>
+                        <li>
+                            <a>Help&nbsp;<b class="caret"></b></a>
+                            <ul class="languages">
+                                <li><a class="fancybox" data-fancybox-type="iframe" href="~/Content/person.pdf">Person</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="topbar-devider"></li>
+                        <li id="logout">@Html.ActionLink("Logout", "Logout", "Home")</li>
+                        <li id="login" class="hidden">@Html.ActionLink("Login", "Research", "Home")</li>
+                    </ul>
+                    <!-- End Topbar Navigation -->
+                </div>
+            </div>
+            <!-- End Topbar -->
+            <!-- Navbar -->
+            <div class="navbar navbar-default" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="fa fa-bars"></span>
+                        </button>
+                        <a class="navbar-brand" href="@Url.Action("Index", "Home")"><img src="@Url.Content("~/Images/findmyfamiliestop.png")" /></a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse navbar-responsive-collapse">
+                        <ul class="nav navbar-nav">
+
+                            <li>@Html.ActionLink("Research", "Research", "Home")</li>
+                            <!-- Search Block
+                                <li><a href="http://findmyfamilies.wordpress.com/">Blog</a></li>
+
+                                <li>@Html.ActionLink("FAQs", "Faqs", "Home")</li>
+
+                                <li>@Html.ActionLink("Contacts", "Contacts", "Home")</li>
+
+                                <li>@Html.ActionLink("About Us", "About", "Home")</li>
+
+                                 -->
+                            @*                            <li>@Html.ActionLink("Error Page", "Error", "Home")</li>*@
+                            <!-- Search Block
+                                <li>
+                                    <i class="search fa fa-search search-btn"></i>
+                                    <div class="search-open">
+                                        <div class="input-group animated fadeInDown">
+                                            <input type="text" class="form-control" placeholder="Search">
+                                            <span class="input-group-btn">
+                                                <button class="btn-u" type="button">Go</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </li>
+                                -->
+                            <!-- End Search Block -->
+                        </ul>
+                    </div><!--/navbar-collapse-->
+                </div>
+            </div>
+            <!-- End Navbar -->
+        </div>
+        <!--=== End Header ===-->
+        @RenderBody()
+
+        <!--=== Footer ===-->
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 md-margin-bottom-20">
+                        <!-- About -->
+                        <div class="headline"><h2>About</h2></div>
+                        <p class="margin-bottom-25 md-margin-bottom-40">The primary purpose of FindMyFamilies is to help you find missing families members, and help you find additional information to prepare names for temple ordinances.</p>
+                        <!-- End About -->
+                        @{ Html.RenderPartial("~/Views/Shared/EmailSubscribe.cshtml"); }
+                    </div><!--/col-md-4-->
+
+                    <div class="col-md-4 md-margin-bottom-40">
+                        <!-- Recent Testimonials -->
+                        <div class="posts">
+                            <div class="headline"><h2>Recent Testimonials</h2></div>
+                        </div>
+                        <!-- End Recent Testimonials -->
+                    </div><!--/col-md-4-->
+
+                    <div class="col-md-4">
+                        <!-- Contact Us -->
+                        <div class="headline"><h2>Contact Us</h2></div>
+                        <address class="md-margin-bottom-40">
+                            Kent Roylance <br />
+                            794 Shadow Wood Dr. <br />
+                            Murray, UT US <br />
+                            Phone:  385-743-3111<br />
+                            Email: <a href="mailto:findmyfamilies.com" class="">findmyfamilies.com</a>
+                        </address>
+                        <!-- End Contact Us -->
+                        <!-- Social Links -->
+                        <div class="headline"><h2>Stay Connected</h2></div>
+                        <ul class="social-icons">
+                            <li><a href="#" data-original-title="Feed" class="social_rss"></a></li>
+                            <li><a href="#" data-original-title="Facebook" class="social_facebook"></a></li>
+                            <li><a href="#" data-original-title="Twitter" class="social_twitter"></a></li>
+                            <li><a href="#" data-original-title="Goole Plus" class="social_googleplus"></a></li>
+                            <li><a href="#" data-original-title="Pinterest" class="social_pintrest"></a></li>
+                            <li><a href="#" data-original-title="Linkedin" class="social_linkedin"></a></li>
+                            <li><a href="#" data-original-title="Vimeo" class="social_vimeo"></a></li>
+                        </ul>
+                        <!-- End Social Links -->
+                    </div><!--/col-md-4-->
+                </div>
+            </div>
+        </div><!--/footer-->
+        <!--=== End Footer ===-->
+        <!--=== Copyright ===-->
+        <div class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>
+                            2014 &copy; FindMyFamilies.com. ALL Rights Reserved.
+                            <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="index.html">
+                            <img class="lazy pull-right" data-original="/Images/findmyfamiliesbottom.png" width="252" height="39">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="spinnerArea" />
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,54 @@
+﻿<div class="panel-body">
+
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="researchFamilyPersonId" class="col-sm-2 control-label">Name:</label>
+            <div class="col-sm-7">
+                <div class="input-group">
+                    <input id="researchFamilyPersonId" type="text" class="form-control" disabled>
+                    <span class="input-group-btn">
+                        <a href="#" id="researchFamilyFindPersonButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left">
+                            <i class="fmf24-Search" style="font-size:22px; vertical-align: middle;margin-top: -0.225em"></i> Find
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="researchFamilyYearRange" class="col-sm-2 control-label">Year Range:</label>
+            <div class="col-sm-10">
+                <select class="form-control select2Digit" id="researchFamilyYearRange">
+                    <option>0</option>
+                    <option>1</option>
+                    <option selected>2</option>
+                    <option>5</option>
+                    <option>10</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="researchFamilyMaidenName" class="col-sm-2 control-label">&nbsp;</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <input id="researchFamilyMaidenName" type="checkbox" /><label for="researchFamilyMaidenName">&nbsp;<span style="font-weight: normal">Maiden Name</span></label>&nbsp;&nbsp;
+                    <input id="researchFamilyMiddleName" type="checkbox" /><label for="researchFamilyMiddleName">&nbsp;<span style="font-weight: normal">Middle Name</span></label>&nbsp;&nbsp;
+                    <input id="researchFamilyPlace" type="checkbox" /><label for="researchFamilyPlace">&nbsp;<span style="font-weight: normal">Place</span></label>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="researchFamilySpinner" style="position: fixed; top: 50%; left: 50%"></div>
+
+<script type="text/javascript">
+    $(function () {
+        var scriptTag = document.createElement("script");
+        scriptTag.src = "Views/Home/Research/ResearchFamily/ResearchFamily.js";
+        document.head.appendChild(scriptTag);
+    });
+</script>
+
+
+@*<script type="text/javascript" src="~/Views/Home/Research/ResearchFamily/ResearchFamily.js"></script>*@
+

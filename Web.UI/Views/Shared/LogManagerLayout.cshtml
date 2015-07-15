@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/LogManager/site.css" rel="stylesheet" />
+    <link href="~/Content/LogManager/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/LogManager/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="~/Content/LogManager/logmanager.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="~/Scripts/modernizr.custom.33321.js"></script>
+</head>
+<body>
+    @RenderBody()
+    
+    <script type="text/javascript" src="~/Scripts/LogManager/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/LogManager/jquery-migrate-1.1.1.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/LogManager/knockout-2.2.1.js"></script>
+    <script type="text/javascript" src="~/Scripts/LogManager/knockout.mapping-latest.js"></script>
+    <script type="text/javascript" src="~/Scripts/LogManager/underscore-min.js"></script>
+    <script type="text/javascript" src="~/Scripts/LogManager/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/LogManager/utilities.js"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

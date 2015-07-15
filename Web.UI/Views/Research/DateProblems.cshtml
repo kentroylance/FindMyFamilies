@@ -1,0 +1,68 @@
+<div class="panel-body">                                                      
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="datesReportId" class="col-sm-2 control-label">Retrieved:</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <select class="form-control" id="datesReportId">
+                        <option value="0">Select</option>
+                    </select>
+                    <span class="input-group-btn">
+                        <a href="#" id="datesRetrieveButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fmf24-retrieve" style="font-size:22px; vertical-align: middle"></i> Retrieve</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="datesResearchType" class="col-sm-2 control-label">Research:</label>
+            <div class="col-sm-10">
+                <select class="form-control researchType" id="datesResearchType">
+                    <option>Ancestors</option>
+                    <option>Descendants</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="datesPersonId" class="col-sm-2 control-label">Name:</label>
+            <div class="col-sm-7">
+                <div class="input-group">
+                    <input id="datesPersonId" type="text" class="form-control" disabled>
+                    <span class="input-group-btn">
+                            <a href="#" id="datesFindPersonButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fmf24-Search" style =" font-size: 22px; vertical-align: middle; margin-top : -0.225em"></i> Find</a>
+	                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="datesGeneration" class="col-sm-2 control-label">Generations:</label>
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <div id="datesGenerationDiv"></div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Problem:</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <input id="datesEmpty" type="checkbox" style="vertical-align: middle; margin-top: 0.25em" /><label for="datesEmpty" style="vertical-align: middle; margin-top: 0.425em">&nbsp;&nbsp;<span style="font-weight: normal">Empty</span></label>&nbsp;&nbsp;
+                    <input id="datesInvalid" type="checkbox" style="vertical-align: middle; margin-top: 0.25em" /><label for="datesInvalid" style="vertical-align: middle; margin-top: 0.425em">&nbsp;&nbsp;<span style="font-weight: normal">Invalid</span></label>&nbsp;&nbsp;
+                    <input id="datesInvalidFormat" type="checkbox" style="vertical-align: middle; margin-top: 0.25em" /><label for="datesInvalidFormat" style="vertical-align: middle; margin-top: 0.425em">&nbsp;&nbsp;<span style="font-weight: normal">Invalid Format</span></label>&nbsp;&nbsp;
+                    <input id="datesIncomplete" type="checkbox" style="vertical-align: middle; margin-top: 0.25em" /><label for="datesIncomplete" style="vertical-align: middle; margin-top: 0.425em">&nbsp;&nbsp;<span style="font-weight: normal">Incomplete</span></label>&nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div id="datesSpinner" style="position: fixed; top: 50%; left: 50%"></div>
+
+<script type="text/javascript">
+    $(function () {
+        var scriptTag = document.createElement("script");
+        scriptTag.src = "/Views/Home/Research/DateProblems/DateProblems.js";
+        document.head.appendChild(scriptTag);
+    });
+</script>
+
+@*<script type="text/javascript" src="~/Views/Home/Research/DateProblems/DateProblems.js"></script>*@

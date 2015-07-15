@@ -1,0 +1,97 @@
+<style type="text/css">
+    /* Adjust feedback icon position */
+    #findPersonForm .form-control-feedback {
+        right: 15px;
+    }
+
+    #findPersonForm .selectContainer .form-control-feedback {
+        right: 25px;
+    }
+</style>
+<div class="panel-body">
+    <!-- Basic Form -->
+    <div class="panel panel-blue">
+        <div class="panel-body">
+            <form id="findPersonForm" role="form" method="post">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <label class="control-label">ID Number</label>
+                            <input type="text" class="form-control" name="personId" id="personId" />
+                        </div>
+                        <div class="col-xs-5">
+                            <label class="control-label">First Name</label>
+                            <input type="text" class="form-control" name="firstName" id="firstName" />
+                        </div>
+                        <div class="col-xs-5">
+                            <label class="control-label">Last Name</label>
+                            <input type="text" class="form-control" name="lastName" id="lastName" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-3 selectContainer">
+                            <label class="control-label">Gender</label>
+                            <select class="form-control" name="gender" id="gender">
+                                <option value="">Choose a gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-2">
+                            <label class="control-label">Birth Year</label>
+                            <div>
+                                <input type="text" class="form-control" name="birthYear" id="birthYear">
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <label class="control-label">Death Year</label>
+                            <div>
+                                <input type="text" class="form-control" name="deathYear" id="deathYear">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="twoButtons">
+                    <button name="findButton" type="submit" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-execute24"></i> Find</button>
+                    <a href="#" id="optionsButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-options24"></i> Options</a>
+                    <a href="#" id="previousButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-previous24"></i> Previous</a>
+                    <a href="#" id="clearButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-clean24"></i> Clear</a>
+                    <a href="#" id="findPersonCloseButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-close24"></i> Close</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div style="height: 235px">
+    <table id="eventsTable"
+           data-toggle="table"
+           data-height="275"
+           data-pagination="true"
+           data-search="false"
+           data-show-refresh="false"
+           data-show-toggle="false"
+           data-show-columns="false"
+           data-toolbar="#toolbar"
+           data-click-to-select="true"
+           data-single-select="true">
+        <thead>
+        <tr>
+            <th data-field="state" data-checkbox="true"></th>
+            <th data-field="name" data-formatter="nameFormatter" data-events="nameEvents">Name</th>
+            <th data-field="events" data-formatter="eventsFormatter">Events</th>
+            <th data-field="parents" data-formatter="parentsFormatter">Parents</th>
+            <th data-field="spouse" data-formatter="spouseFormatter">Spouse</th>
+        </tr>
+        @*            data-visible="false"*@
+        </thead>
+    </table>
+    <br/>
+</div>
+<div id="findPersonSpinner" />
+
+<script type="text/javascript" src="~/Content/js/vendor/bootstrap-table.min.js"></script>
+<script type="text/javascript">require(['main'], function (main) { require(['findPersonController']); });</script>

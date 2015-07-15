@@ -1,0 +1,148 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section styles {
+    <link rel="stylesheet" type="text/css" href="@Url.StyleSheet("research.css")" />
+}
+
+<!--=== Breadcrumbs v3 ===-->
+<div class="breadcrumbs-v3 margin-top-0">
+    <div class="container">
+        <h1 class="pull-left">Family History Research Tool</h1>
+    </div>
+</div>
+<!--=== End Breadcrumbs v3 ===-->
+
+<div class="panel panel-blue margin-top-0">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <i class="fa fa-tasks"></i> Utilities for Researching Family Names
+        </h3>
+    </div>
+    <div class="panel-body">
+        <form id="researchForm" name="researchForm" class="form-horizontal" role="form">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="promo-box">
+                        <a id="researchFamily" href="#">
+                            <span class="fa fmf-family64"></span>
+                            <strong>Research Family</strong>
+                        </a>
+                        <p>This utility provides useful links to popular family history web sites (Ancestry, FindAGrave, MyHeritage, etc.) for research</p>
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <div class="promo-box">
+                        <a id="startingPoint" href="#">
+                            <span class="fa fmf-compass64"></span>
+                            <strong>Starting Point</strong>
+                        </a>
+                        <p>This utility will help guide you in deciding the best ancestor to start researching</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="promo-box">
+                        <a id="findClues" href="#">
+                            <span class="fa fmf-clue64"></span>
+                            <strong>Find Clues</strong>
+                        </a>
+                        <p>This utility provides helpful clues to assist you in finding names that need additional research</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="promo-box">
+                        <a id="incompleteOrdinances" href="#">
+                            <span class="fa fmf-temple64"></span>
+                            <strong>Incomplete Ordinances</strong>
+                        </a>
+                        <p>This utility finds available ordinances that can be requested, along with other useful information to help with researching family names</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="promo-box">
+                        <a id="hints" href="#">
+                            <span class="fa fmf-hint64"></span>
+                            <strong>Hints</strong>
+                        </a>
+                        <p>This utility finds ancestors and descendants that have hints waiting to be attached as sources</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="promo-box">
+                        <a id="possibleDuplicates" href="#">
+                            <span class="fa fmf-duplicates64"></span>
+                            <strong>Possible Duplicates</strong>
+                        </a>
+                        <p>This utility searches for any ancestor or descendant that has possible duplicates or matches</p>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="promo-box">
+                        <a id="dateProblems" href="#">
+                            <span class="fa fmf-dates64"></span>
+                            <strong>Date Problems</strong>
+                        </a>
+                        <p>This utility searches for ancestors and descendants that have problems with birth, death, and marriage dates</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="promo-box">
+                        <a id="placeProblems" href="#">
+                            <span class="fa fmf-place64"></span>
+                            <strong>Place Problems</strong>
+                        </a>
+                        <p>This utility searches for ancestors and descendants that have problems with birth, death, and marriage places</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="promo-box">
+                        <a id="retrieve" href="#">
+                            <span class="fa fmf-retrieve64"></span>
+                            <strong>Retrieve Family Search Data</strong>
+                        </a>
+                        <p>This utility retrieves and stores family search data that can be used later for family history research</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="promo-box">
+                        <a id="refreshAndReset" href="#">
+                            <span class="fa fmf-reset64"></span>
+                            <strong>Reset</strong>
+                        </a>
+                        <p>Refresh web page and clear local storage</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div id="displayPersonForm"></div>
+
+@section Scripts {
+    <script type="text/javascript">require(['main'], function (main) { require(['researchController']); });</script>
+}
+

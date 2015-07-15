@@ -1,0 +1,45 @@
+﻿<link rel="stylesheet" href="~/Views/Home/Research/bootstrap-table.min.css">
+
+<div>
+    <table id="ordinancesTable"
+           data-toggle="table"
+           data-height="600"
+           data-pageSize="50"
+           data-pageList="[10, 25, 50, 100, 200]"
+           data-pagination="true"
+           data-search="true"
+           data-show-refresh="false"
+           data-show-toggle="true"
+           data-show-columns="true"
+           data-toolbar="#toolbar"
+           data-click-to-select="false"
+           data-single-select="false">
+        <thead>
+            <tr>
+                <th data-field="Name" data-formatter="nameFormatter">Name</th>
+                <th data-field="Baptism" data-formatter="ordinanceFormatter">Baptism</th>
+                <th data-field="Confirmation" data-formatter="ordinanceFormatter">Confirmation</th>
+                <th data-field="Initiatory" data-formatter="ordinanceFormatter">Initiatory</th>
+                <th data-field="Endowment" data-formatter="ordinanceFormatter">Endowment</th>
+                <th data-field="SealedToParent" data-formatter="ordinanceFormatter">Sealed To Parent</th>
+                <th data-field="SealedToSpouse" data-formatter="ordinanceFormatter">Sealed To Spouse</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<div id="incompleteOrdinancesSpinner" style="position: fixed; top: 50%; left: 50%"></div>
+
+<script type="text/javascript" src="~/Views/Home/Research/bootstrap-table.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        var scriptTag = document.createElement("script");
+        scriptTag.src = "/Views/Home/Research/IncompleteOrdinances/IncompleteOrdinancesReport.js";
+        document.head.appendChild(scriptTag);
+    });
+</script>
+
+
+@*<script type="text/javascript" src="~/Views/Home/Research/IncompleteOrdinances/IncompleteOrdinances.js"></script>*@
+
+

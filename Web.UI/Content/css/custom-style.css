@@ -1,0 +1,20 @@
+﻿body { height: 100% }
+
+.ui-dialog .ui-dialog-titlebar { background: #ededed }
+ 
+
+.ui-dialog-title {
+    font-size: 115%;
+    color: green;
+    background: #ededed;
+}
+
+.select1Digit { width: 85px !important; }
+
+.select2Digit { width: 95px !important; }
+
+.selectName { width: 430px !important; }
+
+.researchType { width: 180px !important; }
+
+.personAction { width: 120px !important; }

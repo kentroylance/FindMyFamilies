@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+
+<validations>
+	<validation name="NextIDBO" action="CreateNextID" dataObject="NextIDDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="NextIDBO" action="ReadNextID" dataObject="NextIDDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="NextIDBO" action="ReadNextIDsAll" dataObject="NextIDDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="NextIDBO" action="UpdateNextID" dataObject="NextIDDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="NextIDBO" action="DeleteNextID" dataObject="NextIDDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="NextIDBO" action="ReadNextIDsByPage" dataObject="NextIDDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="ReportBO" action="CreateReport" dataObject="ReportDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="ReportBO" action="ReadReport" dataObject="ReportDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="ReportBO" action="ReadReportsAll" dataObject="ReportDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="ReportBO" action="UpdateReport" dataObject="ReportDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="ReportBO" action="DeleteReport" dataObject="ReportDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="ReportBO" action="ReadReportsByPage" dataObject="ReportDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationBO" action="CreateTranslation" dataObject="TranslationDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationBO" action="ReadTranslation" dataObject="TranslationDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationBO" action="ReadTranslationsAll" dataObject="TranslationDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationBO" action="ReadTranslationsAllList" dataObject="TranslationDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationBO" action="UpdateTranslation" dataObject="TranslationDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationBO" action="DeleteTranslation" dataObject="TranslationDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationBO" action="ReadTranslationsByPage" dataObject="TranslationDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationDetailBO" action="CreateTranslationDetail" dataObject="TranslationDetailDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationDetailBO" action="ReadTranslationDetail" dataObject="TranslationDetailDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationDetailBO" action="ReadTranslationDetailsAll" dataObject="TranslationDetailDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationDetailBO" action="ReadTranslationDetailsAllList" dataObject="TranslationDetailDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationDetailBO" action="UpdateTranslationDetail" dataObject="TranslationDetailDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationDetailBO" action="DeleteTranslationDetail" dataObject="TranslationDetailDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationDetailBO" action="ReadTranslationDetailsByPage" dataObject="TranslationDetailDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationMasterBO" action="CreateTranslationMaster" dataObject="TranslationMasterDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationMasterBO" action="ReadTranslationMaster" dataObject="TranslationMasterDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationMasterBO" action="ReadTranslationMastersAll" dataObject="TranslationMasterDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationMasterBO" action="ReadTranslationMastersAllList" dataObject="TranslationMasterDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationMasterBO" action="UpdateTranslationMaster" dataObject="TranslationMasterDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationMasterBO" action="DeleteTranslationMaster" dataObject="TranslationMasterDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="TranslationMasterBO" action="ReadTranslationMastersByPage" dataObject="TranslationMasterDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="EmailBO" action="CreateEmail" dataObject="EmailDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="EmailBO" action="ReadEmail" dataObject="EmailDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="EmailBO" action="ReadEmailsAll" dataObject="EmailDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="EmailBO" action="ReadEmailsAllList" dataObject="EmailDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="EmailBO" action="UpdateEmail" dataObject="EmailDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="EmailBO" action="DeleteEmail" dataObject="EmailDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="EmailBO" action="ReadEmailsByPage" dataObject="EmailDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="AppSettingsBO" action="CreateAppSettings" dataObject="AppSettingsDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="AppSettingsBO" action="ReadAppSettings" dataObject="AppSettingsDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="AppSettingsBO" action="ReadAppSettingssAll" dataObject="AppSettingsDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="AppSettingsBO" action="ReadAppSettingssAllList" dataObject="AppSettingsDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="AppSettingsBO" action="UpdateAppSettings" dataObject="AppSettingsDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="AppSettingsBO" action="DeleteAppSettings" dataObject="AppSettingsDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="AppSettingsBO" action="ReadAppSettingssByPage" dataObject="AppSettingsDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="AddressBO" action="CreateAddress" dataObject="AddressDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="AddressBO" action="ReadAddress" dataObject="AddressDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="AddressBO" action="ReadAddresssAll" dataObject="AddressDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="AddressBO" action="UpdateAddress" dataObject="AddressDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="AddressBO" action="DeleteAddress" dataObject="AddressDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="AddressBO" action="ReadAddresssByPage" dataObject="AddressDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="MemberBO" action="CreateMember" dataObject="MemberDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="MemberBO" action="ReadMember" dataObject="MemberDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="MemberBO" action="ReadMembersAll" dataObject="MemberDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="MemberBO" action="UpdateMember" dataObject="MemberDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="MemberBO" action="DeleteMember" dataObject="MemberDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="MemberBO" action="ReadMembersByPage" dataObject="MemberDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="FindPersonOptionsBO" action="CreateFindPersonOptions" dataObject="FindPersonOptionsDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="FindPersonOptionsBO" action="ReadFindPersonOptions" dataObject="FindPersonOptionsDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="FindPersonOptionsBO" action="ReadFindPersonOptionssAll" dataObject="FindPersonOptionsDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="FindPersonOptionsBO" action="UpdateFindPersonOptions" dataObject="FindPersonOptionsDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="FindPersonOptionsBO" action="DeleteFindPersonOptions" dataObject="FindPersonOptionsDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+	<validation name="FindPersonOptionsBO" action="ReadFindPersonOptionssByPage" dataObject="FindPersonOptionsDO" authenticate="true" groups="" javaScriptFile="">
+		<lists>
+			<list name=""/>
+		</lists>
+	</validation>
+</validations>

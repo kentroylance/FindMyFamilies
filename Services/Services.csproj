@@ -1,0 +1,363 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6C4454BD-26BF-43AD-9732-9F1CE4B1CB87}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>FindMyFamiles.Services</RootNamespace>
+    <AssemblyName>FindMyFamiles.Services</AssemblyName>
+    <Description>Library for accessing a GEDCOM X-compliant API.</Description>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <DebugSymbols>true</DebugSymbols>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>..\packages\Protobuf\protobuf-net.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RestSharp, Version=104.3.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.104.3.3\lib\net4\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Tavis.UriTemplates, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Tavis.UriTemplates.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Base\AdminServicesBase.cs" />
+    <Compile Include="Base\MemberServicesBase.cs" />
+    <Compile Include="Base\PersonServicesBase.cs" />
+    <Compile Include="BusinessObject\AddressBO.cs" />
+    <Compile Include="BusinessObject\Base\AddressBOBase.cs" />
+    <Compile Include="BusinessObject\Base\BusinessObjectBase.cs" />
+    <Compile Include="BusinessObject\Base\EmailBOBase.cs" />
+    <Compile Include="BusinessObject\Base\FindPersonOptionsBOBase.cs" />
+    <Compile Include="BusinessObject\Base\MemberBOBase.cs" />
+    <Compile Include="BusinessObject\Base\NextIDBOBase.cs" />
+    <Compile Include="BusinessObject\Base\ReportBOBase.cs" />
+    <Compile Include="BusinessObject\Base\TranslationBOBase.cs" />
+    <Compile Include="BusinessObject\Base\TranslationDetailBOBase.cs" />
+    <Compile Include="BusinessObject\Base\TranslationMasterBOBase.cs" />
+    <Compile Include="BusinessObject\EmailBO.cs" />
+    <Compile Include="BusinessObject\FindPersonOptionsBO.cs" />
+    <Compile Include="BusinessObject\MemberBO.cs" />
+    <Compile Include="BusinessObject\NextIDBO.cs" />
+    <Compile Include="BusinessObject\ReportBO.cs" />
+    <Compile Include="BusinessObject\SecurityBO.cs" />
+    <Compile Include="BusinessObject\TranslationBO.cs" />
+    <Compile Include="BusinessObject\TranslationDetailBO.cs" />
+    <Compile Include="BusinessObject\TranslationMasterBO.cs" />
+    <Compile Include="DataAccess\AddressDAO.cs" />
+    <Compile Include="DataAccess\Base\AddressDAOBase.cs" />
+    <Compile Include="DataAccess\Base\DBConstantsBase.cs" />
+    <Compile Include="DataAccess\Base\EmailDAOBase.cs" />
+    <Compile Include="DataAccess\Base\FindPersonOptionsDAOBase.cs" />
+    <Compile Include="DataAccess\Base\MemberDAOBase.cs" />
+    <Compile Include="DataAccess\Base\NextIDDAOBase.cs" />
+    <Compile Include="DataAccess\Base\TranslationDAOBase.cs" />
+    <Compile Include="DataAccess\Base\TranslationDetailDAOBase.cs" />
+    <Compile Include="DataAccess\Configuration\ConfigManager.cs" />
+    <Compile Include="DataAccess\EmailDAO.cs" />
+    <Compile Include="DataAccess\Exceptions\InvalidContextStateException.cs" />
+    <Compile Include="DataAccess\Exceptions\TransactionContextException.cs" />
+    <Compile Include="DataAccess\FindPersonOptionsDAO.cs" />
+    <Compile Include="DataAccess\MemberDAO.cs" />
+    <Compile Include="DataAccess\NextIDDAO.cs" />
+    <Compile Include="DataAccess\ReportDAO.cs" />
+    <Compile Include="DataAccess\TransactionHandling\HomeGrownTransactionHandler.cs" />
+    <Compile Include="DataAccess\TransactionHandling\ITransactionHandler.cs" />
+    <Compile Include="DataAccess\TransactionHandling\SWCTransactionHandler.cs" />
+    <Compile Include="DataAccess\TransactionHandling\TransactionHandlerFactory.cs" />
+    <Compile Include="DataAccess\Transactions\NotSupportedTransactionContext.cs" />
+    <Compile Include="DataAccess\Transactions\RequiredTransactionContext.cs" />
+    <Compile Include="DataAccess\Transactions\RequiresNewTransactionContext.cs" />
+    <Compile Include="DataAccess\Transactions\SupportedTransactionContext.cs" />
+    <Compile Include="DataAccess\Transactions\TransactionAffinity.cs" />
+    <Compile Include="DataAccess\Transactions\TransactionContext.cs" />
+    <Compile Include="DataAccess\Transactions\TransactionContextFactory.cs" />
+    <Compile Include="DataAccess\Transactions\TransactionContextState.cs" />
+    <Compile Include="DataAccess\Transactions\TransactionIsolationLevel.cs" />
+    <Compile Include="DataAccess\Base\TranslationMasterDAOBase.cs" />
+    <Compile Include="DataAccess\CustomAdapter.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataAccess\Base\DataAccessObjectBase.cs" />
+    <Compile Include="DataAccess\DataCommand.cs" />
+    <Compile Include="DataAccess\DataOperationFactory.cs" />
+    <Compile Include="DataAccess\DataParameterCollection.cs" />
+    <Compile Include="DataAccess\DataProvider.cs" />
+    <Compile Include="DataAccess\DataProviderFactory.cs" />
+    <Compile Include="DataAccess\DataSession.cs" />
+    <Compile Include="DataAccess\DataSessionFactory.cs" />
+    <Compile Include="DataAccess\DataSetAdapter.cs" />
+    <Compile Include="DataAccess\DataSource.cs" />
+    <Compile Include="DataAccess\DataSourceFactory.cs" />
+    <Compile Include="DataAccess\DBConstants.cs" />
+    <Compile Include="DataAccess\DBConstantsBase.cs" />
+    <Compile Include="DataAccess\DBHelper.cs" />
+    <Compile Include="DataAccess\Base\ReportDAOBase.cs" />
+    <Compile Include="DataAccess\IDataCommand.cs" />
+    <Compile Include="DataAccess\IDataSetAdapter.cs" />
+    <Compile Include="DataAccess\IDataSource.cs" />
+    <Compile Include="DataAccess\TranslationDAO.cs" />
+    <Compile Include="DataAccess\TranslationDetailDAO.cs" />
+    <Compile Include="DataAccess\TranslationMasterDAO.cs" />
+    <Compile Include="Data\AddressDO.cs" />
+    <Compile Include="Data\Base\FindPersonOptionsDOBase.cs" />
+    <Compile Include="Data\FindPersonOptionsDO.cs" />
+    <Compile Include="Data\PlaceInputDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\PlaceListItemDO.cs" />
+    <Compile Include="Data\DateListItemDO.cs" />
+    <Compile Include="Data\AncestorListsDO.cs" />
+    <Compile Include="Data\DescendantsDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\AppSettingsDO.cs" />
+    <Compile Include="Data\Base\AddressDOBase.cs" />
+    <Compile Include="Data\Base\AppSettingsDOBase.cs" />
+    <Compile Include="Data\Base\EmailDOBase.cs" />
+    <Compile Include="Data\Base\ListsBase.cs" />
+    <Compile Include="Data\Base\MemberDOBase.cs" />
+    <Compile Include="Data\Base\MessageKeysBase.cs" />
+    <Compile Include="Data\Base\NextIDDOBase.cs" />
+    <Compile Include="Data\Base\ReportDOBase.cs" />
+    <Compile Include="Data\Base\ResearchedContentDOBase.cs" />
+    <Compile Include="Data\Base\TranslationDetailDOBase.cs" />
+    <Compile Include="Data\Base\TranslationDOBase.cs" />
+    <Compile Include="Data\Base\TranslationMasterDOBase.cs" />
+    <Compile Include="Data\AnalyzeFamilySearchDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\AncestorsDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\FindDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\FindCluesInputDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\AnalyzeListItemDO.cs" />
+    <Compile Include="Data\HintInputDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\HintListItemDO.cs" />
+    <Compile Include="Data\DateInputDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\PossibleDuplicateListItemDO.cs" />
+    <Compile Include="Data\RetrieveDO.cs" />
+    <Compile Include="Data\StartingPointDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\StartingPointListItemDO.cs" />
+    <Compile Include="Data\StartingPointInputDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\OrdinanceListItemDO.cs" />
+    <Compile Include="Data\HintDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\HintEntryDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\PossibleDuplicateEntryDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\PossibleDuplicateDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\OrdinanceDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\PossibleDuplicateInputDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\DateDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\PersonInfoDO.cs" />
+    <Compile Include="Data\ResearchDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\FindListItemDO.cs" />
+    <Compile Include="Data\SelectListItemDO.cs" />
+    <Compile Include="Data\ListItemsDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\EmailDO.cs" />
+    <Compile Include="Data\ProblemInfoDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\ResearchedContentDO.cs" />
+    <Compile Include="Data\RetrieveFamilySearchDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\PersonsDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\LoginDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\SummaryDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\DataTransferObject.cs" />
+    <Compile Include="Data\ListItemDO.cs" />
+    <Compile Include="Data\MemberDO.cs" />
+    <Compile Include="Data\MessageKeys.cs" />
+    <Compile Include="Data\NextIDDO.cs" />
+    <Compile Include="Data\PagingDO.cs" />
+    <Compile Include="Data\ReportDO.cs" />
+    <Compile Include="Data\IncompleteOrdinanceDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\SecurityDO.cs" />
+    <Compile Include="Data\TranslationDetailDO.cs" />
+    <Compile Include="Data\TranslationDO.cs" />
+    <Compile Include="Data\TranslationMasterDO.cs" />
+    <Compile Include="Data\ValidationDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="AuthenticationServices.cs" />
+    <Compile Include="AncestryServices.cs" />
+    <Compile Include="BusinessObject\AncestryBO.cs" />
+    <Compile Include="BusinessObject\AuthenticationBO.cs" />
+    <Compile Include="BusinessObject\FamilyBO.cs" />
+    <Compile Include="BusinessObject\PersonBO.cs" />
+    <Compile Include="DataAccess\AncestryDAO.cs" />
+    <Compile Include="DataAccess\AuthenticationDAO.cs" />
+    <Compile Include="DataAccess\PersonDAO.cs" />
+    <Compile Include="Exceptions\ApplicationException.cs" />
+    <Compile Include="Exceptions\BaseException.cs" />
+    <Compile Include="Exceptions\ConfigurationException.cs" />
+    <Compile Include="Exceptions\DataAccessException.cs" />
+    <Compile Include="Exceptions\ReflectionException.cs" />
+    <Compile Include="Exceptions\RequestException.cs" />
+    <Compile Include="Exceptions\ResourceException.cs" />
+    <Compile Include="Exceptions\SecurityException.cs" />
+    <Compile Include="Exceptions\ValidationException.cs" />
+    <Compile Include="Helper\AncestryHelper.cs" />
+    <Compile Include="Helper\RestHelper.cs" />
+    <Compile Include="Data\FamilyDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\FamilyTreeDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\PersonDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Data\SessionDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="AdminServices.cs" />
+    <Compile Include="MemberServices.cs" />
+    <Compile Include="PersonServices.cs" />
+    <Compile Include="ServiceManager.cs" />
+    <Compile Include="Tests\Minimods\Minimod.PrettyDateAndTime.Generated.cs" />
+    <Compile Include="Tests\Minimods\Minimod.PrettyPrint.Generated.cs" />
+    <Compile Include="Tests\Minimods\Minimod.PrettyText.Generated.cs" />
+    <Compile Include="Tests\Minimods\Minimod.PrettyTypeSignatures.Generated.cs" />
+    <Compile Include="Tests\UnitTest1.cs" />
+    <Compile Include="Util\CacheControl.cs" />
+    <Compile Include="Util\CacheManager.cs" />
+    <Compile Include="Util\ObjectDumper.cs" />
+    <Compile Include="Util\UtilityTest.cs" />
+    <Compile Include="Util\ListItemSort.cs" />
+    <Compile Include="Util\SerializerHelper.cs" />
+    <Compile Include="Util\FilePathHelper.cs" />
+    <Compile Include="Util\ObjectSerializer.cs" />
+    <Compile Include="Util\Constants.cs" />
+    <Compile Include="Util\DateHelper.cs" />
+    <Compile Include="Util\Dates.cs" />
+    <Compile Include="Util\Exceptions.cs" />
+    <Compile Include="Util\ILogger.cs" />
+    <Compile Include="Util\Log4netXmlLayout.cs" />
+    <Compile Include="Util\Logger.cs" />
+    <Compile Include="Util\MssqlAppender.cs" />
+    <Compile Include="Util\Resource.cs" />
+    <Compile Include="Util\SessionHelper.cs" />
+    <Compile Include="Util\Strings.cs" />
+    <Compile Include="Util\SystemInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="FindMyFamilies.DataAccess.dataSources.config" />
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SqlClient.CommandsBase.findmyfamilies.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Util\log4net.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\" />
+    <Folder Include="Resources\Resources\" />
+    <Folder Include="Resources\Server\" />
+    <Folder Include="Transactions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MessagesBase.findmyfamilies.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Validation.Server.Base.findmyfamilies.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gedcomx\Gedcomx.csproj">
+      <Project>{4629ba54-406e-4cd2-9dc6-cda2c5206eb7}</Project>
+      <Name>Gedcomx</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

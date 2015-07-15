@@ -1,0 +1,29 @@
+/* icons */
+[class^="fmf64-"],
+[class*=" fmf64-"] {
+  display: inline-block;
+  width: 65px;
+  height: 64px;
+  *margin-right: .3em;
+  line-height: 62px;
+  vertical-align: text-top;
+  background-image: url("/Content/images/csg-5526842e96b7d.png");
+  background-position: 62px 62px;
+  background-repeat: no-repeat;
+}
+[class^="fmf64-"]:last-child,
+[class*=" fmf64-"]:last-child {
+  *margin-left: 0;
+}
+
+/* icons code below */
+.fmf64-clue{ background-position: 0 0;  } 
+.fmf64-compass{ background-position: -69px 0;  } 
+.fmf64-dates{ background-position: -138px 0;  } 
+.fmf64-duplicates{ background-position: -207px 0;  } 
+.fmf64-family{ background-position: -276px 0;  } 
+.fmf64-hint{ background-position: -345px 0;  } 
+.fmf64-place{ background-position: -414px 0;  } 
+.fmf64-reset{ background-position: -483px 0;  } 
+.fmf64-retrieve{ background-position: -552px 0;  } 
+.fmf64-temple{ background-position: -621px 0;  } 

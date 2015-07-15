@@ -1,0 +1,57 @@
+<div class="panel-body">                                                      
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="placesReportId" class="col-sm-2 control-label">Retrieved:</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <select class="form-control" id="placesReportId">
+                        <option value="0">Select</option>
+                    </select>
+                    <span class="input-group-btn">
+                        <a href="#" id="placesRetrieveButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fmf24-retrieve" style="font-size:22px; vertical-align: middle"></i> Retrieve</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="placesResearchType" class="col-sm-2 control-label">Research:</label>
+            <div class="col-sm-10">
+                <select class="form-control researchType" id="placesResearchType">
+                    <option>Ancestors</option>
+                    <option>Descendants</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="placesPersonId" class="col-sm-2 control-label">Name:</label>
+            <div class="col-sm-7">
+                <div class="input-group">
+                    <input id="placesPersonId" type="text" class="form-control" disabled>
+                    <span class="input-group-btn">
+                            <a href="#" id="retrieveFindPersonButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fmf24-Search" style =" font-size: 22px; vertical-align: middle; margin-top : -0.225em"></i> Find</a>
+	                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="placesGeneration" class="col-sm-2 control-label">Generations:</label>
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <div id="placesGenerationDiv"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="placesSpinner" style="position: fixed; top: 50%; left: 50%"></div>
+
+<script type="text/javascript">
+    $(function () {
+        var scriptTag = document.createElement("script");
+        scriptTag.src = "/Scripts/view/PlaceProblems.js";
+        document.head.appendChild(scriptTag);
+    });
+</script>
+
+@*<script type="text/javascript" src="~/Scripts/view/PlaceProblems.js"></script>*@
