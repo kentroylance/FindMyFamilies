@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4629BA54-406E-4CD2-9DC6-CDA2C5206EB7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Gedcomx.Model</RootNamespace>
+    <AssemblyName>Gedcomx.Model</AssemblyName>
+    <Description>The basic GEDCOM X model.</Description>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <DebugSymbols>true</DebugSymbols>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Tavis.UriTemplates, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Tavis.UriTemplates.0.4\lib\Net35\Tavis.UriTemplates.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Model.Api\Name3.cs" />
+    <Compile Include="Model.Api\Qualification3.cs" />
+    <Compile Include="Model.Api\SealingToSpouse.cs" />
+    <Compile Include="Model.Api\Spouse.cs" />
+    <Compile Include="Model.Api\Name.cs" />
+    <Compile Include="Model.Api\Date2.cs" />
+    <Compile Include="Model.Api\Temple.cs" />
+    <Compile Include="Model.Api\Temple2.cs" />
+    <Compile Include="Model.Api\Qualification2.cs" />
+    <Compile Include="Model.Api\SealingToParent.cs" />
+    <Compile Include="Model.Api\Piece3.cs" />
+    <Compile Include="Model.Api\Parent.cs" />
+    <Compile Include="Model.Api\Name2.cs" />
+    <Compile Include="Model.Api\Piece2.cs" />
+    <Compile Include="Model.Api\Date3.cs" />
+    <Compile Include="Model.Api\Astro3.cs" />
+    <Compile Include="Model.Api\Astro2.cs" />
+    <Compile Include="Model.Api\Piece.cs" />
+    <Compile Include="Model.Api\Event.cs" />
+    <Compile Include="Model.Api\Place.cs" />
+    <Compile Include="Model.Api\Normalized.cs" />
+    <Compile Include="Model.Api\Date.cs" />
+    <Compile Include="Model.Api\Astro.cs" />
+    <Compile Include="Model.Api\Initiatory.cs" />
+    <Compile Include="Model.Api\Confirmation.cs" />
+    <Compile Include="Model.Api\Endowment.cs" />
+    <Compile Include="Model.Api\Person2.cs" />
+    <Compile Include="Model.Api\PersonOrdinance.cs" />
+    <Compile Include="Model.Api\UserNotification.cs" />
+    <Compile Include="Model.Api\UserNotifications.cs" />
+    <Compile Include="Model.Api\Baptism.cs" />
+    <Compile Include="Model.Api\Ordinance.cs" />
+    <Compile Include="Model.Api\Persons.cs" />
+    <Compile Include="Model.Api\Person.cs" />
+    <Compile Include="Model.Fs\ArtifactMetadata.cs" />
+    <Compile Include="Model.Fs\ArtifactType.cs" />
+    <Compile Include="Model.Fs\ChangeInfo.cs" />
+    <Compile Include="Model.Fs\ChangeObjectModifier.cs" />
+    <Compile Include="Model.Fs\ChangeObjectType.cs" />
+    <Compile Include="Model.Fs\ChangeOperation.cs" />
+    <Compile Include="Model.Fs\ChildAndParentsRelationship.cs" />
+    <Compile Include="Model.Fs\Comment.cs" />
+    <Compile Include="Model.Fs\Discussion.cs" />
+    <Compile Include="Model.Fs\DiscussionReference.cs" />
+    <Compile Include="Model.Fs\Error.cs" />
+    <Compile Include="Model.Fs\FamilySearchPlatform.cs" />
+    <Compile Include="Model.Fs\Feature.cs" />
+    <Compile Include="Model.Fs\HealthConfig.cs" />
+    <Compile Include="Model.Fs\MatchInfo.cs" />
+    <Compile Include="Model.Fs\MatchResolution.cs" />
+    <Compile Include="Model.Fs\MatchSystem.cs" />
+    <Compile Include="Model.Fs\Merge.cs" />
+    <Compile Include="Model.Fs\MergeAnalysis.cs" />
+    <Compile Include="Model.Fs\MergeConflict.cs" />
+    <Compile Include="Model.Fs\SpouseRelationship.cs" />
+    <Compile Include="Model.Fs\Tag.cs" />
+    <Compile Include="Model.Fs\User.cs" />
+    <Compile Include="Model.Pd\Content.cs" />
+    <Compile Include="Model.Pd\First.cs" />
+    <Compile Include="Model.Pd\Links3.cs" />
+    <Compile Include="Model.Pd\Next.cs" />
+    <Compile Include="Model.Pd\Identifiers.cs" />
+    <Compile Include="Model.Pd\Entry.cs" />
+    <Compile Include="Model.Pd\Hint.cs" />
+    <Compile Include="Model.Pd\Relationship.cs" />
+    <Compile Include="Model.Pd\Person22.cs" />
+    <Compile Include="Model.Pd\Person1.cs" />
+    <Compile Include="Model.Pd\Search.cs" />
+    <Compile Include="Model.Pd\Self.cs" />
+    <Compile Include="Model.Pd\SourceLinker.cs" />
+    <Compile Include="Model.Pd\RecordHints.cs" />
+    <Compile Include="Model.Pd\SourceDescription.cs" />
+    <Compile Include="Model.Pd\PossibleDuplicate.cs" />
+    <Compile Include="Model.Pd\Person3.cs" />
+    <Compile Include="Model.Pd\Merge.cs" />
+    <Compile Include="Model.Pd\NonMatches.cs" />
+    <Compile Include="Model.Pd\Links2.cs" />
+    <Compile Include="Model.Pd\MatchInfo.cs" />
+    <Compile Include="Model.Pd\SearchInfo.cs" />
+    <Compile Include="Model.Pd\Title.cs" />
+    <Compile Include="Model.Pd\Collection.cs" />
+    <Compile Include="Model.Pd\Links.cs" />
+    <Compile Include="Model.Pd\Gender.cs" />
+    <Compile Include="Model.Pd\NameForm.cs" />
+    <Compile Include="Model.Pd\Name.cs" />
+    <Compile Include="Model.Pd\Date.cs" />
+    <Compile Include="Model.Pd\Place.cs" />
+    <Compile Include="Model.Pd\Fact.cs" />
+    <Compile Include="Model.Pd\Display.cs" />
+    <Compile Include="Model.Pd\Person2.cs" />
+    <Compile Include="Model.Pd\Gedcomx.cs" />
+    <Compile Include="Model.Pd\Person.cs" />
+    <Compile Include="Model.Rs\Category.cs" />
+    <Compile Include="Model.Rs\CommonAttributes.cs" />
+    <Compile Include="Model.Rs\Content.cs" />
+    <Compile Include="Model.Rs\Entry.cs" />
+    <Compile Include="Model.Rs\ExtensibleElement.cs" />
+    <Compile Include="Model.Rs\Feed.cs" />
+    <Compile Include="Model.Rs\Generator.cs" />
+    <Compile Include="Model.Rs\Person.cs" />
+    <Compile Include="Model.Rs\ResultConfidence.cs" />
+    <Compile Include="Model\Address.cs" />
+    <Compile Include="Model\Agent.cs" />
+    <Compile Include="Model\Attribution.cs" />
+    <Compile Include="Model\CitationField.cs" />
+    <Compile Include="Model\Collection.cs" />
+    <Compile Include="Model\CollectionContent.cs" />
+    <Compile Include="Model\Conclusion.cs" />
+    <Compile Include="Model\ConfidenceLevel.cs" />
+    <Compile Include="Model.Api\Qualification.cs" />
+    <Compile Include="Model.Api\Reservation.cs" />
+    <Compile Include="Model\PersonPart.cs" />
+    <Compile Include="Model\GedcomxPerson.cs" />
+    <Compile Include="Model\Coverage.cs" />
+    <Compile Include="Model\DateInfo.cs" />
+    <Compile Include="Model\DisplayProperties.cs" />
+    <Compile Include="Model\Document.cs" />
+    <Compile Include="Model\DocumentType.cs" />
+    <Compile Include="Model\Event.cs" />
+    <Compile Include="Model\EventRole.cs" />
+    <Compile Include="Model\EventRoleType.cs" />
+    <Compile Include="Model\EventType.cs" />
+    <Compile Include="Model\EvidenceReference.cs" />
+    <Compile Include="Model\ExtensibleData.cs" />
+    <Compile Include="Model\Facet.cs" />
+    <Compile Include="Model\FacetType.cs" />
+    <Compile Include="Model\FacetValue.cs" />
+    <Compile Include="Model\Fact.cs" />
+    <Compile Include="Model\FactType.cs" />
+    <Compile Include="Model\Field.cs" />
+    <Compile Include="Model\FieldDescriptor.cs" />
+    <Compile Include="Model\FieldType.cs" />
+    <Compile Include="Model\FieldValue.cs" />
+    <Compile Include="Model\FieldValueType.cs" />
+    <Compile Include="Model\Gedcomx.cs" />
+    <Compile Include="Model\Gender.cs" />
+    <Compile Include="Model\GenderType.cs" />
+    <Compile Include="Model\HypermediaEnabledData.cs" />
+    <Compile Include="Model\Identifier.cs" />
+    <Compile Include="Model\IdentifierType.cs" />
+    <Compile Include="Model\Link.cs" />
+    <Compile Include="Model\Name.cs" />
+    <Compile Include="Model\NameForm.cs" />
+    <Compile Include="Model\Part.cs" />
+    <Compile Include="Model\NameType.cs" />
+    <Compile Include="Model\Note.cs" />
+    <Compile Include="Model\OnlineAccount.cs" />
+    <Compile Include="Model\PartType.cs" />
+    <Compile Include="Model\Person.cs" />
+    <Compile Include="Model\PlaceDescription.cs" />
+    <Compile Include="Model\PlaceReference.cs" />
+    <Compile Include="Model\Qualifier.cs" />
+    <Compile Include="Model\RecordDescriptor.cs" />
+    <Compile Include="Model\RecordSet.cs" />
+    <Compile Include="Model\Relationship.cs" />
+    <Compile Include="Model\RelationshipType.cs" />
+    <Compile Include="Model\ResourceReference.cs" />
+    <Compile Include="Model\ResourceType.cs" />
+    <Compile Include="Model\SourceCitation.cs" />
+    <Compile Include="Model\SourceDescription.cs" />
+    <Compile Include="Model\SourceReference.cs" />
+    <Compile Include="Model\Subject.cs" />
+    <Compile Include="Model\TextValue.cs" />
+    <Compile Include="Model\RecordType.cs" />
+    <Compile Include="Model\FieldValueDescriptor.cs" />
+    <Compile Include="Util\GedcomxIdDictionary.cs" />
+    <Compile Include="Util\GedcomxModelVisitorBase.cs" />
+    <Compile Include="Util\IGedcomxModelVisitor.cs" />
+    <Compile Include="Util\RecordHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
