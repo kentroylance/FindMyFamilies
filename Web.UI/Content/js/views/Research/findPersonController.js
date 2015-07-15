@@ -19,7 +19,6 @@ define(function(require) {
 //           
 //        });
 
-//        require("css!/Content/css/vendor/formValidation.min.css");
 //        var formValidation = require("formValidation");
 //        var bootstrapValidation = require("bootstrapValidation");
 
