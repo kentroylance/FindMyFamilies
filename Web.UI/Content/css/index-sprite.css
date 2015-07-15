@@ -9,93 +9,87 @@ Icon classes can be used entirely standalone. They are named after their origina
 <img class="icon-home" />
 ```
 */
-.fmf-Computer2 {
-  background-image: url(index.png);
-  background-position: -2080px -500px;
-  width: 595px;
-  height: 357px;
-}
 .fmf-bg2 {
   background-image: url(index.png);
-  background-position: -1600px 0px;
+  background-position: 0px -1500px;
   width: 1920px;
   height: 500px;
 }
 .fmf-bg5 {
   background-image: url(index.png);
-  background-position: 0px 0px;
+  background-position: -2300px 0px;
   width: 1600px;
   height: 1200px;
 }
+.fmf-computer2 {
+  background-image: url(index.png);
+  background-position: -1920px -1500px;
+  width: 595px;
+  height: 357px;
+}
 .fmf-facebook {
   background-image: url(index.png);
-  background-position: -2731px -539px;
+  background-position: -2300px -1239px;
   width: 28px;
   height: 66px;
 }
-.fmf-findmyfamilies_new1-4 {
-  background-image: url(index.png);
-  background-position: -1280px -1200px;
-  width: 380px;
-  height: 438px;
-}
 .fmf-findmyfamilies_new1 {
   background-image: url(index.png);
-  background-position: -1600px -500px;
+  background-position: 0px -2000px;
   width: 480px;
   height: 553px;
 }
 .fmf-findmyfamiliesbottom {
   background-image: url(index.png);
-  background-position: -2675px -500px;
+  background-position: -2300px -1200px;
   width: 252px;
   height: 39px;
 }
 .fmf-findmyfamiliestop {
   background-image: url(index.png);
-  background-position: -2927px -500px;
+  background-position: -2552px -1200px;
   width: 252px;
   height: 39px;
 }
 .fmf-googleplus {
   background-image: url(index.png);
-  background-position: -2675px -539px;
+  background-position: -2468px -1239px;
   width: 28px;
   height: 66px;
+}
+.fmf-img1 {
+  background-image: url(index.png);
+  background-position: 0px 0px;
+  width: 2300px;
+  height: 1500px;
 }
 .fmf-linkedin {
   background-image: url(index.png);
-  background-position: -2843px -539px;
+  background-position: -2356px -1239px;
   width: 28px;
   height: 66px;
 }
-.fmf-mbg {
-  background-image: url(index.png);
-  background-position: 0px -1200px;
-  width: 1280px;
-  height: 720px;
-}
 .fmf-pintrest {
   background-image: url(index.png);
-  background-position: -2759px -539px;
+  background-position: -2384px -1239px;
   width: 28px;
   height: 66px;
 }
 .fmf-rss {
   background-image: url(index.png);
-  background-position: -2787px -539px;
+  background-position: -2412px -1239px;
   width: 28px;
   height: 66px;
 }
 .fmf-twitter {
   background-image: url(index.png);
-  background-position: -2815px -539px;
+  background-position: -2440px -1239px;
   width: 28px;
   height: 66px;
 }
 .fmf-vimeo {
   background-image: url(index.png);
-  background-position: -2703px -539px;
+  background-position: -2328px -1239px;
   width: 28px;
   height: 66px;
 }

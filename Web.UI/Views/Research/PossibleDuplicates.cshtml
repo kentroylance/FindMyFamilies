@@ -8,7 +8,7 @@
                         <option value="0">Select</option>
                     </select>
                     <span class="input-group-btn">
-                        <a href="#" id="possibleDuplicatesRetrieveButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fmf24-retrieve" style="font-size:22px; vertical-align: middle"></i> Retrieve</a>
+                        <a href="#" id="possibleDuplicatesRetrieveButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fmf24-retrieve" style="font-size:22px; margin-top: -0.24em; margin-bottom: -.1em; vertical-align: middle"></i> Retrieve</a>
                     </span>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                 <div class="input-group">
                     <input id="possibleDuplicatesPersonId" type="text" class="form-control" disabled>
                     <span class="input-group-btn">
-                            <a href="#" id="possibleDuplicatesFindPersonButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fmf24-Search" style =" font-size: 22px; vertical-align: middle; margin-top : -0.225em"></i> Find</a>
+                            <a href="#" id="possibleDuplicatesFindPersonButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fmf24-Search" style =" font-size: 22px; vertical-align: middle; margin-top : -0.24em"></i> Find</a>
 	                    </span>
                 </div>
             </div>
@@ -45,8 +45,10 @@
         <div class="form-group">
             <label for="includePossibleDuplicates" class="col-sm-2 control-label">&nbsp;</label>
             <div class="col-sm-10">
-                <input id="includePossibleDuplicates" type="checkbox" /><label for="includePossibleDuplicates">&nbsp;<span style="font-weight: normal">Possible Duplicates</span></label>&nbsp;&nbsp;<br/>
-                <input id="includePossibleMatches" type="checkbox" /><label for="includePossibleMatches">&nbsp;<span style="font-weight: normal">Possible Matches</span></label>&nbsp;&nbsp;
+                <div id="checkBoxes">
+                          <input id="includePossibleDuplicates" type="checkbox" /><label for="includePossibleDuplicates" style="margin-bottom: 0px;">&nbsp;<span style="font-weight: normal">Possible Duplicates</span></label>&nbsp;&nbsp;<br />
+                          <input id="includePossibleMatches" type="checkbox" /><label for="includePossibleMatches" style="margin-bottom: 0px;">&nbsp;<span style="font-weight: normal">Possible Matches</span></label>&nbsp;&nbsp;
+                </div>
             </div>
         </div>
     </form>

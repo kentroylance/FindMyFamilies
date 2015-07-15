@@ -4,3 +4,4 @@
 
 /* Application stylesheets */
 @import url('../../Content/css/style.css');
+@import url('../../Content/css/lib/research/bootstrap-table.min.css');
