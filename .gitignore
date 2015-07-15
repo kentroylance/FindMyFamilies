@@ -5986,3 +5986,6 @@ Web.UI/bin/Data/ValidationDO.cs
 Web.UI/log.txt
 Web.Core/obj/Debug/build.force
 Web.UI/obj/Debug/build.force
+Gedcomx/bin/Debug/RestSharp.xml
+Web.UI/ErrorLogs/error-2015-07-15213506Z-5028523f-031b-449c-8bc5-2876cef20ff2.xml
+Web.UI/ErrorLogs/error-2015-07-15213506Z-55d2aad5-583c-4567-860b-4f41c37ac553.xml
