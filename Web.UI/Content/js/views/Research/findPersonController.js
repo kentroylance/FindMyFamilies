@@ -274,6 +274,15 @@ define(function(require) {
                             case 'fmf-urls':
                                 menuOptions += "<li><a onclick=\"researchController.personUrlOptions('" + row.id + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-family16\"></span> Family Research Urls</a></li>";
                                 break;
+                            case 'google':
+                                menuOptions += "<li><a href=\"" + constants.GOOGLE + row.firstName + getMiddleName(row.middleName, constants.GOOGLE) + "+" + getLastName(row.lastName) + "+" + getBirthYear(row.birthYear, constants.GOOGLE) + "+" + getDeathYear(row.deathYear, constants.GOOGLE) + "+" + getPlace(row.birthPlace, constants.GOOGLE) + "\" target=\" _tab\" ><span class=\"fa fmf-google16\"></span> Google</a></li>";
+                                break;
+                            case 'findmypast':
+                                menuOptions += "<li><a href=\"" + constants.FIND_MY_PAST + "firstname=" + row.firstName + getMiddleName(row.middleName, constants.FIND_MY_PAST) + "&lastname=" + getLastName(row.lastName) + getBirthYear(row.birthYear, constants.FIND_MY_PAST) + "\" target=\" _tab\" ><span class=\"fa fmf-FindMyPast16\"></span> Find My Past</a></li>";
+                                break;
+                            case 'myheritage':
+                                menuOptions += "<li><a href=\"" + constants.FIND_MY_PAST + "firstname=" + row.firstName + getMiddleName(row.middleName, constants.FIND_MY_PAST) + "&lastname=" + getLastName(row.lastName) + getBirthYear(row.birthYear, constants.FIND_MY_PAST) + "\" target=\" _tab\" ><span class=\"fa fmf-FindMyPast16\"></span> Find My Past</a></li>";
+                                break;
                             case 'ancestry':
                                 menuOptions += "<li><a href=\"" + constants.ANCESTRY + "&gsfn=" + row.firstName + getMiddleName(row.middleName, constants.ANCESTRY) + "&gsln=" + getLastName(row.lastName) + ((person.yearRange === 0) ? "&msbdy_x=1" : "&msbdy_x=1&msbdp=" + person.yearRange) + getBirthYear(row.birthYear, constants.ANCESTRY) + getPlace(row.birthPlace, constants.ANCESTRY) + getDeathYear(row.deathYear, constants.ANCESTRY) + ((person.yearRange === 0) ? "&msddy_x=1" : "&msddy_x=1&msddp=" + person.yearRange) + "&_83004003-n_xcl=" + ((row.gender === "Male") ? "f" : "m") + "&cp=0&catbucket=rstp&uidh=000\" target=\" _tab\" ><span class=\"fa fmf-ancestry16\"></span> Ancestry</a></li>";
                                 break;

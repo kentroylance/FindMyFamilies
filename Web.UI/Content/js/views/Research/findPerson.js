@@ -4,7 +4,7 @@
 //    var person = require('person');
 
     var _formName = "findPersonForm";
-    var _formTitleImage = "fmf-Search24";
+    var _formTitleImage = "fa fmf-search24";
     var _form = $("#findPersonForm");
     var _spinner = "findPersonSpinner";
     var _callerSpinner;

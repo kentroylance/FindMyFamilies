@@ -5,7 +5,7 @@
     var constants = require('constants');
 
     var _formName = "startingPointForm";
-    var _formTitleImage = "fmf24-compass";
+    var _formTitleImage = "fa fmf-compass24";
     var _form = $("#startingPointForm");
     var _previous;
     var _displayType = "start";
