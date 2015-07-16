@@ -99,6 +99,13 @@
     top: 16px !important;
 }
 
+.msg-icons {
+    font-size: 22px;
+    vertical-align: middle; 
+    margin-right: .25em;
+    margin-top: -0.225em;
+}
+
 /*Icons
 ------------------------------------*/
 /*Social Icons*/
@@ -239,6 +246,9 @@
     width: 24px;
     height: 24px;
     opacity: 1;
+}
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    float: none;
 }
 
 .ui-button {
