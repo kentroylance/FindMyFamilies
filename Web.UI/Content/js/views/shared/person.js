@@ -14,7 +14,7 @@
     var _includePlace = false;
     var _yearRange = constants.YEAR_RANGE;
     var _history = {};
-    var _findUrls = {};
+    var _findPersonOptions = {};
     var _selected = false;
     var _callerSpinner;
     var _reportId = constants.REPORT_ID;
@@ -22,7 +22,7 @@
     var _generationAncestors = constants.GENERATION;
     var _generationDescendants = "1";
 
-    function PersonDO(id, name, researchType, generation, includeMaidenName, includeMiddleName, includePlace, yearRange, history, findUrls, reportId, addChildren) {
+    function PersonDO(id, name, researchType, generation, includeMaidenName, includeMiddleName, includePlace, yearRange, history, findPersonOptions, reportId, addChildren) {
         this.id = id;
         this.name = name;
         this.researchType = researchType;
@@ -32,7 +32,7 @@
         this.includePlace = includePlace;
         this.yearRange = yearRange;
         this.history = history;
-        this.findUrls = findUrls;
+        this.findPersonOptions = findPersonOptions;
         this.reportId = reportId;
         this.addChildren = addChildren;
     }
@@ -48,7 +48,7 @@
 
     function save() {
         if (window.localStorage) {
-            var person = new PersonDO(_id, _name, _researchType, _generation, _includeMaidenName, _includeMiddleName, _includePlace, _yearRange, _history, _findUrls, _reportId, _addChildren);
+            var person = new PersonDO(_id, _name, _researchType, _generation, _includeMaidenName, _includeMiddleName, _includePlace, _yearRange, _history, _findPersonOptions, _reportId, _addChildren);
             localStorage.setItem(constants.PERSON, JSON.stringify(person));
         }
     }
@@ -127,7 +127,16 @@
             _includePlace = person.includePlace;
             _yearRange = person.yearRange;
             _history = person.history;
-            _findUrls = person.findUrls;
+            _findPersonOptions = person.findPersonOptions;
+
+            if (!_findPersonOptions) {
+                _findPersonOptions = [];
+                _findPersonOptions.push('fmf-urls');
+                _findPersonOptions.push('ancestry');
+                _findPersonOptions.push('findagrave');
+                _findPersonOptions.push('myheritage');
+                _findPersonOptions.push('amerancest');
+            }
 
             _reportId = startingPoint.reportId;
             if (!_reportId) {
@@ -168,7 +177,7 @@
         _includePlace = false;
         _yearRange = constants.YEAR_RANGE;
         _history = {};
-        _findUrls = {};
+        _findPersonOptions = {};
         _selected = false;
         _callerSpinner = "";
     }
@@ -250,11 +259,11 @@
         set yearRange(value) {
             _yearRange = value;
         },
-        get findUrls() {
-            return _findUrls;
+        get findPersonOptions() {
+            return _findPersonOptions;
         },
-        set findUrls(value) {
-            _findUrls = value;
+        set findPersonOptions(value) {
+            _findPersonOptions = value;
         },
         get history() {
             return _history;

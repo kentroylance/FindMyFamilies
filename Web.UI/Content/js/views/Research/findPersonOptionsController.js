@@ -14,6 +14,11 @@ define(function(require) {
 
     function loadEvents() {
 
+        $("#findPersonOptionSaveButton").unbind('click').bind('click', function (e) {
+            person.save();
+            findPersonOptions.form.dialog(constants.CLOSE);
+        });
+
         $("#findPersonOptionCloseButton").unbind('click').bind('click', function (e) {
             findPersonOptions.form.dialog(constants.CLOSE);
         });
@@ -61,11 +66,12 @@ define(function(require) {
             select5.append(optionhtml);
         });
 
-        select1.val('fmf-urls');
-        select2.val('ancestry');
-        select3.val('findagrave');
-        select4.val('myheritage');
-        select5.val('amerancest');
+        select1.val(Object.keys(findPersonHelper.findUrls)[0]);
+        select2.val(Object.keys(findPersonHelper.findUrls)[1]);
+        select3.val(Object.keys(findPersonHelper.findUrls)[2]);
+        select4.val(Object.keys(findPersonHelper.findUrls)[3]);
+        select5.val(Object.keys(findPersonHelper.findUrls)[4]);
+
 
     }
 
