@@ -149,7 +149,7 @@ define(function(require) {
             if (!messageText) {
                 messageText = message;
             }
-            messageText = "<i class=\"fa fmf-warning24 msg-icons\"></i>" + messageText;
+            messageText = "<i class=\"fa fmf-cancel24 msg-icons\"></i>" + messageText;
             try {
                 var $dialogContainer = $('#msgBox');
                 var $detachedChildren = $dialogContainer.children().detach();
