@@ -15,6 +15,11 @@ define(function(require) {
     function loadEvents() {
 
         $("#findPersonOptionSaveButton").unbind('click').bind('click', function (e) {
+            person.findPersonOptions[0] = $("#findPersonOptions1").val();
+            person.findPersonOptions[1] = $("#findPersonOptions2").val();
+            person.findPersonOptions[2] = $("#findPersonOptions3").val();
+            person.findPersonOptions[3] = $("#findPersonOptions4").val();
+            person.findPersonOptions[4] = $("#findPersonOptions5").val();
             person.save();
             findPersonOptions.form.dialog(constants.CLOSE);
         });
@@ -66,11 +71,11 @@ define(function(require) {
             select5.append(optionhtml);
         });
 
-        select1.val(Object.keys(findPersonHelper.findUrls)[0]);
-        select2.val(Object.keys(findPersonHelper.findUrls)[1]);
-        select3.val(Object.keys(findPersonHelper.findUrls)[2]);
-        select4.val(Object.keys(findPersonHelper.findUrls)[3]);
-        select5.val(Object.keys(findPersonHelper.findUrls)[4]);
+        select1.val(person.findPersonOptions[0]);
+        select2.val(person.findPersonOptions[1]);
+        select3.val(person.findPersonOptions[2]);
+        select4.val(person.findPersonOptions[3]);
+        select5.val(person.findPersonOptions[4]);
 
 
     }

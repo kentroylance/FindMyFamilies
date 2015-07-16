@@ -112,10 +112,12 @@
         set callerSpinner(value) {
             _callerSpinner = value;
         },
+        get findPersonOptionsController() {
+            return _findPersonOptionsController;
+        },
         set findPersonOptionsController(value) {
             _findPersonOptionsController = value;
         }
-
     };
 
     return findPerson;
