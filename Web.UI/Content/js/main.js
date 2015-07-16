@@ -35,6 +35,9 @@
             possibleDuplicates: 'views/research/possibleDuplicates',
             findPersonController: 'views/research/findPersonController',
             findPerson: 'views/research/findPerson',
+            findPersonOptionsController: 'views/research/findPersonOptionsController',
+            findPersonOptions: 'views/research/findPersonOptions',
+            findPersonHelper: 'views/research/findPersonHelper',
             person: 'views/shared/person',
             retrieve: 'views/research/retrieve',
             indexController: 'views/home/indexController'
@@ -53,6 +56,9 @@
             },
             findPerson: {
                 exports: 'findPerson'
+            },
+            findPersonOptions: {
+                exports: 'findPersonOptions'
             },
             formValidation: { deps: ['jquery'], exports: "FormValidation" },
             bootstrapTable: { deps: ["jquery", "bootstrap"] },
@@ -95,8 +101,16 @@
                 exports: 'possibleDuplicatesController'
             },
             findPersonController: {
-                deps: ['jquery', 'formValidation', 'bootstrapValidation', 'bootstrapTable', 'findPerson', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload', 'string'],
+                deps: ['jquery', 'formValidation', 'bootstrapValidation', 'bootstrapTable', 'findPerson', 'findPersonHelper', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload', 'string'],
                 exports: 'findPersonController'
+            },
+            findPersonOptionsController: {
+                deps: ['jquery', 'findPersonOptions', 'findPersonHelper', 'findPerson', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload', 'string'],
+                exports: 'findPersonOptionsController'
+            },
+            findPersonHelper: {
+                deps: ['jquery', 'system', 'user', 'constants', 'person', 'string'],
+                exports: 'findPersonHelper'
             },
             lazyload: ["jquery"],
             system: {

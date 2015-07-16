@@ -42,6 +42,11 @@ namespace FindMyFamilies.Web.Controllers {
         }
 
         [System.Web.Mvc.HttpGet]
+        public ActionResult FindPersonOptions() {
+            return PartialView("~/Views/Research/FindPersonOptions.cshtml");
+        }
+
+        [System.Web.Mvc.HttpGet]
         public ActionResult StartingPointReportHtml() {
             return PartialView("~/Views/Research/StartingPointReport.cshtml");
         }

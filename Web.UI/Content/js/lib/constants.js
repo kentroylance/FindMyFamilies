@@ -45,6 +45,7 @@
     var HINTS_URL = "/Home/Hints";
     var DISPLAY_PERSON_URL = "/Home/DisplayPerson";
     var FIND_PERSONS_URL = "/Home/FindPersons";
+    var FIND_PERSON_OPTIONS_URL = "/Home/FindPersonOptions";
 
     var FIND_A_GRAVE = "http://www.findagrave.com/cgi-bin/fg.cgi?page=gsr";
     var GOOGLE = "https://www.google.com/#q=";
@@ -173,8 +174,8 @@
         get FIND_PERSON_URL() {
             return FIND_PERSON_URL;
         },
-        get FIND_PERSONS_URL() {
-            return FIND_PERSONS_URL;
+        get FIND_PERSON_OPTIONS_URL() {
+            return FIND_PERSON_OPTIONS_URL;
         },
         get DISPLAY_PERSON_URL() {
             return DISPLAY_PERSON_URL;

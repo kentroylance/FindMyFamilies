@@ -397,7 +397,10 @@
     <Content Include="Content\js\vendor\spin.min.js" />
     <Content Include="Content\js\vendor\string.js" />
     <Content Include="Content\js\vendor\string.min.js" />
+    <Content Include="Content\js\views\Research\findPersonOptionsController.js" />
+    <Content Include="Content\js\views\Research\findPersonOptions.js" />
     <Content Include="Content\js\views\Research\findPerson.js" />
+    <Content Include="Content\js\views\Research\findPersonHelper.js" />
     <Content Include="Content\js\views\Research\findPersonController.js" />
     <Content Include="Content\js\views\Research\researchController.js" />
     <Content Include="Content\js\views\Research\possibleDupliates.js" />
@@ -457,7 +460,6 @@
     <Content Include="Content\js\views\Research\HintsReport.js" />
     <Content Include="Content\js\views\Research\IncompleteOrdinances.js" />
     <Content Include="Content\js\views\Research\IncompleteOrdinancesReport.js" />
-    <Content Include="Content\js\views\Research\person.js" />
     <Content Include="Content\js\views\Research\PersonUrlOptions.js" />
     <Content Include="Content\js\views\Research\PlaceProblems.js" />
     <Content Include="Content\js\views\Research\PlaceProblemsReport.js" />
@@ -1343,6 +1345,7 @@
     <Content Include="Views\Research\Retrieve.cshtml" />
     <Content Include="Views\Research\StartingPoint.cshtml" />
     <Content Include="Views\Research\StartingPointReport.cshtml" />
+    <Content Include="Views\Research\FindPersonOptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />

@@ -237,7 +237,7 @@
         user.name = getCookie(constants.USER_NAME);
     }
 
-    function openForm(form, image, spinnerTarget) {
+    function openForm(form, image, spinnerTarget, firstField) {
         form.parent().children(".ui-dialog-titlebar").prepend('<span style="float:left; margin-top: 1px; margin-right: .3em;" class="fa ' + image + '"></span>');
         form.dialog({ minHeight: 0 });
         form.dialog({ open: function() { $(this).parent().css("padding", "0px") } });
@@ -247,6 +247,9 @@
             initSpinner(spinnerTarget, true);
         } else {
             stopSpinner(true);
+        }
+        if (firstField) {
+            firstField.focus();
         }
     }
 
