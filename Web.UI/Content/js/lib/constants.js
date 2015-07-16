@@ -174,6 +174,9 @@
         get FIND_PERSON_URL() {
             return FIND_PERSON_URL;
         },
+        get FIND_PERSONS_URL() {
+            return FIND_PERSONS_URL;
+        },
         get FIND_PERSON_OPTIONS_URL() {
             return FIND_PERSON_OPTIONS_URL;
         },
