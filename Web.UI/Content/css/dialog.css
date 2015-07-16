@@ -15,6 +15,7 @@
    white-space: nowrap;
    display: inline-block;
    text-decoration: none;
+   outline: none;
 }
 .btn-u:hover {
   color: #fff;
@@ -87,6 +88,17 @@
     margin-top: -0.24em; 
     margin-bottom: -.1em;
 }
+
+.input-group-btn {
+    font-size: 14px;
+}
+
+.btn-msg-dialog {
+    width: 24px;
+    height: 24px;
+    top: 16px !important;
+}
+
 /*Icons
 ------------------------------------*/
 /*Social Icons*/
