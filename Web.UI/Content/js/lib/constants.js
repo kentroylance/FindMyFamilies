@@ -7,6 +7,7 @@
     var PERSON = "person";
     var FIND_PERSON = "findPerson";
     var STARTING_POINT_PREVIOUS = "startingPointPrevious";
+    var HINTS_PREVIOUS = "hintsPrevious";
     var POSSIBLE_DUPLICATES_PREVIOUS = "possibleDuplicatesPrevious";
     var CLOSE = "close";
     var DIALOG_CLOSE = "dialogclose";
@@ -26,6 +27,7 @@
 
     // Forms
     var STARTING_POINT = "startingPoint";
+    var HINTS = "hints";
     var POSSIBLE_DUPLICATES = "possibleDuplicates";
 
     // Urls
@@ -218,6 +220,12 @@
         },
         get FIND_MY_PAST() {
             return FIND_MY_PAST;
+        },
+        get HINTS_PREVIOUS() {
+            return HINTS_PREVIOUS;
+        },
+        get HINTS() {
+            return HINTS;
         },
         get AMERICAN_ANCESTOR() {
             return AMERICAN_ANCESTOR;

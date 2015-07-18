@@ -125,6 +125,9 @@ a.btn-u-lg {
 
 /*Main Styles
 ------------------------------------*/
+.ls-bar-timer {
+    top: 496px !important;
+}
 /*Purchase Block*/
 .purchase {
 	padding: 25px 0 30px;
@@ -735,4 +738,8 @@ h1 i, h2 i, h3 i, h4 i, h5 i, h6 i {
 	.header .navbar-toggle {
 		margin-right: 0;
 	}
+}
+
+.fmf-img-slide {
+    
 }

@@ -31,6 +31,8 @@
             research: 'views/research/research',
             startingPointController: 'views/research/startingPointController',
             startingPoint: 'views/research/startingPoint',
+            hintsController: 'views/research/hintsController',
+            hints: 'views/research/hints',
             possibleDuplicatesController: 'views/research/possibleDuplicatesController',
             possibleDuplicates: 'views/research/possibleDuplicates',
             findPersonController: 'views/research/findPersonController',
@@ -95,6 +97,10 @@
             startingPointController: {
                 deps: ['jquery', 'startingPoint', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
                 exports: 'startingPointController'
+            },
+            hintsController: {
+                deps: ['jquery', 'startingPoint', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                exports: 'hintsController'
             },
             possibleDuplicatesController: {
                 deps: ['jquery', 'startingPoint', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],

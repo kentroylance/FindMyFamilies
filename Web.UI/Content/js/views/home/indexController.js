@@ -18,7 +18,9 @@
                 pauseOnHover: false,
                 autoPlayVideos: false,
                 autoStart: false,
-                firstLayer: 2,
+                firstLayer: 1,
+                showBarTimer: true,
+                showCircleTimer: false,
                 skin: 'borderlesslight',
                 skinsPath: '/Content/LayerSlider/layerslider/skins/'
             });
