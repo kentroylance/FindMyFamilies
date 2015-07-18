@@ -25,8 +25,8 @@ define(function(require) {
                     var $dialogContainer = $("#findPersonOptionsForm");
                     var $detachedChildren = $dialogContainer.children().detach();
                     $("<div id=\"findPersonOptionsForm\"></div>").dialog({
-                        width: 450,
-                        title: "Find Person Options",
+                        width: 260,
+                        title: "Find Options",
                         open: function() {
                             $detachedChildren.appendTo($dialogContainer);
                         }
