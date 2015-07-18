@@ -1074,10 +1074,12 @@ namespace FindMyFamilies.BusinessObject {
         }
 
         private StartingPointListItemDO GetStartingPoints(PersonDO personDO, StartingPointInputDO startingPointInputDO, ref SessionDO session) {
-            StartingPointListItemDO startingPointListItemDO = new StartingPointListItemDO("", "");
+            StartingPointListItemDO startingPointListItemDO = new StartingPointListItemDO("", "", "", "");
 
             if (!personDO.Living) {
-                startingPointListItemDO.Name = personDO.Id + "~" + personDO.Fullname;
+                startingPointListItemDO.Id = personDO.Id;
+                startingPointListItemDO.Gender = personDO.Gender;
+                startingPointListItemDO.Fullname = personDO.Fullname;
                 startingPointListItemDO.Reasons = "";
                 if (startingPointInputDO.Born18101850 && ((personDO.BirthYear >= 1810) && (personDO.BirthYear <= 1850))) {
                     startingPointListItemDO.Reasons += "BornBetween1810and1850[" + personDO.BirthYear.ToString() + "]~";
@@ -1214,11 +1216,11 @@ namespace FindMyFamilies.BusinessObject {
             var startingPointListItems = new List<StartingPointListItemDO>();
 
             ResearchDO researchDO = new ResearchDO();
-            researchDO.PersonId = startingPointInputDO.PersonId;
+            researchDO.PersonId = startingPointInputDO.Id;
             researchDO.ResearchType = startingPointInputDO.ResearchType;
             researchDO.Generation = startingPointInputDO.Generation;
             researchDO.ReportId = startingPointInputDO.ReportId;
-            researchDO.PersonName = startingPointInputDO.PersonName;
+            researchDO.PersonName = startingPointInputDO.FullName;
 
             var ancestors = getPersons(ref researchDO, ref session);
 

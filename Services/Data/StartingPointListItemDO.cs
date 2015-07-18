@@ -6,11 +6,15 @@ namespace FindMyFamilies.Data {
         public StartingPointListItemDO() {
         } 
 
-        public StartingPointListItemDO(string name, string reasons) {
-            this.Name = name;
+        public StartingPointListItemDO(string id, string fullname, string gender, string reasons) {
+            this.Id = id;
+            this.Fullname = fullname;
+            this.Gender = gender;
             this.Reasons = reasons;
         } 
-		public string Name { get; set; }
+		public string Id { get; set; }
+		public string Gender { get; set; }
+		public string Fullname { get; set; }
 
         public String Reasons {
             get;

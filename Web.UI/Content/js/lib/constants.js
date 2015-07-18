@@ -26,6 +26,7 @@
 
     // Forms
     var STARTING_POINT = "startingPoint";
+    var STARTING_POINT_REPORT = "startingPointReport";
     var POSSIBLE_DUPLICATES = "possibleDuplicates";
 
     // Urls
@@ -33,6 +34,9 @@
     var STARTING_POINT_REPORT_HTML_URL = '/Home/StartingPointReportHtml';
     var KEEP_SESSION_ALIVE_URL = '/Home/KeepSessionAlive';
     var STARTING_POINT_URL = '/Home/StartingPoint';
+    var STARTING_POINT_REPORT_DATA_URL = '/Home/StartingPointReportData';
+    var STARTING_POINT_HTML = '/Home/StartingPointReportHtml';
+    var POSSIBLE_DUPLICATES_REPORT_HTML_URL = '/Home/PossibleDuplicatesReportHtml';
     var FIND_PERSON_URL = '/Home/FindPerson';
     var RETRIEVE_DATA_URL = '/Home/Retrieve';
     var DISPLAY_PERSON_URLS_URL = "/Home/DisplayPersonUrls";
@@ -122,6 +126,9 @@
         },
         get STARTING_POINT() {
             return STARTING_POINT;
+        },
+        get STARTING_POINT_REPORT() {
+            return STARTING_POINT_REPORT;
         },
         get STARTING_POINT_URL() {
             return STARTING_POINT_URL;
@@ -221,7 +228,16 @@
         },
         get AMERICAN_ANCESTOR() {
             return AMERICAN_ANCESTOR;
-        }
+        },
+        get STARTING_POINT_REPORT_DATA_URL() {
+            return STARTING_POINT_REPORT_DATA_URL;
+        },
+        get STARTING_POINT_HTML() {
+            return STARTING_POINT_HTML;
+        },
+        get POSSIBLE_DUPLICATES_REPORT_HTML_URL() {
+            return POSSIBLE_DUPLICATES_REPORT_HTML_URL;
+}
 
         
     }

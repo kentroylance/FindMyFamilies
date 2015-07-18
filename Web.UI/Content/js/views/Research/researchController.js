@@ -13,62 +13,12 @@ define(function(require) {
     var lazyRequire = require("lazyRequire");
     var requireOnce = lazyRequire.once();
     require("lazyload");
+    var researchHelper = require("researchHelper");
 
     // models
     var user = require("user");
     var person = require("person");
     var research = require("research");
-
-    function findPerson(e) {
-        var defer = $.Deferred();
-        e.preventDefault();
-        if (system.isAuthenticated()) {
-            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
-            requireOnce(["bootstrapTable", "formValidation", "bootstrapValidation", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css", "css!/Content/css/vendor/formValidation.min.css"], function () {
-//                require("css!/Content/css/vendor/formValidation.min.css");
-//                var formValidation = require("formValidation");
-//                var bootstrapValidation = require("bootstrapValidation");
-
-                //                requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css", "css!/Content/css/vendor/formValidation.min.css", "bootstrapTable", "formValidation", "bootstrapValidation"], function () {
-                }, function() {
-                    $.ajax({
-                        url: constants.FIND_PERSON_URL,
-                        success: function(data) {
-                            var $dialogContainer = $("#findPersonForm");
-                            var $detachedChildren = $dialogContainer.children().detach();
-                            $("<div id=\"findPersonForm\"></div>").dialog({
-                                    width: 1100,
-                                    title: "Find Person",
-                                    position: {
-                                        my: "center top",
-                                        at: ("center top+" + (window.innerHeight * .15)),
-                                        collision: "none"
-                                    },
-                                    open: function() {
-                                        $detachedChildren.appendTo($dialogContainer);
-                                        $(this).css("maxHeight", 700);
-                                    },
-                                    close: function(event, ui) {
-                                        event.preventDefault();
-                                        research.findPersonController.close();
-                                        $(this).dialog("destroy").remove();
-                                    }
-
-                                }
-                            );
-                            $("#findPersonForm").empty().append(data);
-                            if (research && research.findPersonController) {
-                                research.findPersonController.open();
-                            }
-                        }
-                    });
-                }
-            );
-        } else {
-            system.relogin();
-        }
-    }
-
 
     function retrieveData(e) {
         var defer = $.Deferred();
@@ -158,7 +108,7 @@ define(function(require) {
     function startingPoint() {
         if (system.isAuthenticated()) {
             system.initSpinner(constants.DEFAULT_SPINNER_AREA);
-            requireOnce(["jqueryUiOptions"], function () {
+            requireOnce(["jqueryUiOptions", "bootstrapTable", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
                 }, function () {
                     $.ajax({
                         url: constants.STARTING_POINT_URL,
@@ -489,88 +439,12 @@ define(function(require) {
     });
 
     $("#researchFamily").unbind("click").bind("click", function (e) {
-        person.callerSpinner = 
-        findPerson(e);
+        researchHelper.findPerson(e);
         return false;
     });
 
     $("#possibleDuplicates").unbind("click").bind("click", function(e) {
-        e.preventDefault();
-        if (system.isAuthenticated()) {
-            system.startSpinner(constants.DEFAULT_SPINNER_AREA);
-            $.ajax({
-                url: constants.POSSIBLE_DUPLICATES_URL,
-                success: function(data) {
-                    var $dialogContainer = $("#possibleDuplicatesForm");
-                    var $detachedChildren = $dialogContainer.children().detach();
-                    $("<div id=\"possibleDuplicatesForm\"></div>").dialog({
-                        width: 775,
-                        title: "PossibleDuplicates",
-                        open: function() {
-                            $detachedChildren.appendTo($dialogContainer);
-                        },
-                        buttons: {
-                            "0": {
-                                id: "submit",
-                                text: "Possible Duplicates",
-                                icons: { primary: "submitIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    PossibleDuplicates.submit();
-                                },
-
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-green"
-                            },
-                            "1": {
-                                id: "previous",
-                                text: "Previous",
-                                icons: { primary: "previousIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    PossibleDuplicates.displayPrevious();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "2": {
-                                id: "reset",
-                                text: "Reset",
-                                icons: { primary: "resetIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    PossibleDuplicates.reset();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "3": {
-                                id: "close",
-                                text: "Close",
-                                icons: { primary: "closeIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    $(this).dialog("close");
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "4": {
-                                id: "help",
-                                text: "Help",
-                                icons: { primary: "helpIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            }
-
-                        }
-
-                    });
-                    $("#possibleDuplicatesForm").empty().append(data);
-                }
-            });
-
-        } else {
-            system.relogin();
-        }
+        researchHelper.possibleDuplicates(e);
         return false;
     });
 

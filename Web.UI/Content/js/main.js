@@ -29,8 +29,10 @@
             system: 'lib/system',
             researchController: 'views/research/researchController',
             research: 'views/research/research',
-            startingPointController: 'views/research/startingPointController',
             startingPoint: 'views/research/startingPoint',
+            startingPointController: 'views/research/startingPointController',
+            startingPointReport: 'views/research/startingPointReport',
+            startingPointReportController: 'views/research/startingPointReportController',
             possibleDuplicatesController: 'views/research/possibleDuplicatesController',
             possibleDuplicates: 'views/research/possibleDuplicates',
             findPersonController: 'views/research/findPersonController',
@@ -38,6 +40,7 @@
             findPersonOptionsController: 'views/research/findPersonOptionsController',
             findPersonOptions: 'views/research/findPersonOptions',
             findPersonHelper: 'views/research/findPersonHelper',
+            researchHelper: 'views/research/researchHelper',
             person: 'views/shared/person',
             retrieve: 'views/research/retrieve',
             indexController: 'views/home/indexController'
@@ -56,6 +59,13 @@
             },
             findPerson: {
                 exports: 'findPerson'
+            },
+            possibleDuplicates: {
+                deps: ['jquery', 'person', 'constants'],
+                exports: 'possibleDuplicates'
+            },
+            startingPointReport: {
+                exports: 'startingPointReport'
             },
             findPersonOptions: {
                 exports: 'findPersonOptions'
@@ -88,16 +98,24 @@
                 deps: ['jquery', 'constants'],
                 exports: 'user'
             },
+            startingPoint: {
+                deps: ['jquery', 'person', 'constants'],
+                exports: 'startingPoint'
+            },
             researchController: {
-                deps: ['jquery', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload', 'research'],
+                deps: ['jquery', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload', 'research', 'researchHelper'],
                 exports: 'researchController'
             },
             startingPointController: {
-                deps: ['jquery', 'startingPoint', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'startingPoint', 'startingPointReport', 'research', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
                 exports: 'startingPointController'
             },
+            startingPointReportController: {
+                deps: ['jquery', 'startingPointReport', 'system', 'constants', 'person'],
+                exports: 'startingPointReportController'
+            },
             possibleDuplicatesController: {
-                deps: ['jquery', 'startingPoint', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'possibleDuplicates', 'research', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
                 exports: 'possibleDuplicatesController'
             },
             findPersonController: {
@@ -111,6 +129,10 @@
             findPersonHelper: {
                 deps: ['jquery', 'system', 'user', 'constants', 'person', 'string'],
                 exports: 'findPersonHelper'
+            },
+            researchHelper: {
+                deps: ['jquery', 'system', 'user', 'findPerson', 'research', 'constants', 'person', 'string'],
+                exports: 'researchHelper'
             },
             lazyload: ["jquery"],
             system: {

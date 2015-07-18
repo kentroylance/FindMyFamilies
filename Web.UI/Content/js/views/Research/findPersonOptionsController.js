@@ -93,7 +93,7 @@ define(function(require) {
         }
     };
 
-    findPerson.findPersonOptionsController = findPersonOptionsController;
+    findPersonHelper.findPersonOptionsController = findPersonOptionsController;
     open();
 
     return findPersonOptionsController;

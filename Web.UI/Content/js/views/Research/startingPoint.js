@@ -12,6 +12,7 @@
     var _generationAncestors = constants.GENERATION;
     var _generationDescendants = "1";
     var _spinner = "startingPointSpinner";
+    
 
     var _nonMormon = false;
     var _born18101850 = false;
@@ -82,12 +83,6 @@
         set previous(value) {
             _previous = value;
         },
-        get displayType() {
-            return _displayType;
-        },
-        set displayType(value) {
-            _displayType = value;
-        },
         get nonMormon() {
             return _nonMormon;
         },
@@ -124,6 +119,12 @@
         set duplicates(value) {
             _duplicates = value;
         },
+        get displayType() {
+            return _displayType;
+        },
+        set displayType(value) {
+            _displayType = value;
+        },        
         save: function() {
             save();
         },

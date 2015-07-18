@@ -5,10 +5,13 @@ define(function (require) {
     var msgBox = require('msgBox');
     var retrieve = require('retrieve');
     var constants = require('constants');
+    var researchHelper = require("researchHelper");
+
 
     // models
     var person = require('person');
     var startingPoint = require('startingPoint');
+    var startingPointReport = require('startingPointReport');
     var research = require('research');
 
     function updateForm() {
@@ -174,21 +177,22 @@ define(function (require) {
         });
 
         $("#startingPointFindPersonButton").unbind('click').bind('click', function (e) {
-// add method outside of researchController
-            findPerson(e, $(this)).then(function () {
-                        if (person.selected) {
-                            var changed = (person.id === $("#startingPointPersonId").val()) ? false : true;
-                            //               PersonInfo.updateFromFindPerson();
-                            //                startingPoint.id = FindPerson.id;
-                            //                startingPoint.personName = FindPerson.personName;
-                            startingPoint.save();
-                            person.loadPersons($("#startingPointPersonId"), true);
-                            if (changed) {
-                                person.resetReportId($("#startingPointReportId"));
-                                updateResearchData();
-                            }
-                        }
-                    });
+            researchHelper.findPerson(e, function (result) {
+                if (result) {
+                    var changed = (person.id === $("#startingPointPersonId").val()) ? false : true;
+                    //               PersonInfo.updateFromFindPerson();
+                    //                startingPoint.id = FindPerson.id;
+                    //                startingPoint.personName = FindPerson.personName;
+                    startingPoint.save();
+                    person.loadPersons($("#startingPointPersonId"), true);
+                    if (changed) {
+                        person.resetReportId($("#startingPointReportId"));
+                        updateResearchData();
+                    }
+                }
+                var findPerson = require('findPerson');
+                findPerson.reset();
+            });
             return false;
         });
 
@@ -274,8 +278,10 @@ define(function (require) {
 
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function (result) {
                     if (result) {
+                        system.initSpinner(startingPoint.spinner);
+                        startingPoint.callerSpinner = startingPoint.spinner;
                         $.ajax({
-                            url: constants.STARTING_POINT_REPORT_HTML_URL,
+                            url: constants.STARTING_POINT_HTML,
                             success: function (data) {
                                 var $dialogContainer = $('#startingPointReportForm');
                                 var $detachedChildren = $dialogContainer.children().detach();
@@ -290,49 +296,19 @@ define(function (require) {
                                     open: function () {
                                         $detachedChildren.appendTo($dialogContainer);
                                         $(this).css("maxHeight", 700);
-                                    },
-                                    close: function (event, ui) {
-                                        event.preventDefault();
-                                        if (person.reportId === constants.REPORT_ID) {
-                                            startingPoint.loadReports(true);
-                                        }
-                                        system.initSpinner('startingPointSpinner', true);
-                                        $(this).dialog('destroy').remove();
-                                    },
-                                    buttons: {
-                                        "0": {
-                                            id: 'save',
-                                            text: 'Save',
-                                            icons: { primary: "saveIcon" },
-                                            click: function (event) {
-                                                event.preventDefault();
-                                                startingPoint.savePrevious();
-                                                $(this).dialog("close");
-                                            },
-
-                                            "class": "btn-u btn-brd btn-brd-hover rounded btn-u-green"
-                                        },
-                                        "1": {
-                                            id: 'close',
-                                            text: 'Close',
-                                            icons: { primary: "closeIcon" },
-                                            click: function (event) {
-                                                event.preventDefault();
-                                                startingPoint.displayType = "start";
-                                                $(this).dialog("close");
-                                            },
-                                            "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                                        }
                                     }
                                 });
-                                startingPoint.displayType = "start";
-                                startingPoint.form.empty().append(data);
+                                startingPointReport.displayType = "start";
+                                startingPointReport.form.empty().append(data);
+                                if (research && research.startingPointReportController) {
+                                    research.startingPointReportController.open();
+                                }
                             }
                         });
                     }
                 });
             } else {
-                startingPoint.form.dialog("close");
+                startingPointReport.form.dialog("close");
                 relogin();
             }
             return false;

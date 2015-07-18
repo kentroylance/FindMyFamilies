@@ -187,8 +187,8 @@ define(function(require) {
         person.includePlace = true;
 
         menuOptions += "<ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"dLabel\" >";
-        $.each(_findUrls, function (key, value) {
-            switch (key) {
+        $.each(person.findPersonOptions, function (key, value) {
+            switch (value) {
             case 'fmf-urls':
                 menuOptions += "<li><a onclick=\"researchController.personUrlOptions('" + row.id + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-family16\"></span> Family Research Urls</a></li>";
                 break;
@@ -246,6 +246,7 @@ define(function(require) {
         get findUrls() {
             return _findUrls;
         }
+
     };
 
 

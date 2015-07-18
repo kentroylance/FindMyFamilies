@@ -18,6 +18,9 @@
         _count--;
         if (force || _count === 0) {
             //            _target.spin();
+            if (!_target) {
+                _target = document.getElementById(constants.DEFAULT_SPINNER_AREA);
+            }
             $('#' + _target.id).spin(false);
             _count = 0;
         } else if (_count < 0) {
@@ -29,6 +32,9 @@
         //    alert(_count + " " + _target.id);
         if (force || _count === 0) {
             //spinner = new Spinner(options).spin(_target);
+            if (!_target) {
+                _target = document.getElementById(constants.DEFAULT_SPINNER_AREA);
+            }
             $('#' + _target.id).spin();
             _count = 0;
         }

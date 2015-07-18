@@ -8,7 +8,7 @@
                         <option value="0">Select</option>
                     </select>
                     <span class="input-group-btn">
-                        <button id="possibleDuplicatesRetrieveButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fmf24-retrieve" style="font-size:22px; margin-top: -0.24em; margin-bottom: -.1em; vertical-align: middle"></i> Retrieve</button>
+                        <button id="possibleDuplicatesRetrieveButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-retrieve24 dialog-buttons btn-retrieve-find"></i> Retrieve</button>
                     </span>
                 </div>
             </div>
@@ -26,16 +26,16 @@
             <label for="possibleDuplicatesPersonId" class="col-sm-2 control-label">Name:</label>
             <div class="col-sm-7">
                 <div class="input-group">
-                    <input id="possibleDuplicatesPersonId" type="text" class="form-control" disabled>
+                    <select class="form-control" id="possibleDuplicatesPersonId"></select>
                     <span class="input-group-btn">
-                            <button id="possibleDuplicatesFindPersonButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fmf24-Search" style =" font-size: 22px; vertical-align: middle; margin-top : -0.24em"></i> Find</button>
-	                    </span>
+                        <button id="possibleDuplicatesFindPersonButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-search24 dialog-buttons btn-retrieve-find"></i> Find</button>
+                    </span>
                 </div>
             </div>
         </div>
 
         <div class="form-group">
-            <label for="possibleDuplicatesGeneration" class="col-sm-2 control-label">Generations:</label>
+            <label for="possibleDuplicatesGenerationDiv" class="col-sm-2 control-label">Generations:</label>
             <div class="col-sm-4">
                 <div class="input-group">
                     <div id="possibleDuplicatesGenerationDiv"></div>
@@ -51,17 +51,22 @@
                 </div>
             </div>
         </div>
+        <hr/>
+        <div class="row" >
+            <div class="text-center">
+                <button id="possibleDuplicatesSubmitButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-submit24 dialog-buttons"></i> Submit</button>
+                <button id="possibleDuplicatesPreviousButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-previous24 dialog-buttons"></i> Previous</button>
+                <button id="possibleDuplicatesResetButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-reset24 dialog-buttons"></i> Reset</button>
+                <button id="possibleDuplicatesHelpButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-help24 dialog-buttons"></i> Help</button>
+                <button id="possibleDuplicatesCloseButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-close24 dialog-buttons"></i> Close</button>
+            </div>
+        </div>
     </form>
 </div>
-<div id="possibleDuplicatesSpinner" style="position: fixed; top: 50%; left: 50%"></div>
+<div id="possibleDuplicatesSpinner"/>
+
+<script type="text/javascript">require(['main'], function (main) { require(['possibleDuplicatesController']); });</script>
 
 
-<script type="text/javascript">
-    $(function () {
-        var scriptTag = document.createElement("script");
-        scriptTag.src = "/Views/Home/Research/PossibleDuplicates/PossibleDuplicates.js";
-        document.head.appendChild(scriptTag);
-    });
-</script>
 
-@*<script type="text/javascript" src="~/Views/Home/Research/PossibleDuplicates/PossibleDuplicates.js"></script>*@
+

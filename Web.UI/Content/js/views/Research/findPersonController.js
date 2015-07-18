@@ -5,6 +5,7 @@ define(function(require) {
     var constants = require('constants');
     var string = require('string');
     var findPersonHelper = require('findPersonHelper');
+    var msgBox = require('msgBox');
 
     // models
     var findPerson = require('findPerson');
@@ -31,8 +32,8 @@ define(function(require) {
                         }
                     });
                     $("#findPersonOptionsForm").empty().append(data);
-                    if (findPerson && findPerson.findPersonOptionsController) {
-                        findPerson.findPersonOptionsController.open();
+                    if (research && research.findPersonOptionsController) {
+                        research.findPersonOptionsController.open();
                     }
                 }
             });
@@ -47,6 +48,12 @@ define(function(require) {
             $("#birthYear").val("");
             $("#deathYear").val("");
             $('#firstName').focus();
+            // Revalidate the fields
+            validateRow1(findPerson.form.data('formValidation'));
+            findPerson.form
+                .formValidation('revalidateField', 'gender')
+                .formValidation('revalidateField', 'birthYear')
+                .formValidation('revalidateField', 'deathYear');
         });
 
         $("#previousButton").unbind('click').bind('click', function(e) {
@@ -67,9 +74,33 @@ define(function(require) {
             $('#submit').focus();
         });
 
+        $("#findPersonSelectButton").unbind('click').bind('click', function (e) {
+            if (!person.selected) {
+                msgBox.message("You must first select a person by checking the checkbox before proceeding");
+                $('#eventsTable').focus();
+            } else {
+                findPerson.form.dialog(constants.CLOSE);
+            }
+        });
+
+        $("#findPersonCancelButton").unbind('click').bind('click', function (e) {
+            person.selected = false;
+            findPerson.form.dialog(constants.CLOSE);
+        });
 
         $("#findPersonCloseButton").unbind('click').bind('click', function(e) {
             findPerson.form.dialog(constants.CLOSE);
+        });
+
+        findPerson.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
+            system.initSpinner(findPerson.callerSpinner, true);
+            person.save();
+            if (findPerson.callback) {
+                if (typeof (findPerson.callback) === "function") {
+                    findPerson.callback(person.selected);
+                }
+            }
+            findPerson.reset();
         });
 
         window.nameEvents = {
@@ -265,14 +296,19 @@ define(function(require) {
     }
 
     function open() {
+        var currentSpinnerTarget = system.target.id;
         if (system.target) {
             findPerson.callerSpinner = system.target.id;
         }
-
         findPerson.form = $("#findPersonForm");
         loadEvents();
         system.openForm(findPerson.form, findPerson.formTitleImage, findPerson.spinner);
         $('#firstName').focus();
+        if (currentSpinnerTarget !== constants.DEFAULT_SPINNER_AREA) {
+            var findPersonButtons = document.getElementById("findPersonButtons");
+            findPersonButtons.style.display = 'block';
+        }
+
     }
 
     function submit() {
@@ -304,10 +340,6 @@ define(function(require) {
             $(this).dialog("close");
             system.relogin();
         }
-    }
-
-    function close() {
-        system.initSpinner(findPerson.callerSpinner, true);
     }
 
     function findPersonsStartingPoint() {

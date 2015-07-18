@@ -1,14 +1,14 @@
 ﻿define(function (require) {
 
     var constants = require('constants');
-//    var person = require('person');
+    var person = require('person');
 
     var _formName = "findPersonForm";
     var _formTitleImage = "fa fmf-search24";
     var _form = $("#findPersonForm");
     var _spinner = "findPersonSpinner";
     var _callerSpinner;
-    var _findPersonOptionsController;
+    var _callback;
 
     var _personId;
     var _firstName;
@@ -46,6 +46,11 @@
             }
 
         }
+    }
+
+    function reset() {
+        person.selected = false;
+        _callback = null;
     }
 
     function clear() {
@@ -103,6 +108,9 @@
         clear: function () {
             clear();
         },
+        reset: function () {
+            reset();
+        },
         save: function () {
             save();
         },
@@ -112,11 +120,11 @@
         set callerSpinner(value) {
             _callerSpinner = value;
         },
-        get findPersonOptionsController() {
-            return _findPersonOptionsController;
+        get callback() {
+            return _callback;
         },
-        set findPersonOptionsController(value) {
-            _findPersonOptionsController = value;
+        set callback(value) {
+            _callback = value;
         }
     };
 

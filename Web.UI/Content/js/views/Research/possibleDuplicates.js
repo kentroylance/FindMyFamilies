@@ -8,7 +8,6 @@
     var _formTitleImage = "fmf-duplicates24";
     var _form = $("#possibleDuplicatesForm");
     var _previous;
-    var _displayType = "start";
     var _generationAncestors = constants.GENERATION;
     var _generationDescendants = "1";
     var _spinner = "possibleDuplicatesSpinner";
@@ -35,10 +34,10 @@
             possibleDuplicatesDO = new PossibleDuplicatesDO();
         }
         if (!possibleDuplicatesDO.researchType) {
-            possibleDuplicates.includePossibleDuplicates = true;
+            _includePossibleDuplicates = true;
         }
-        _includePossibleDuplicates = possibleDuplicates.includePossibleDuplicates;
-        _includePossibleMatches = possibleDuplicates.includePossibleMatches;
+        _includePossibleDuplicates = possibleDuplicatesDO.includePossibleDuplicates;
+        _includePossibleMatches = possibleDuplicatesDO.includePossibleMatches;
     }
 
     var possibleDuplicates = {

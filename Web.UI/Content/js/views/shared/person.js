@@ -333,6 +333,9 @@
         },
         reset: function () {
             reset();
+        },
+        resetReportId: function (reportId) {
+            resetReportId(reportId);
         }
     };
 

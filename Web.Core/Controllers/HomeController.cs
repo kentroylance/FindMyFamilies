@@ -54,7 +54,7 @@ namespace FindMyFamilies.Web.Controllers {
         [System.Web.Mvc.HttpGet]
         public JsonResult StartingPointReportData(StartingPointInputDO startingPoint) {
             List<StartingPointListItemDO> startingPoints = new List<StartingPointListItemDO>();
-            if (Request.IsAjaxRequest() && (startingPoint != null) && (startingPoint.PersonId != null)) {
+            if (Request.IsAjaxRequest() && (startingPoint != null) && (startingPoint.Id != null)) {
                 session = GetSession();
                 startingPoints = Service.GetStartingPoints(startingPoint, ref session);
                 checkAuthentication();
