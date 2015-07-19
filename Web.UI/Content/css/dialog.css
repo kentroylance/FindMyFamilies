@@ -78,7 +78,9 @@
     border-bottom-left-radius: 0px;
     border-top-left-radius: 0px;
 }
-
+.ui-dialog .ui-dialog-title {
+    width: 87% !important;
+}
 .dialog-buttons {
    font-size: 22px; 
    vertical-align: middle 
@@ -106,6 +108,10 @@
     margin-top: -0.225em;
 }
 
+hr {
+    margin-top: 14.33px;
+    margin-bottom: 14.33px;
+}
 /*Icons
 ------------------------------------*/
 /*Social Icons*/
