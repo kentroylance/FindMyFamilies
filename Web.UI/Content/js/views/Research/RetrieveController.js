@@ -2,7 +2,7 @@
 
     var $ = require("jquery");
     var system = require("system");
-    var msgbox = require("msgBox");
+    var msgBox = require("msgBox");
     var constants = require("constants");
     var researchHelper = require("researchHelper");
 
@@ -28,8 +28,8 @@
         }
     }
 
-    function submit() {
-        if (isAuthenticated()) {
+    function retrieveFamilySearchData() {
+        if (system.isAuthenticated()) {
             if (person.id) {
                 person.save();
             } else {
@@ -38,6 +38,8 @@
 
             msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine. ", "Question", function(result) {
                 if (result) {
+                    system.initSpinner(startingPoint.spinner);
+                    retrieve.callerSpinner = retrieve.spinner;
                     $.ajax({
                         url: constants.RETRIEVE_DATA_URL,
                         data: { "personId": person.id, "name": person.name, "generation": person.generation, "researchType": person.researchType, "title": retrieve.title, "addChildren": person.addChildren },
@@ -77,7 +79,7 @@
                 }
             });
         } else {
-            retrieve.dialog("close");
+            retrieve.form.dialog("close");
             relogin();
         }
         return false;
@@ -182,27 +184,15 @@
             debugger;
         });
 
-        $("#retrieveReportId").change(function(e) {
-            var reportText = $("#retrieveReportId").text();
-            if (reportText && reportText.length > 8) {
-                var nameIndex = reportText.indexOf("Name: ") + 6;
-                var dateIndex = reportText.indexOf(", Date:  ");
-                var researchTypeIndex = reportText.indexOf(", Research Type: ");
-                var generationoIndex = reportText.indexOf(",  Generations: ");
-                person.id = reportText.substring(nameIndex, nameIndex + 8);
-                person.name = reportText.substring(nameIndex + 11, dateIndex);
-                person.researchType = reportText.substring(researchTypeIndex + 17, generationoIndex);
-                person.generation = reportText.substring(generationoIndex + 16, generationoIndex + 17);
-                person.ReportId = $("#retrieveReportId").val();
-                retrieve.updateForm();
-            }
-
-        });
-
         $("#retrieveTitle").change(function(e) {
             retrieve.title = $("#retrieveTitle").val();
         });
 
+        $('#retrievePersonId').change(function (e) {
+            person.id = $('option:selected', $(this)).val();
+            person.name = $('option:selected', $(this)).text();
+            updateResearchData();
+        });
 
         $('#retrieveResearchType').change(function(e) {
             person.researchType = $("#retrieveResearchType").val();
@@ -238,6 +228,11 @@
             return false;
         });
 
+        $("#retrieveButton").unbind('click').bind('click', function (e) {
+            retrieveFamilySearchData();
+            return false;
+        });
+
         $("#addChildren").change(function(e) {
             person.addChildren = $("#addChildren").prop("checked");
             if (person.addChildren) {
@@ -247,6 +242,11 @@
             updateResearchData();
         });
         $("#retrieveHelpButton").unbind('click').bind('click', function(e) {
+        });
+
+        $("#retrieveHelpReset").unbind('click').bind('click', function (e) {
+            person.reset();
+            updateResearchData();
         });
 
         $("#retrieveCloseButton").unbind('click').bind('click', function(e) {

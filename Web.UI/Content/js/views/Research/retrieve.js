@@ -42,9 +42,6 @@
                         $.each(data, function (i) {
                             if (data[i].ValueMember === person.reportId) {
                                 found = true;
-                            } else if ((person.reportId === constants.REPORT_ID) && (i === 0)) {
-                                person.reportId = data[i].ValueMember;
-                                found = true;
                             }
                             optionhtml = '<option value="' + data[i].ValueMember + '">' + data[i].DisplayMember + '</option>';
                             reportId.append(optionhtml);
@@ -86,9 +83,6 @@
                 var found = false;
                 $.each(data, function (i) {
                     if (data[i].ValueMember === person.reportId) {
-                        found = true;
-                    } else if ((person.reportId === constants.REPORT_ID) && (i === 0)) {
-                        person.reportId = data[i].ValueMember;
                         found = true;
                     }
                     optionhtml = '<option value="' + data[i].ValueMember + '">' + data[i].DisplayMember + '</option>';

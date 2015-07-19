@@ -107,7 +107,7 @@ define(function(require) {
     function updateResearchData() {
         $("#startingPointReportId").val(person.reportId);
         var reportText = $("#startingPointReportId option:selected").text();
-        if (reportText && reportText.length > 8) {
+        if (reportText && reportText.length > 8 && reportText !== "Select") {
             var nameIndex = reportText.indexOf("Name: ") + 6;
             var dateIndex = reportText.indexOf(", Date:  ");
             var researchTypeIndex = reportText.indexOf(", Research Type: ");
@@ -116,6 +116,7 @@ define(function(require) {
             person.name = reportText.substring(nameIndex + 11, dateIndex);
             person.researchType = reportText.substring(researchTypeIndex + 17, generationoIndex);
             person.generation = reportText.substring(generationoIndex + 16, generationoIndex + 17);
+            person.loadPersons($("#startingPointPersonId"));
             //                person.reportId = $("#startingPointReportId option:selected").val();
         }
         if (person.researchType === constants.DESCENDANTS) {
@@ -144,7 +145,7 @@ define(function(require) {
         startingPoint.form = $("#startingPointForm");
         loadEvents();
         loadReports();
-        person.loadPersons($("#startingPointPersonId"), false);
+        person.loadPersons($("#startingPointPersonId"));
         updateForm();
         system.openForm(startingPoint.form, startingPoint.formTitleImage, startingPoint.spinner);
     }
@@ -155,6 +156,12 @@ define(function(require) {
 
     function reset() {
         person.reset();
+        updateResearchData();
+    }
+
+    function resetReportId() {
+        person.resetReportId($("#startingPointReportId"));
+        updateResearchData();
     }
 
     function loadEvents() {
@@ -173,6 +180,7 @@ define(function(require) {
         $('#startingPointPersonId').change(function(e) {
             person.id = $('option:selected', $(this)).val();
             person.name = $('option:selected', $(this)).text();
+            resetReportId();
         });
 
         $('#startingPointResearchType').change(function(e) {
@@ -188,8 +196,7 @@ define(function(require) {
             }
 
             setHiddenFields();
-            person.resetReportId($("#startingPointReportId"));
-            updateResearchData();
+            resetReportId();
         });
 
         $("#startingPointFindPersonButton").unbind('click').bind('click', function(e) {
@@ -197,10 +204,9 @@ define(function(require) {
                 if (result) {
                     var changed = (person.id === $("#startingPointPersonId").val()) ? false : true;
                     startingPoint.save();
-                    person.loadPersons($("#startingPointPersonId"), true);
+                    person.loadPersons($("#startingPointPersonId"));
                     if (changed) {
-                        person.resetReportId($("#startingPointReportId"));
-                        updateResearchData();
+                        resetReportId();
                     }
                 }
                 var findPerson = require('findPerson');
@@ -214,10 +220,9 @@ define(function(require) {
                 if (result) {
                     var changed = (person.id === $("#startingPointPersonId").val()) ? false : true;
                     startingPoint.save();
-                    person.loadPersons($("#startingPointPersonId"), true);
+                    person.loadPersons($("#startingPointPersonId"));
                     if (changed) {
-                        person.resetReportId($("#startingPointReportId"));
-                        updateResearchData();
+                        resetReportId();
                     }
                 }
                 var retrieve = require('retrieve');
