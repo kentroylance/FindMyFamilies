@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Net;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading;
 using FindMyFamilies.Data;
@@ -378,37 +379,7 @@ namespace FindMyFamilies.DataAccess {
                         }
                         if (persons.ContainsKey(findListItemDO.id)) {
                             PersonDO findPersonDO = persons[findListItemDO.id];
-                            findListItemDO.fullName = findPersonDO.Fullname;
-                            findListItemDO.firstName = findPersonDO.Firstname;
-                            findListItemDO.middleName = findPersonDO.Middlename;
-                            findListItemDO.lastName = findPersonDO.Lastname;
-                            DateTime? birthDate = Dates.GetDateTime(findPersonDO.BirthDateString);
-                            if ((birthDate != null) && (birthDate.Value.Year != 1)) {
-                                findListItemDO.birthYear = birthDate.Value.Year.ToString();
-                            } else {
-                                findListItemDO.birthYear = findPersonDO.BirthDateString;
-                            }
-                            findListItemDO.birthYear = (findListItemDO.birthYear == null) ? "" : findListItemDO.birthYear;
-                            findListItemDO.gender = (findPersonDO.IsMale) ? "Male" : "Female";
-                            DateTime? deathDate = Dates.GetDateTime(findPersonDO.DeathDateString);
-                            if ((deathDate != null) && (deathDate.Value.Year != 1)) {
-                                findListItemDO.deathYear = deathDate.Value.Year.ToString();
-                            } else {
-                                findListItemDO.deathYear = findPersonDO.DeathDateString;
-                            }
-                            findListItemDO.deathYear = (findListItemDO.deathYear == null) ? "" : findListItemDO.deathYear;
-                            findListItemDO.birthPlace = findPersonDO.BirthPlace;
-                            findListItemDO.deathPlace = findPersonDO.DeathPlace;
-                            if (!findPersonDO.Father.IsEmpty) {
-                                findListItemDO.fatherName = findPersonDO.Father.Fullname;
-                            }
-                            if (!findPersonDO.Mother.IsEmpty) {
-                                findListItemDO.motherName = findPersonDO.Mother.Fullname;
-                            }
-                            if (findPersonDO.HasSpouse) {
-                                findListItemDO.spouseName = findPersonDO.Spouse.Fullname;
-                                findListItemDO.spouseGender = (findPersonDO.Spouse.IsMale) ? "Male" : "Female";
-                            }  
+                            PopulateFindListItem(findPersonDO, ref findListItemDO);
                         }       
 //                        findListItemDO.Score = entry.score;
 //                        findListItemDO.Confidence = entry.confidence;
@@ -419,6 +390,43 @@ namespace FindMyFamilies.DataAccess {
             }
 
             return findPersons;
+        }
+
+        public void PopulateFindListItem(PersonDO findPersonDO, ref FindListItemDO findListItemDO) {
+            findListItemDO.id = findPersonDO.Id;
+            findListItemDO.fullName = findPersonDO.Fullname;
+            findListItemDO.firstName = findPersonDO.Firstname;
+            findListItemDO.middleName = findPersonDO.Middlename;
+            findListItemDO.lastName = findPersonDO.Lastname;
+            DateTime? birthDate = Dates.GetDateTime(findPersonDO.BirthDateString);
+            if ((birthDate != null) && (birthDate.Value.Year != 1)) {
+                findListItemDO.birthYear = birthDate.Value.Year.ToString();
+            } else {
+                findListItemDO.birthYear = findPersonDO.BirthDateString;
+            }
+            findListItemDO.birthYear = (findListItemDO.birthYear == null) ? "" : findListItemDO.birthYear;
+            findListItemDO.gender = (findPersonDO.IsMale) ? "Male" : "Female";
+            DateTime? deathDate = Dates.GetDateTime(findPersonDO.DeathDateString);
+            if ((deathDate != null) && (deathDate.Value.Year != 1)) {
+                findListItemDO.deathYear = deathDate.Value.Year.ToString();
+            } else {
+                findListItemDO.deathYear = findPersonDO.DeathDateString;
+            }
+            findListItemDO.deathYear = (findListItemDO.deathYear == null) ? "" : findListItemDO.deathYear;
+            findListItemDO.birthPlace = findPersonDO.BirthPlace;
+            findListItemDO.deathPlace = findPersonDO.DeathPlace;
+            if (!findPersonDO.Father.IsEmpty) {
+                findListItemDO.fatherName = findPersonDO.Father.Fullname;
+            }
+            if (!findPersonDO.Mother.IsEmpty) {
+                findListItemDO.motherName = findPersonDO.Mother.Fullname;
+            }
+            if (findPersonDO.HasSpouse) {
+                findListItemDO.spouseName = findPersonDO.Spouse.Fullname;
+                findListItemDO.spouseGender = (findPersonDO.Spouse.IsMale) ? "Male" : "Female";
+            }
+            //                        findListItemDO.Score = entry.score;
+            //                        findListItemDO.Confidence = entry.confidence;
         }
 
         private void AddPerson(PersonDO personDo, Dictionary<string, PersonDO> persons) {

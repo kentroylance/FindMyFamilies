@@ -5,7 +5,6 @@
     var _form = $("#startingPointReportForm");
     var _spinner = "startingPointReportSpinner";
 
-    var _displayType = "start";
     var _callerSpinner;
 
     function StartingPointReportDO(previous) {
@@ -46,15 +45,7 @@
         },
         save: function () {
             save();
-        },
-        get displayType() {
-            return _displayType;
-        },
-        set displayType(value) {
-            _displayType = value;
         }
-
-
     };
 
     return startingPointReport;

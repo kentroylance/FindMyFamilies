@@ -40,7 +40,6 @@
     var STARTING_POINT_HTML = '/Home/StartingPointReportHtml';
     var POSSIBLE_DUPLICATES_REPORT_HTML_URL = '/Home/PossibleDuplicatesReportHtml';
     var FIND_PERSON_URL = '/Home/FindPerson';
-    var RETRIEVE_DATA_URL = '/Home/Retrieve';
     var DISPLAY_PERSON_URLS_URL = "/Home/DisplayPersonUrls";
     var PERSON_URL_OPTIONS_URL = "/Home/PersonUrlOptions";
     var INCOMPLETE_ORDINANCES_URL = "/Home/IncompleteOrdinances";
@@ -52,6 +51,8 @@
     var DISPLAY_PERSON_URL = "/Home/DisplayPerson";
     var FIND_PERSONS_URL = "/Home/FindPersons";
     var FIND_PERSON_OPTIONS_URL = "/Home/FindPersonOptions";
+    var RETRIEVE_URL = '/Home/Retrieve';
+    var RETRIEVE_DATA_URL = '/Home/RetrieveData';
 
     var FIND_A_GRAVE = "http://www.findagrave.com/cgi-bin/fg.cgi?page=gsr";
     var GOOGLE = "https://www.google.com/#q=";
@@ -245,9 +246,10 @@
         },
         get POSSIBLE_DUPLICATES_REPORT_HTML_URL() {
             return POSSIBLE_DUPLICATES_REPORT_HTML_URL;
-}
-
-        
+        },
+        get RETRIEVE_URL() {
+            return RETRIEVE_URL;
+        }
     }
     return constants;
 });

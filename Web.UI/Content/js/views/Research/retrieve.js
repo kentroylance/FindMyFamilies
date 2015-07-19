@@ -4,23 +4,28 @@
     var person = require("person");
     var constants = require("constants");
 
+    var _formName = "retrieveForm";
+    var _formTitleImage = "fmf-retrieve24";
+    var _form = $("#retrieveForm");
+    var _spinner = "retrieveSpinner";
+    var _callerSpinner;
+    var _callback;
+    
     var _title;
-    var _caller;
     var _retrievedRecords = 0;
-    var _popup = false;
     var _reports;
 
-    function clear() {
-        _caller = "";
-        _retrievedRecords = 0;
-        _popup = false;
-        _title = "";
+    function save() {
+        person.save();
     }
 
     function reset() {
-        _caller = "";
+        person.selected = false;
+        _callback = null;
+    }
+
+    function clear() {
         _retrievedRecords = 0;
-        _popup = false;
         _title = "";
     }
 
@@ -96,25 +101,21 @@
         }
     }
 
-
     var retrieve = {
-        get caller() {
-            return _caller;
+        formName: _formName,
+        formTitleImage: _formTitleImage,
+        spinner: _spinner,
+        get form() {
+            return _form;
         },
-        set caller(value) {
-            _caller = value;
+        set form(value) {
+            _form = value;
         },
         get reports() {
             return _reports;
         },
         set reports(value) {
             _reports = value;
-        },
-        get popup() {
-            return _popup;
-        },
-        set popup(value) {
-            _popup = value;
         },
         get retrievedRecords() {
             return _retrievedRecords;
@@ -127,7 +128,26 @@
         },
         clear: function () {
             clear();
+        },
+        reset: function () {
+            reset();
+        },
+        save: function () {
+            save();
+        },
+        get callerSpinner() {
+            return _callerSpinner;
+        },
+        set callerSpinner(value) {
+            _callerSpinner = value;
+        },
+        get callback() {
+            return _callback;
+        },
+        set callback(value) {
+            _callback = value;
         }
+        
     };
 
     return retrieve;

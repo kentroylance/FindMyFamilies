@@ -6,6 +6,7 @@ define(function(require) {
     var string = require('string');
     var person = require('person');
 
+    var _findPersonOptionsController;
     var _findUrls = {};
     _findUrls['fmf-urls'] = 'Family Research Urls';
     _findUrls['ancestry'] = 'Ancestry';
@@ -187,7 +188,7 @@ define(function(require) {
         person.includePlace = true;
 
         menuOptions += "<ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"dLabel\" >";
-        $.each(person.findPersonOptions, function (key, value) {
+        $.each(person.findPersonOptions, function(key, value) {
             switch (value) {
             case 'fmf-urls':
                 menuOptions += "<li><a onclick=\"researchController.personUrlOptions('" + row.id + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-family16\"></span> Family Research Urls</a></li>";
@@ -214,7 +215,7 @@ define(function(require) {
                 menuOptions += "<li><a href=\"https://puzzilla.org/descendants?id=" + row.id + "&changeToId=" + row.id + "&depth=6&ancestorsView=true\" target=\" _tab\" ><span class=\"fa fmf-puzilla16\"></span> Puzilla - Ancestors</a></li>";
                 break;
 //            case 'fs-person':
-                //                menuOptions += "<li><a href=\"" + system.familySearchSystem() + "/tree/#view=ancestor&person=" + row.id + "\" target=\" _tab\" ><span class=\"fa fmf-familysearch16\"></span> Family Search - Person</a></li>";
+            //                menuOptions += "<li><a href=\"" + system.familySearchSystem() + "/tree/#view=ancestor&person=" + row.id + "\" target=\" _tab\" ><span class=\"fa fmf-familysearch16\"></span> Family Search - Person</a></li>";
 //                break;
             case 'fs-tree':
                 menuOptions += "<li><a href=\"" + system.familySearchSystem() + "/tree/#view=tree&section=pedigree&person=" + row.id + "\" target=\" _tab\" ><span class=\"fa fmf-familysearch16\"></span> Family Search - Tree</a></li>";
@@ -239,13 +240,47 @@ define(function(require) {
         return menuOptions;
     }
 
+    function findOptions(e, module) {
+        e.preventDefault();
+        system.initSpinner(module.spinner);
+        module.callerSpinner = module.spinner;
+        $.ajax({
+            url: constants.FIND_PERSON_OPTIONS_URL,
+            success: function (data) {
+                var $dialogContainer = $("#findPersonOptionsForm");
+                var $detachedChildren = $dialogContainer.children().detach();
+                $("<div id=\"findPersonOptionsForm\"></div>").dialog({
+                    width: 260,
+                    title: "Find Options",
+                    open: function () {
+                        $detachedChildren.appendTo($dialogContainer);
+                    }
+                });
+                $("#findPersonOptionsForm").empty().append(data);
+                if (_findPersonOptionsController) {
+                    _findPersonOptionsController.open();
+                }
+            }
+        });
+    }
+
     var findPersonHelper = {
-        getMenuOptions: function (row) {
+        getMenuOptions: function(row) {
             return getMenuOptions(row);
         },
         get findUrls() {
             return _findUrls;
-        }
+        },
+        findOptions: function(e, module) {
+            return findOptions(e, module);
+        },
+        get findPersonOptionsController() {
+            return _findPersonOptionsController;
+        },
+        set findPersonOptionsController(value) {
+            _findPersonOptionsController = value;
+        },
+
 
     };
 

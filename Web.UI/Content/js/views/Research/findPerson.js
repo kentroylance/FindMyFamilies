@@ -6,6 +6,7 @@
     var _formName = "findPersonForm";
     var _formTitleImage = "fa fmf-search24";
     var _form = $("#findPersonForm");
+    var _displayType = "start";
     var _spinner = "findPersonSpinner";
     var _callerSpinner;
     var _callback;

@@ -1,25 +1,21 @@
 ﻿define(function(require) {
 
     var $ = require("jquery");
-    var spinner = require("spinner");
     var system = require("system");
     var msgbox = require("msgBox");
     var constants = require("constants");
-    var lazyRequire = require("lazyRequire");
-    var requireOnce = lazyRequire.once();
+    var researchHelper = require("researchHelper");
 
     // models
     var user = require("user");
     var person = require("person");
     var retrieve = require("retrieve");
+    var research = require('research');
 
-    var _formName = "retrieveForm";
-    var _formTitleImage = "fmf24-retrieve";
-    var _form = $("#retrieveForm");
 
     function updateForm() {
         if (person.id) {
-            $("#retrievePersonId").val(person.id + " - " + person.name);
+            $("#retrievePersonId").val(person.id);
         }
         if (person.researchType) {
             $("#retrieveResearchType").val(person.researchType);
@@ -28,16 +24,9 @@
             $("#retrieveGeneration").val(person.generation);
         }
         if (person.addChildren) {
-            $("#addChildren").prop("checked", person.addChildren);
+            $('#addChildren').prop('checked', person.addChildren);
         }
     }
-
-    function reset() {
-        person.reset();
-        retrieve.reset();
-        updateForm();
-    }
-
 
     function submit() {
         if (isAuthenticated()) {
@@ -50,35 +39,35 @@
             msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine. ", "Question", function(result) {
                 if (result) {
                     $.ajax({
-                        url: "/Home/RetrieveData",
+                        url: constants.RETRIEVE_DATA_URL,
                         data: { "personId": person.id, "name": person.name, "generation": person.generation, "researchType": person.researchType, "title": retrieve.title, "addChildren": person.addChildren },
                         success: function(data) {
                             if (data) {
                                 retrieve.retrievedRecords = data.RetrievedRecords;
                                 retrieve.reportId = data.ReportId;
-                                if (retrieve.caller === "IncompleteOrdinances") {
-                                    IncompleteOrdinances.reportId = data.ReportId;
-                                    IncompleteOrdinances.loadReports(true);
-                                } else if (retrieve.caller === "PossibleDuplicates") {
-                                    PossibleDuplicates.reportId = data.ReportId;
-                                    PossibleDuplicates.loadReports(true);
-                                } else if (retrieve.caller === "Hints") {
-                                    Hints.reportId = data.ReportId;
-                                    Hints.loadReports(true);
-                                } else if (retrieve.caller === "StartingPoint") {
-                                    StartingPoint.reportId = data.ReportId;
-                                    StartingPoint.loadReports(true);
-                                } else if (retrieve.caller === "DateProblems") {
-                                    DateProblems.reportId = data.ReportId;
-                                    DateProblems.loadReports(true);
-                                } else if (retrieve.caller === "FindClues") {
-                                    FindClues.reportId = data.ReportId;
-                                    FindClues.loadReports(true);
-                                }
+//                                if (retrieve.caller === "IncompleteOrdinances") {
+//                                    IncompleteOrdinances.reportId = data.ReportId;
+//                                    IncompleteOrdinances.loadReports(true);
+//                                } else if (retrieve.caller === "PossibleDuplicates") {
+//                                    PossibleDuplicates.reportId = data.ReportId;
+//                                    PossibleDuplicates.loadReports(true);
+//                                } else if (retrieve.caller === "Hints") {
+//                                    Hints.reportId = data.ReportId;
+//                                    Hints.loadReports(true);
+//                                } else if (retrieve.caller === "StartingPoint") {
+//                                    StartingPoint.reportId = data.ReportId;
+//                                    StartingPoint.loadReports(true);
+//                                } else if (retrieve.caller === "DateProblems") {
+//                                    DateProblems.reportId = data.ReportId;
+//                                    DateProblems.loadReports(true);
+//                                } else if (retrieve.caller === "FindClues") {
+//                                    FindClues.reportId = data.ReportId;
+//                                    FindClues.loadReports(true);
+//                                }
                                 msgBox.message("Successfully retrieved <b>" + data.RetrievedRecords + "</b> " + person.researchType + ".");
 
                                 if (retrieve.popup) {
-                                    _form.dialog("close");
+                                    retrieve.form.dialog("close");
                                 }
                             } else {
                                 msgBox.message("Retrieved no " + person.researchType + ".");
@@ -88,35 +77,38 @@
                 }
             });
         } else {
-            _form.dialog("close");
+            retrieve.dialog("close");
             relogin();
         }
         return false;
     }
 
-    function resetReportId() {
-        person.reportId = constants.REPORT_ID;
-        $("#retrieveReportId").val(constants.REPORT_ID);
-    }
+    function addGenerationOptions(options) {
+        var select = $("<select class=\"form-control select1Digit\" id=\"retrieveGeneration\"\>");
+        $.each(options, function (a, b) {
+            select.append($("<option/>").attr("value", b).text(b));
+        });
+        $('#retrieveGenerationDiv').empty();
+        $("#retrieveGenerationDiv").append(select);
+        $('#retrieveGenerationDiv').nextAll().remove();
+        if ((person.researchType === "Ancestors") && (person.reportId === constants.REPORT_ID)) {
+            $("#retrieveGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: top; margin-top: -0.625em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -0.965em\">&nbsp;<span style=\"font-weight: normal\">Add Children</span></label>");
+        }
+        $("#retrieveGeneration").change(function (e) {
+            var generation = $("#retrieveGeneration").val();
+            if (person.researchType === constants.DESCENDANTS) {
+                if (generation > 1) {
+                    msgBox.warning("Selecting two generations of Descendants will more than double the time to retrieve descendants.");
+                }
+            } else {
+                if (generation > person.generation) {
+                    msgBox.warning("Increasing the number of generations will increase the time to retrieve ancestors.");
+                }
+            }
+            person.generation = $("#retrieveGeneration").val();
+            person.resetReportId($("#retrieveReportId"));
+        });
 
-    function setHiddenFields() {
-        if (person.researchType === constants.ANCESTORS) {
-        } else {
-            person.generation = "2";
-        }
-        $("retrieveGeneration").val(person.generation);
-    }
-
-    function initialize() {
-        if (!_initialized) {
-            loadData();
-        }
-        if (person.researchType === constants.DESCENDANTS) {
-            addDecendantGenerationOptions();
-        } else {
-            addAncestorGenerationOptions();
-        }
-        updateForm();
     }
 
     function addDecendantGenerationOptions() {
@@ -141,168 +133,171 @@
         $("#retrieveGeneration").val(person.generation);
     }
 
-    function addGenerationOptions(options) {
-        var select = $("<select class=\"form-control select1Digit\" id=\"retrieveGeneration\"\>");
-        $.each(options, function(a, b) {
-            select.append($("<option/>").attr("value", b).text(b));
-        });
-        $("#retrieveGenerationDiv").empty();
-        $("#retrieveGenerationDiv").append(select);
-        $("#retrieveGenerationDiv").nextAll().remove();
-        if (person.researchType === "Ancestors") {
-            $("#retrieveGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: top; margin-top: -0.625em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -0.965em\">&nbsp;<span style=\"font-weight: normal\">Add Children</span></label>");
-        }
-        $("#retrieveGeneration").change(function(e) {
-            var generation = $("#retrieveGeneration").val();
-            if (person.researchType === constants.DESCENDANTS) {
-                if (generation > 1) {
-                    msgBox.warning("Selecting two generations of Descendants will more than double the time to retrieve descendants.");
-                }
-            } else {
-                if (generation > person.generation) {
-                    msgBox.warning("Increasing the number of generations will increase the time to retrieve ancestors.");
-                }
-            }
-            person.generation = $("#retrieveGeneration").val();
-            resetReportId();
-        });
-
-    }
-
-    $("#retrievePerson").change(function(e) {
-        debugger;
-    });
-
-    $("#retrieveReportId").change(function(e) {
-        var reportText = $("#retrieveReportId").text();
-        if (reportText && reportText.length > 8) {
-            var nameIndex = reportText.indexOf("Name: ") + 6;
-            var dateIndex = reportText.indexOf(", Date:  ");
-            var researchTypeIndex = reportText.indexOf(", Research Type: ");
-            var generationoIndex = reportText.indexOf(",  Generations: ");
-            Retrieve.personId = reportText.substring(nameIndex, nameIndex + 8);
-            Retrieve.personName = reportText.substring(nameIndex + 11, dateIndex);
-            Retrieve.researchType = reportText.substring(researchTypeIndex + 17, generationoIndex);
-            Retrieve.generation = reportText.substring(generationoIndex + 16, generationoIndex + 17);
-            Retrieve.ReportId = $("#retrieveReportId").val();
-            Retrieve.updateForm();
-        }
-
-    });
-
-    $("#retrieveTitle").change(function(e) {
-        Retrieve.title = $("#retrieveTitle").val();
-    });
-
-
-    $("#retrieveResearchType").change(function(e) {
-        Retrieve.researchType = $("#retrieveResearchType").val();
-        if (Retrieve.researchType === "Descendants") {
-            Retrieve.generationAncestors = Retrieve.generation;
-            Retrieve.generation = Retrieve.generationDescendants;
-            Retrieve.addDecendantGenerationOptions();
+    function updateResearchData() {
+        if (person.researchType === constants.DESCENDANTS) {
+            addDecendantGenerationOptions();
         } else {
-            Retrieve.generationDescendants = Retrieve.generation;
-            Retrieve.generation = Retrieve.generationAncestors;
-            Retrieve.addAncestorGenerationOptions();
+            addAncestorGenerationOptions();
         }
-
-        Retrieve.setHiddenFields();
-        Retrieve.resetReportId();
-    });
-
-    $("#retrieveFindPersonButton").unbind("click").bind("click", function(e) {
-        findPerson(e, $(this)).then(function() {
-            if (FindPerson.selected) {
-                $("#retrievePersonId").val(FindPerson.personId + " - " + FindPerson.personName);
-                Retrieve.personId = FindPerson.personId;
-                Retrieve.personName = FindPerson.personName;
-            }
-        });
-        return false;
-    });
-
-    $("#addChildren").change(function(e) {
-        Retrieve.addChildren = $("#addChildren").prop("checked");
-        if (Retrieve.addChildren) {
-            msgBox.warning("Selecting <b>Add Children</b> check box will more double the time to retrieve ancestors.");
-        }
-    });
-
-    Retrieve.form.unbind("dialogclose").bind("dialogclose", function(e) {
-        person.save();
-    });
-
-    if (spinnerTarget) {
-        retrieve.callerSpinner = spinnerTarget.id;
+        updateForm();
     }
-
-
-    openForm(Retrieve.form, Retrieve.formTitleImage, "retrieveSpinner");
+    function setHiddenFields() {
+        if (person.researchType === constants.ANCESTORS) {
+        } else {
+            person.generation = "2";
+        }
+        $("retrieveGeneration").val(person.generation);
+    }
 
     function open() {
-        loadReports();
-        person.loadPersons($("#startingPointPersonId"), false);
+        var currentSpinnerTarget = system.target.id;
+        if (system.target) {
+            retrieve.callerSpinner = system.target.id;
+        }
+        retrieve.form = $("#retrieveForm");
+        loadEvents();
+        person.loadPersons($("#retrievePersonId"), false);
+        updateResearchData();
         updateForm();
-        openForm(startingPoint.form, startingPoint.formTitleImage, startingPoint.spinner);
+        system.openForm(retrieve.form, retrieve.formTitleImage, retrieve.spinner);
+        //        $('#firstName').focus();
+        if (currentSpinnerTarget !== constants.DEFAULT_SPINNER_AREA) {
+            //            var retrieveButtons = document.getElementById("retrieveButtons");
+            //            retrieveButtons.style.display = 'block';
+        }
     }
 
+    function clear() {
+        person.clear();
+    }
 
-    //    Retrieve.form = $("#retrieveForm");
+    function reset() {
+        person.reset();
+        retrieve.reset();
+        updateForm();
+    }
 
-    Retrieve.initialize();
+    function loadEvents() {
+        $("#retrievePerson").change(function(e) {
+            debugger;
+        });
+
+        $("#retrieveReportId").change(function(e) {
+            var reportText = $("#retrieveReportId").text();
+            if (reportText && reportText.length > 8) {
+                var nameIndex = reportText.indexOf("Name: ") + 6;
+                var dateIndex = reportText.indexOf(", Date:  ");
+                var researchTypeIndex = reportText.indexOf(", Research Type: ");
+                var generationoIndex = reportText.indexOf(",  Generations: ");
+                person.id = reportText.substring(nameIndex, nameIndex + 8);
+                person.name = reportText.substring(nameIndex + 11, dateIndex);
+                person.researchType = reportText.substring(researchTypeIndex + 17, generationoIndex);
+                person.generation = reportText.substring(generationoIndex + 16, generationoIndex + 17);
+                person.ReportId = $("#retrieveReportId").val();
+                retrieve.updateForm();
+            }
+
+        });
+
+        $("#retrieveTitle").change(function(e) {
+            retrieve.title = $("#retrieveTitle").val();
+        });
 
 
+        $('#retrieveResearchType').change(function(e) {
+            person.researchType = $("#retrieveResearchType").val();
+            if (person.researchType === constants.DESCENDANTS) {
+                person.generationAncestors = person.generation;
+                person.generation = retrieve.generationDescendants;
+                addDecendantGenerationOptions();
+            } else {
+                retrieve.generationDescendants = person.generation;
+                person.generation = retrieve.generationAncestors;
+                addAncestorGenerationOptions();
+            }
 
-    startingPoint.form = $("#startingPointForm");
+            setHiddenFields();
+            person.resetReportId($("#retrieveReportId"));
+            updateResearchData();
+        });
 
+        $("#retrieveFindPersonButton").unbind('click').bind('click', function(e) {
+            researchHelper.findPerson(e, function(result) {
+                if (result) {
+                    var changed = (person.id === $("#retrievePersonId").val()) ? false : true;
+                    retrieve.save();
+                    person.loadPersons($("#retrievePersonId"), true);
+                    if (changed) {
+                        person.resetReportId($("#retrieveReportId"));
+                        updateResearchData();
+                    }
+                }
+                var findPerson = require('findPerson');
+                findPerson.reset();
+            });
+            return false;
+        });
 
-    open();
+        $("#addChildren").change(function(e) {
+            person.addChildren = $("#addChildren").prop("checked");
+            if (person.addChildren) {
+                msgBox.warning("Selecting <b>Add Children</b> check box will probably double the time to retrieve ancestors.");
+            }
+            person.resetReportId($("#startingPointReportId"));
+            updateResearchData();
+        });
+        $("#retrieveHelpButton").unbind('click').bind('click', function(e) {
+        });
 
-//    return {
-//        formName: _formName,
-//        formTitleImage: _formTitleImage,
-//        get form() {
-//            return _form;
-//        },
-//        set form(value) {
-//            _form = value;
-//        },
-//        setHiddenFields: function () {
-//            setHiddenFields();
-//        },
-//        resetReportId: function () {
-//            resetReportId();
-//        },
-//        updateForm: function () {
-//            updateForm();
-//        },
-//        save: function () {
-//            save();
-//        },
-//        loadData: function () {
-//            loadData();
-//        },
-//        reset: function () {
-//            reset();
-//        },
-//        submit: function () {
-//            submit();
-//        }
-//    };
+        $("#retrieveCloseButton").unbind('click').bind('click', function(e) {
+            retrieve.form.dialog(constants.CLOSE);
+        });
 
+        $("#retrieveResetButton").unbind('click').bind('click', function(e) {
+            reset();
+        });
+
+        $("#retrieveSelectButton").unbind('click').bind('click', function (e) {
+            if (!person.selected) {
+                msgBox.message("You must first select a person by checking the checkbox before proceeding");
+                $('#eventsTable').focus();
+            } else {
+                retrieve.form.dialog(constants.CLOSE);
+            }
+        });
+
+        $("#retrieveCancelButton").unbind('click').bind('click', function (e) {
+            person.selected = false;
+            retrieve.form.dialog(constants.CLOSE);
+        });
+
+        $("#retrieveCloseButton").unbind('click').bind('click', function (e) {
+            retrieve.form.dialog(constants.CLOSE);
+        });
+
+        retrieve.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
+            system.initSpinner(retrieve.callerSpinner, true);
+            person.save();
+            if (retrieve.callback) {
+                if (typeof (retrieve.callback) === "function") {
+                    retrieve.callback(person.selected);
+                }
+            }
+            retrieve.reset();
+        });
+    }
 
     var retrieveController = {
-        open: function() {
+        open: function () {
             open();
         }
     };
 
+    research.retrieveController = retrieveController;
+    open();
+
     return retrieveController;
+
+
 });
-
-
 //# sourceURL=retrieveController.js
-
-
-//# sourceURL=Retrieve.js

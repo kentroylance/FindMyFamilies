@@ -20,120 +20,26 @@ define(function(require) {
     var person = require("person");
     var research = require("research");
 
-    function retrieveData(e) {
-        var defer = $.Deferred();
-        e.preventDefault();
-        if (system.isAuthenticated()) {
-            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
-            var retrieveData;
-            requireOnce(["retrieveData"], function(RetrieveData) {
-                    retrieveData = RetrieveData;
-                },
-                function() {
-                    retrieveData.retrievedRecords = 0;
-                    $.ajax({
-                        url: constants.RETRIEVE_DATA_URL,
-                        success: function(data) {
-                            var $dialogContainer = $("#retrieveForm");
-                            var $detachedChildren = $dialogContainer.children().detach();
-                            $("<div id=\"retrieveForm\"></div>").dialog({
-                                width: 825,
-                                title: "Retrieve Family Search Data",
-                                open: function() {
-                                    $(this).css("maxHeight", 700);
-                                    $detachedChildren.appendTo($dialogContainer);
-                                },
-                                close: function(event, ui) {
-                                    event.preventDefault();
-                                    retrieveData.popup = false;
-                                    retrieveData.clear();
-                                    system.initSpinner(Retrieve.callerSpinner, true);
-                                    $(this).dialog("destroy").remove();
-                                },
-                                buttons: {
-                                    "0": {
-                                        id: "submit",
-                                        text: "Retrieve",
-                                        icons: { primary: "submitIcon" },
-                                        click: function(event) {
-                                            event.preventDefault();
-                                            Retrieve.submit();
-                                            defer.resolve(true);
-                                        },
-                                        "class": "btn-u btn-brd btn-brd-hover rounded btn-u-green"
-                                    },
-                                    "1": {
-                                        id: "reset",
-                                        text: "Reset",
-                                        icons: { primary: "resetIcon" },
-                                        click: function(event) {
-                                            event.preventDefault();
-                                            Retrieve.reset();
-                                        },
-                                        "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                                    },
-                                    "2": {
-                                        id: "close",
-                                        text: "Close",
-                                        icons: { primary: "closeIcon" },
-                                        click: function(event) {
-                                            event.preventDefault();
-                                            $(this).dialog("close");
-                                        },
-                                        "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                                    },
-                                    "3": {
-                                        id: "help",
-                                        text: "Help",
-                                        icons: { primary: "helpIcon" },
-                                        click: function(event) {
-                                            event.preventDefault();
-                                        },
-                                        "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                                    }
-                                }
-                            });
-                            $("#retrieveForm").empty().append(data);
-                        }
-                    });
-                }
-            );
-        } else {
-            system.relogin();
-        }
 
-        return defer.promise();
-    }
+    $("#startingPoint").unbind("click").bind("click", function (e) {
+        researchHelper.startingPoint(e);
+        return false;
+    });
 
-    function startingPoint() {
-        if (system.isAuthenticated()) {
-            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
-            requireOnce(["jqueryUiOptions", "bootstrapTable", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
-                }, function () {
-                    $.ajax({
-                        url: constants.STARTING_POINT_URL,
-                        success: function(data) {
-                            var $dialogContainer = $("#startingPointForm");
-                            var $detachedChildren = $dialogContainer.children().detach();
-                            $("<div id=\"startingPointForm\"></div>").dialog({
-                                width: 775,
-                                title: "Starting Point",
-                                open: function() {
-                                    $detachedChildren.appendTo($dialogContainer);
-                                }
-                            });
-                            $("#startingPointForm").empty().append(data);
-                            if (research && research.startingPointController) {
-                                research.startingPointController.open();
-                            }
-                        }
-                    });
-                }
-            );
-        } else {
-            system.relogin();
-        }
-    }
+    $("#retrieve").unbind("click").bind("click", function (e) {
+        researchHelper.retrieve(e);
+        return false;
+    });
+
+    $("#researchFamily").unbind("click").bind("click", function (e) {
+        researchHelper.findPerson(e);
+        return false;
+    });
+
+    $("#possibleDuplicates").unbind("click").bind("click", function (e) {
+        researchHelper.possibleDuplicates(e);
+        return false;
+    });
 
     function displayPersonUrls() {
         if (person.personId && system.isAuthenticated()) {
@@ -269,13 +175,6 @@ define(function(require) {
         });
         return false;
     });
-
-    $("#retrieve").unbind("click").bind("click", function(e) {
-
-        retrieveData(e, $(this)).then(function() {
-        });
-    });
-
 
     $("#incompleteOrdinances").unbind("click").bind("click", function(e) {
         e.preventDefault();
@@ -435,16 +334,6 @@ define(function(require) {
         } else {
             system.relogin();
         }
-        return false;
-    });
-
-    $("#researchFamily").unbind("click").bind("click", function (e) {
-        researchHelper.findPerson(e);
-        return false;
-    });
-
-    $("#possibleDuplicates").unbind("click").bind("click", function(e) {
-        researchHelper.possibleDuplicates(e);
         return false;
     });
 
@@ -689,29 +578,19 @@ define(function(require) {
         return false;
     });
 
-    $("#startingPoint").unbind("click").bind("click", function(e) {
-        e.preventDefault();
-
-        startingPoint();
-        return false;
-    });
-
     $("#clearStorage").unbind("click").bind("click", function(e) {
-        e.preventDefault();
         system.clearStorage();
         //        $.fancybox.message.info("Cleared Storage Successfully");
         return false;
     });
 
     $("#refreshAndReset").unbind("click").bind("click", function(e) {
-        e.preventDefault();
         system.clearStorage();
         system.relogin();
         return false;
     });
 
     $("#refresh").unbind("click").bind("click", function(e) {
-        e.preventDefault();
         system.relogin();
         return false;
     });

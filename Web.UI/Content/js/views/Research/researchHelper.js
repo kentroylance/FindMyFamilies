@@ -12,6 +12,73 @@ define(function(require) {
     var requireOnce = lazyRequire.once();
     require("lazyload");
 
+    function startingPoint() {
+        if (system.isAuthenticated()) {
+            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
+            requireOnce(["jqueryUiOptions", "bootstrapTable", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
+            }, function () {
+                $.ajax({
+                    url: constants.STARTING_POINT_URL,
+                    success: function (data) {
+                        var $dialogContainer = $("#startingPointForm");
+                        var $detachedChildren = $dialogContainer.children().detach();
+                        $("<div id=\"startingPointForm\"></div>").dialog({
+                            width: 775,
+                            title: "Starting Point",
+                            open: function () {
+                                $detachedChildren.appendTo($dialogContainer);
+                            }
+                        });
+                        $("#startingPointForm").empty().append(data);
+                        if (research && research.startingPointController) {
+                            research.startingPointController.open();
+                        }
+                    }
+                });
+            }
+            );
+        } else {
+            system.relogin();
+        }
+    }
+
+    function retrieve(e, callback) {
+        e.preventDefault();
+        system.startSpinner();
+        if (system.isAuthenticated()) {
+            requireOnce(["jqueryUiOptions", "bootstrapTable", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
+            }, function () {
+                var retrieve = require('retrieve');
+                retrieve.callback = callback;
+                retrieve.callerSpinner = system.target.id;
+                $.ajax({
+                    url: constants.RETRIEVE_URL,
+                    success: function (data) {
+                        var $dialogContainer = $("#retrieveForm");
+                        var $detachedChildren = $dialogContainer.children().detach();
+                        $("<div id=\"retrieveForm\"></div>").dialog({
+                            width: 825,
+                            title: "Retrieve",
+                            open: function () {
+                                $detachedChildren.appendTo($dialogContainer);
+                                $(this).css("maxHeight", 700);
+                            }
+                        }
+                        );
+                        $("#retrieveForm").empty().append(data);
+                        if (research && research.retrieveController) {
+                            research.retrieveController.open();
+                        }
+                    }
+                });
+            }
+            );
+        } else {
+            system.relogin();
+        }
+    }
+
+
     function findPerson(e, callback) {
         e.preventDefault();
         system.startSpinner();
@@ -34,11 +101,6 @@ define(function(require) {
                         $("<div id=\"findPersonForm\"></div>").dialog({
                             width: 1100,
                             title: "Find Person",
-                            position: {
-                                my: "center top",
-                                at: ("center top+" + (window.innerHeight * .15)),
-                                collision: "none"
-                            },
                             open: function () {
                                 $detachedChildren.appendTo($dialogContainer);
                                 $(this).css("maxHeight", 700);
@@ -92,10 +154,15 @@ define(function(require) {
         }
     }
 
-
     var researchHelper = {
         findPerson: function (e, deferred) {
             return findPerson(e, deferred);
+        },
+        retrieve: function (e, deferred) {
+            return retrieve(e, deferred);
+        },
+        startingPoint: function (e) {
+            return startingPoint(e);
         },
         possibleDuplicates: function (e) {
             return possibleDuplicates(e);

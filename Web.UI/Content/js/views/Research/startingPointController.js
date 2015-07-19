@@ -1,11 +1,14 @@
-define(function (require) {
+define(function(require) {
 
     var $ = require('jquery');
     var system = require('system');
     var msgBox = require('msgBox');
-    var retrieve = require('retrieve');
     var constants = require('constants');
     var researchHelper = require("researchHelper");
+
+    var lazyRequire = require("lazyRequire");
+    var requireOnce = lazyRequire.once();
+    require("lazyload");
 
 
     // models
@@ -13,6 +16,7 @@ define(function (require) {
     var startingPoint = require('startingPoint');
     var startingPointReport = require('startingPointReport');
     var research = require('research');
+    var retrieve = require('retrieve');
 
     function updateForm() {
         if (person.id) {
@@ -52,7 +56,7 @@ define(function (require) {
 
     function addGenerationOptions(options) {
         var select = $("<select class=\"form-control select1Digit\" id=\"startingPointGeneration\"\>");
-        $.each(options, function (a, b) {
+        $.each(options, function(a, b) {
             select.append($("<option/>").attr("value", b).text(b));
         });
         $('#startingPointGenerationDiv').empty();
@@ -61,7 +65,7 @@ define(function (require) {
         if ((person.researchType === "Ancestors") && (person.reportId === constants.REPORT_ID)) {
             $("#startingPointGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: top; margin-top: -0.625em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -0.965em\">&nbsp;<span style=\"font-weight: normal\">Add Children</span></label>");
         }
-        $("#startingPointGeneration").change(function (e) {
+        $("#startingPointGeneration").change(function(e) {
             var generation = $("#startingPointGeneration").val();
             if (person.researchType === constants.DESCENDANTS) {
                 if (generation > 1) {
@@ -145,13 +149,20 @@ define(function (require) {
         system.openForm(startingPoint.form, startingPoint.formTitleImage, startingPoint.spinner);
     }
 
+    function clear() {
+        person.clear();
+    }
+
+    function reset() {
+        person.reset();
+    }
 
     function loadEvents() {
-        $('#startingPointPerson').change(function (e) {
+        $('#startingPointPerson').change(function(e) {
             debugger;
         });
 
-        $("#startingPointReportId").change(function (e) {
+        $("#startingPointReportId").change(function(e) {
             person.reportId = $("#startingPointReportId option:selected").val();
             if (person.reportId === constants.REPORT_ID) {
                 msgBox.warning("Even though the \"Select\" option is availiable to retrieve family search data, to avoid performance problems it is best practice to first retrieve the data before analyzing.");
@@ -159,15 +170,20 @@ define(function (require) {
             updateResearchData();
         });
 
-        $('#startingPointResearchType').change(function (e) {
+        $('#startingPointPersonId').change(function(e) {
+            person.id = $('option:selected', $(this)).val();
+            person.name = $('option:selected', $(this)).text();
+        });
+
+        $('#startingPointResearchType').change(function(e) {
             person.researchType = $("#startingPointResearchType").val();
             if (person.researchType === constants.DESCENDANTS) {
-                startingPoint.generationAncestors = person.generation;
-                person.generation = startingPoint.generationDescendants;
+                person.generationAncestors = person.generation;
+                person.generation = person.generationDescendants;
                 addDecendantGenerationOptions();
             } else {
-                startingPoint.generationDescendants = person.generation;
-                person.generation = startingPoint.generationAncestors;
+                person.generationDescendants = person.generation;
+                person.generation = person.generationAncestors;
                 addAncestorGenerationOptions();
             }
 
@@ -176,13 +192,10 @@ define(function (require) {
             updateResearchData();
         });
 
-        $("#startingPointFindPersonButton").unbind('click').bind('click', function (e) {
-            researchHelper.findPerson(e, function (result) {
+        $("#startingPointFindPersonButton").unbind('click').bind('click', function(e) {
+            researchHelper.findPerson(e, function(result) {
                 if (result) {
                     var changed = (person.id === $("#startingPointPersonId").val()) ? false : true;
-                    //               PersonInfo.updateFromFindPerson();
-                    //                startingPoint.id = FindPerson.id;
-                    //                startingPoint.personName = FindPerson.personName;
                     startingPoint.save();
                     person.loadPersons($("#startingPointPersonId"), true);
                     if (changed) {
@@ -196,71 +209,61 @@ define(function (require) {
             return false;
         });
 
-        $("#startingPointRetrieveButton").unbind('click').bind('click', function (e) {
-            if (startingPoint.id) {
-                retrieve.caller = constants.STARTING_POINT;
-                retrieve.retrievedRecords = 0;
-                retrieve.popup = true;
-                updateResearchData();
-            }
-//  add method outside of researchController
-            retrieveData(e, $(this)).then(function () {
+        $("#startingPointRetrieveButton").unbind('click').bind('click', function(e) {
+            researchHelper.retrieve(e, function(result) {
+                if (result) {
+                    var changed = (person.id === $("#startingPointPersonId").val()) ? false : true;
+                    startingPoint.save();
+                    person.loadPersons($("#startingPointPersonId"), true);
+                    if (changed) {
+                        person.resetReportId($("#startingPointReportId"));
+                        updateResearchData();
+                    }
+                }
+                var retrieve = require('retrieve');
+                retrieve.reset();
             });
             return false;
         });
 
-        function clear() {
-            person.clear();
-        }
-
-        function reset() {
-            person.reset();
-        }
-
-
-        $("#startingPointHelpButton").unbind('click').bind('click', function (e) {
+        $("#startingPointHelpButton").unbind('click').bind('click', function(e) {
         });
 
-        $("#startingPointCloseButton").unbind('click').bind('click', function (e) {
+        $("#startingPointCloseButton").unbind('click').bind('click', function(e) {
             startingPoint.form.dialog(constants.CLOSE);
         });
 
-        $("#startingPointResetButton").unbind('click').bind('click', function (e) {
+        $("#startingPointResetButton").unbind('click').bind('click', function(e) {
             reset();
         });
 
-        $("#startingPointPreviousButton").unbind('click').bind('click', function (e) {
+        $("#startingPointPreviousButton").unbind('click').bind('click', function(e) {
             if (!startingPoint.previous) {
                 if (window.localStorage) {
                     startingPoint.previous = JSON.parse(localStorage.getItem(constants.STARTING_POINT_PREVIOUS));
                 }
             }
             if (startingPoint.previous) {
-                system.initSpinner('startingPointSpinner');
+                system.initSpinner(startingPoint.spinner);
+                startingPoint.callerSpinner = startingPoint.spinner;
                 $.ajax({
                     url: constants.STARTING_POINT_REPORT_HTML_URL,
-                    success: function (data) {
+                    success: function(data) {
                         var $dialogContainer = $('#startingPointReportForm');
                         var $detachedChildren = $dialogContainer.children().detach();
-                        $('<div id="startingPointReportForm"></div>').dialog({
-                            position: {
-                                my: "center top",
-                                at: ("center top+" + (window.innerHeight * .07)),
-                                collision: "none"
-                            },
+                        $('<div id=\"startingPointReportForm\"></div>').dialog({
                             title: "Starting Points",
                             width: 975,
-                            open: function () {
+                            open: function() {
                                 $detachedChildren.appendTo($dialogContainer);
                                 $(this).css("maxHeight", 700);
-                            },
-                            close: function (event, ui) {
-                                event.preventDefault();
-                                $(this).dialog('destroy').remove();
                             }
                         });
                         startingPoint.displayType = "previous";
                         $("#startingPointReportForm").empty().append(data);
+                        if (research && research.startingPointReportController) {
+                            research.startingPointReportController.open();
+                        }
                     }
                 });
             } else {
@@ -268,53 +271,52 @@ define(function (require) {
             }
         });
 
-        $("#startingPointSubmitButton").unbind('click').bind('click', function (e) {
+        $("#startingPointSubmitButton").unbind('click').bind('click', function(e) {
             if (system.isAuthenticated()) {
-                if (person.id) {
-                    startingPoint.save();
-                } else {
+                if (!person.id) {
                     msgBox.message("You must first select a person from Family Search");
                 }
 
-                msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function (result) {
+                msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
-                        system.initSpinner(startingPoint.spinner);
-                        startingPoint.callerSpinner = startingPoint.spinner;
-                        $.ajax({
-                            url: constants.STARTING_POINT_HTML,
-                            success: function (data) {
-                                var $dialogContainer = $('#startingPointReportForm');
-                                var $detachedChildren = $dialogContainer.children().detach();
-                                $('<div id="startingPointReportForm"></div>').dialog({
-                                    position: {
-                                        my: "center top",
-                                        at: ("center top+" + (window.innerHeight * .07)),
-                                        collision: "none"
-                                    },
-                                    title: "Starting Points",
-                                    width: 975,
-                                    open: function () {
-                                        $detachedChildren.appendTo($dialogContainer);
-                                        $(this).css("maxHeight", 700);
+                        requireOnce(["bootstrapTable", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
+                            }, function() {
+                                system.initSpinner(startingPoint.spinner);
+                                startingPoint.callerSpinner = startingPoint.spinner;
+                                $.ajax({
+                                    url: constants.STARTING_POINT_HTML,
+                                    success: function(data) {
+                                        var $dialogContainer = $('#startingPointReportForm');
+                                        var $detachedChildren = $dialogContainer.children().detach();
+                                        $("<div id=\"startingPointReportForm\"></div>").dialog({
+                                            title: "Starting Points",
+                                            width: 975,
+                                            height: 700,
+                                            open: function() {
+                                                $detachedChildren.appendTo($dialogContainer);
+                                            }
+                                        });
+                                        startingPointReport.displayType = "start";
+                                        startingPoint.save();
+                                        $("#startingPointReportForm").empty().append(data);
+                                        if (research && research.startingPointReportController) {
+                                            research.startingPointReportController.open();
+                                        }
                                     }
                                 });
-                                startingPointReport.displayType = "start";
-                                startingPointReport.form.empty().append(data);
-                                if (research && research.startingPointReportController) {
-                                    research.startingPointReportController.open();
-                                }
                             }
-                        });
+                        );
                     }
                 });
             } else {
                 startingPointReport.form.dialog("close");
-                relogin();
+                system.relogin();
             }
             return false;
         });
 
-        $("#addChildren").change(function (e) {
+
+        $("#addChildren").change(function(e) {
             person.addChildren = $("#addChildren").prop("checked");
             if (person.addChildren) {
                 msgBox.warning("Selecting <b>Add Children</b> check box will probably double the time to retrieve ancestors.");
@@ -323,7 +325,7 @@ define(function (require) {
             updateResearchData();
         });
 
-        $("#startingPointNonMormon").change(function (e) {
+        $("#startingPointNonMormon").change(function(e) {
             startingPoint.nonMormon = $("#startingPointNonMormon").prop("checked");
             if (startingPoint.nonMormon) {
                 $('#startingPointOrdinances').prop('checked', true);
@@ -331,15 +333,15 @@ define(function (require) {
             }
         });
 
-        $("#startingPointBorn18101850").change(function (e) {
+        $("#startingPointBorn18101850").change(function(e) {
             startingPoint.born18101850 = $("#startingPointBorn18101850").prop("checked");
         });
 
-        $("#startingPointLivedInUSA").change(function (e) {
+        $("#startingPointLivedInUSA").change(function(e) {
             startingPoint.livedInUSA = $("#startingPointLivedInUSA").prop("checked");
         });
 
-        $("#startingPointOrdinances").change(function (e) {
+        $("#startingPointOrdinances").change(function(e) {
             startingPoint.ordinances = $("#startingPointOrdinances").prop("checked");
             if (startingPoint.ordinances) {
                 $('#startingPointNonMormon').prop('checked', true);
@@ -348,31 +350,31 @@ define(function (require) {
 
         });
 
-        $("#startingPointHints").change(function (e) {
+        $("#startingPointHints").change(function(e) {
             startingPoint.hints = $("#startingPointHints").prop("checked");
             if (startingPoint.hints) {
                 msgBox.warning("Selecting <b>Hints</b> will add 1-3 seconds more time for each " + startingPoint.researchType.substring(0, startingPoint.researchType.length - 1) + " that is processed.");
             }
         });
 
-        $("#startingPointDuplicates").change(function (e) {
+        $("#startingPointDuplicates").change(function(e) {
             startingPoint.duplicates = $("#startingPointDuplicates").prop("checked");
             if (startingPoint.duplicates) {
                 msgBox.warning("Selecting <b>Possible Duplicates</b> will add 1-3 seconds more time for each " + startingPoint.researchType.substring(0, startingPoint.researchType.length - 1) + " that is processed.");
             }
         });
 
-        $("#startingPointCancelButton").unbind('click').bind('click', function (e) {
+        $("#startingPointCancelButton").unbind('click').bind('click', function(e) {
             startingPoint.form.dialog(constants.CLOSE);
         });
 
-        startingPoint.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
+        startingPoint.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function(e) {
             startingPoint.save();
         });
     }
 
     var startingPointController = {
-        open: function () {
+        open: function() {
             open();
         }
     };

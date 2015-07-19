@@ -11,34 +11,11 @@ define(function(require) {
     var findPerson = require('findPerson');
     var person = require('person');
     var research = require('research');
-    var researchController = require('researchController');
 
     function loadEvents() {
-
-
-        $("#optionsButton").unbind('click').bind('click', function(e) {
-            system.initSpinner(findPerson.spinner);
-            findPerson.callerSpinner = findPerson.spinner;
-            $.ajax({
-                url: constants.FIND_PERSON_OPTIONS_URL,
-                success: function(data) {
-                    var $dialogContainer = $("#findPersonOptionsForm");
-                    var $detachedChildren = $dialogContainer.children().detach();
-                    $("<div id=\"findPersonOptionsForm\"></div>").dialog({
-                        width: 260,
-                        title: "Find Options",
-                        open: function() {
-                            $detachedChildren.appendTo($dialogContainer);
-                        }
-                    });
-                    $("#findPersonOptionsForm").empty().append(data);
-                    if (research && research.findPersonOptionsController) {
-                        research.findPersonOptionsController.open();
-                    }
-                }
-            });
+        $("#optionsButton").unbind('click').bind('click', function (e) {
+            findPersonHelper.findOptions(e, findPerson);
         });
-
 
         $("#clearButton").unbind('click').bind('click', function(e) {
             $("#personId").val("");

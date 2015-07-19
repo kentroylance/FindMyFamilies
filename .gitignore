@@ -5989,3 +5989,7 @@ Web.UI/obj/Debug/build.force
 Gedcomx/bin/Debug/RestSharp.xml
 Web.UI/ErrorLogs/error-2015-07-15213506Z-5028523f-031b-449c-8bc5-2876cef20ff2.xml
 Web.UI/ErrorLogs/error-2015-07-15213506Z-55d2aad5-583c-4567-860b-4f41c37ac553.xml
+Web.UI/Content/js/lib/constants.js.orig
+Web.UI/Content/js/main.js.orig
+Web.UI/Views/Research/FindPerson.cshtml.orig
+Web.UI/Web.UI.csproj.orig

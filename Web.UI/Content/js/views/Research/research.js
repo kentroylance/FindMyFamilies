@@ -3,8 +3,8 @@
     var _startingPointController;
     var _findPersonController;
     var _startingPointReportController;
-    var _findPersonOptionsController;
     var _possibleDuplicatesController;
+    var _retrieveController;
 
 
     var research = {
@@ -26,18 +26,19 @@
         set startingPointReportController(value) {
             _startingPointReportController = value;
         },
-        get findPersonOptionsController() {
-            return _findPersonOptionsController;
-        },
-        set findPersonOptionsController(value) {
-            _findPersonOptionsController = value;
-        },
         get possibleDuplicatesController() {
             return _possibleDuplicatesController;
         },
         set possibleDuplicatesController(value) {
             _possibleDuplicatesController = value;
+        },
+        get retrieveController() {
+            return _retrieveController;
+        },
+        set retrieveController(value) {
+            _retrieveController = value;
         }
+
     };
 
     return research;

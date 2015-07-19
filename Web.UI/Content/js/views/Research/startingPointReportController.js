@@ -7,35 +7,38 @@
     // models
     var person = require('person');
     var startingPoint = require('startingPoint');
+    var startingPointReport = require('startingPointReport');
     var research = require('research');
 
     function loadEvents() {
 
-        $("#startingPointReportOptionsButton").unbind('click').bind('click', function(e) {
-            system.initSpinner(startingPointReport.spinner);
-            startingPointReport.callerSpinner = startingPointReport.spinner;
-            $.ajax({
-                url: constants.FIND_PERSON_OPTIONS_URL,
-                success: function(data) {
-                    var $dialogContainer = $("#findPersonOptionsForm");
-                    var $detachedChildren = $dialogContainer.children().detach();
-                    $("<div id=\"findPersonOptionsForm\"></div>").dialog({
-                        width: 450,
-                        title: "Find Person Options",
-                        open: function() {
-                            $detachedChildren.appendTo($dialogContainer);
-                        }
-                    });
-                    $("#findPersonOptionsForm").empty().append(data);
-                    if (research && research.findPersonOptionsController) {
-                        research.findPersonOptionsController.open();
-                    }
-                }
-            });
+        $("#startingPointReportOptionsButton").unbind('click').bind('click', function (e) {
+            findPersonHelper.findOptions(e, startingPointReport);
+        });
+
+        $("#startingPointReportSaveButton").unbind('click').bind('click', function (e) {
+            startingPoint.savePrevious();
+            startingPointReport.form.dialog(constants.CLOSE);
+        });
+
+
+        $("#startingPointReportCancelButton").unbind('click').bind('click', function (e) {
+            startingPointReport.form.dialog(constants.CLOSE);
         });
 
         $("#startingPointReportCloseButton").unbind('click').bind('click', function(e) {
             startingPointReport.form.dialog(constants.CLOSE);
+        });
+
+        startingPointReport.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
+            system.initSpinner(startingPointReport.callerSpinner, true);
+            person.save();
+            if (startingPointReport.callback) {
+                if (typeof (startingPointReport.callback) === "function") {
+                    startingPointReport.callback(person.selected);
+                }
+            }
+//            startingPointReport.reset();
         });
 
         window.nameEvents = {
@@ -45,9 +48,52 @@
                 }
             }
         };
+
+        var $result = $('#eventsResult');
+
+        $('#startingPointsTable').on('all.bs.table', function (e, name, args) {
+                console.log('Event:', name, ', data:', args);
+            })
+            .on('click-row.bs.table', function(e, row, $element) {
+                $result.text('Event: click-row.bs.table');
+            })
+            .on('dbl-click-row.bs.table', function(e, row, $element) {
+                $result.text('Event: dbl-click-row.bs.table');
+            })
+            .on('sort.bs.table', function(e, name, order) {
+                $result.text('Event: sort.bs.table');
+            })
+            .on('check.bs.table', function(e, row) {
+                $result.text('Event: check.bs.table');
+            })
+            .on('uncheck.bs.table', function(e, row) {
+                $result.text('Event: uncheck.bs.table');
+            })
+            .on('check-all.bs.table', function(e) {
+                $result.text('Event: check-all.bs.table');
+            })
+            .on('uncheck-all.bs.table', function(e) {
+                $result.text('Event: uncheck-all.bs.table');
+            })
+            .on('load-success.bs.table', function(e, data) {
+                $result.text('Event: load-success.bs.table');
+            })
+            .on('load-error.bs.table', function(e, status) {
+                $result.text('Event: load-error.bs.table');
+            })
+            .on('column-switch.bs.table', function(e, field, checked) {
+                $result.text('Event: column-switch.bs.table');
+            })
+            .on('page-change.bs.table', function(e, size, number) {
+                $result.text('Event: page-change.bs.table');
+            })
+            .on('search.bs.table', function(e, text) {
+                $result.text('Event: search.bs.table');
+            });
     }
 
     function open() {
+        var currentSpinnerTarget = system.target.id;
         if (system.target) {
             startingPointReport.callerSpinner = system.target.id;
         }
@@ -55,9 +101,9 @@
         startingPointReport.form = $("#startingPointReportForm");
         loadEvents();
 
-        if (startingPointReport.displayType === "start") {
+        if (startingPoint.displayType === "start") {
             $.ajax({
-                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "nonMormon": startingPoint.nonMormon, "born18101850": startingPoint.born18101850, "livedInUSA": startingPoint.livedInUSA, "needOrdinances": startingPoint.ordinances, "hint": startingPoint.hints, "duplicate": startingPoint.duplicates, "reportId": startingPoint.reportId },
+                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "nonMormon": startingPoint.nonMormon, "born18101850": startingPoint.born18101850, "livedInUSA": startingPoint.livedInUSA, "needOrdinances": startingPoint.ordinances, "hint": startingPoint.hints, "duplicate": startingPoint.duplicates, "reportId": person.reportId },
                 url: constants.STARTING_POINT_REPORT_DATA_URL,
                 success: function (data) {
                     startingPoint.previous = data;
@@ -70,10 +116,6 @@
             system.openForm(startingPointReport.form, startingPointReport.formTitleImage, startingPointReport.spinner);
         }
 
-    }
-
-    function close() {
-        system.initSpinner(startingPointReport.callerSpinner, true);
     }
 
     var startingPointReportController = {
@@ -150,4 +192,4 @@ function reasonsFormatter(value) {
     return result;
 }
 
-//# sourceURL=StartingPointReport.js
+//# sourceURL=startingPointReportController.js

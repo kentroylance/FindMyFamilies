@@ -45,6 +45,7 @@
             researchHelper: 'views/research/researchHelper',
             person: 'views/shared/person',
             retrieve: 'views/research/retrieve',
+            retrieveController: 'views/research/retrieveController',
             indexController: 'views/home/indexController'
         },
         map: {
@@ -112,12 +113,16 @@
                 deps: ['jquery', 'startingPoint', 'startingPointReport', 'research', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
                 exports: 'startingPointController'
             },
+            retrieveController: {
+                deps: ['jquery', 'retrieve', 'research', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                exports: 'retrieveController'
+            },
             hintsController: {
                 deps: ['jquery', 'startingPoint', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
                 exports: 'hintsController'
             },
             startingPointReportController: {
-                deps: ['jquery', 'startingPointReport', 'system', 'constants', 'person'],
+                deps: ['jquery', 'startingPointReport', 'research', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
                 exports: 'startingPointReportController'
             },
             possibleDuplicatesController: {

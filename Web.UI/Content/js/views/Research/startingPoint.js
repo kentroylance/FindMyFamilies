@@ -38,6 +38,14 @@
         person.save();
     }
 
+    function savePrevious() {
+        if (_previous) {
+            if (window.localStorage) {
+                localStorage.setItem("startingPointsPrevious", JSON.stringify(_previous));
+            }
+        }
+    }
+
     if (window.localStorage) {
         var startingPointDO = JSON.parse(localStorage.getItem(constants.STARTING_POINT));
         if (!startingPointDO) {
@@ -128,7 +136,10 @@
         save: function() {
             save();
         },
-        clear: function() {
+        savePrevious: function () {
+            savePrevious();
+        },
+        clear: function () {
             clear();
         },
         reset: function() {

@@ -3,14 +3,11 @@ define(function(require) {
     var $ = require('jquery');
     var system = require('system');
     var constants = require('constants');
-    var string = require('string');
     var findPersonHelper = require('findPersonHelper');
 
     // models
     var findPersonOptions = require('findPersonOptions');
     var person = require('person');
-    var findPerson = require('findPerson');
-    var findPersonController = require('findPersonController');
 
     function loadEvents() {
 

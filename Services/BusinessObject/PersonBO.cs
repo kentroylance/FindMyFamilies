@@ -1074,12 +1074,11 @@ namespace FindMyFamilies.BusinessObject {
         }
 
         private StartingPointListItemDO GetStartingPoints(PersonDO personDO, StartingPointInputDO startingPointInputDO, ref SessionDO session) {
-            StartingPointListItemDO startingPointListItemDO = new StartingPointListItemDO("", "", "", "");
+            StartingPointListItemDO startingPointListItemDO = new StartingPointListItemDO();
+            FindListItemDO findListItemDO = (FindListItemDO) startingPointListItemDO;
 
             if (!personDO.Living) {
-                startingPointListItemDO.Id = personDO.Id;
-                startingPointListItemDO.Gender = personDO.Gender;
-                startingPointListItemDO.Fullname = personDO.Fullname;
+                personDAO.PopulateFindListItem(personDO, ref findListItemDO);
                 startingPointListItemDO.Reasons = "";
                 if (startingPointInputDO.Born18101850 && ((personDO.BirthYear >= 1810) && (personDO.BirthYear <= 1850))) {
                     startingPointListItemDO.Reasons += "BornBetween1810and1850[" + personDO.BirthYear.ToString() + "]~";
