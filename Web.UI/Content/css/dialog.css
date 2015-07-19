@@ -265,8 +265,12 @@ hr {
     height: 34px;
     width: 213.5px;
 }
-#checkBoxes {
+.checkBoxes {
    height: 40px !important;
+}
+
+.checkbox-bottom {
+    margin-bottom: -.8em;
 }
 
 /*Change the HTML*/
