@@ -5,12 +5,19 @@ define(function(require) {
     var constants = require('constants');
     var string = require('string');
     var person = require('person');
-    var research = require("research");
-
+    var personUrlOptionsModel = require('personUrlOptions');
     var msgBox;
     var lazyRequire = require("lazyRequire");
     var requireOnce = lazyRequire.once();
     require("lazyload");
+
+    var _startingPointController;
+    var _findPersonController;
+    var _startingPointReportController;
+    var _possibleDuplicatesController;
+    var _retrieveController;
+    var _personUrlOptionsController;
+
 
     function startingPoint() {
         if (system.isAuthenticated()) {
@@ -30,8 +37,8 @@ define(function(require) {
                             }
                         });
                         $("#startingPointForm").empty().append(data);
-                        if (research && research.startingPointController) {
-                            research.startingPointController.open();
+                        if (_startingPointController) {
+                            _startingPointController.open();
                         }
                     }
                 });
@@ -66,8 +73,8 @@ define(function(require) {
                         }
                         );
                         $("#retrieveForm").empty().append(data);
-                        if (research && research.retrieveController) {
-                            research.retrieveController.open();
+                        if (_retrieveController) {
+                            _retrieveController.open();
                         }
                     }
                 });
@@ -108,8 +115,8 @@ define(function(require) {
                         }
                         );
                         $("#findPersonForm").empty().append(data);
-                        if (research && research.findPersonController) {
-                            research.findPersonController.open();
+                        if (_findPersonController) {
+                            _findPersonController.open();
                         }
                     }
                 });
@@ -142,8 +149,8 @@ define(function(require) {
                             }
                         });
                         $("#possibleDuplicatesForm").empty().append(data);
-                        if (research && research.possibleDuplicatesController) {
-                            research.possibleDuplicatesController.open();
+                        if (_possibleDuplicatesController) {
+                            _possibleDuplicatesController.open();
                         }
                     }
                 });
@@ -153,6 +160,78 @@ define(function(require) {
             system.relogin();
         }
     }
+
+    function displayPersonUrls() {
+        if (personUrlOptionsModel.id && system.isAuthenticated()) {
+            $.ajax({
+                url: constants.DISPLAY_PERSON_URLS_URL,
+                data: {
+                    "personId": personUrlOptionsModel.id,
+                    "includeMaidenName": person.includeMaidenName,
+                    "includeMiddleName": person.includeMiddleName,
+                    "includePlace": person.includePlace,
+                    "yearRange": person.yearRange
+                },
+                success: function (data) {
+                    var $dialogContainer = $("#personUrlsForm");
+                    var $detachedChildren = $dialogContainer.children().detach();
+                    $("<div id=\"personUrlsForm\"></div>").dialog({
+                        width: 600,
+                        title: "Research Family",
+                        resizable: false,
+                        minHeight: 0,
+                        maxHeight: $(window).height(),
+                        create: function () {
+                            $(this).css("maxHeight", 700);
+                        },
+                        open: function () {
+                            $detachedChildren.appendTo($dialogContainer);
+                            $(this).dialog("option", "maxHeight", $(window).height());
+                        },
+                        close: function (event, ui) {
+                            event.preventDefault();
+                            $(this).dialog("destroy").remove();
+                        }
+                    });
+                    $("#personUrlsForm").empty().append(data);
+                }
+            });
+        } else {
+            system.relogin();
+        }
+        return false;
+    }
+
+    function personUrlOptions(id, name) {
+        if (id && system.isAuthenticated()) {
+            system.startSpinner();
+            $.ajax({
+                url: constants.PERSON_URL_OPTIONS_URL,
+                success: function (data) {
+                    var $dialogContainer = $("#personUrlOptionsForm");
+                    var $detachedChildren = $dialogContainer.children().detach();
+                    $("<div id=\"personUrlOptionsForm\"></div>").dialog({
+                        width: 400,
+                        title: "Search Options",
+                        open: function () {
+                            $detachedChildren.appendTo($dialogContainer);
+                        }
+
+                    });
+                    $("#personUrlOptionsForm").empty().append(data);
+                    personUrlOptionsModel.id = id;
+                    personUrlOptionsModel.name = name;
+                    if (_personUrlOptionsController) {
+                        _personUrlOptionsController.open();
+                    }
+                }
+            });
+
+        } else {
+            system.relogin();
+        }
+    }
+
 
     var researchHelper = {
         findPerson: function (e, deferred) {
@@ -166,7 +245,47 @@ define(function(require) {
         },
         possibleDuplicates: function (e) {
             return possibleDuplicates(e);
+        },
+        displayPersonUrls: function () {
+            displayPersonUrls();
+        },
+        personUrlOptions: function (id, name) {
+            personUrlOptions(id, name);
+        },
+        get startingPointController() {
+            return _startingPointController;
+        },
+        set startingPointController(value) {
+            _startingPointController = value;
+        },
+        get findPersonController() {
+            return _findPersonController;
+        },
+        set findPersonController(value) {
+            _findPersonController = value;
+        },
+        get startingPointReportController() {
+            return _startingPointReportController;
+        },
+        set startingPointReportController(value) {
+            _startingPointReportController = value;
+        },
+        get possibleDuplicatesController() {
+            return _possibleDuplicatesController;
+        },
+        set possibleDuplicatesController(value) {
+            _possibleDuplicatesController = value;
+        },
+        get retrieveController() {
+            return _retrieveController;
+        },
+        set retrieveController(value) {
+            _retrieveController = value;
+        },
+        set personUrlOptionsController(value) {
+            _personUrlOptionsController = value;
         }
+
 
     };
 

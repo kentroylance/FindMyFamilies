@@ -6,7 +6,7 @@ define(function(require) {
 //    require("css!/Content/css/vendor/formValidation.min.css");
 //    var formValidation = require("formValidation");
 //    var bootstrapValidation = require("bootstrapValidation");
-//    
+//
 
 
     var msgBox;
@@ -18,7 +18,6 @@ define(function(require) {
     // models
     var user = require("user");
     var person = require("person");
-    var research = require("research");
 
 
     $("#startingPoint").unbind("click").bind("click", function (e) {
@@ -40,106 +39,6 @@ define(function(require) {
         researchHelper.possibleDuplicates(e);
         return false;
     });
-
-    function displayPersonUrls() {
-        if (person.personId && system.isAuthenticated()) {
-            $.ajax({
-                url: constants.DISPLAY_PERSON_URLS_URL,
-                data: {
-                    "personId": person.personId,
-                    "includeMaidenName": person.includeMaidenName,
-                    "includeMiddleName": person.includeMiddleName,
-                    "includePlace": person.includePlace,
-                    "yearRange": person.yearRange
-                },
-                success: function(data) {
-                    var $dialogContainer = $("#personUrlsForm");
-                    var $detachedChildren = $dialogContainer.children().detach();
-                    $("<div id=\"personUrlsForm\"></div>").dialog({
-                        width: 600,
-                        title: "Research Family",
-                        resizable: false,
-                        minHeight: 0,
-                        maxHeight: $(window).height(),
-                        create: function() {
-                            $(this).css("maxHeight", 700);
-                        },
-                        open: function() {
-                            $detachedChildren.appendTo($dialogContainer);
-                            $(this).dialog("option", "maxHeight", $(window).height());
-                        },
-                        close: function(event, ui) {
-                            event.preventDefault();
-                            $(this).dialog("destroy").remove();
-                        }
-                    });
-                    $("#personUrlsForm").empty().append(data);
-                }
-            });
-        } else {
-            system.relogin();
-        }
-        return false;
-    }
-
-    function personUrlOptions(personId) {
-        if (personId && system.isAuthenticated()) {
-            person.personId = personId;
-            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
-            $.ajax({
-                url: constants.PERSON_URL_OPTIONS_URL,
-                success: function(data) {
-                    var $dialogContainer = $("#personUrlOptionsForm");
-                    var $detachedChildren = $dialogContainer.children().detach();
-                    $("<div id=\"personUrlOptionsForm\"></div>").dialog({
-                        width: 350,
-                        title: "Search Options",
-                        open: function() {
-                            $detachedChildren.appendTo($dialogContainer);
-                        },
-                        buttons: {
-                            "0": {
-                                id: "ok",
-                                text: "Ok",
-                                icons: { primary: "okIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    PersonUrlOptions.submit();
-                                },
-
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-green"
-                            },
-                            "1": {
-                                id: "close",
-                                text: "Close",
-                                icons: { primary: "closeIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    $(this).dialog("close");
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "2": {
-                                id: "help",
-                                text: "Help",
-                                icons: { primary: "helpIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            }
-
-                        }
-
-                    });
-                    $("#personUrlOptionsForm").empty().append(data);
-                }
-            });
-
-        } else {
-            system.relogin();
-        }
-    }
 
     var domReady = require("domReady");
     domReady(function() {
@@ -605,12 +504,6 @@ define(function(require) {
         },
         retrieveData: function(e) {
             retrieveData(e);
-        },
-        displayPersonUrls: function() {
-            displayPersonUrls();
-        },
-        personUrlOptions: function(personId) {
-            personUrlOptions(personId);
         },
         test: function() {
             //            $.fancybox.message.info("Thanks for subscribing to our monthly newsletter.");

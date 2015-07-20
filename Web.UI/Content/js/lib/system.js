@@ -206,10 +206,10 @@
         '500': defaultHandler
     });
 
-    requirejs.onError = function (err) {
-        alert(err.requireType + '. modules: ' + err.requireModules);
-        throw err;
-    };
+//    requirejs.onError = function (err) {
+//        alert(err.requireType + '. modules: ' + err.requireModules);
+//        throw err;
+//    };
 
 //    requireQueue([
 //            'app',

@@ -42,6 +42,8 @@
             findPersonOptionsController: 'views/research/findPersonOptionsController',
             findPersonOptions: 'views/research/findPersonOptions',
             findPersonHelper: 'views/research/findPersonHelper',
+            personUrlOptions: 'views/research/personUrlOptions',
+            personUrlOptionsController: 'views/research/personUrlOptionsController',
             researchHelper: 'views/research/researchHelper',
             person: 'views/shared/person',
             retrieve: 'views/research/retrieve',
@@ -72,6 +74,9 @@
             },
             findPersonOptions: {
                 exports: 'findPersonOptions'
+            },
+            personUrlOptions: {
+                exports: 'personUrlOptions'
             },
             formValidation: { deps: ['jquery'], exports: "FormValidation" },
             bootstrapTable: { deps: ["jquery", "bootstrap"] },
@@ -106,15 +111,15 @@
                 exports: 'startingPoint'
             },
             researchController: {
-                deps: ['jquery', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload', 'research', 'researchHelper'],
+                deps: ['jquery', 'researchHelper', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload', 'research'],
                 exports: 'researchController'
             },
             startingPointController: {
-                deps: ['jquery', 'startingPoint', 'startingPointReport', 'research', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'startingPoint', 'startingPointReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
                 exports: 'startingPointController'
             },
             retrieveController: {
-                deps: ['jquery', 'retrieve', 'research', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'retrieve', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
                 exports: 'retrieveController'
             },
             hintsController: {
@@ -122,11 +127,11 @@
                 exports: 'hintsController'
             },
             startingPointReportController: {
-                deps: ['jquery', 'startingPointReport', 'research', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'startingPointReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
                 exports: 'startingPointReportController'
             },
             possibleDuplicatesController: {
-                deps: ['jquery', 'possibleDuplicates', 'research', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'possibleDuplicates', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
                 exports: 'possibleDuplicatesController'
             },
             findPersonController: {
@@ -137,12 +142,16 @@
                 deps: ['jquery', 'findPersonOptions', 'findPersonHelper', 'findPerson', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload', 'string'],
                 exports: 'findPersonOptionsController'
             },
+            personUrlOptionsController: {
+                deps: ['jquery', 'personUrlOptions', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload', 'string'],
+                exports: 'personUrlOptionsController'
+            },
             findPersonHelper: {
-                deps: ['jquery', 'system', 'user', 'constants', 'person', 'string'],
+                deps: ['jquery', 'researchHelper', 'system', 'user', 'constants', 'person', 'string'],
                 exports: 'findPersonHelper'
             },
             researchHelper: {
-                deps: ['jquery', 'system', 'user', 'findPerson', 'research', 'constants', 'person', 'string'],
+                deps: ['jquery', 'system', 'user', 'findPerson', 'constants', 'person', 'string'],
                 exports: 'researchHelper'
             },
             lazyload: ["jquery"],

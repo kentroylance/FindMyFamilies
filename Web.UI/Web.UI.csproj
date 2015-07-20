@@ -398,6 +398,8 @@
     <Content Include="Content\js\vendor\spin.min.js" />
     <Content Include="Content\js\vendor\string.js" />
     <Content Include="Content\js\vendor\string.min.js" />
+    <Content Include="Content\js\views\Research\personUrlOptions.js" />
+    <Content Include="Content\js\views\Research\personUrlOptionsController.js" />
     <Content Include="Content\js\views\Research\researchHelper.js" />
     <Content Include="Content\js\views\Research\findPersonOptionsController.js" />
     <Content Include="Content\js\views\Research\findPersonOptions.js" />
@@ -464,7 +466,6 @@
     <Content Include="Content\js\views\Research\HintsReport.js" />
     <Content Include="Content\js\views\Research\IncompleteOrdinances.js" />
     <Content Include="Content\js\views\Research\IncompleteOrdinancesReport.js" />
-    <Content Include="Content\js\views\Research\PersonUrlOptions.js" />
     <Content Include="Content\js\views\Research\PlaceProblems.js" />
     <Content Include="Content\js\views\Research\PlaceProblemsReport.js" />
     <Content Include="Content\js\views\Research\possibleDuplicatesController.js" />

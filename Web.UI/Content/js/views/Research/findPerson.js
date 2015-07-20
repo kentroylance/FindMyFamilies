@@ -17,6 +17,8 @@
     var _gender;
     var _birthYear;
     var _deathYear;
+    var _selected = false;
+
 
     function FindPersonDO(personId, firstName, lastName, gender, birthYear, deathYear) {
         this.personId = personId;
@@ -50,7 +52,7 @@
     }
 
     function reset() {
-        person.selected = false;
+        _selected = false;
         _callback = null;
     }
 
@@ -126,7 +128,14 @@
         },
         set callback(value) {
             _callback = value;
+        },
+        get selected() {
+            return _selected;
+        },
+        set selected(value) {
+            _selected = value;
         }
+
     };
 
     return findPerson;

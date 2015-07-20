@@ -15,7 +15,6 @@ define(function(require) {
     var person = require('person');
     var startingPoint = require('startingPoint');
     var startingPointReport = require('startingPointReport');
-    var research = require('research');
     var retrieve = require('retrieve');
 
     function updateForm() {
@@ -201,16 +200,20 @@ define(function(require) {
 
         $("#startingPointFindPersonButton").unbind('click').bind('click', function(e) {
             researchHelper.findPerson(e, function(result) {
+                var findPersonModel = require('findPerson');
                 if (result) {
-                    var changed = (person.id === $("#startingPointPersonId").val()) ? false : true;
+                    var changed = (findPersonModel.id === $("#startingPointPersonId").val()) ? false : true;
+                    if (changed) {
+                        person.id = findPersonModel.id;
+                        person.name = findPersonModel.name;
+                    }
                     startingPoint.save();
                     person.loadPersons($("#startingPointPersonId"));
                     if (changed) {
                         resetReportId();
                     }
                 }
-                var findPerson = require('findPerson');
-                findPerson.reset();
+                findPersonModel.reset();
             });
             return false;
         });
@@ -266,8 +269,8 @@ define(function(require) {
                         });
                         startingPoint.displayType = "previous";
                         $("#startingPointReportForm").empty().append(data);
-                        if (research && research.startingPointReportController) {
-                            research.startingPointReportController.open();
+                        if (researchHelper && researchHelper.startingPointReportController) {
+                            researchHelper.startingPointReportController.open();
                         }
                     }
                 });
@@ -304,8 +307,8 @@ define(function(require) {
                                         startingPointReport.displayType = "start";
                                         startingPoint.save();
                                         $("#startingPointReportForm").empty().append(data);
-                                        if (research && research.startingPointReportController) {
-                                            research.startingPointReportController.open();
+                                        if (researchHelper && researchHelper.startingPointReportController) {
+                                            researchHelper.startingPointReportController.open();
                                         }
                                     }
                                 });
@@ -384,7 +387,7 @@ define(function(require) {
         }
     };
 
-    research.startingPointController = startingPointController;
+    researchHelper.startingPointController = startingPointController;
     open();
 
     return startingPointController;

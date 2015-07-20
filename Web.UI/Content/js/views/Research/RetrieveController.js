@@ -1,16 +1,15 @@
-﻿define(function(require) {
+define(function(require) {
 
-    var $ = require("jquery");
-    var system = require("system");
-    var msgBox = require("msgBox");
-    var constants = require("constants");
+    var $ = require('jquery');
+    var system = require('system');
+    var msgBox = require('msgBox');
+    var constants = require('constants');
     var researchHelper = require("researchHelper");
 
     // models
     var user = require("user");
     var person = require("person");
     var retrieve = require("retrieve");
-    var research = require('research');
 
 
     function updateForm() {
@@ -213,8 +212,13 @@
 
         $("#retrieveFindPersonButton").unbind('click').bind('click', function(e) {
             researchHelper.findPerson(e, function(result) {
+                var findPersonModel = require('findPerson');
                 if (result) {
-                    var changed = (person.id === $("#retrievePersonId").val()) ? false : true;
+                    var changed = (findPersonModel.id === $("#retrievePersonId").val()) ? false : true;
+                    if (changed) {
+                        person.id = findPersonModel.id;
+                        person.name = findPersonModel.name;
+                    }
                     retrieve.save();
                     person.loadPersons($("#retrievePersonId"), true);
                     if (changed) {
@@ -222,8 +226,7 @@
                         updateResearchData();
                     }
                 }
-                var findPerson = require('findPerson');
-                findPerson.reset();
+                findPersonModel.reset();
             });
             return false;
         });
@@ -293,7 +296,7 @@
         }
     };
 
-    research.retrieveController = retrieveController;
+    researchHelper.retrieveController = retrieveController;
     open();
 
     return retrieveController;

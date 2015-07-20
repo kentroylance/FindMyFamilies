@@ -12,7 +12,6 @@ define(function (require) {
     var person = require('person');
     var possibleDuplicates = require('possibleDuplicates');
 //    var possibleDuplicatesReport = require('possibleDuplicatesReport');
-    var research = require('research');
 
     function updateForm() {
         if (person.id) {
@@ -288,8 +287,8 @@ define(function (require) {
                                 });
                                 possibleDuplicatesReport.displayType = "start";
                                 possibleDuplicatesReport.form.empty().append(data);
-                                if (research && research.possibleDuplicatesReportController) {
-                                    research.possibleDuplicatesReportController.open();
+                                if (researchHelper && researchHelper.possibleDuplicatesReportController) {
+                                    researchHelper.possibleDuplicatesReportController.open();
                                 }
                             }
                         });
@@ -335,7 +334,7 @@ define(function (require) {
         }
     };
 
-    research.possibleDuplicatesController = possibleDuplicatesController;
+    researchHelper.possibleDuplicatesController = possibleDuplicatesController;
     open();
 
     return possibleDuplicatesController;
