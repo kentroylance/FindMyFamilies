@@ -63,7 +63,7 @@
         }
     }
 
-    function loadPersons(id, refresh) {
+    function loadPersons(id) {
         var optionalhtml = '';
         isInList(_id, _name);
         id.empty();
@@ -277,8 +277,8 @@
         save: function () {
             save();
         },
-        loadPersons: function (id, refresh) {
-            loadPersons(id, refresh);
+        loadPersons: function (id) {
+            loadPersons(id);
         },
         updateFromFindPerson: function (id, name) {
             updateFromFindPerson(id, name);
