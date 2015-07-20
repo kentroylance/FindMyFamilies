@@ -67,6 +67,10 @@
                 deps: ['jquery', 'person', 'constants'],
                 exports: 'possibleDuplicates'
             },
+            hints: {
+                deps: ['jquery', 'person', 'constants'],
+                exports: 'hints'
+            },
             startingPointReport: {
                 exports: 'startingPointReport'
             },
@@ -118,7 +122,7 @@
                 exports: 'retrieveController'
             },
             hintsController: {
-                deps: ['jquery', 'startingPoint', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'hints', 'research', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
                 exports: 'hintsController'
             },
             startingPointReportController: {

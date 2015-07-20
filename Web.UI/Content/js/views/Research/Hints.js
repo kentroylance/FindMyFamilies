@@ -8,7 +8,6 @@
     var _formTitleImage = "fa fmf-hint24";
     var _form = $("#hintsForm");
     var _previous;
-    var _displayType = "start";
     var _generationAncestors = constants.GENERATION;
     var _generationDescendants = "1";
     var _spinner = "hintsSpinner";
@@ -35,11 +34,11 @@
             hintsDO = new HintsDO();
         }
         if (!hintsDO.researchType) {
-            hints.topScore = true;
-            hints.count = false;
+            _topScore = true;
+            _count = false;
         }
-        __topScore = hints.topScore;
-        _count = hints.count;
+        _topScore = hintsDO.topScore;
+        _count = hintsDO.count;
     }
 
     var hints = {

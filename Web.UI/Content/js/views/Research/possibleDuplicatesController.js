@@ -47,7 +47,7 @@ define(function (require) {
         $("#possibleDuplicatesGenerationDiv").append(select);
         $('#possibleDuplicatesGenerationDiv').nextAll().remove();
         if ((person.researchType === "Ancestors") && (person.reportId === constants.REPORT_ID)) {
-            $("#possibleDuplicatesGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: top; margin-top: -0.625em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -0.965em\">&nbsp;<span style=\"font-weight: normal\">Add Children</span></label>");
+            $("#possibleDuplicatesGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: middle; margin-top: -0.625em; margin-left: 1em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -1.4em\">&nbsp;<span style=\"font-weight: normal\">Add Children</span></label>");
         }
         $("#possibleDuplicatesGeneration").change(function (e) {
             var generation = $("#possibleDuplicatesGeneration").val();

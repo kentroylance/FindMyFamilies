@@ -39,6 +39,7 @@
     var STARTING_POINT_REPORT_DATA_URL = '/Home/StartingPointReportData';
     var STARTING_POINT_HTML = '/Home/StartingPointReportHtml';
     var POSSIBLE_DUPLICATES_REPORT_HTML_URL = '/Home/PossibleDuplicatesReportHtml';
+    var HINTS_REPORT_HTML_URL = '/Home/HintsReportHtml';
     var FIND_PERSON_URL = '/Home/FindPerson';
     var DISPLAY_PERSON_URLS_URL = "/Home/DisplayPersonUrls";
     var PERSON_URL_OPTIONS_URL = "/Home/PersonUrlOptions";
@@ -246,6 +247,9 @@
         },
         get POSSIBLE_DUPLICATES_REPORT_HTML_URL() {
             return POSSIBLE_DUPLICATES_REPORT_HTML_URL;
+        },
+        get HINTS_REPORT_HTML_URL() {
+            return HINTS_REPORT_HTML_URL;
         },
         get RETRIEVE_URL() {
             return RETRIEVE_URL;

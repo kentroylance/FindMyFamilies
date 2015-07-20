@@ -41,6 +41,11 @@ define(function(require) {
         return false;
     });
 
+    $("#hints").unbind("click").bind("click", function (e) {
+        researchHelper.hints(e);
+        return false;
+    });
+
     function displayPersonUrls() {
         if (person.personId && system.isAuthenticated()) {
             $.ajax({
@@ -488,87 +493,6 @@ define(function(require) {
 
                     });
                     $("#placeProblemsForm").empty().append(data);
-                }
-            });
-
-        } else {
-            system.relogin();
-        }
-        return false;
-    });
-
-
-    $("#hints").unbind("click").bind("click", function(e) {
-        e.preventDefault();
-        if (system.isAuthenticated()) {
-            system.startSpinner(constants.DEFAULT_SPINNER_AREA);
-            $.ajax({
-                url: constants.HINTS_URL,
-                success: function(data) {
-                    var $dialogContainer = $("#hintsForm");
-                    var $detachedChildren = $dialogContainer.children().detach();
-                    $("<div id=\"hintsForm\"></div>").dialog({
-                        width: 775,
-                        title: "Hints",
-                        open: function() {
-                            $detachedChildren.appendTo($dialogContainer);
-                        },
-                        buttons: {
-                            "0": {
-                                id: "submit",
-                                text: "Find Hints",
-                                icons: { primary: "submitIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    Hints.submit();
-                                },
-
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-green"
-                            },
-                            "1": {
-                                id: "previous",
-                                text: "Previous",
-                                icons: { primary: "previousIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    Hints.displayPrevious();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "2": {
-                                id: "reset",
-                                text: "Reset",
-                                icons: { primary: "resetIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    Hints.reset();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "3": {
-                                id: "close",
-                                text: "Close",
-                                icons: { primary: "closeIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    $(this).dialog("close");
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "4": {
-                                id: "help",
-                                text: "Help",
-                                icons: { primary: "helpIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            }
-
-                        }
-
-                    });
-                    $("#hintsForm").empty().append(data);
                 }
             });
 
