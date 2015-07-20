@@ -232,6 +232,39 @@ define(function(require) {
         }
     }
 
+    function hints(e) {
+        e.preventDefault();
+        system.startSpinner();
+        if (system.isAuthenticated()) {
+            requireOnce(["jqueryUiOptions", "bootstrapTable", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
+            }, function () {
+                var hints = require('hints');
+                hints.callerSpinner = system.target.id;
+                $.ajax({
+                    url: constants.HINTS_URL,
+                    success: function (data) {
+                        var $dialogContainer = $("#hintsForm");
+                        var $detachedChildren = $dialogContainer.children().detach();
+                        $("<div id=\"hintsForm\"></div>").dialog({
+                            width: 775,
+                            title: "Hints",
+                            open: function () {
+                                $detachedChildren.appendTo($dialogContainer);
+                            }
+                        });
+                        $("#hintsForm").empty().append(data);
+                        if (research && research.hintsController) {
+                            research.hintsController.open();
+                        }
+                    }
+                });
+            }
+            );
+        } else {
+            system.relogin();
+        }
+    }
+
 
     var researchHelper = {
         findPerson: function (e, deferred) {
@@ -284,7 +317,12 @@ define(function(require) {
         },
         set personUrlOptionsController(value) {
             _personUrlOptionsController = value;
+        },
+          hints: function (e) {
+            return hints(e);
         }
+
+    };
 
 
     };

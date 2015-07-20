@@ -462,7 +462,7 @@
     <Content Include="Content\js\views\Research\DateProblemsReport.js" />
     <Content Include="Content\js\views\Research\FindClues.js" />
     <Content Include="Content\js\views\Research\FindCluesReport.js" />
-    <Content Include="Content\js\views\Research\Hints1.js" />
+    <Content Include="Content\js\views\Research\hintsController.js" />
     <Content Include="Content\js\views\Research\HintsReport.js" />
     <Content Include="Content\js\views\Research\IncompleteOrdinances.js" />
     <Content Include="Content\js\views\Research\IncompleteOrdinancesReport.js" />
