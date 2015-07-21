@@ -5,6 +5,7 @@ define(function(require) {
     var constants = require('constants');
     var string = require('string');
     var person = require('person');
+    var researchHelper = require('researchHelper');
 
     var _findPersonOptionsController;
     var _findUrls = {};
@@ -25,6 +26,66 @@ define(function(require) {
     _findUrls['fs-search'] = 'Family Search - Search';
     _findUrls['fs-person'] = 'Family Search - Person';
     _findUrls['google'] = 'Google Search';
+
+
+    function personUrlOptions(personId) {
+        if (personId && system.isAuthenticated()) {
+            person.id = personId;
+            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
+            $.ajax({
+                url: constants.PERSON_URL_OPTIONS_URL,
+                success: function (data) {
+                    var $dialogContainer = $("#personUrlOptionsForm");
+                    var $detachedChildren = $dialogContainer.children().detach();
+                    $("<div id=\"personUrlOptionsForm\"></div>").dialog({
+                        width: 350,
+                        title: "Search Options",
+                        open: function () {
+                            $detachedChildren.appendTo($dialogContainer);
+                        },
+                        buttons: {
+                            "0": {
+                                id: "ok",
+                                text: "Ok",
+                                icons: { primary: "okIcon" },
+                                click: function (event) {
+                                    event.preventDefault();
+                                    PersonUrlOptions.submit();
+                                },
+
+                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-green"
+                            },
+                            "1": {
+                                id: "close",
+                                text: "Close",
+                                icons: { primary: "closeIcon" },
+                                click: function (event) {
+                                    event.preventDefault();
+                                    $(this).dialog("close");
+                                },
+                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
+                            },
+                            "2": {
+                                id: "help",
+                                text: "Help",
+                                icons: { primary: "helpIcon" },
+                                click: function (event) {
+                                    event.preventDefault();
+                                },
+                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
+                            }
+
+                        }
+
+                    });
+                    $("#personUrlOptionsForm").empty().append(data);
+                }
+            });
+
+        } else {
+            system.relogin();
+        }
+    }
 
     function getMiddleNameQuote(middleName) {
         var result = "";
@@ -187,11 +248,16 @@ define(function(require) {
         person.includeMiddleName = true;
         person.includePlace = true;
 
+        window.researchHelper = researchHelper;
+
         menuOptions += "<ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"dLabel\" >";
         $.each(person.findPersonOptions, function(key, value) {
             switch (value) {
-            case 'fmf-urls':
-                menuOptions += "<li><a onclick=\"researchController.personUrlOptions('" + row.id + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-family16\"></span> Family Research Urls</a></li>";
+                case 'fmf-urls':
+                    var isOpen = $("#personUrlsForm").is(':visible');
+                    if (!isOpen) {
+                        menuOptions += "<li><a onclick=\"researchHelper.personUrlOptions('" + row.id + "','" + row.fullName + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-family16\"></span> Family Research Urls</a></li>";
+                    }
                 break;
             case 'google':
                 menuOptions += "<li><a href=\"" + constants.GOOGLE + row.firstName + getMiddleName(row.middleName, constants.GOOGLE) + "+" + getLastName(row.lastName) + "+" + getBirthYear(row.birthYear, constants.GOOGLE) + "+" + getDeathYear(row.deathYear, constants.GOOGLE) + "+" + getPlace(row.birthPlace, constants.GOOGLE) + "\" target=\" _tab\" ><span class=\"fa fmf-google16\"></span> Google</a></li>";
@@ -265,8 +331,8 @@ define(function(require) {
     }
 
     var findPersonHelper = {
-        getMenuOptions: function(row) {
-            return getMenuOptions(row);
+        getMenuOptions: function(row, formName) {
+            return getMenuOptions(row, formName);
         },
         get findUrls() {
             return _findUrls;

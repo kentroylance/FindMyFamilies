@@ -10,7 +10,7 @@ define(function(require) {
     // models
     var findPerson = require('findPerson');
     var person = require('person');
-    var research = require('research');
+    var researchHelper = require('researchHelper');
 
     function loadEvents() {
         $("#optionsButton").unbind('click').bind('click', function (e) {
@@ -52,7 +52,7 @@ define(function(require) {
         });
 
         $("#findPersonSelectButton").unbind('click').bind('click', function (e) {
-            if (!person.selected) {
+            if (!findPerson.selected) {
                 msgBox.message("You must first select a person by checking the checkbox before proceeding");
                 $('#eventsTable').focus();
             } else {
@@ -61,7 +61,7 @@ define(function(require) {
         });
 
         $("#findPersonCancelButton").unbind('click').bind('click', function (e) {
-            person.selected = false;
+            findPerson.selected = false;
             findPerson.form.dialog(constants.CLOSE);
         });
 
@@ -74,7 +74,7 @@ define(function(require) {
             person.save();
             if (findPerson.callback) {
                 if (typeof (findPerson.callback) === "function") {
-                    findPerson.callback(person.selected);
+                    findPerson.callback(findPerson.selected);
                 }
             }
             findPerson.reset();
@@ -105,16 +105,16 @@ define(function(require) {
             .on('check.bs.table', function(e, row) {
                 $result.text('Event: check.bs.table');
                 if (row.state && row.id) {
-                    person.id = row.id;
-                    person.name = row.fullName;
-                    person.selected = true;
+                    findPerson.id = row.id;
+                    findPerson.name = row.fullName;
+                    findPerson.selected = true;
                 }
             })
             .on('uncheck.bs.table', function(e, row) {
                 $result.text('Event: uncheck.bs.table');
                 //        person.id = row.id;
                 //        person.name = row.fullName;
-                person.selected = false;
+                findPerson.selected = false;
             })
             .on('check-all.bs.table', function(e) {
                 $result.text('Event: check-all.bs.table');
@@ -336,7 +336,7 @@ define(function(require) {
 
     };
 
-    research.findPersonController = findPersonController;
+    researchHelper.findPersonController = findPersonController;
     open();
 
     return findPersonController;

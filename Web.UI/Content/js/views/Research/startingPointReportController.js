@@ -1,14 +1,14 @@
-﻿define(function (require) {
+define(function (require) {
     var $ = require('jquery');
     var system = require('system');
     var constants = require('constants');
     var findPersonHelper = require('findPersonHelper');
+    var researchHelper = require('researchHelper');
 
     // models
     var person = require('person');
     var startingPoint = require('startingPoint');
     var startingPointReport = require('startingPointReport');
-    var research = require('research');
 
     function loadEvents() {
 
@@ -127,7 +127,7 @@
         }
     };
 
-    research.startingPointReportController = startingPointReportController;
+    researchHelper.startingPointReportController = startingPointReportController;
     open();
 
     return startingPointReportController;

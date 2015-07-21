@@ -15,7 +15,6 @@
     var _yearRange = constants.YEAR_RANGE;
     var _history = {};
     var _findPersonOptions = {};
-    var _selected = false;
     var _callerSpinner;
     var _reportId = constants.REPORT_ID;
     var _addChildren;
@@ -126,6 +125,9 @@
             _includeMiddleName = person.includeMiddleName;
             _includePlace = person.includePlace;
             _yearRange = person.yearRange;
+            if (!_yearRange) {
+                _yearRange = constants.YEAR_RANGE;
+            }
             _history = person.history;
             _findPersonOptions = person.findPersonOptions;
 
@@ -178,7 +180,6 @@
         _yearRange = constants.YEAR_RANGE;
         _history = {};
         _findPersonOptions = {};
-        _selected = false;
         _callerSpinner = "";
     }
 
@@ -294,12 +295,6 @@
         },
         clear: function () {
             clear();
-        },
-        get selected() {
-            return _selected;
-        },
-        set selected(value) {
-            _selected = value;
         },
         get callerSpinner() {
             return _callerSpinner;

@@ -26,17 +26,6 @@ define(function(require) {
         });
     }
 
-    function open() {
-        if (system.target) {
-            findPersonOptions.callerSpinner = system.target.id;
-        }
-
-        findPersonOptions.form = $("#findPersonOptionsForm");
-        loadEvents();
-        loadOptions();
-        system.openForm(findPersonOptions.form, findPersonOptions.formTitleImage, findPersonOptions.spinner, $('#findPersonOptions1'));
-    }
-
     function loadOptions() {
         var select1 = $("#findPersonOptions1");
         $.each(findPersonHelper.findUrls, function (i, value) {
@@ -73,8 +62,17 @@ define(function(require) {
         select3.val(person.findPersonOptions[2]);
         select4.val(person.findPersonOptions[3]);
         select5.val(person.findPersonOptions[4]);
+    }
 
+    function open() {
+        if (system.target) {
+            findPersonOptions.callerSpinner = system.target.id;
+        }
 
+        findPersonOptions.form = $("#findPersonOptionsForm");
+        loadEvents();
+        loadOptions();
+        system.openForm(findPersonOptions.form, findPersonOptions.formTitleImage, findPersonOptions.spinner, $('#findPersonOptions1'));
     }
 
     function close() {

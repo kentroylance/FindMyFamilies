@@ -3,7 +3,7 @@
     <form class="form-horizontal" role="form">
         <div class="form-group">
             <label for="personUrlOptionsYearRange" class="col-sm-5 control-label">Year Range:</label>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <select class="form-control select2Digit" id="personUrlOptionsYearRange">
                     <option>0</option>
                     <option>1</option>
@@ -14,8 +14,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="personUrlOptionsMaidenName" class="col-sm-5 control-label">&nbsp;</label>
-            <div class="col-sm-7">
+            <label for="personUrlOptionsMaidenName" class="col-sm-5 control-label">Options:</label>
+            <div class="col-sm-7" style="margin-top: 9px;">
                 <div class="input-group">
                     <input id="personUrlOptionsMaidenName" type="checkbox" /><label for="personUrlOptionsMaidenName">&nbsp;<span style="font-weight: normal">Maiden Name</span></label>&nbsp;&nbsp;
                 </div>
@@ -37,18 +37,16 @@
                 </div>
             </div>
         </div>
+        <hr />
+        <div class="row">
+            <div class="text-center">
+                <button id="personUrlOptionsOkButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-ok24 dialog-buttons"></i> OK</button>
+                <button id="personUrlOptionsCloseButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-close24 dialog-buttons"></i> Close</button>
+            </div>
+        </div>
     </form>
 </div>
 
-<div id="personUrlOptionsSpinner" style="position: fixed; top: 50%; left: 50%"></div>
+<div id="personUrlOptionsSpinner"/>
 
-<script type="text/javascript">
-    $(function () {
-        var scriptTag = document.createElement("script");
-        scriptTag.src = "/Views/Home/Research/ResearchFamily/PersonUrlOptions.js";
-        document.head.appendChild(scriptTag);
-    });
-</script>
-
-@*<script type="text/javascript" src="~/Views/Home/Research/ResearchFamily/PersonUrlOptions.js"></script>*@
-
+<script type="text/javascript">require(['main'], function (main) { require(['personUrlOptionsController']); });</script>

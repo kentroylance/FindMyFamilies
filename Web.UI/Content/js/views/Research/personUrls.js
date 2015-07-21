@@ -1,16 +1,16 @@
 ﻿define(function (require) {
 
-    var _formName = "personUrlOptionsForm";
+    var _formName = "personUrlsForm";
     var _formTitleImage = "fmf-family24";
-    var _form = $("#personUrlOptionsForm");
-    var _spinner = "personUrlOptionsSpinner";
+    var _form = $("#personUrlsForm");
+    var _spinner = "personUrlsSpinner";
     var _callerSpinner;
 
     var _id;
     var _name;
 
 
-    var personUrlOptions = {
+    var personUrls = {
         formName: _formName,
         formTitleImage: _formTitleImage,
         spinner: _spinner,
@@ -42,7 +42,7 @@
 
     };
 
-    return personUrlOptions;
+    return personUrls;
 });
 
-//# sourceURL=personUrlOptions.js
+//# sourceURL=personUrls.js

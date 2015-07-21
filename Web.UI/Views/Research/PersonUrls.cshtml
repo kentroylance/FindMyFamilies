@@ -18,8 +18,7 @@
                 <b>Father:</b>
             </div>
             <div class="col-sm-10">
-                @if (!Model.Person.Father.IsEmpty)
-                {
+                @if (!Model.Person.Father.IsEmpty) {
                     @Html.Raw(AncestryHelper.PersonDropDown(Model.Person.Father, Model))
                     @*                    @Html.Raw(Model.Person.Father.Fullname + ",  " + Model.Person.Father.LifeSpan + ",  " + AncestryHelper.GetYearsLived(Model.Person.Father) + " - ")*@
                     @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.PersonUrl(Model.Person.Father, Model) + "\" target=\"_blank\">Person</a>,&nbsp;")*@
@@ -27,9 +26,7 @@
                     @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.FanChartUrl(Model.Person.Father, Model) + "\" target=\"_blank\">Fan</a>,&nbsp;")*@
                     @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.DescendancyUrl(Model.Person.Father, Model) + "\" target=\"_blank\">Descendancy</a>,&nbsp;")*@
                     @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.familySearchUrl(Model.Person.Father, Model) + "\" target=\"_blank\">Search</a>")*@
-                }
-                else
-                {
+                } else {
                     @Html.Raw("&nbsp;")
                 }
             </div>
@@ -38,8 +35,7 @@
                 <b>Mother:</b>
             </div>
             <div class="col-sm-10">
-                @if (!Model.Person.Mother.IsEmpty)
-                {
+                @if (!Model.Person.Mother.IsEmpty) {
                     @Html.Raw(AncestryHelper.PersonDropDown(Model.Person.Mother, Model))
                     @*                    @Html.Raw(Model.Person.Mother.Fullname + ",  " + Model.Person.Mother.LifeSpan + ",  " + AncestryHelper.GetYearsLived(Model.Person.Mother) + " - ")*@
                     @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.PersonUrl(Model.Person.Mother, Model) + "\" target=\"_blank\">Person</a>,&nbsp;")*@
@@ -47,9 +43,7 @@
                     @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.FanChartUrl(Model.Person.Mother, Model) + "\" target=\"_blank\">Fan</a>,&nbsp;")*@
                     @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.DescendancyUrl(Model.Person.Mother, Model) + "\" target=\"_blank\">Descendancy</a>,&nbsp;")*@
                     @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.familySearchUrl(Model.Person.Mother, Model) + "\" target=\"_blank\">Search</a>")*@
-                }
-                else
-                {
+                } else {
                     @Html.Raw("&nbsp;")
                 }
             </div>
@@ -58,8 +52,7 @@
                 <b>Spouse:</b>
             </div>
             <div class="col-sm-10">
-                @if (Model.Person.Spouses.Count > 0)
-                {
+                @if (Model.Person.Spouses.Count > 0) {
                     @Html.Raw(AncestryHelper.PersonDropDown(Model.Person.SortedSpouses[0], Model))
                     @*                    @Html.Raw(Model.Person.SortedSpouses[0].Fullname + ",  " + Model.Person.SortedSpouses[0].LifeSpan + ",  " + AncestryHelper.GetYearsLived(Model.Person.SortedSpouses[0]) + " - ")*@
                     @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.PersonUrl(Model.Person.SortedSpouses[0], Model) + "\" target=\"_blank\">Person</a>,&nbsp;")*@
@@ -67,9 +60,7 @@
                     @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.FanChartUrl(Model.Person.SortedSpouses[0], Model) + "\" target=\"_blank\">Fan</a>,&nbsp;")*@
                     @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.DescendancyUrl(Model.Person.SortedSpouses[0], Model) + "\" target=\"_blank\">Descendancy</a>,&nbsp;")*@
                     @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.familySearchUrl(Model.Person.SortedSpouses[0], Model) + "\" target=\"_blank\">Search</a>")*@
-                }
-                else
-                {
+                } else {
                     @Html.Raw("&nbsp;")
                 }
             </div>
@@ -79,20 +70,15 @@
             </div>
 
             <div class="col-sm-10">
-                @if ((Model.Person.Spouses.Count > 0) && Model.Person.SortedSpouses[0].Children.Count > 0)
-                {
+                @if ((Model.Person.Spouses.Count > 0) && Model.Person.SortedSpouses[0].Children.Count > 0) {
                     @Html.Raw(AncestryHelper.PersonDropDown(Model.Person.SortedSpouses[0].SortedChildren[0], Model))
-                }
-                else
-                {
+                } else {
                     @Html.Raw("&nbsp;")
                 }
             </div>
 
-            @if ((Model.Person.Spouses.Count > 0) && Model.Person.SortedSpouses[0].Children.Count > 1)
-            {
-                for (int i = 1; i < Model.Person.SortedSpouses[0].Children.Count; i++)
-                {
+            @if ((Model.Person.Spouses.Count > 0) && Model.Person.SortedSpouses[0].Children.Count > 1) {
+                for (int i = 1; i < Model.Person.SortedSpouses[0].Children.Count; i++) {
                     @Html.Raw("<div class=\"col-sm-2\">")
                     ;
                     @Html.Raw("&nbsp;")
@@ -112,12 +98,9 @@
             }
 
 
-            @if (Model.Person.Spouses.Count > 1)
-            {
-                foreach (var spouse in Model.Person.SortedSpouses)
-                {
-                    if (!Model.Person.SortedSpouses[0].Id.Equals(spouse.Id))
-                    {
+            @if (Model.Person.Spouses.Count > 1) {
+                foreach (var spouse in Model.Person.SortedSpouses) {
+                    if (!Model.Person.SortedSpouses[0].Id.Equals(spouse.Id)) {
                         @Html.Raw("<div class=\"col-sm-2\">")
                         @Html.Raw("<b>Spouse:</b>")
                         @Html.Raw("</div>")
@@ -137,8 +120,7 @@
                         @Html.Raw("</div>")
 
                         @Html.Raw("<div class=\"col-sm-10\">")
-                        if (spouse.Children.Count > 0)
-                        {
+                        if (spouse.Children.Count > 0) {
                             @Html.Raw(AncestryHelper.PersonDropDown(spouse.SortedChildren[0], Model))
 @*                            @Html.Raw(spouse.SortedChildren[0].Fullname + ",  " + spouse.SortedChildren[0].LifeSpan + ",  " + AncestryHelper.GetYearsLived(spouse.SortedChildren[0]) + " - ")*@
 @*                            @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.PersonUrl(spouse.SortedChildren[0], Model) + "\" target=\"_blank\">Person</a>,&nbsp;")*@
@@ -146,17 +128,13 @@
 @*                            @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.FanChartUrl(spouse.SortedChildren[0], Model) + "\" target=\"_blank\">Fan</a>,&nbsp;")*@
 @*                            @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.DescendancyUrl(spouse.SortedChildren[0], Model) + "\" target=\"_blank\">Descendancy</a>,&nbsp;")*@
 @*                            @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.familySearchUrl(spouse.SortedChildren[0], Model) + "\" target=\"_blank\">Search</a>")*@
-                        }
-                        else
-                        {
+                        } else {
                             @Html.Raw("&nbsp;")
                         }
                         @Html.Raw("</div>")
 
-                        if (spouse.Children.Count > 1)
-                        {
-                            for (int i = 1; i < spouse.Children.Count; i++)
-                            {
+                        if (spouse.Children.Count > 1) {
+                            for (int i = 1; i < spouse.Children.Count; i++) {
                                 @Html.Raw("<div class=\"col-sm-2\">")
                                 @Html.Raw("&nbsp;")
                                 @Html.Raw("</div>")
@@ -175,8 +153,7 @@
                 }
             }
 
-            @if (!Model.Person.Living && !(Model.Person.BirthYear <= (DateTime.Now.Year - 110)))
-            {
+            @if (!Model.Person.Living && !(Model.Person.BirthYear <= (DateTime.Now.Year - 110))) {
                 @Html.Raw("<div class=\"col-sm-2\">")
                 ;
                 @Html.Raw("&nbsp;")
@@ -195,13 +172,14 @@
                 @Html.Raw("</div>")
             }
         </div>
+        <hr />
+        <div class="row">
+            <div class="text-center">
+                <button id="personUrlsCloseButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-close24 dialog-buttons"></i> Close</button>
+            </div>
+        </div>
     </form>
 </div>
-<div id="personUrlsSpinner" style="position: fixed; top: 50%; left: 50%"></div>
+<div id="personUrlsSpinner" />
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        openForm($("#personUrlsForm"), 'fmf24-report');
-//        msgBox.message("Error retrieving descendant data");
-    });
-</script>
+<script type="text/javascript">require(['main'], function (main) { require(['personUrlsController']); });</script>
