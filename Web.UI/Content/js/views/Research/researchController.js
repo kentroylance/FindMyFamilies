@@ -6,7 +6,7 @@ define(function(require) {
 //    require("css!/Content/css/vendor/formValidation.min.css");
 //    var formValidation = require("formValidation");
 //    var bootstrapValidation = require("bootstrapValidation");
-//
+//    
 
 
     var msgBox;
@@ -18,6 +18,7 @@ define(function(require) {
     // models
     var user = require("user");
     var person = require("person");
+    var research = require("research");
 
 
     $("#startingPoint").unbind("click").bind("click", function (e) {
@@ -377,6 +378,12 @@ define(function(require) {
         },
         retrieveData: function(e) {
             retrieveData(e);
+        },
+        displayPersonUrls: function() {
+            displayPersonUrls();
+        },
+        personUrlOptions: function(personId) {
+            personUrlOptions(personId);
         },
         test: function() {
             //            $.fancybox.message.info("Thanks for subscribing to our monthly newsletter.");

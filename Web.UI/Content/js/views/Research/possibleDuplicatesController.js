@@ -3,6 +3,7 @@ define(function(require) {
     var $ = require('jquery');
     var system = require('system');
     var msgBox = require('msgBox');
+    var retrieve = require('retrieve');
     var constants = require('constants');
     var researchHelper = require("researchHelper");
 
@@ -15,6 +16,7 @@ define(function(require) {
     var person = require('person');
     var possibleDuplicates = require('possibleDuplicates');
 //    var possibleDuplicatesReport = require('possibleDuplicatesReport');
+    
     var retrieve = require('retrieve');
 
     function updateForm() {
