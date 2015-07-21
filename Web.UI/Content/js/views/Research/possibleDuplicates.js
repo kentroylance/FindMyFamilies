@@ -5,9 +5,10 @@
     var constants = require('constants');
 
     var _formName = "possibleDuplicatesForm";
-    var _formTitleImage = "fmf-duplicates24";
+    var _formTitleImage = "fa fmf-duplicates24";
     var _form = $("#possibleDuplicatesForm");
     var _previous;
+    var _displayType = "start";
     var _generationAncestors = constants.GENERATION;
     var _generationDescendants = "1";
     var _spinner = "possibleDuplicatesSpinner";
@@ -23,11 +24,19 @@
     function save() {
         if (window.localStorage) {
             var possibleDuplicates = new PossibleDuplicatesDO(_includePossibleDuplicates, _includePossibleMatches);
-            localStorage.setItem("PossibleDuplicates", JSON.stringify(possibleDuplicates));
+            localStorage.setItem(constants.POSSIBLE_DUPLICATES, JSON.stringify(possibleDuplicatesDO));
         }
         person.save();
     }
 
+    function savePrevious() {
+        if (_previous) {
+	    if (window.localStorage) {
+                localStorage.setItem("possibleDuplicatesPrevious", JSON.stringify(_previous));
+            }
+        }
+    }
+    
     if (window.localStorage) {
         var possibleDuplicatesDO = JSON.parse(localStorage.getItem(constants.POSSIBLE_DUPLICATES));
         if (!possibleDuplicatesDO) {
@@ -89,7 +98,10 @@
         save: function() {
             save();
         },
-        clear: function() {
+        savePrevious: function () {
+            savePrevious();
+        },
+        clear: function () {
             clear();
         },
         reset: function() {

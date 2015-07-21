@@ -6,7 +6,7 @@ define(function(require) {
 //    require("css!/Content/css/vendor/formValidation.min.css");
 //    var formValidation = require("formValidation");
 //    var bootstrapValidation = require("bootstrapValidation");
-//
+//    
 
 
     var msgBox;
@@ -18,6 +18,7 @@ define(function(require) {
     // models
     var user = require("user");
     var person = require("person");
+    var research = require("research");
 
 
     $("#startingPoint").unbind("click").bind("click", function (e) {
@@ -45,6 +46,115 @@ define(function(require) {
         return false;
     });
 
+    $("#incompleteOrdinances").unbind("click").bind("click", function (e) {
+        researchHelper.incompleteOrdinances(e);
+        return false;
+    });
+
+    $("#dateProblems").unbind("click").bind("click", function (e) {
+        researchHelper.dateProblems(e);
+        return false;
+    });
+
+    function displayPersonUrls() {
+        if (person.personId && system.isAuthenticated()) {
+            $.ajax({
+                url: constants.DISPLAY_PERSON_URLS_URL,
+                data: {
+                    "personId": person.personId,
+                    "includeMaidenName": person.includeMaidenName,
+                    "includeMiddleName": person.includeMiddleName,
+                    "includePlace": person.includePlace,
+                    "yearRange": person.yearRange
+                },
+                success: function(data) {
+                    var $dialogContainer = $("#personUrlsForm");
+                    var $detachedChildren = $dialogContainer.children().detach();
+                    $("<div id=\"personUrlsForm\"></div>").dialog({
+                        width: 600,
+                        title: "Research Family",
+                        resizable: false,
+                        minHeight: 0,
+                        maxHeight: $(window).height(),
+                        create: function() {
+                            $(this).css("maxHeight", 700);
+                        },
+                        open: function() {
+                            $detachedChildren.appendTo($dialogContainer);
+                            $(this).dialog("option", "maxHeight", $(window).height());
+                        },
+                        close: function(event, ui) {
+                            event.preventDefault();
+                            $(this).dialog("destroy").remove();
+                        }
+                    });
+                    $("#personUrlsForm").empty().append(data);
+                }
+            });
+        } else {
+            system.relogin();
+        }
+        return false;
+    }
+
+    function personUrlOptions(personId) {
+        if (personId && system.isAuthenticated()) {
+            person.personId = personId;
+            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
+            $.ajax({
+                url: constants.PERSON_URL_OPTIONS_URL,
+                success: function(data) {
+                    var $dialogContainer = $("#personUrlOptionsForm");
+                    var $detachedChildren = $dialogContainer.children().detach();
+                    $("<div id=\"personUrlOptionsForm\"></div>").dialog({
+                        width: 350,
+                        title: "Search Options",
+                        open: function() {
+                            $detachedChildren.appendTo($dialogContainer);
+                        },
+                        buttons: {
+                            "0": {
+                                id: "ok",
+                                text: "Ok",
+                                icons: { primary: "okIcon" },
+                                click: function(event) {
+                                    event.preventDefault();
+                                    PersonUrlOptions.submit();
+                                },
+
+                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-green"
+                            },
+                            "1": {
+                                id: "close",
+                                text: "Close",
+                                icons: { primary: "closeIcon" },
+                                click: function(event) {
+                                    event.preventDefault();
+                                    $(this).dialog("close");
+                                },
+                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
+                            },
+                            "2": {
+                                id: "help",
+                                text: "Help",
+                                icons: { primary: "helpIcon" },
+                                click: function(event) {
+                                    event.preventDefault();
+                                },
+                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
+                            }
+
+                        }
+
+                    });
+                    $("#personUrlOptionsForm").empty().append(data);
+                }
+            });
+
+        } else {
+            system.relogin();
+        }
+    }
 
     var domReady = require("domReady");
     domReady(function() {
@@ -78,87 +188,6 @@ define(function(require) {
                 $("#displayPersonForm").empty().append(data);
             }
         });
-        return false;
-    });
-
-    $("#incompleteOrdinances").unbind("click").bind("click", function(e) {
-        e.preventDefault();
-        if (system.isAuthenticated()) {
-            system.startSpinner(constants.DEFAULT_SPINNER_AREA);
-
-            $.ajax({
-                url: constants.INCOMPLETE_ORDINANCES_URL,
-                success: function(data) {
-                    var $dialogContainer = $("#ordinancesForm");
-                    var $detachedChildren = $dialogContainer.children().detach();
-                    $("<div id=\"ordinancesForm\"></div>").dialog({
-                        width: 775,
-                        title: "IncompleteOrdinances",
-                        open: function() {
-                            $detachedChildren.appendTo($dialogContainer);
-                        },
-                        buttons: {
-                            "0": {
-                                id: "submit",
-                                text: "Submit",
-                                icons: { primary: "submitIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    IncompleteOrdinances.submit();
-                                },
-
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-green"
-                            },
-                            "1": {
-                                id: "previous",
-                                text: "Previous",
-                                icons: { primary: "previousIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    IncompleteOrdinances.displayPrevious();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "2": {
-                                id: "reset",
-                                text: "Reset",
-                                icons: { primary: "resetIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    IncompleteOrdinances.reset();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "3": {
-                                id: "close",
-                                text: "Close",
-                                icons: { primary: "closeIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    $(this).dialog("close");
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "4": {
-                                id: "help",
-                                text: "Help",
-                                icons: { primary: "helpIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            }
-
-                        }
-
-                    });
-                    $("#ordinancesForm").empty().append(data);
-                }
-            });
-
-        } else {
-            system.relogin();
-        }
         return false;
     });
 
@@ -233,86 +262,6 @@ define(function(require) {
 
                     });
                     $("#findCluesForm").empty().append(data);
-                }
-            });
-
-        } else {
-            system.relogin();
-        }
-        return false;
-    });
-
-    $("#dateProblems").unbind("click").bind("click", function(e) {
-        e.preventDefault();
-        if (system.isAuthenticated()) {
-            system.startSpinner(constants.DEFAULT_SPINNER_AREA);
-            $.ajax({
-                url: constants.DATE_PROBLEMS_URL,
-                success: function(data) {
-                    var $dialogContainer = $("#datesForm");
-                    var $detachedChildren = $dialogContainer.children().detach();
-                    $("<div id=\"datesForm\"></div>").dialog({
-                        width: 775,
-                        title: "Date Problems",
-                        open: function() {
-                            $detachedChildren.appendTo($dialogContainer);
-                        },
-                        buttons: {
-                            "0": {
-                                id: "submit",
-                                text: "Find DateProblems",
-                                icons: { primary: "submitIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    DateProblems.submit();
-                                },
-
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-green"
-                            },
-                            "1": {
-                                id: "previous",
-                                text: "Previous",
-                                icons: { primary: "previousIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    DateProblems.displayPrevious();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "2": {
-                                id: "reset",
-                                text: "Reset",
-                                icons: { primary: "resetIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    DateProblems.reset();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "3": {
-                                id: "close",
-                                text: "Close",
-                                icons: { primary: "closeIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    $(this).dialog("close");
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "4": {
-                                id: "help",
-                                text: "Help",
-                                icons: { primary: "helpIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            }
-
-                        }
-
-                    });
-                    $("#datesForm").empty().append(data);
                 }
             });
 
@@ -429,6 +378,12 @@ define(function(require) {
         },
         retrieveData: function(e) {
             retrieveData(e);
+        },
+        displayPersonUrls: function() {
+            displayPersonUrls();
+        },
+        personUrlOptions: function(personId) {
+            personUrlOptions(personId);
         },
         test: function() {
             //            $.fancybox.message.info("Thanks for subscribing to our monthly newsletter.");
