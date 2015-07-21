@@ -65,11 +65,9 @@ define(function(require) {
 //                                    FindClues.reportId = data.ReportId;
 //                                    FindClues.loadReports(true);
 //                                }
+                                system.stopSpinner();
                                 msgBox.message("Successfully retrieved <b>" + data.RetrievedRecords + "</b> " + person.researchType + ".");
-
-                                if (retrieve.popup) {
-                                    retrieve.form.dialog("close");
-                                }
+                                retrieve.form.dialog("close");
                             } else {
                                 msgBox.message("Retrieved no " + person.researchType + ".");
                             }

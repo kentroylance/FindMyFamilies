@@ -221,7 +221,7 @@ define(function(require) {
         $("#startingPointRetrieveButton").unbind('click').bind('click', function(e) {
             researchHelper.retrieve(e, function(result) {
                 if (result) {
-                    var changed = (person.id === $("#startingPointPersonId").val()) ? false : true;
+                    var changed = (person.reportIdid === $("#startingPointReportId").val()) ? false : true;
                     startingPoint.save();
                     person.loadPersons($("#startingPointPersonId"));
                     if (changed) {
