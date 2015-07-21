@@ -1,8 +1,8 @@
-﻿define(function(require) {
+﻿define(function (require) {
 
-    var $ = require('jquery');
-    var person = require('person');
-    var constants = require('constants');
+    var $ = require("jquery");
+    var person = require("person");
+    var constants = require("constants");
 
     var _formName = "incompleteOrdinancesForm";
     var _formTitleImage = "fa fmf-temple24";
