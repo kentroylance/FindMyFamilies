@@ -398,6 +398,8 @@
     <Content Include="Content\js\vendor\spin.min.js" />
     <Content Include="Content\js\vendor\string.js" />
     <Content Include="Content\js\vendor\string.min.js" />
+    <Content Include="Content\js\views\Research\dateProblemsController.js" />
+    <Content Include="Content\js\views\Research\incompleteOrdinancesController.js" />
     <Content Include="Content\js\views\Research\researchHelper.js" />
     <Content Include="Content\js\views\Research\findPersonOptionsController.js" />
     <Content Include="Content\js\views\Research\findPersonOptions.js" />
@@ -456,13 +458,13 @@
     <Content Include="Content\js\vendor\text.js" />
     <Content Include="Content\js\vendor\underscore-min.js" />
     <Content Include="Content\js\views\home\indexController.js" />
-    <Content Include="Content\js\views\Research\DateProblems.js" />
+    <Content Include="Content\js\views\Research\dateProblems.js" />
     <Content Include="Content\js\views\Research\DateProblemsReport.js" />
     <Content Include="Content\js\views\Research\FindClues.js" />
     <Content Include="Content\js\views\Research\FindCluesReport.js" />
     <Content Include="Content\js\views\Research\hintsController.js" />
     <Content Include="Content\js\views\Research\HintsReport.js" />
-    <Content Include="Content\js\views\Research\IncompleteOrdinances.js" />
+    <Content Include="Content\js\views\Research\incompleteOrdinances.js" />
     <Content Include="Content\js\views\Research\IncompleteOrdinancesReport.js" />
     <Content Include="Content\js\views\Research\PersonUrlOptions.js" />
     <Content Include="Content\js\views\Research\PlaceProblems.js" />
