@@ -214,10 +214,20 @@ hr {
 .pagination{
     margin-bottom: -3px !important;
     margin-top: 6px !important;
+    display: block !important;
+}
+
+.page-list {
+    display: inline-block !important;
 }
 
 .fixed-table-pagination .pagination,.fixed-table-pagination .pagination-detail {
     margin-bottom: 0px;
+}
+
+.startingPoint-table {
+    margin-top: -1.4em;
+    height: 423px;
 }
 
 /*Rounded and Circle Classes

@@ -187,6 +187,72 @@ define(function(require) {
         }
     }
 
+    //function incompleteOrdinances(e) {
+    //    e.preventDefault();
+    //    system.startSpinner();
+    //    if (system.isAuthenticated()) {
+    //        requireOnce(["jqueryUiOptions", "bootstrapTable", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
+    //        }, function () {
+    //            var incompleteOrdinances = require('incompleteOrdinances');
+    //            incompleteOrdinances.callerSpinner = system.target.id;
+    //            $.ajax({
+    //                url: constants.INCOMPLETE_ORDINANCES_URL,
+    //                success: function (data) {
+    //                    var $dialogContainer = $("#incompleteOrdinancesForm");
+    //                    var $detachedChildren = $dialogContainer.children().detach();
+    //                    $("<div id=\"incompleteOrdinancesForm\"></div>").dialog({
+    //                        width: 775,
+    //                        title: "Incomplete Ordinances",
+    //                        open: function () {
+    //                            $detachedChildren.appendTo($dialogContainer);
+    //                        }
+    //                    });
+    //                    $("#incompleteOrdinancesForm").empty().append(data);
+    //                    if (research && research.incompleteOrdinancesController) {
+    //                        research.incompleteOrdinancesController.open();
+    //                    }
+    //                }
+    //            });
+    //        }
+    //        );
+    //    } else {
+    //        system.relogin();
+    //    }
+    //}
+
+    function dateProblems(e) {
+        e.preventDefault();
+        system.startSpinner();
+        if (system.isAuthenticated()) {
+            requireOnce(["jqueryUiOptions", "bootstrapTable", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
+            }, function () {
+                var dateProblems = require('dateProblems');
+                dateProblems.callerSpinner = system.target.id;
+                $.ajax({
+                    url: constants.DATE_PROBLEMS_URL,
+                    success: function (data) {
+                        var $dialogContainer = $("#dateProblemsForm");
+                        var $detachedChildren = $dialogContainer.children().detach();
+                        $("<div id=\"dateProblemsForm\"></div>").dialog({
+                            width: 775,
+                            title: "Date Problems",
+                            open: function () {
+                                $detachedChildren.appendTo($dialogContainer);
+                            }
+                        });
+                        $("#dateProblemsForm").empty().append(data);
+                        if (research && research.dateProblemsController) {
+                            research.dateProblemsController.open();
+                        }
+                    }
+                });
+            }
+            );
+        } else {
+            system.relogin();
+        }
+    }
+
     var researchHelper = {
         findPerson: function (e, deferred) {
             return findPerson(e, deferred);
@@ -202,6 +268,12 @@ define(function(require) {
         },
         hints: function (e) {
             return hints(e);
+        },
+        incompleteOrdinances: function (e) {
+            return incompleteOrdinances(e);
+        },
+        dateProblems: function(e) {
+            return dateProblems(e);
         }
 
     };

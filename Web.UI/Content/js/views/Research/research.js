@@ -2,9 +2,12 @@
 
     var _startingPointController;
     var _findPersonController;
+    var _hintsController;
+    var _incompleteOrdinancesController;
     var _startingPointReportController;
     var _possibleDuplicatesController;
     var _retrieveController;
+    var _dateProblemsController;
 
 
     var research = {
@@ -31,6 +34,24 @@
         },
         set possibleDuplicatesController(value) {
             _possibleDuplicatesController = value;
+        },
+        get hintsController() {
+            return _hintsController;
+        },
+        set hintsController(value) {
+            _hintsController = value;
+        },
+        get dateProblemsController() {
+            return _dateProblemsController;
+        },
+        set dateProblemsController(value) {
+            _dateProblemsController = value;
+        },
+        get incompleteOrdinancesController() {
+            return _incompleteOrdinancesController;
+        },
+        set incompleteOrdinancesController(value) {
+            _incompleteOrdinancesController = value;
         },
         get retrieveController() {
             return _retrieveController;

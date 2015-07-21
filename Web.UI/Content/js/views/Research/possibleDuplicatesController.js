@@ -1,11 +1,14 @@
-define(function (require) {
+define(function(require) {
 
     var $ = require('jquery');
     var system = require('system');
     var msgBox = require('msgBox');
-    var retrieve = require('retrieve');
     var constants = require('constants');
     var researchHelper = require("researchHelper");
+
+    var lazyRequire = require("lazyRequire");
+    var requireOnce = lazyRequire.once();
+    require("lazyload");
 
 
     // models
@@ -13,6 +16,7 @@ define(function (require) {
     var possibleDuplicates = require('possibleDuplicates');
 //    var possibleDuplicatesReport = require('possibleDuplicatesReport');
     var research = require('research');
+    var retrieve = require('retrieve');
 
     function updateForm() {
         if (person.id) {
@@ -47,7 +51,7 @@ define(function (require) {
         $("#possibleDuplicatesGenerationDiv").append(select);
         $('#possibleDuplicatesGenerationDiv').nextAll().remove();
         if ((person.researchType === "Ancestors") && (person.reportId === constants.REPORT_ID)) {
-            $("#possibleDuplicatesGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: middle; margin-top: -0.625em; margin-left: 1em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -1.4em\">&nbsp;<span style=\"font-weight: normal\">Add Children</span></label>");
+            $("#possibleDuplicatesGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: middle; margin-top: -0.625em; margin-left: .7em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -1.4em\">&nbsp;<span style=\"font-weight: normal\">Add Children</span></label>");
         }
         $("#possibleDuplicatesGeneration").change(function (e) {
             var generation = $("#possibleDuplicatesGeneration").val();
@@ -100,6 +104,7 @@ define(function (require) {
             person.name = reportText.substring(nameIndex + 11, dateIndex);
             person.researchType = reportText.substring(researchTypeIndex + 17, generationoIndex);
             person.generation = reportText.substring(generationoIndex + 16, generationoIndex + 17);
+            person.loadPersons($("#possibleDuplicatesPersonId"));
             //                person.reportId = $("#possibleDuplicatesReportId option:selected").val();
         }
         if (person.researchType === constants.DESCENDANTS) {
@@ -133,6 +138,19 @@ define(function (require) {
         system.openForm(possibleDuplicates.form, possibleDuplicates.formTitleImage, possibleDuplicates.spinner);
     }
 
+    function clear() {
+        person.clear();
+    }
+
+    function reset() {
+        person.reset();
+        updateResearchData();
+    }
+
+    function resetReportId() {
+        person.resetReportId($("#possibleDuplicatesReportId"));
+        updateResearchData();
+    }
 
     function loadEvents() {
         $('#possibleDuplicatesPerson').change(function (e) {
@@ -147,35 +165,36 @@ define(function (require) {
             updateResearchData();
         });
 
-        $('#possibleDuplicatesResearchType').change(function (e) {
+        $('#possibleDuplicatesPersonId').change(function(e) {
+            person.id = $('option:selected', $(this)).val();
+            person.name = $('option:selected', $(this)).text();
+            resetReportId();
+        });
+
+        $('#possibleDuplicatesResearchType').change(function(e) {
             person.researchType = $("#possibleDuplicatesResearchType").val();
             if (person.researchType === constants.DESCENDANTS) {
-                possibleDuplicates.generationAncestors = person.generation;
-                person.generation = possibleDuplicates.generationDescendants;
+                person.generationAncestors = person.generation;
+                person.generation = person.generationDescendants;
                 addDecendantGenerationOptions();
             } else {
-                possibleDuplicates.generationDescendants = person.generation;
-                person.generation = possibleDuplicates.generationAncestors;
+                person.generationDescendants = person.generation;
+                person.generation = person.generationAncestors;
                 addAncestorGenerationOptions();
             }
 
             setHiddenFields();
-            person.resetReportId($("#possibleDuplicatesReportId"));
-            updateResearchData();
+            resetReportId();
         });
 
         $("#possibleDuplicatesFindPersonButton").unbind('click').bind('click', function (e) {
             researchHelper.findPerson(e, function (result) {
                 if (result) {
                     var changed = (person.id === $("#possibleDuplicatesPersonId").val()) ? false : true;
-                    //               PersonInfo.updateFromFindPerson();
-                    //                possibleDuplicates.id = FindPerson.id;
-                    //                possibleDuplicates.personName = FindPerson.personName;
                     possibleDuplicates.save();
-                    person.loadPersons($("#possibleDuplicatesPersonId"), true);
+                    person.loadPersons($("#possibleDuplicatesPersonId"));
                     if (changed) {
-                        person.resetReportId($("#possibleDuplicatesReportId"));
-                        updateResearchData();
+                        resetReportId();
                     }
                 }
                 var findPerson = require('findPerson');
@@ -184,29 +203,23 @@ define(function (require) {
             return false;
         });
 
-        $("#possibleDuplicatesRetrieveButton").unbind('click').bind('click', function (e) {
-            if (possibleDuplicates.id) {
-                retrieve.caller = constants.POSSIBLE_DUPLICATES;
-                retrieve.retrievedRecords = 0;
-                retrieve.popup = true;
-                updateResearchData();
-            }
-            //  add method outside of researchController
-            retrieveData(e, $(this)).then(function () {
+        $("#possibleDuplicatesRetrieveButton").unbind('click').bind('click', function(e) {
+            researchHelper.retrieve(e, function(result) {
+                if (result) {
+                    var changed = (person.id === $("#possibleDuplicatesPersonId").val()) ? false : true;
+                    possibleDuplicates.save();
+                    person.loadPersons($("#possibleDuplicatesPersonId"));
+                    if (changed) {
+                        resetReportId();
+                    }
+                }
+                var retrieve = require('retrieve');
+                retrieve.reset();
             });
             return false;
         });
 
-        function clear() {
-            person.clear();
-        }
-
-        function reset() {
-            person.reset();
-        }
-
-
-        $("#possibleDuplicatesHelpButton").unbind('click').bind('click', function (e) {
+        $("#possibleDuplicatesHelpButton").unbind('click').bind('click', function(e) {
         });
 
         $("#possibleDuplicatesCloseButton").unbind('click').bind('click', function (e) {
@@ -224,31 +237,26 @@ define(function (require) {
                 }
             }
             if (possibleDuplicates.previous) {
-                system.initSpinner('possibleDuplicatesSpinner');
+                system.initSpinner(possibleDuplicates.spinner);
+                possibleDuplicates.callerSpinner = possibleDuplicates.spinner;
                 $.ajax({
                     url: constants.POSSIBLE_DUPLICATES_REPORT_HTML_URL,
                     success: function (data) {
                         var $dialogContainer = $('#possibleDuplicatesReportForm');
                         var $detachedChildren = $dialogContainer.children().detach();
-                        $('<div id="possibleDuplicatesReportForm"></div>').dialog({
-                            position: {
-                                my: "center top",
-                                at: ("center top+" + (window.innerHeight * .07)),
-                                collision: "none"
-                            },
-                            title: "Starting Points",
+                        $('<div id=\"possibleDuplicatesReportForm\"></div>').dialog({
+                            title: "Possible Duplicates",
                             width: 975,
-                            open: function () {
+                            open: function() {
                                 $detachedChildren.appendTo($dialogContainer);
                                 $(this).css("maxHeight", 700);
-                            },
-                            close: function (event, ui) {
-                                event.preventDefault();
-                                $(this).dialog('destroy').remove();
                             }
                         });
                         possibleDuplicates.displayType = "previous";
                         $("#possibleDuplicatesReportForm").empty().append(data);
+                        if (research && research.possibleDuplicatesReportController) {
+                            research.possibleDuplicatesReportController.open();
+                        }
                     }
                 });
             } else {
@@ -258,51 +266,50 @@ define(function (require) {
 
         $("#possibleDuplicatesSubmitButton").unbind('click').bind('click', function (e) {
             if (system.isAuthenticated()) {
-                if (person.id) {
-                    possibleDuplicates.save();
-                } else {
+                if (!person.id) {
                     msgBox.message("You must first select a person from Family Search");
                 }
 
-                msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function (result) {
+                msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
-                        system.initSpinner(possibleDuplicates.spinner);
-                        possibleDuplicates.callerSpinner = possibleDuplicates.spinner;
-                        $.ajax({
-                            url: constants.POSSIBLE_DUPLICATES_REPORT_HTML_URL,
-                            success: function (data) {
-                                var $dialogContainer = $('#possibleDuplicatesReportForm');
-                                var $detachedChildren = $dialogContainer.children().detach();
-                                $('<div id="possibleDuplicatesReportForm"></div>').dialog({
-                                    position: {
-                                        my: "center top",
-                                        at: ("center top+" + (window.innerHeight * .07)),
-                                        collision: "none"
-                                    },
-                                    title: "Starting Points",
-                                    width: 975,
-                                    open: function () {
-                                        $detachedChildren.appendTo($dialogContainer);
-                                        $(this).css("maxHeight", 700);
+                        requireOnce(["bootstrapTable", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
+                            }, function() {
+                                system.initSpinner(possibleDuplicates.spinner);
+                                possibleDuplicates.callerSpinner = possibleDuplicates.spinner;
+                                $.ajax({
+                                    url: constants.POSSIBLE_DUPLICATES_HTML,
+                                    success: function(data) {
+                                        var $dialogContainer = $('#possibleDuplicatesReportForm');
+                                        var $detachedChildren = $dialogContainer.children().detach();
+                                        $("<div id=\"possibleDuplicatesReportForm\"></div>").dialog({
+                                            title: "Possible Duplicates",
+                                            width: 975,
+                                            height: 515,
+                                            open: function() {
+                                                $detachedChildren.appendTo($dialogContainer);
+                                            }
+                                        });
+                                        possibleDuplicatesReport.displayType = "start";
+                                        possibleDuplicates.save();
+                                        $("#possibleDuplicatesReportForm").empty().append(data);
+                                        if (research && research.possibleDuplicatesReportController) {
+                                            research.possibleDuplicatesReportController.open();
+                                        }
                                     }
                                 });
-                                possibleDuplicatesReport.displayType = "start";
-                                possibleDuplicatesReport.form.empty().append(data);
-                                if (research && research.possibleDuplicatesReportController) {
-                                    research.possibleDuplicatesReportController.open();
-                                }
                             }
-                        });
+                        );
                     }
                 });
             } else {
                 possibleDuplicatesReport.form.dialog("close");
-                relogin();
+                system.relogin();
             }
             return false;
         });
 
-        $("#addChildren").change(function (e) {
+
+        $("#addChildren").change(function(e) {
             person.addChildren = $("#addChildren").prop("checked");
             if (person.addChildren) {
                 msgBox.warning("Selecting <b>Add Children</b> check box will probably double the time to retrieve ancestors.");

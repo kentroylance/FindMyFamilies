@@ -46,6 +46,16 @@ define(function(require) {
         return false;
     });
 
+    $("#incompleteOrdinances").unbind("click").bind("click", function (e) {
+        researchHelper.incompleteOrdinances(e);
+        return false;
+    });
+
+    $("#dateProblems").unbind("click").bind("click", function (e) {
+        researchHelper.dateProblems(e);
+        return false;
+    });
+
     function displayPersonUrls() {
         if (person.personId && system.isAuthenticated()) {
             $.ajax({
@@ -181,87 +191,6 @@ define(function(require) {
         return false;
     });
 
-    $("#incompleteOrdinances").unbind("click").bind("click", function(e) {
-        e.preventDefault();
-        if (system.isAuthenticated()) {
-            system.startSpinner(constants.DEFAULT_SPINNER_AREA);
-
-            $.ajax({
-                url: constants.INCOMPLETE_ORDINANCES_URL,
-                success: function(data) {
-                    var $dialogContainer = $("#ordinancesForm");
-                    var $detachedChildren = $dialogContainer.children().detach();
-                    $("<div id=\"ordinancesForm\"></div>").dialog({
-                        width: 775,
-                        title: "IncompleteOrdinances",
-                        open: function() {
-                            $detachedChildren.appendTo($dialogContainer);
-                        },
-                        buttons: {
-                            "0": {
-                                id: "submit",
-                                text: "Submit",
-                                icons: { primary: "submitIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    IncompleteOrdinances.submit();
-                                },
-
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-green"
-                            },
-                            "1": {
-                                id: "previous",
-                                text: "Previous",
-                                icons: { primary: "previousIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    IncompleteOrdinances.displayPrevious();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "2": {
-                                id: "reset",
-                                text: "Reset",
-                                icons: { primary: "resetIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    IncompleteOrdinances.reset();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "3": {
-                                id: "close",
-                                text: "Close",
-                                icons: { primary: "closeIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    $(this).dialog("close");
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "4": {
-                                id: "help",
-                                text: "Help",
-                                icons: { primary: "helpIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            }
-
-                        }
-
-                    });
-                    $("#ordinancesForm").empty().append(data);
-                }
-            });
-
-        } else {
-            system.relogin();
-        }
-        return false;
-    });
-
     $("#findClues").unbind("click").bind("click", function(e) {
         e.preventDefault();
         if (system.isAuthenticated()) {
@@ -333,86 +262,6 @@ define(function(require) {
 
                     });
                     $("#findCluesForm").empty().append(data);
-                }
-            });
-
-        } else {
-            system.relogin();
-        }
-        return false;
-    });
-
-    $("#dateProblems").unbind("click").bind("click", function(e) {
-        e.preventDefault();
-        if (system.isAuthenticated()) {
-            system.startSpinner(constants.DEFAULT_SPINNER_AREA);
-            $.ajax({
-                url: constants.DATE_PROBLEMS_URL,
-                success: function(data) {
-                    var $dialogContainer = $("#datesForm");
-                    var $detachedChildren = $dialogContainer.children().detach();
-                    $("<div id=\"datesForm\"></div>").dialog({
-                        width: 775,
-                        title: "Date Problems",
-                        open: function() {
-                            $detachedChildren.appendTo($dialogContainer);
-                        },
-                        buttons: {
-                            "0": {
-                                id: "submit",
-                                text: "Find DateProblems",
-                                icons: { primary: "submitIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    DateProblems.submit();
-                                },
-
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-green"
-                            },
-                            "1": {
-                                id: "previous",
-                                text: "Previous",
-                                icons: { primary: "previousIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    DateProblems.displayPrevious();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "2": {
-                                id: "reset",
-                                text: "Reset",
-                                icons: { primary: "resetIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    DateProblems.reset();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "3": {
-                                id: "close",
-                                text: "Close",
-                                icons: { primary: "closeIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    $(this).dialog("close");
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "4": {
-                                id: "help",
-                                text: "Help",
-                                icons: { primary: "helpIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            }
-
-                        }
-
-                    });
-                    $("#datesForm").empty().append(data);
                 }
             });
 

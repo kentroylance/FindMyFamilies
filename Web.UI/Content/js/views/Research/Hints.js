@@ -8,6 +8,7 @@
     var _formTitleImage = "fa fmf-hint24";
     var _form = $("#hintsForm");
     var _previous;
+    var _displayType = "start";
     var _generationAncestors = constants.GENERATION;
     var _generationDescendants = "1";
     var _spinner = "hintsSpinner";
@@ -23,11 +24,19 @@
     function save() {
         if (window.localStorage) {
             var hints = new HintsDO(_topScore, _count);
-            localStorage.setItem("Hints", JSON.stringify(hints));
+            localStorage.setItem(constants.HINTS, JSON.stringify(hintsDO));
         }
         person.save();
     }
 
+    function savePrevious() {
+        if (_previous) {
+	    if (window.localStorage) {
+                localStorage.setItem("hintsPrevious", JSON.stringify(_previous));
+            }
+        }
+    }
+    
     if (window.localStorage) {
         var hintsDO = JSON.parse(localStorage.getItem(constants.HINTS));
         if (!hintsDO) {
@@ -89,6 +98,9 @@
         },
         save: function() {
             save();
+        },
+        savePrevious: function () {
+            savePrevious();
         },
         clear: function() {
             clear();
