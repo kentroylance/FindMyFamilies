@@ -62,7 +62,7 @@ define(function(require) {
         $("#startingPointGenerationDiv").append(select);
         $('#startingPointGenerationDiv').nextAll().remove();
         if ((person.researchType === "Ancestors") && (person.reportId === constants.REPORT_ID)) {
-            $("#startingPointGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: middle; margin-top: -0.625em; margin-left: 1em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -1.4em\">&nbsp;<span style=\"font-weight: normal\">Add Children</span></label>");
+            $("#startingPointGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: middle; margin-top: -0.625em; margin-left: .7em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -1.4em;\">&nbsp;<span style=\"font-weight: normal;\">Add Children</span></label>");
         }
         $("#startingPointGeneration").change(function(e) {
             var generation = $("#startingPointGeneration").val();
@@ -299,7 +299,7 @@ define(function(require) {
                                         $("<div id=\"startingPointReportForm\"></div>").dialog({
                                             title: "Starting Points",
                                             width: 975,
-                                            height: 700,
+                                            height: 515,
                                             open: function() {
                                                 $detachedChildren.appendTo($dialogContainer);
                                             }

@@ -35,6 +35,10 @@
             startingPointReportController: 'views/research/startingPointReportController',
             hintsController: 'views/research/hintsController',
             hints: 'views/research/hints',
+            dateProblemsController: 'views/research/dateProblemsController',
+            dateProblems: 'views/research/dateProblems',
+            incompleteOrdinancesController: 'views/research/incompleteOrdinancesController',
+            incompleteOrdinances: 'views/research/incompleteOrdinances',
             possibleDuplicatesController: 'views/research/possibleDuplicatesController',
             possibleDuplicates: 'views/research/possibleDuplicates',
             findPersonController: 'views/research/findPersonController',
@@ -71,9 +75,17 @@
                 deps: ['jquery', 'person', 'constants'],
                 exports: 'possibleDuplicates'
             },
+            dateProblems: {
+                deps: ['jquery', 'person', 'constants'],
+                exports: 'dateProblems'
+            },
             hints: {
                 deps: ['jquery', 'person', 'constants'],
                 exports: 'hints'
+            },
+            incompleteOrdinances: {
+                deps: ['jquery', 'person', 'constants'],
+                exports: 'incompleteOrdinances'
             },
             startingPointReport: {
                 exports: 'startingPointReport'
@@ -134,6 +146,14 @@
             hintsController: {
                 deps: ['jquery', 'hints', 'research', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
                 exports: 'hintsController'
+            },
+            dateProblemsController: {
+                deps: ['jquery', 'hints', 'research', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                exports: 'dateProblemsController'
+            },
+            incompleteOrdinancesController: {
+                deps: ['jquery', 'incompleteOrdinances', 'research', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                exports: 'incompleteOrdinancesController'
             },
             startingPointReportController: {
                 deps: ['jquery', 'startingPointReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],

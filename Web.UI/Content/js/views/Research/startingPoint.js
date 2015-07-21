@@ -40,18 +40,17 @@
 
     function savePrevious() {
         if (_previous) {
-            if (window.localStorage) {
+	    if (window.localStorage) {
                 localStorage.setItem("startingPointsPrevious", JSON.stringify(_previous));
             }
         }
     }
-
     if (window.localStorage) {
         var startingPointDO = JSON.parse(localStorage.getItem(constants.STARTING_POINT));
         if (!startingPointDO) {
             startingPointDO = new StartingPointDO();
-        }
-        if (!startingPointDO.researchType) {
+	}
+    	if (!startingPointDO.researchType) {
             startingPointDO.livedInUSA = true;
             startingPointDO.born18101850 = true;
         }
