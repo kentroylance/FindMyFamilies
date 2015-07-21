@@ -17,7 +17,7 @@
             //nested dependencies.
             include: ['jquery',
                       'bootstrap'
-                      
+
             ]
         },
 
@@ -31,7 +31,7 @@
         //requirejs in the page*.js files.
         {
             //module names are relative to baseUrl/paths config
-            name: 'views/home/index',
+            name: 'views/home/indexController',
             include: ['jquery'],
             exclude: ['main']
         },
@@ -45,7 +45,7 @@
         //requirejs in the page*.js files.
         {
             //module names are relative to baseUrl/paths config
-            name: 'views/home/contact',
+            name: 'views/research/researchController',
             include: ['jquery'],
             exclude: ['main']
         }

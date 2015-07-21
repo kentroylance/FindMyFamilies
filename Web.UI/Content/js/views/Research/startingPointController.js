@@ -267,7 +267,7 @@ define(function(require) {
                                 $(this).css("maxHeight", 700);
                             }
                         });
-                        startingPoint.displayType = "previous";
+                        blestartingPoint.displayType = "previous";
                         $("#startingPointReportForm").empty().append(data);
                         if (researchHelper && researchHelper.startingPointReportController) {
                             researchHelper.startingPointReportController.open();

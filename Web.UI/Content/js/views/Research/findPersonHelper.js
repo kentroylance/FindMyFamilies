@@ -253,8 +253,11 @@ define(function(require) {
         menuOptions += "<ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"dLabel\" >";
         $.each(person.findPersonOptions, function(key, value) {
             switch (value) {
-            case 'fmf-urls':
-                menuOptions += "<li><a onclick=\"researchHelper.personUrlOptions('" + row.id + "','" + row.fullName + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-family16\"></span> Family Research Urls</a></li>";
+                case 'fmf-urls':
+                    var isOpen = $("#personUrlsForm").is(':visible');
+                    if (!isOpen) {
+                        menuOptions += "<li><a onclick=\"researchHelper.personUrlOptions('" + row.id + "','" + row.fullName + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-family16\"></span> Family Research Urls</a></li>";
+                    }
                 break;
             case 'google':
                 menuOptions += "<li><a href=\"" + constants.GOOGLE + row.firstName + getMiddleName(row.middleName, constants.GOOGLE) + "+" + getLastName(row.lastName) + "+" + getBirthYear(row.birthYear, constants.GOOGLE) + "+" + getDeathYear(row.deathYear, constants.GOOGLE) + "+" + getPlace(row.birthPlace, constants.GOOGLE) + "\" target=\" _tab\" ><span class=\"fa fmf-google16\"></span> Google</a></li>";
@@ -328,8 +331,8 @@ define(function(require) {
     }
 
     var findPersonHelper = {
-        getMenuOptions: function(row) {
-            return getMenuOptions(row);
+        getMenuOptions: function(row, formName) {
+            return getMenuOptions(row, formName);
         },
         get findUrls() {
             return _findUrls;

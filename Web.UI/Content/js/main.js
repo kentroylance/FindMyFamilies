@@ -44,6 +44,8 @@
             findPersonHelper: 'views/research/findPersonHelper',
             personUrlOptions: 'views/research/personUrlOptions',
             personUrlOptionsController: 'views/research/personUrlOptionsController',
+            personUrls: 'views/research/personUrls',
+            personUrlsController: 'views/research/personUrlsController',
             researchHelper: 'views/research/researchHelper',
             person: 'views/shared/person',
             retrieve: 'views/research/retrieve',
@@ -81,6 +83,9 @@
             },
             personUrlOptions: {
                 exports: 'personUrlOptions'
+            },
+            personUrls: {
+                exports: 'personUrls'
             },
             formValidation: { deps: ['jquery'], exports: "FormValidation" },
             bootstrapTable: { deps: ["jquery", "bootstrap"] },
@@ -149,6 +154,10 @@
             personUrlOptionsController: {
                 deps: ['jquery', 'personUrlOptions', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload', 'string'],
                 exports: 'personUrlOptionsController'
+            },
+            personUrlsController: {
+                deps: ['jquery', 'personUrls', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload', 'string'],
+                exports: 'personUrlsController'
             },
             findPersonHelper: {
                 deps: ['jquery', 'researchHelper', 'system', 'user', 'constants', 'person', 'string'],

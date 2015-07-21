@@ -398,7 +398,9 @@
     <Content Include="Content\js\vendor\spin.min.js" />
     <Content Include="Content\js\vendor\string.js" />
     <Content Include="Content\js\vendor\string.min.js" />
+    <Content Include="Content\js\views\Research\personUrls.js" />
     <Content Include="Content\js\views\Research\personUrlOptions.js" />
+    <Content Include="Content\js\views\Research\personUrlsController.js" />
     <Content Include="Content\js\views\Research\personUrlOptionsController.js" />
     <Content Include="Content\js\views\Research\researchHelper.js" />
     <Content Include="Content\js\views\Research\findPersonOptionsController.js" />
@@ -409,7 +411,6 @@
     <Content Include="Content\js\views\Research\researchController.js" />
     <Content Include="Content\js\views\Research\possibleDuplicates.js" />
     <Content Include="Content\js\views\Research\Hints.js" />
-    <Content Include="Content\js\views\Research\startingPointEvents.js" />
     <Content Include="Content\js\lib\constants.js" />
     <Content Include="Content\js\views\Research\research.js" />
     <Content Include="Content\js\views\Research\startingPointReportController.js" />
@@ -462,7 +463,7 @@
     <Content Include="Content\js\views\Research\DateProblemsReport.js" />
     <Content Include="Content\js\views\Research\FindClues.js" />
     <Content Include="Content\js\views\Research\FindCluesReport.js" />
-    <Content Include="Content\js\views\Research\hintsController.js" />
+    <Content Include="Content\js\views\Research\Hints1.js" />
     <Content Include="Content\js\views\Research\HintsReport.js" />
     <Content Include="Content\js\views\Research\IncompleteOrdinances.js" />
     <Content Include="Content\js\views\Research\IncompleteOrdinancesReport.js" />

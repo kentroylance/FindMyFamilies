@@ -283,17 +283,35 @@ namespace FindMyFamilies.Helper {
             return url;
         }
 
+    public static string  getPersonImage(string gender) {
+        if (gender.Equals("MALE")) {
+            return "<i class=\"fa fa-user color-dark-blue\"></i>&nbsp;";
+        } else {
+            return "<i class=\"fa fa-user color-red\"></i>&nbsp;";
+        }
+    }
+
+    public static string  getPersonColor(string gender) {
+        if (gender.Equals("MALE")) {
+            return "rgb(0,0,255)";
+        } else {
+            return "rgb(255,0,0)";
+        }
+    }
+
         public static string PersonDropDown(PersonDO person, PersonInfoDO personInfo) {
-            string url = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\">" +person.Fullname + "(" + person.LifeSpan + ") " + AncestryHelper.GetYearsLived(person) + "</button><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button><ul class=\"dropdown-menu\" role=\"menu\">" +
-            "<li><a href=\"" + AncestryHelper.AncestryUrl(person, personInfo) + "\" target=\"_blank\"><span class=\"fa fmf16-Ancestry\"></span> Ancestry</a></li>" +
-            "<li><a href=\"" + AncestryHelper.FindAGraveUrl(person, personInfo) + "\" target=\"_blank\"><span class=\"fa fmf16-FindAGrave\"></span> Find A Grave</a></li>" +
-            "<li><a href=\"" + AncestryHelper.BillionGravesUrl(person, personInfo) + "\" target=\"_blank\"><span class=\"fa fmf16-BillionGraves\"></span> Billion Graves</a></li>" +
-            "<li><a href=\"" + AncestryHelper.MyHeritageUrl(person, personInfo) + "\" target=\"_blank\"><span class=\"fa fmf16-FindMyPast\"></span> Find My Past</a></li>" +
-            "<li><a href=\"" + AncestryHelper.FindMyPastUrl(person, personInfo) + "\" target=\"_blank\"><span class=\"fa fmf16-Google\"></span> Google</a></li>" +
-            "<li><a href=\"https://puzzilla.org/descendants?id=" + person.Id + "&changeToId=" + person.Id + "&depth=6&ancestorsView=true\" target=\"_blank\"><span class=\"fa fmf16-Puzilla\"></span> Puzilla Ancestors</a></li>" +
-            "<li><a href=\"https://puzzilla.org/descendants?id=" + person.Id + "\" target=\"_blank\"><span class=\"fa fmf16-Puzilla\"></span> Puzilla Descendants</a></li>" +
-            "<li><a onclick=\"findPersonsStartingPoint();\" href=\"javascript:void(0);\"><span class=\"fa fmf16-FindMyFamilies\"></span> Starting Point</a></li>" + 
-            "</ul></div>";
+            string url = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\"><span style=\"color: " + getPersonColor(person.Gender) + "\">" + getPersonImage(person.Gender) + person.Fullname + "</span></button><a class=\"personUrlsAction\" data-id=" + person.Id + " data-firstName=" + person.Firstname + " data-lastName=" + person.Lastname + " data-fullName=\"" + person.Fullname + "\" data-gender=" + person.Gender + " data-birthYear=" + person.BirthYear + " data-deathYear=" + person.DeathYear + " data-birthPlace=\"" + person.BirthPlace + "\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
+
+//            string url = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\">" +person.Fullname + "(" + person.LifeSpan + ") " + AncestryHelper.GetYearsLived(person) + "</button><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button><ul class=\"dropdown-menu\" role=\"menu\">" +
+//            "<li><a href=\"" + AncestryHelper.AncestryUrl(person, personInfo) + "\" target=\"_blank\"><span class=\"fa fmf16-Ancestry\"></span> Ancestry</a></li>" +
+//            "<li><a href=\"" + AncestryHelper.FindAGraveUrl(person, personInfo) + "\" target=\"_blank\"><span class=\"fa fmf16-FindAGrave\"></span> Find A Grave</a></li>" +
+//            "<li><a href=\"" + AncestryHelper.BillionGravesUrl(person, personInfo) + "\" target=\"_blank\"><span class=\"fa fmf16-BillionGraves\"></span> Billion Graves</a></li>" +
+//            "<li><a href=\"" + AncestryHelper.MyHeritageUrl(person, personInfo) + "\" target=\"_blank\"><span class=\"fa fmf16-FindMyPast\"></span> Find My Past</a></li>" +
+//            "<li><a href=\"" + AncestryHelper.FindMyPastUrl(person, personInfo) + "\" target=\"_blank\"><span class=\"fa fmf16-Google\"></span> Google</a></li>" +
+//            "<li><a href=\"https://puzzilla.org/descendants?id=" + person.Id + "&changeToId=" + person.Id + "&depth=6&ancestorsView=true\" target=\"_blank\"><span class=\"fa fmf16-Puzilla\"></span> Puzilla Ancestors</a></li>" +
+//            "<li><a href=\"https://puzzilla.org/descendants?id=" + person.Id + "\" target=\"_blank\"><span class=\"fa fmf16-Puzilla\"></span> Puzilla Descendants</a></li>" +
+//            "<li><a onclick=\"findPersonsStartingPoint();\" href=\"javascript:void(0);\"><span class=\"fa fmf16-FindMyFamilies\"></span> Starting Point</a></li>" + 
+//            "</ul></div>";
 
 //@*                @Html.Raw(Model.Person.Fullname + ",  " + Model.Person.LifeSpan + ",  " + AncestryHelper.GetYearsLived(Model.Person) + " - ")*@
 //@*                @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.PersonUrl(Model.Person, Model) + "\" target=\"_blank\">Person</a>,&nbsp;")*@

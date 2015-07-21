@@ -17,6 +17,7 @@ define(function(require) {
     var _possibleDuplicatesController;
     var _retrieveController;
     var _personUrlOptionsController;
+    var _personUrlsController;
 
 
     function startingPoint() {
@@ -315,18 +316,23 @@ define(function(require) {
         set retrieveController(value) {
             _retrieveController = value;
         },
+        get personUrlOptionsController() {
+            return _personUrlOptionsController;
+            },
         set personUrlOptionsController(value) {
             _personUrlOptionsController = value;
         },
-          hints: function (e) {
+        get personUrlsController() {
+            return _personUrlsController;
+            },
+        set personUrlsController(value) {
+            _personUrlsController = value;
+        },
+        hints: function (e) {
             return hints(e);
         }
 
     };
-
-
-    };
-
 
     return researchHelper;
 });
