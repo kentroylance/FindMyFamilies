@@ -27,66 +27,6 @@ define(function(require) {
     _findUrls['fs-person'] = 'Family Search - Person';
     _findUrls['google'] = 'Google Search';
 
-
-    function personUrlOptions(personId) {
-        if (personId && system.isAuthenticated()) {
-            person.id = personId;
-            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
-            $.ajax({
-                url: constants.PERSON_URL_OPTIONS_URL,
-                success: function (data) {
-                    var $dialogContainer = $("#personUrlOptionsForm");
-                    var $detachedChildren = $dialogContainer.children().detach();
-                    $("<div id=\"personUrlOptionsForm\"></div>").dialog({
-                        width: 350,
-                        title: "Search Options",
-                        open: function () {
-                            $detachedChildren.appendTo($dialogContainer);
-                        },
-                        buttons: {
-                            "0": {
-                                id: "ok",
-                                text: "Ok",
-                                icons: { primary: "okIcon" },
-                                click: function (event) {
-                                    event.preventDefault();
-                                    PersonUrlOptions.submit();
-                                },
-
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-green"
-                            },
-                            "1": {
-                                id: "close",
-                                text: "Close",
-                                icons: { primary: "closeIcon" },
-                                click: function (event) {
-                                    event.preventDefault();
-                                    $(this).dialog("close");
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "2": {
-                                id: "help",
-                                text: "Help",
-                                icons: { primary: "helpIcon" },
-                                click: function (event) {
-                                    event.preventDefault();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            }
-
-                        }
-
-                    });
-                    $("#personUrlOptionsForm").empty().append(data);
-                }
-            });
-
-        } else {
-            system.relogin();
-        }
-    }
-
     function getMiddleNameQuote(middleName) {
         var result = "";
         if (!string(middleName).isEmpty() && person.includeMiddleName) {
@@ -331,8 +271,8 @@ define(function(require) {
     }
 
     var findPersonHelper = {
-        getMenuOptions: function(row, formName) {
-            return getMenuOptions(row, formName);
+        getMenuOptions: function(row) {
+            return getMenuOptions(row);
         },
         get findUrls() {
             return _findUrls;

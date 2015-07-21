@@ -14,13 +14,15 @@
     var _title;
     var _retrievedRecords = 0;
     var _reports;
+    var _selected = false;
+
 
     function save() {
         person.save();
     }
 
     function reset() {
-        person.selected = false;
+        _selected = false;
         _callback = null;
     }
 
@@ -114,7 +116,7 @@
         get retrievedRecords() {
             return _retrievedRecords;
         },
-        set selected(value) {
+        set retrievedRecords(value) {
             _retrievedRecords = value;
         },
         loadReports: function (reportId, refreshReport) {
@@ -140,7 +142,14 @@
         },
         set callback(value) {
             _callback = value;
+        },
+        get selected() {
+            return _selected;
+        },
+        set selected(value) {
+            _selected = value;
         }
+
         
     };
 

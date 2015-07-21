@@ -220,15 +220,12 @@ define(function(require) {
 
         $("#startingPointRetrieveButton").unbind('click').bind('click', function(e) {
             researchHelper.retrieve(e, function(result) {
-                if (result) {
-                    var changed = (person.reportIdid === $("#startingPointReportId").val()) ? false : true;
-                    startingPoint.save();
-                    person.loadPersons($("#startingPointPersonId"));
-                    if (changed) {
-                        resetReportId();
-                    }
-                }
                 var retrieve = require('retrieve');
+                if (result) {
+                    startingPoint.reportId = retrieve.reportId;
+                    startingPoint.save();
+                    loadReports(true);
+                }
                 retrieve.reset();
             });
             return false;
@@ -267,7 +264,7 @@ define(function(require) {
                                 $(this).css("maxHeight", 700);
                             }
                         });
-                        blestartingPoint.displayType = "previous";
+                        startingPoint.displayType = "previous";
                         $("#startingPointReportForm").empty().append(data);
                         if (researchHelper && researchHelper.startingPointReportController) {
                             researchHelper.startingPointReportController.open();

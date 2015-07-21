@@ -44,7 +44,7 @@ define(function(require) {
             var dropdown = $(this);
             var dropdownRow = new row(dropdown.data('id'), dropdown.data('firstname'), dropdown.data('middlename'), dropdown.data('lastname'), dropdown.data('fullname'), dropdown.data('gender'), dropdown.data('birthyear'), dropdown.data('deathyear'), dropdown.data('birthplace'));
             if (dropdown.children().length <= 1) {
-                dropdown.append(findPersonHelper.getMenuOptions(dropdownRow, personUrls.formName));
+                dropdown.append(findPersonHelper.getMenuOptions(dropdownRow));
             }
         });
 

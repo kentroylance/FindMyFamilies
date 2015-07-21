@@ -45,6 +45,11 @@ define(function(require) {
                         success: function(data) {
                             if (data) {
                                 retrieve.retrievedRecords = data.RetrievedRecords;
+                                if (retrieve.retrievedRecords > 0) {
+                                    retrieve.selected = true;
+                                } else {
+                                    retrieve.selected = false;
+                                }
                                 retrieve.reportId = data.ReportId;
 //                                if (retrieve.caller === "IncompleteOrdinances") {
 //                                    IncompleteOrdinances.reportId = data.ReportId;
@@ -56,7 +61,7 @@ define(function(require) {
 //                                    Hints.reportId = data.ReportId;
 //                                    Hints.loadReports(true);
 //                                } else if (retrieve.caller === "StartingPoint") {
-//                                    StartingPoint.reportId = data.ReportId;
+//                                    StartingPoint.reportId = retrieve.ReportId;
 //                                    StartingPoint.loadReports(true);
 //                                } else if (retrieve.caller === "DateProblems") {
 //                                    DateProblems.reportId = data.ReportId;
@@ -281,7 +286,7 @@ define(function(require) {
             person.save();
             if (retrieve.callback) {
                 if (typeof (retrieve.callback) === "function") {
-                    retrieve.callback(person.selected);
+                    retrieve.callback(retrieve.selected);
                 }
             }
             retrieve.reset();
