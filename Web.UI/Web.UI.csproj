@@ -459,13 +459,13 @@
     <Content Include="Content\js\vendor\text.js" />
     <Content Include="Content\js\vendor\underscore-min.js" />
     <Content Include="Content\js\views\home\indexController.js" />
-    <Content Include="Content\js\views\Research\DateProblems.js" />
+    <Content Include="Content\js\views\Research\dateProblems.js" />
     <Content Include="Content\js\views\Research\DateProblemsReport.js" />
     <Content Include="Content\js\views\Research\FindClues.js" />
     <Content Include="Content\js\views\Research\FindCluesReport.js" />
     <Content Include="Content\js\views\Research\Hints1.js" />
     <Content Include="Content\js\views\Research\HintsReport.js" />
-    <Content Include="Content\js\views\Research\IncompleteOrdinances.js" />
+    <Content Include="Content\js\views\Research\incompleteOrdinances.js" />
     <Content Include="Content\js\views\Research\IncompleteOrdinancesReport.js" />
     <Content Include="Content\js\views\Research\PlaceProblems.js" />
     <Content Include="Content\js\views\Research\PlaceProblemsReport.js" />
