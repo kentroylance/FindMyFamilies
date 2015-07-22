@@ -6,7 +6,7 @@
                 <div class="input-group">
                     <select class="form-control" id="findCluesReportId"></select>
                     <span class="input-group-btn">
-                        <button id="findCluesRetrieveButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fmf24-retrieve" style="font-size:22px; margin-top: -0.24em; margin-bottom: -.1em; vertical-align: middle"></i> Retrieve</button>
+                        <button id="findCluesRetrieveButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-retrieve24 dialog-buttons btn-retrieve-find"></i> Retrieve</button>
                     </span>
                 </div>
             </div>
@@ -76,17 +76,19 @@
                 </select>
             </div>
         </div>
+        <hr/>
+        <div class="row" >
+            <div class="text-center">
+                <button id="findCluesSubmitButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-clue24 dialog-buttons"></i> Find Clues</button>
+                <button type='button' id="findCluesPreviousButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-previous24 dialog-buttons"></i> Previous</button>
+                <button type='button' id="findCluesResetButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-reset24 dialog-buttons"></i> Reset</button>
+                <button type='button' id="findCluesHelpButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-help24 dialog-buttons"></i> Help</button>
+                <button type='button' id="findCluesCloseButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-close24 dialog-buttons"></i> Close</button>
+            </div>
+        </div>
 
     </form>
 </div>
-<div id="findCluesSpinner" style="position: fixed; top: 50%; left: 50%"></div>
+<div id="findCluesSpinner"/>
 
-<script type="text/javascript">
-    $(function () {
-        var scriptTag = document.createElement("script");
-        scriptTag.src = "/Views/Home/Research/FindClues/FindClues.js";
-        document.head.appendChild(scriptTag);
-    });
-</script>
-
-@*<script type="text/javascript" src="~/Views/Home/Research/FindClues/FindClues.js"></script>*@
+<script type="text/javascript">require(['main'], function (main) { require(['findCluesController']); });</script>

@@ -33,6 +33,10 @@
             startingPointController: 'views/research/startingPointController',
             startingPointReport: 'views/research/startingPointReport',
             startingPointReportController: 'views/research/startingPointReportController',
+            findClues: 'views/research/findClues',
+            findCluesController: 'views/research/findCluesController',
+            findCluesReport: 'views/research/findCluesReport',
+            findCluesReportController: 'views/research/findCluesReportController',
             hintsController: 'views/research/hintsController',
             hints: 'views/research/hints',
             dateProblemsController: 'views/research/dateProblemsController',
@@ -90,6 +94,9 @@
             startingPointReport: {
                 exports: 'startingPointReport'
             },
+            findCluesReport: {
+                exports: 'findCluesReport'
+            },
             findPersonOptions: {
                 exports: 'findPersonOptions'
             },
@@ -131,12 +138,20 @@
                 deps: ['jquery', 'person', 'constants'],
                 exports: 'startingPoint'
             },
+            findClues: {
+                deps: ['jquery', 'person', 'constants'],
+                exports: 'findClues'
+            },
             researchController: {
                 deps: ['jquery', 'researchHelper', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload', 'research'],
                 exports: 'researchController'
             },
             startingPointController: {
                 deps: ['jquery', 'startingPoint', 'startingPointReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                exports: 'startingPointController'
+            },
+            findCluesController: {
+                deps: ['jquery', 'findClues', 'findCluesReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
                 exports: 'startingPointController'
             },
             retrieveController: {
@@ -158,6 +173,10 @@
             startingPointReportController: {
                 deps: ['jquery', 'startingPointReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
                 exports: 'startingPointReportController'
+            },
+            findCluesReportController: {
+                deps: ['jquery', 'findCluesReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                exports: 'findCluesReportController'
             },
             possibleDuplicatesController: {
                 deps: ['jquery', 'possibleDuplicates', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],

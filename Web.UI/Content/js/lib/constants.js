@@ -11,8 +11,10 @@
     var DATE_PROBLEMS_PREVIOUS = "dateProblemsPrevious";
     var INCOMPLETE_ORDINANCES_PREVIOUS = "incompleteOrdinancesPrevious";
     var POSSIBLE_DUPLICATES_PREVIOUS = "possibleDuplicatesPrevious";
+    var FIND_CLUES_PREVIOUS = "findCluesPrevious";
     var CLOSE = "close";
     var DIALOG_CLOSE = "dialogclose";
+    var FIND_CLUES = "findClues";
 
 
     // Default values
@@ -37,11 +39,13 @@
 
     // Urls
     var GET_REPORT_LIST_URL = '/Home/GetReportList';
-    var STARTING_POINT_REPORT_HTML_URL = '/Home/StartingPointReportHtml';
+    var FIND_CLUES_URL = "/Home/FindClues";
+    var FIND_CLUES_REPORT_HTML_URL = "/Home/FindCluesReportHtml";
+    var FIND_CLUES_REPORT_DATA_URL = "/Home/FindCluesReportData";
     var KEEP_SESSION_ALIVE_URL = '/Home/KeepSessionAlive';
     var STARTING_POINT_URL = '/Home/StartingPoint';
+    var STARTING_POINT_REPORT_HTML_URL = '/Home/StartingPointReportHtml';
     var STARTING_POINT_REPORT_DATA_URL = '/Home/StartingPointReportData';
-    var STARTING_POINT_HTML = '/Home/StartingPointReportHtml';
     var POSSIBLE_DUPLICATES_REPORT_HTML_URL = '/Home/PossibleDuplicatesReportHtml';
     var HINTS_REPORT_HTML_URL = '/Home/HintsReportHtml';
     var DATE_PROBLEMS_REPORT_HTML_URL = '/Home/DateProblemsReportHtml';
@@ -50,7 +54,6 @@
     var DISPLAY_PERSON_URLS_URL = "/Home/DisplayPersonUrls";
     var PERSON_URL_OPTIONS_URL = "/Home/PersonUrlOptions";
     var INCOMPLETE_ORDINANCES_URL = "/Home/incompleteOrdinances";
-    var FIND_CLUES_URL = "/Home/FindClues";
     var POSSIBLE_DUPLICATES_URL = "/Home/PossibleDuplicates";
     var DATE_PROBLEMS_URL = "/Home/DateProblems";
     var PLACE_PROBLEMS_URL = "/Home/PlaceProblems";
@@ -61,6 +64,7 @@
     var FIND_PERSON_OPTIONS_URL = "/Home/FindPersonOptions";
     var RETRIEVE_URL = '/Home/Retrieve';
     var RETRIEVE_DATA_URL = '/Home/RetrieveData';
+    var SEARCH_CRITERIA_LIST_URL = "/Home/SearchCriteriaList";
 
     var FIND_A_GRAVE = "http://www.findagrave.com/cgi-bin/fg.cgi?page=gsr";
     var GOOGLE = "https://www.google.com/#q=";
@@ -278,7 +282,25 @@
         },
         get RETRIEVE_URL() {
             return RETRIEVE_URL;
+        },
+        get FIND_CLUES() {
+            return FIND_CLUES;
+        },
+        get FIND_CLUES_PREVIOUS() {
+            return FIND_CLUES_PREVIOUS;
+        },
+        get FIND_CLUES_REPORT_HTML_URL() {
+            return FIND_CLUES_REPORT_HTML_URL;
+        },
+        get SEARCH_CRITERIA_LIST_URL() {
+            return SEARCH_CRITERIA_LIST_URL;
+        },
+        get FIND_CLUES_REPORT_DATA_URL() {
+            return FIND_CLUES_REPORT_DATA_URL;
         }
+
+
+        
     }
     return constants;
 });

@@ -26,6 +26,12 @@ define(function(require) {
         return false;
     });
 
+    $("#findClues").unbind("click").bind("click", function (e) {
+        researchHelper.findClues(e);
+        return false;
+    });
+
+
     $("#retrieve").unbind("click").bind("click", function (e) {
         researchHelper.retrieve(e);
         return false;
@@ -191,85 +197,6 @@ define(function(require) {
         return false;
     });
 
-    $("#findClues").unbind("click").bind("click", function(e) {
-        e.preventDefault();
-        if (system.isAuthenticated()) {
-            system.startSpinner(constants.DEFAULT_SPINNER_AREA);
-            $.ajax({
-                url: constants.FIND_CLUES_URL,
-                success: function(data) {
-                    var $dialogContainer = $("#findCluesForm");
-                    var $detachedChildren = $dialogContainer.children().detach();
-                    $("<div id=\"findCluesForm\"></div>").dialog({
-                        width: 950,
-                        title: "Find Clues",
-                        open: function() {
-                            $detachedChildren.appendTo($dialogContainer);
-                        },
-                        buttons: {
-                            "0": {
-                                id: "submit",
-                                text: "Find Clues",
-                                icons: { primary: "submitIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    FindClues.submit();
-                                },
-
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-green"
-                            },
-                            "1": {
-                                id: "previous",
-                                text: "Previous",
-                                icons: { primary: "previousIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    FindClues.displayPrevious();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "2": {
-                                id: "reset",
-                                text: "Reset",
-                                icons: { primary: "resetIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    FindClues.reset();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "3": {
-                                id: "close",
-                                text: "Close",
-                                icons: { primary: "closeIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                    $(this).dialog("close");
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            },
-                            "4": {
-                                id: "help",
-                                text: "Help",
-                                icons: { primary: "helpIcon" },
-                                click: function(event) {
-                                    event.preventDefault();
-                                },
-                                "class": "btn-u btn-brd btn-brd-hover rounded btn-u-blue"
-                            }
-
-                        }
-
-                    });
-                    $("#findCluesForm").empty().append(data);
-                }
-            });
-
-        } else {
-            system.relogin();
-        }
-        return false;
-    });
 
     $("#placeProblems").unbind("click").bind("click", function(e) {
         e.preventDefault();

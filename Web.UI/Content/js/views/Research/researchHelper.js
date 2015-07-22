@@ -19,6 +19,7 @@ define(function (require) {
     var _personUrlOptionsController;
     var _personUrlsController;
     var _hintsController;
+    var _findCluesController;
 
 
     function startingPoint() {
@@ -41,6 +42,36 @@ define(function (require) {
                         $("#startingPointForm").empty().append(data);
                         if (_startingPointController) {
                             _startingPointController.open();
+                        }
+                    }
+                });
+            }
+            );
+        } else {
+            system.relogin();
+        }
+    }
+
+    function findClues() {
+        if (system.isAuthenticated()) {
+            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
+            requireOnce(["jqueryUiOptions", "bootstrapTable", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
+            }, function () {
+                $.ajax({
+                    url: constants.FIND_CLUES_URL,
+                    success: function (data) {
+                        var $dialogContainer = $("#findCluesForm");
+                        var $detachedChildren = $dialogContainer.children().detach();
+                        $("<div id=\"findCluesForm\"></div>").dialog({
+                            width: 775,
+                            title: "Find Clues",
+                            open: function () {
+                                $detachedChildren.appendTo($dialogContainer);
+                            }
+                        });
+                        $("#findCluesForm").empty().append(data);
+                        if (_findCluesController) {
+                            _findCluesController.open();
                         }
                     }
                 });
@@ -196,6 +227,10 @@ define(function (require) {
                         }
                     });
                     $("#personUrlsForm").empty().append(data);
+                    if (_personUrlsController) {
+                        _personUrlsController.open();
+                    }
+
                 }
             });
         } else {
@@ -278,6 +313,9 @@ define(function (require) {
         startingPoint: function (e) {
             return startingPoint(e);
         },
+        findClues: function (e) {
+            return findClues(e);
+        },
         possibleDuplicates: function (e) {
             return possibleDuplicates(e);
         },
@@ -334,8 +372,13 @@ define(function (require) {
         },
         set hintsController(value) {
             _hintsController = value;
+        },
+        get findCluesController() {
+            return _findCluesController;
+        },
+        set findCluesController(value) {
+            _findCluesController = value;
         }
-
     };
 
     return researchHelper;

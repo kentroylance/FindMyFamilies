@@ -222,7 +222,7 @@ define(function(require) {
             researchHelper.retrieve(e, function(result) {
                 var retrieve = require('retrieve');
                 if (result) {
-                    startingPoint.reportId = retrieve.reportId;
+                    person.reportId = retrieve.reportId;
                     startingPoint.save();
                     loadReports(true);
                 }
@@ -289,7 +289,7 @@ define(function(require) {
                                 system.initSpinner(startingPoint.spinner);
                                 startingPoint.callerSpinner = startingPoint.spinner;
                                 $.ajax({
-                                    url: constants.STARTING_POINT_HTML,
+                                    url: constants.STARTING_POINT_REPORT_HTML_URL,
                                     success: function(data) {
                                         var $dialogContainer = $('#startingPointReportForm');
                                         var $detachedChildren = $dialogContainer.children().detach();

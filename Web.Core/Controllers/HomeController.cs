@@ -444,7 +444,7 @@ namespace FindMyFamilies.Web.Controllers {
         }
 
         [System.Web.Mvc.HttpGet]
-        public JsonResult GetSearchCriteriaList() {
+        public JsonResult SearchCriteriaList() {
             return Json(AncestryHelper.GetSearchCriteriaList(), JsonRequestBehavior.AllowGet);
         }
 
