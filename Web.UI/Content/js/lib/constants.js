@@ -162,6 +162,9 @@
         get STARTING_POINT_PREVIOUS() {
             return STARTING_POINT_PREVIOUS;
         },
+        get GET_REPORT_LIST_URL() {
+            return GET_REPORT_LIST_URL;
+        },
         get STARTING_POINT_REPORT_HTML_URL() {
             return STARTING_POINT_REPORT_HTML_URL;
         },

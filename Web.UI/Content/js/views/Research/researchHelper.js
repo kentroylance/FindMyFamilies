@@ -12,7 +12,6 @@ define(function(require) {
 
     var _startingPointController;
     var _startingPointReportController;
-    var _findPersonController;
     var _possibleDuplicatesController;
     var _possibleDuplicatesReportController;
     var _retrieveController;

@@ -168,13 +168,12 @@
             },
             findCluesController: {
                 deps: ['jquery', 'findClues', 'findCluesReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
-                exports: 'findCluesController'
             },
             retrieveController: {
                 deps: ['jquery', 'retrieve', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'retrieveController'
                 deps: ['jquery', 'hints', 'research', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
-                deps: ['jquery', 'hints', 'research', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'hints', 'research', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 deps: ['jquery', 'incompleteOrdinances', 'research', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
             },
             startingPointReportController: {
@@ -190,7 +189,7 @@
                 exports: 'possibleDuplicatesReportController'
             },
             possibleDuplicatesController: {
-                deps: ['jquery', 'possibleDuplicates', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'possibleDuplicates', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'possibleDuplicatesController'
             },
             hintsReportController: {
