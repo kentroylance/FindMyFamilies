@@ -11,6 +11,7 @@ define(function(require) {
     var requireOnce = lazyRequire.once();
 
     var _startingPointController;
+    var _findPersonController;
     var _startingPointReportController;
     var _possibleDuplicatesController;
     var _possibleDuplicatesReportController;
@@ -211,18 +212,52 @@ define(function(require) {
     }
 
     function displayPersonUrls() {
-        e.preventDefault();
-        system.startSpinner();
-            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
+        requireOnce(['personUrlOptions'], function(PersonUrlOptions) {
+            personUrlOptions = PersonUrlOptions;
         }, function() {
+            if (personUrlOptions.id && system.isAuthenticated()) {
+                $.ajax({
+                    url: constants.DISPLAY_PERSON_URLS_URL,
+                    data: {
+                        "personId": personUrlOptions.id,
+                        "includeMaidenName": person.includeMaidenName,
+                        "includeMiddleName": person.includeMiddleName,
+                        "includePlace": person.includePlace,
+                        "yearRange": person.yearRange
+                    },
+                    success: function(data) {
+                        var $dialogContainer = $("#personUrlsForm");
+                        var $detachedChildren = $dialogContainer.children().detach();
+                        $("<div id=\"personUrlsForm\"></div>").dialog({
+                            width: 600,
+                            title: "Research Family",
+                            resizable: false,
+                            minHeight: 0,
+                            maxHeight: $(window).height(),
+                            create: function() {
+                                $(this).css("maxHeight", 700);
+                            },
+                            open: function() {
+                                $detachedChildren.appendTo($dialogContainer);
+                                $(this).dialog("option", "maxHeight", $(window).height());
+                            },
+                            close: function(event, ui) {
+                                event.preventDefault();
+                                $(this).dialog("destroy").remove();
+                            }
+                        });
+                        $("#personUrlsForm").empty().append(data);
+                        if (_personUrlsController) {
+                            _personUrlsController.open();
                         }
+
                     }
                 });
+            } else {
+                system.relogin();
             }
-            );
-        } else {
-            system.relogin();
-        }
+        });
+        return false;
     }
 
     function hints(e) {
@@ -377,6 +412,12 @@ define(function(require) {
                         }
                     }
                 });
+            });
+        } else {
+            system.relogin();
+        }
+    }
+
     var researchHelper = {
         findPerson: function(deferred) {
             return findPerson(deferred);
@@ -408,17 +449,17 @@ define(function(require) {
         personUrlOptions: function(id, name) {
             personUrlOptions(id, name);
         },
-        get findPersonController() {
-            return _findPersonController;
-        },
-        set findPersonController(value) {
-            _findPersonController = value;
-        },
         get startingPointController() {
             return _startingPointController;
         },
         set startingPointController(value) {
             _startingPointController = value;
+        },
+        get findPersonController() {
+            return _findPersonController;
+        },
+        set findPersonController(value) {
+            _findPersonController = value;
         },
         get startingPointReportController() {
             return _startingPointReportController;

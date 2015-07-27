@@ -258,10 +258,6 @@
         get DATE_PROBLEMS_HTML() {
             return DATE_PROBLEMS_HTML;
         },
-        get GET_REPORT_LIST_URL() {
-            return GET_REPORT_LIST_URL;
-        },
-        
         get CLOSE() {
             return CLOSE;
         },
