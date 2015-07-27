@@ -399,10 +399,14 @@
     <Content Include="Content\js\vendor\string.js" />
     <Content Include="Content\js\vendor\string.min.js" />
     <Content Include="Content\js\views\Research\dateProblemsController.js" />
+    <Content Include="Content\js\views\Research\dateProblemsReportController.js" />
+    <Content Include="Content\js\views\Research\hintsReportController.js" />
     <Content Include="Content\js\views\Research\incompleteOrdinancesController.js" />
+    <Content Include="Content\js\views\Research\incompleteOrdinancesReportController.js" />
     <Content Include="Content\js\views\Research\personUrlOptionsController.js" />
     <Content Include="Content\js\views\Research\personUrls.js" />
     <Content Include="Content\js\views\Research\personUrlsController.js" />
+    <Content Include="Content\js\views\Research\possibleDuplicatesReportController.js" />
     <Content Include="Content\js\views\Research\researchHelper.js" />
     <Content Include="Content\js\views\Research\findPersonOptionsController.js" />
     <Content Include="Content\js\views\Research\findPersonOptions.js" />

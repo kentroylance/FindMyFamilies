@@ -8,32 +8,28 @@ define(function(require) {
 
     var lazyRequire = require("lazyRequire");
     var requireOnce = lazyRequire.once();
+    require("lazyload");
 
 
     // models
     var person = require('person');
-    var possibleDuplicates = require('possibleDuplicates');
-    var possibleDuplicatesReport = require('possibleDuplicatesReport');
+    var incompleteOrdinances = require('incompleteOrdinances');
+    var incompleteOrdinancesReport = require('incompleteOrdinancesReport');
     var retrieve = require('retrieve');
 
     function updateForm() {
         if (person.id) {
-            $("#possibleDuplicatesPersonId").val(person.id);
+            $("#incompleteOrdinancesPersonId").val(person.id);
         }
         if (person.researchType) {
-            $("#possibleDuplicatesResearchType").val(person.researchType);
+            $("#incompleteOrdinancesResearchType").val(person.researchType);
         }
         if (person.generation) {
-            $("#possibleDuplicatesGeneration").val(person.generation);
+            $("#incompleteOrdinancesGeneration").val(person.generation);
         }
-        if (possibleDuplicates.includePossibleDuplicates) {
-            $("#includePossibleDuplicates").prop('checked', possibleDuplicates.includePossibleDuplicates);
-            }
-        if (possibleDuplicates.includePossibleMatches) {
-            $("#includePossibleMatches").prop('checked', possibleDuplicates.includePossibleMatches);
-            }
+        
         if (person.reportId) {
-            $("#possibleDuplicatesReportId").val(person.reportId);
+            $("#incompleteOrdinancesReportId").val(person.reportId);
         }
         if (person.addChildren) {
             $('#addChildren').prop('checked', person.addChildren);
@@ -41,18 +37,18 @@ define(function(require) {
     }
 
     function addGenerationOptions(options) {
-        var select = $("<select class=\"form-control select1Digit\" id=\"possibleDuplicatesGeneration\"\>");
-        $.each(options, function (a, b) {
+        var select = $("<select class=\"form-control select1Digit\" id=\"incompleteOrdinancesGeneration\"\>");
+        $.each(options, function(a, b) {
             select.append($("<option/>").attr("value", b).text(b));
         });
-        $('#possibleDuplicatesGenerationDiv').empty();
-        $("#possibleDuplicatesGenerationDiv").append(select);
-        $('#possibleDuplicatesGenerationDiv').nextAll().remove();
+        $('#incompleteOrdinancesGenerationDiv').empty();
+        $("#incompleteOrdinancesGenerationDiv").append(select);
+        $('#incompleteOrdinancesGenerationDiv').nextAll().remove();
         if ((person.researchType === "Ancestors") && (person.reportId === constants.REPORT_ID)) {
-            $("#possibleDuplicatesGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: middle; margin-top: -0.625em; margin-left: .7em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -1.4em\">&nbsp;<span style=\"font-weight: normal\">Add Children</span></label>");
+            $("#incompleteOrdinancesGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: middle; margin-top: -0.625em; margin-left: .7em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -1.4em;\">&nbsp;<span style=\"font-weight: normal;\">Add Children</span></label>");
         }
-        $("#possibleDuplicatesGeneration").change(function (e) {
-            var generation = $("#possibleDuplicatesGeneration").val();
+        $("#incompleteOrdinancesGeneration").change(function(e) {
+            var generation = $("#incompleteOrdinancesGeneration").val();
             if (person.researchType === constants.DESCENDANTS) {
                 if (generation > 1) {
                     msgBox.warning("Selecting two generations of Descendants will more than double the time to retrieve descendants.");
@@ -62,8 +58,8 @@ define(function(require) {
                     msgBox.warning("Increasing the number of generations will increase the time to retrieve ancestors.");
                 }
             }
-            person.generation = $("#possibleDuplicatesGeneration").val();
-            person.resetReportId($("#possibleDuplicatesReportId"));
+            person.generation = $("#incompleteOrdinancesGeneration").val();
+            person.resetReportId($("#incompleteOrdinancesReportId"));
         });
 
     }
@@ -74,7 +70,7 @@ define(function(require) {
         options[1] = "2";
         options[2] = "3";
         addGenerationOptions(options);
-        $("#possibleDuplicatesGeneration").val(person.generation);
+        $("#incompleteOrdinancesGeneration").val(person.generation);
     }
 
     function addAncestorGenerationOptions() {
@@ -87,12 +83,12 @@ define(function(require) {
         options[5] = "7";
         options[6] = "8";
         addGenerationOptions(options);
-        $("#possibleDuplicatesGeneration").val(person.generation);
+        $("#incompleteOrdinancesGeneration").val(person.generation);
     }
 
     function updateResearchData() {
-        $("#possibleDuplicatesReportId").val(person.reportId);
-        var reportText = $("#possibleDuplicatesReportId option:selected").text();
+        $("#incompleteOrdinancesReportId").val(person.reportId);
+        var reportText = $("#incompleteOrdinancesReportId option:selected").text();
         if (reportText && reportText.length > 8 && reportText !== "Select") {
             var nameIndex = reportText.indexOf("Name: ") + 6;
             var dateIndex = reportText.indexOf(", Date:  ");
@@ -102,8 +98,8 @@ define(function(require) {
             person.name = reportText.substring(nameIndex + 11, dateIndex);
             person.researchType = reportText.substring(researchTypeIndex + 17, generationoIndex);
             person.generation = reportText.substring(generationoIndex + 16, generationoIndex + 17);
-            person.loadPersons($("#possibleDuplicatesPersonId"));
-            //                person.reportId = $("#possibleDuplicatesReportId option:selected").val();
+            person.loadPersons($("#incompleteOrdinancesPersonId"));
+            //                person.reportId = $("#incompleteOrdinancesReportId option:selected").val();
         }
         if (person.researchType === constants.DESCENDANTS) {
             addDecendantGenerationOptions();
@@ -114,7 +110,7 @@ define(function(require) {
     }
 
     function loadReports(refreshReport) {
-        retrieve.loadReports($("#possibleDuplicatesReportId"), refreshReport);
+        retrieve.loadReports($("#incompleteOrdinancesReportId"), refreshReport);
         updateResearchData();
     }
 
@@ -124,16 +120,16 @@ define(function(require) {
         } else {
             person.generation = "2";
         }
-        $("possibleDuplicatesGeneration").val(person.generation);
+        $("incompleteOrdinancesGeneration").val(person.generation);
     }
 
     function open() {
-        possibleDuplicates.form = $("#possibleDuplicatesForm");
+        incompleteOrdinances.form = $("#incompleteOrdinancesForm");
         loadEvents();
         loadReports();
-        person.loadPersons($("#possibleDuplicatesPersonId"));
+        person.loadPersons($("#incompleteOrdinancesPersonId"));
         updateForm();
-        system.openForm(possibleDuplicates.form, possibleDuplicates.formTitleImage, possibleDuplicates.spinner);
+        system.openForm(incompleteOrdinances.form, incompleteOrdinances.formTitleImage, incompleteOrdinances.spinner);
     }
 
     function clear() {
@@ -146,31 +142,31 @@ define(function(require) {
     }
 
     function resetReportId() {
-        person.resetReportId($("#possibleDuplicatesReportId"));
+        person.resetReportId($("#incompleteOrdinancesReportId"));
         updateResearchData();
     }
 
     function loadEvents() {
-        $('#possibleDuplicatesPerson').change(function (e) {
+        $('#incompleteOrdinancesPerson').change(function(e) {
             debugger;
         });
 
-        $("#possibleDuplicatesReportId").change(function (e) {
-            person.reportId = $("#possibleDuplicatesReportId option:selected").val();
+        $("#incompleteOrdinancesReportId").change(function(e) {
+            person.reportId = $("#incompleteOrdinancesReportId option:selected").val();
             if (person.reportId === constants.REPORT_ID) {
                 msgBox.warning("Even though the \"Select\" option is availiable to retrieve family search data, to avoid performance problems it is best practice to first retrieve the data before analyzing.");
             }
             updateResearchData();
         });
 
-        $('#possibleDuplicatesPersonId').change(function(e) {
+        $('#incompleteOrdinancesPersonId').change(function(e) {
             person.id = $('option:selected', $(this)).val();
             person.name = $('option:selected', $(this)).text();
             resetReportId();
         });
 
-        $('#possibleDuplicatesResearchType').change(function(e) {
-            person.researchType = $("#possibleDuplicatesResearchType").val();
+        $('#incompleteOrdinancesResearchType').change(function(e) {
+            person.researchType = $("#incompleteOrdinancesResearchType").val();
             if (person.researchType === constants.DESCENDANTS) {
                 person.generationAncestors = person.generation;
                 person.generation = person.generationDescendants;
@@ -185,17 +181,17 @@ define(function(require) {
             resetReportId();
         });
 
-        $("#possibleDuplicatesFindPersonButton").unbind('click').bind('click', function(e) {
+        $("#incompleteOrdinancesFindPersonButton").unbind('click').bind('click', function(e) {
             researchHelper.findPerson(e, function(result) {
                 var findPersonModel = require('findPerson');
                 if (result) {
-                    var changed = (findPersonModel.id === $("#possibleDuplicatesPersonId").val()) ? false : true;
+                    var changed = (findPersonModel.id === $("#incompleteOrdinancesPersonId").val()) ? false : true;
                     if (changed) {
                         person.id = findPersonModel.id;
                         person.name = findPersonModel.name;
                     }
-                    possibleDuplicates.save();
-                    person.loadPersons($("#possibleDuplicatesPersonId"));
+                    incompleteOrdinances.save();
+                    person.loadPersons($("#incompleteOrdinancesPersonId"));
                     if (changed) {
                         resetReportId();
                     }
@@ -205,12 +201,12 @@ define(function(require) {
             return false;
         });
 
-        $("#possibleDuplicatesRetrieveButton").unbind('click').bind('click', function(e) {
+        $("#incompleteOrdinancesRetrieveButton").unbind('click').bind('click', function(e) {
             researchHelper.retrieve(e, function(result) {
                 var retrieve = require('retrieve');
                 if (result) {
                     person.reportId = retrieve.reportId;
-                    possibleDuplicates.save();
+                    incompleteOrdinances.save();
                     loadReports(true);
                 }
                 retrieve.reset();
@@ -218,43 +214,43 @@ define(function(require) {
             return false;
         });
 
-        $("#possibleDuplicatesHelpButton").unbind('click').bind('click', function(e) {
+        $("#incompleteOrdinancesHelpButton").unbind('click').bind('click', function(e) {
         });
 
-        $("#possibleDuplicatesCloseButton").unbind('click').bind('click', function (e) {
-            possibleDuplicates.form.dialog(constants.CLOSE);
+        $("#incompleteOrdinancesCloseButton").unbind('click').bind('click', function(e) {
+            incompleteOrdinances.form.dialog(constants.CLOSE);
         });
 
-        $("#possibleDuplicatesResetButton").unbind('click').bind('click', function (e) {
+        $("#incompleteOrdinancesResetButton").unbind('click').bind('click', function(e) {
             reset();
         });
 
-        $("#possibleDuplicatesPreviousButton").unbind('click').bind('click', function (e) {
-            if (!possibleDuplicates.previous) {
+        $("#incompleteOrdinancesPreviousButton").unbind('click').bind('click', function(e) {
+            if (!incompleteOrdinances.previous) {
                 if (window.localStorage) {
-                    possibleDuplicates.previous = JSON.parse(localStorage.getItem(constants.POSSIBLE_DUPLICATES_PREVIOUS));
+                    incompleteOrdinances.previous = JSON.parse(localStorage.getItem(constants.INCOMPLETE_ORDINANCES_PREVIOUS));
                 }
             }
-            if (possibleDuplicates.previous) {
-                system.initSpinner(possibleDuplicates.spinner);
-                possibleDuplicates.callerSpinner = possibleDuplicates.spinner;
+            if (incompleteOrdinances.previous) {
+                system.initSpinner(incompleteOrdinances.spinner);
+                incompleteOrdinances.callerSpinner = incompleteOrdinances.spinner;
                 $.ajax({
-                    url: constants.POSSIBLE_DUPLICATES_REPORT_HTML_URL,
-                    success: function (data) {
-                        var $dialogContainer = $('#possibleDuplicatesReportForm');
+                    url: constants.INCOMPLETE_ORDINANCES_REPORT_HTML_URL,
+                    success: function(data) {
+                        var $dialogContainer = $('#incompleteOrdinancesReportForm');
                         var $detachedChildren = $dialogContainer.children().detach();
-                        $('<div id=\"possibleDuplicatesReportForm\"></div>').dialog({
-                            title: "Possible Duplicates",
+                        $('<div id=\"incompleteOrdinancesReportForm\"></div>').dialog({
+                            title: "Incomplete Ordinances",
                             width: 975,
                             open: function() {
                                 $detachedChildren.appendTo($dialogContainer);
                                 $(this).css("maxHeight", 700);
                             }
                         });
-                        possibleDuplicates.displayType = "previous";
-                        $("#possibleDuplicatesReportForm").empty().append(data);
-                        if (researchHelper && researchHelper.possibleDuplicatesReportController) {
-                            researchHelper.possibleDuplicatesReportController.open();
+                        incompleteOrdinances.displayType = "previous";
+                        $("#incompleteOrdinancesReportForm").empty().append(data);
+                        if (researchHelper && researchHelper.incompleteOrdinancesReportController) {
+                            researchHelper.incompleteOrdinancesReportController.open();
                         }
                     }
                 });
@@ -263,7 +259,7 @@ define(function(require) {
             }
         });
 
-        $("#possibleDuplicatesSubmitButton").unbind('click').bind('click', function (e) {
+        $("#incompleteOrdinancesSubmitButton").unbind('click').bind('click', function(e) {
             if (system.isAuthenticated()) {
                 if (!person.id) {
                     msgBox.message("You must first select a person from Family Search");
@@ -271,28 +267,28 @@ define(function(require) {
 
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
-                        requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
+                        requireOnce(["bootstrapTable", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
                             }, function() {
-                                system.initSpinner(possibleDuplicates.spinner);
-                                possibleDuplicates.callerSpinner = possibleDuplicates.spinner;
+                                system.initSpinner(incompleteOrdinances.spinner);
+                                incompleteOrdinances.callerSpinner = incompleteOrdinances.spinner;
                                 $.ajax({
-                                    url: constants.POSSIBLE_DUPLICATES_REPORT_HTML_URL,
+                                    url: constants.INCOMPLETE_ORDINANCES_REPORT_HTML_URL,
                                     success: function(data) {
-                                        var $dialogContainer = $('#possibleDuplicatesReportForm');
+                                        var $dialogContainer = $('#incompleteOrdinancesReportForm');
                                         var $detachedChildren = $dialogContainer.children().detach();
-                                        $("<div id=\"possibleDuplicatesReportForm\"></div>").dialog({
-                                            title: "Possible Duplicates",
+                                        $("<div id=\"incompleteOrdinancesReportForm\"></div>").dialog({
+                                            title: "Incomplete Ordinances",
                                             width: 975,
                                             height: 515,
                                             open: function() {
                                                 $detachedChildren.appendTo($dialogContainer);
                                             }
                                         });
-                                        possibleDuplicatesReport.displayType = "start";
-                                        possibleDuplicates.save();
-                                        $("#possibleDuplicatesReportForm").empty().append(data);
-                                if (researchHelper && researchHelper.possibleDuplicatesReportController) {
-                                    researchHelper.possibleDuplicatesReportController.open();
+                                        incompleteOrdinancesReport.displayType = "start";
+                                        incompleteOrdinances.save();
+                                        $("#incompleteOrdinancesReportForm").empty().append(data);
+                                        if (researchHelper && researchHelper.incompleteOrdinancesReportController) {
+                                            researchHelper.incompleteOrdinancesReportController.open();
                                         }
                                     }
                                 });
@@ -301,7 +297,7 @@ define(function(require) {
                     }
                 });
             } else {
-                possibleDuplicatesReport.form.dialog("close");
+                incompleteOrdinancesReport.form.dialog("close");
                 system.relogin();
             }
             return false;
@@ -313,39 +309,32 @@ define(function(require) {
             if (person.addChildren) {
                 msgBox.warning("Selecting <b>Add Children</b> check box will probably double the time to retrieve ancestors.");
             }
-            person.resetReportId($("#possibleDuplicatesReportId"));
+            person.resetReportId($("#incompleteOrdinancesReportId"));
             updateResearchData();
         });
 
-    $("#includePossibleDuplicates").change(function (e) {
-        possibleDuplicates.includePossibleDuplicates = $("#includePossibleDuplicates").prop("checked");
-    });
-
-    $("#includePossibleMatches").change(function (e) {
-        possibleDuplicates.includePossibleMatches = $("#includePossibleMatches").prop("checked");
-    });
 
 
-        $("#possibleDuplicatesCancelButton").unbind('click').bind('click', function (e) {
-            possibleDuplicates.form.dialog(constants.CLOSE);
+        $("#incompleteOrdinancesCancelButton").unbind('click').bind('click', function(e) {
+            incompleteOrdinances.form.dialog(constants.CLOSE);
         });
 
-        possibleDuplicates.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
-            possibleDuplicates.save();
+        incompleteOrdinances.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function(e) {
+            incompleteOrdinances.save();
         });
     }
 
-    var possibleDuplicatesController = {
-        open: function () {
+    var incompleteOrdinancesController = {
+        open: function() {
             open();
         }
     };
 
-    researchHelper.possibleDuplicatesController = possibleDuplicatesController;
+    researchHelper.incompleteOrdinancesController = incompleteOrdinancesController;
     open();
 
-    return possibleDuplicatesController;
+    return incompleteOrdinancesController;
 });
 
 
-//# sourceURL=possibleDuplicatesController.js
+//# sourceURL=incompleteOrdinancesController.js

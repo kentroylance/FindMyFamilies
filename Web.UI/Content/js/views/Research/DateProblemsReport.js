@@ -1,45 +1,53 @@
-﻿(function($) {
-    $("[data-toggle='tooltip']").tooltip();
-    if (DateProblems.displayType === "start") {
-        $.ajax({
-            data: { "personId": DateProblems.personId, "personName": DateProblems.personName, "generation": DateProblems.generation, "researchType": DateProblems.researchType, "reportId": DateProblems.reportId, "empty": DateProblems.empty, "invalid": DateProblems.invalid, "invalidFormat": DateProblems.invalidFormat, "incomplete": DateProblems.incomplete },
-            url: '/Home/DateProblemsReport',
-            success: function(data) {
-                DateProblems.previous = data;
-                $('#datesTable').bootstrapTable("load", data);
-                openForm($("#datesReportForm"), "fmf24-report", "getDatesSpinner");
-            }
-        });
-    } else {
-        $('#datesTable').bootstrapTable("append", DateProblems.previous);
-        openForm($("#datesReportForm"), "fmf24-report", "getDatesSpinner");
-    }
-})(jQuery);
+﻿define(function (require) {
+    var constants = require('constants');
+    var _formName = "dateProblemsReportForm";
+    var _formTitleImage = "fa fmf-search24";
+    var _form = $("#dateProblemsReportForm");
+    var _spinner = "dateProblemsReportSpinner";
 
-function nameFormatter(value) {
-    var result = "";
-    if (value != null) {
-        var idNumber = value.substring(0, value.indexOf("~"));
-        var fullname = value.substring(value.indexOf("~") + 1, value.size);
-        var idNumberUrl = "<p><a style=\"color: rgb(0,0,255)\" href=\"" + getFamilySearchSystem() + "/tree/#view=ancestor&person=" + idNumber + "\" target=\"_tab\">" + idNumber + "</a></p>";
-        var fullnameUrl = "<p><a href= \"#\" onClick=\" displayPerson('" + idNumber + "'); \" style= \" color: rgb(0, 153, 0)\" value= \"" + idNumber + "\" data-toggle=\" tooltip\" data-placement= \"top \" title=\" Select to display more info about this person\" >" + fullname + "</a></p>";
-        result = fullnameUrl + idNumberUrl;
-    }
-    return result;
-}
+    var _callerSpinner;
 
-function dateFormatter(value) {
-    var result = "";
-    if (value) {
-        var problems = value.split("~");
-        if (problems.length > 1) {
-            result += "<p>" + problems[0] + "</p>";
-            result += "<p>" + problems[1] + "</p>";
-        } else {
-            result += "<p>" + problems[0] + "</p>";
+    function DateProblemsReportDO(previous) {
+        this.previous = previous;
+    }
+
+    function save() {
+        if (window.localStorage) {
+            var dateProblemsReport = new DateProblemsReportDO();
+            localStorage.setItem(constants.DATE_PROBLEMS_REPORT, JSON.stringify(dateProblemsReport));
         }
     }
-    return result;
-}
 
+    function load() {
+        if (window.localStorage) {
+            var dateProblemsReport = JSON.parse(localStorage.getItem(constants.DATE_PROBLEMS_REPORT));
+            if (!dateProblemsReport) {
+                dateProblemsReport = new DateProblemsReportDO();
+            }
+        }
+    }
+
+    function clear() {
+    }
+
+    load();
+
+
+    var dateProblemsReport = {
+        formName: _formName,
+        formTitleImage: _formTitleImage,
+        spinner: _spinner,
+        get form() {
+            return _form;
+        },
+        set form(value) {
+            _form = value;
+        },
+        save: function () {
+            save();
+        }
+    };
+
+    return dateProblemsReport;
+});
 //# sourceURL=DateProblemsReport.js

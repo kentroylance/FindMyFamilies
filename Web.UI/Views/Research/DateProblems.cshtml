@@ -1,67 +1,73 @@
 <div class="panel-body">                                                      
     <form class="form-horizontal" role="form">
         <div class="form-group">
-            <label for="datesReportId" class="col-sm-2 control-label">Retrieved:</label>
+            <label for="dateProblemsReportId" class="col-sm-2 control-label">Retrieved:</label>
             <div class="col-sm-10">
                 <div class="input-group">
-                    <select class="form-control" id="datesReportId">
+                    <select class="form-control" id="dateProblemsReportId">
                         <option value="0">Select</option>
                     </select>
                     <span class="input-group-btn">
-                        <button id="datesRetrieveButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fmf24-retrieve" style="font-size:22px; margin-top: -0.24em; margin-bottom: -.1em; vertical-align: middle"></i> Retrieve</button>
+                        <button id="dateProblemsRetrieveButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-retrieve24 dialog-buttons btn-retrieve-find"></i> Retrieve</button>
                     </span>
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <label for="datesResearchType" class="col-sm-2 control-label">Research:</label>
-            <div class="col-sm-10">
-                <select class="form-control researchType" id="datesResearchType">
+            <label for="dateProblemsResearchType" class="col-sm-2 control-label">Research:</label>
+            <div class="col-sm-3">
+                <select class="form-control researchType" id="dateProblemsResearchType">
                     <option>Ancestors</option>
                     <option>Descendants</option>
                 </select>
             </div>
         </div>
         <div class="form-group">
-            <label for="datesPersonId" class="col-sm-2 control-label">Name:</label>
+            <label for="dateProblemsPersonId" class="col-sm-2 control-label">Name:</label>
             <div class="col-sm-7">
                 <div class="input-group">
-                    <input id="datesPersonId" type="text" class="form-control" disabled>
+                    <select class="form-control" id="dateProblemsPersonId"></select>
                     <span class="input-group-btn">
-                            <button id="datesFindPersonButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fmf24-Search" style =" font-size: 22px; vertical-align: middle; margin-top : -0.24em"></i> Find</button>
-	                    </span>
+                        <button id="dateProblemsFindPersonButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-search24 dialog-buttons btn-retrieve-find"></i> Find</button>
+                    </span>
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <label for="datesGeneration" class="col-sm-2 control-label">Generations:</label>
+            <label for="dateProblemsGeneration" class="col-sm-2 control-label">Generations:</label>
             <div class="col-sm-4">
                 <div class="input-group">
-                    <div id="datesGenerationDiv"></div>
+                    <div id="dateProblemsGenerationDiv"></div>
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">Problem:</label>
-            <div class="col-sm-10">
+            <label class="col-sm-2 control-label">Problems:</label>
+            <div class="col-sm-10" style="margin-top: 10px;">
                 <div class="input-group">
-                    <input id="datesEmpty" type="checkbox" style="vertical-align: middle; margin-top: 0.25em" /><label for="datesEmpty" style="vertical-align: middle; margin-top: 0.425em">&nbsp;&nbsp;<span style="font-weight: normal">Empty</span></label>&nbsp;&nbsp;
-                    <input id="datesInvalid" type="checkbox" style="vertical-align: middle; margin-top: 0.25em" /><label for="datesInvalid" style="vertical-align: middle; margin-top: 0.425em">&nbsp;&nbsp;<span style="font-weight: normal">Invalid</span></label>&nbsp;&nbsp;
-                    <input id="datesInvalidFormat" type="checkbox" style="vertical-align: middle; margin-top: 0.25em" /><label for="datesInvalidFormat" style="vertical-align: middle; margin-top: 0.425em">&nbsp;&nbsp;<span style="font-weight: normal">Invalid Format</span></label>&nbsp;&nbsp;
-                    <input id="datesIncomplete" type="checkbox" style="vertical-align: middle; margin-top: 0.25em" /><label for="datesIncomplete" style="vertical-align: middle; margin-top: 0.425em">&nbsp;&nbsp;<span style="font-weight: normal">Incomplete</span></label>&nbsp;&nbsp;
+                    <input id="dateProblemsEmpty" type="checkbox" /><label for="datesdateProblemsEmpty">&nbsp;&nbsp;<span style="font-weight: normal">Empty</span></label>&nbsp;&nbsp;
+                    <input id="dateProblemsInvalid" type="checkbox"/><label for="datesdateProblemsInvalid">&nbsp;&nbsp;<span style="font-weight: normal">Invalid</span></label>&nbsp;&nbsp;
+                    <input id="dateProblemsInvalidFormat" type="checkbox"/><label for="datesdateProblemsInvalidFormat">&nbsp;&nbsp;<span style="font-weight: normal">Invalid Format</span></label>&nbsp;&nbsp;
+                    <input id="dateProblemsIncomplete" type="checkbox"/><label for="datesdateProblemsIncomplete">&nbsp;&nbsp;<span style="font-weight: normal">Incomplete</span></label>&nbsp;&nbsp;
                 </div>
             </div>
-       </div>
+        </div>
+        <hr/>
+        <div class="row" >
+            <div class="text-center">
+                <button id="dateProblemsSubmitButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-submit24 dialog-buttons"></i> Date Problems</button>
+                <button type='button' id="dateProblemsPreviousButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-previous24 dialog-buttons"></i> Previous</button>
+                <button type='button' id="dateProblemsResetButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-reset24 dialog-buttons"></i> Reset</button>
+                <button type='button' id="dateProblemsHelpButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-help24 dialog-buttons"></i> Help</button>
+                <button type='button' id="dateProblemsCloseButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-close24 dialog-buttons"></i> Close</button>
+            </div>
+        </div>
     </form>
 </div>
-<div id="datesSpinner" style="position: fixed; top: 50%; left: 50%"></div>
+<div id="dateProblemsSpinner"/>
 
-<script type="text/javascript">
-    $(function () {
-        var scriptTag = document.createElement("script");
-        scriptTag.src = "/Views/Home/Research/DateProblems/DateProblems.js";
-        document.head.appendChild(scriptTag);
-    });
-</script>
+<script type="text/javascript">require(['main'], function (main) { require(['dateProblemsController']); });</script>
 
-@*<script type="text/javascript" src="~/Views/Home/Research/DateProblems/DateProblems.js"></script>*@
+
+
+

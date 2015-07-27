@@ -1,40 +1,53 @@
-﻿(function($) {
-    $("[data-toggle='tooltip']").tooltip();
-    if (PossibleDuplicates.displayType === "start") {
-        $.ajax({
-            data: { "personId": PossibleDuplicates.personId, "personName": PossibleDuplicates.personName, "generation": PossibleDuplicates.generation, "researchType": PossibleDuplicates.researchType, "reportId": PossibleDuplicates.reportId, "includePossibleDuplicates": PossibleDuplicates.includePossibleDuplicates, "includePossibleMatches": PossibleDuplicates.includePossibleMatches },
-            url: '/Home/PossibleDuplicatesReportData',
-            success: function(data) {
-                PossibleDuplicates.previous = data;
-                $('#possibleDuplicatesTable').bootstrapTable("load", data);
-                openForm($("#possibleDuplicatesReportForm"), "fmf24-report", "possibleDuplicatesReportSpinner");
+﻿define(function (require) {
+    var constants = require('constants');
+    var _formName = "possibleDuplicatesReportForm";
+    var _formTitleImage = "fa fmf-search24";
+    var _form = $("#possibleDuplicatesReportForm");
+    var _spinner = "possibleDuplicatesReportSpinner";
+
+    var _callerSpinner;
+
+    function PossibleDuplicatesReportDO(previous) {
+        this.previous = previous;
+    }
+
+    function save() {
+        if (window.localStorage) {
+            var possibleDuplicatesReport = new PossibleDuplicatesReportDO();
+            localStorage.setItem(constants.POSSIBLE_DUPLICATES_REPORT, JSON.stringify(possibleDuplicatesReport));
+        }
+    }
+
+    function load() {
+        if (window.localStorage) {
+            var possibleDuplicatesReport = JSON.parse(localStorage.getItem(constants.POSSIBLE_DUPLICATES_REPORT));
+            if (!possibleDuplicatesReport) {
+                possibleDuplicatesReport = new PossibleDuplicatesReportDO();
             }
-        });
-    } else {
-        $('#possibleDuplicatesTable').bootstrapTable("append", PossibleDuplicates.previous);
-        openForm($("#possibleDuplicatesReportForm"), "fmf24-report", "possibleDuplicatesReportSpinner");
+        }
     }
-})(jQuery);
 
-function nameFormatter(value) {
-    var result = "";
-    if (value != null) {
-        var idNumber = value.substring(0, value.indexOf("~"));
-        var fullname = value.substring(value.indexOf("~") + 1, value.size);
-        var idNumberUrl = "<p><a style=\"color: rgb(0,0,255)\" href=\"" + getFamilySearchSystem() + "/tree/#view=ancestor&person=" + idNumber + "\" target=\"_tab\">" + idNumber + "</a></p>";
-        var fullnameUrl = "<p><a href= \"#\" onClick=\" displayPerson('" + idNumber + "'); \" style= \" color: rgb(0, 153, 0)\" value= \"" + idNumber + "\" data-toggle=\" tooltip\" data-placement= \"top \" title=\" Select to display more info about this person\" >" + fullname + "</a></p>";
-        result = fullnameUrl + idNumberUrl;
+    function clear() {
     }
-    return result;
-}
 
-function linkFormatter(value) {
-    var result = "";
-    if (value) {
-        result = getFamilySearchSystem() + "/tree/#view=possibleDuplicates&person=" + value;
-        result = "<a style=\"color: rgb(50,205,50)\" href=\"" + result + "\" target=\"_tab\">Duplicate</a>&nbsp;";
-    }
-    return result;
-}
+    load();
 
-//# sourceURL=GetPossibleDuplicates.js
+
+    var possibleDuplicatesReport = {
+        formName: _formName,
+        formTitleImage: _formTitleImage,
+        spinner: _spinner,
+        get form() {
+            return _form;
+        },
+        set form(value) {
+            _form = value;
+        },
+        save: function () {
+            save();
+        }
+    };
+
+    return possibleDuplicatesReport;
+});
+//# sourceURL=PossibleDuplicatesReport.js

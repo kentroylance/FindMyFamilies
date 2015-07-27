@@ -11,13 +11,19 @@ define(function(require) {
     var requireOnce = lazyRequire.once();
 
     var _startingPointController;
-    var _findPersonController;
     var _startingPointReportController;
+    var _findPersonController;
     var _possibleDuplicatesController;
+    var _possibleDuplicatesReportController;
     var _retrieveController;
     var _personUrlOptionsController;
     var _personUrlsController;
     var _hintsController;
+    var _hintsReportController;
+    var _incompleteOrdinancesController;
+    var _incompleteOrdinancesReportController;
+    var _dateProblemsController;
+    var _dateProblemsReportController;
     var _findCluesController;
     var _findCluesReportController;
 
@@ -206,9 +212,100 @@ define(function(require) {
     }
 
     function displayPersonUrls() {
-        requireOnce(['personUrlOptions'], function(PersonUrlOptions) {
-            personUrlOptions = PersonUrlOptions;
+        e.preventDefault();
+        system.startSpinner();
+            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
         }, function() {
+                        }
+                    }
+                });
+            }
+            );
+        } else {
+            system.relogin();
+        }
+    }
+
+    function hints(e) {
+        if (system.isAuthenticated()) {
+            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
+            requireOnce(["jqueryUiOptions", "bootstrapTable", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
+            }, function () {
+                $.ajax({
+                    url: constants.HINTS_URL,
+                    success: function (data) {
+                        var $dialogContainer = $("#hintsForm");
+                        var $detachedChildren = $dialogContainer.children().detach();
+                        $("<div id=\"hintsForm\"></div>").dialog({
+                            width: 775,
+                            title: "Hints",
+                            open: function () {
+                                $detachedChildren.appendTo($dialogContainer);
+                            }
+                        });
+                        $("#hintsForm").empty().append(data);
+                        if (_hintsController) {
+                            _hintsController.open();
+                        }
+                    }
+                });
+            }
+            );
+        } else {
+            system.relogin();
+        }
+    }
+
+    function dateProblems(e) {
+        if (system.isAuthenticated()) {
+            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
+            requireOnce(["jqueryUiOptions", "bootstrapTable", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
+            }, function () {
+                $.ajax({
+                    url: constants.DATE_PROBLEMS_URL,
+                    success: function (data) {
+                        var $dialogContainer = $("#dateProblemsForm");
+                        var $detachedChildren = $dialogContainer.children().detach();
+                        $("<div id=\"dateProblemsForm\"></div>").dialog({
+                            width: 775,
+                            title: "Date Problems",
+                            open: function () {
+                                $detachedChildren.appendTo($dialogContainer);
+                            }
+                        });
+                        $("#dateProblemsForm").empty().append(data);
+                        if (_dateProblemsController) {
+                            _dateProblemsController.open();
+                        }
+                    }
+                });
+            }
+            );
+        } else {
+            system.relogin();
+        }
+    }
+
+    function incompleteOrdinances(e) {
+        if (system.isAuthenticated()) {
+            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
+            requireOnce(["jqueryUiOptions", "bootstrapTable", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
+            }, function () {
+                $.ajax({
+                    url: constants.INCOMPLETE_ORDINANCES_URL,
+                    success: function (data) {
+                        var $dialogContainer = $("#incompleteOrdinancesForm");
+                        var $detachedChildren = $dialogContainer.children().detach();
+                        $("<div id=\"incompleteOrdinancesForm\"></div>").dialog({
+                            width: 775,
+                            title: "Incomplete Ordinances",
+                            open: function () {
+                                $detachedChildren.appendTo($dialogContainer);
+                            }
+                        });
+                        $("#incompleteOrdinancesForm").empty().append(data);
+                        if (_incompleteOrdinancesController) {
+                            _incompleteOrdinancesController.open();
             if (personUrlOptions.id && system.isAuthenticated()) {
                 $.ajax({
                     url: constants.DISPLAY_PERSON_URLS_URL,
@@ -281,12 +378,6 @@ define(function(require) {
                         }
                     }
                 });
-            });
-        } else {
-            system.relogin();
-        }
-    }
-
     var researchHelper = {
         findPerson: function(deferred) {
             return findPerson(deferred);
@@ -303,23 +394,32 @@ define(function(require) {
         possibleDuplicates: function(id, name) {
             return possibleDuplicates(id, name);
         },
+        hints: function (e) {
+            return hints(e);
+        },
+        dateProblems: function (e) {
+            return dateProblems(e);
+        },
+        incompleteOrdinances: function (e) {
+            return incompleteOrdinances(e);
+        },
         displayPersonUrls: function() {
             displayPersonUrls();
         },
         personUrlOptions: function(id, name) {
             personUrlOptions(id, name);
         },
-        get startingPointController() {
-            return _startingPointController;
-        },
-        set startingPointController(value) {
-            _startingPointController = value;
-        },
         get findPersonController() {
             return _findPersonController;
         },
         set findPersonController(value) {
             _findPersonController = value;
+        },
+        get startingPointController() {
+            return _startingPointController;
+        },
+        set startingPointController(value) {
+            _startingPointController = value;
         },
         get startingPointReportController() {
             return _startingPointReportController;
@@ -332,6 +432,48 @@ define(function(require) {
         },
         set possibleDuplicatesController(value) {
             _possibleDuplicatesController = value;
+        },
+        get possibleDuplicatesReportController() {
+            return _possibleDuplicatesReportController;
+        },
+        set possibleDuplicatesReportController(value) {
+            _possibleDuplicatesReportController = value;
+        },
+        get hintsController() {
+            return _hintsController;
+        },
+        set hintsController(value) {
+            _hintsController = value;
+        },
+        get hintsReportController() {
+            return _hintsReportController;
+        },
+        set hintsReportController(value) {
+            _hintsReportController = value;
+        },
+        get incompleteOrdinancesController() {
+            return _incompleteOrdinancesController;
+        },
+        set incompleteOrdinancesController(value) {
+            _incompleteOrdinancesController = value;
+        },
+        get incompleteOrdinancesReportController() {
+            return _incompleteOrdinancesReportController;
+        },
+        set incompleteOrdinancesReportController(value) {
+            _incompleteOrdinancesReportController = value;
+        },
+        get dateProblemsController() {
+            return _dateProblemsController;
+        },
+        set dateProblemsController(value) {
+            _dateProblemsController = value;
+        },
+        get dateProblemsReportController() {
+            return _dateProblemsReportController;
+        },
+        set dateProblemsReportController(value) {
+            _dateProblemsReportController = value;
         },
         get retrieveController() {
             return _retrieveController;
@@ -350,12 +492,6 @@ define(function(require) {
         },
         set personUrlsController(value) {
             _personUrlsController = value;
-        },
-        get hintsController() {
-            return _hintsController;
-        },
-        set hintsController(value) {
-            _hintsController = value;
         },
         get findCluesController() {
             return _findCluesController;
