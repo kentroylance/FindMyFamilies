@@ -133,53 +133,12 @@ define(function(require) {
         } else {
             system.relogin();
         }
-//
-//
-//        if (system.isAuthenticated()) {
-//            requireOnce(["retrieve", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function(Retrieve) {
-//                retrieveModel = Retrieve;
-//            }, function() {
-//                retrieveModel.callback = callback;
-//                retrieveModel.callerSpinner = system.target.id;
-//                $.ajax({
-//                    url: constants.RETRIEVE_URL,
-//                    success: function(data) {
-//                        var $dialogContainer = $("#retrieveForm");
-//                        var $detachedChildren = $dialogContainer.children().detach();
-//                        $("<div id=\"retrieveForm\"></div>").dialog({
-//                                width: 825,
-//                                title: "Retrieve",
-//                                open: function() {
-//                                    $detachedChildren.appendTo($dialogContainer);
-//                                    $(this).css("maxHeight", 700);
-//                                }
-//                            }
-//                        );
-//                        $("#retrieveForm").empty().append(data);
-//                        if (id) {
-//                            person.id = id;
-//                            person.name = name;
-//                        }
-//                        if (_retrieveController) {
-//                            _retrieveController.open();
-//                        }
-//                    }
-//                });
-//            });
-//        } else {
-//            system.relogin();
-//        }
     }
 
     function findPerson(callback) {
         system.startSpinner();
         if (system.isAuthenticated()) {
             requireOnce(["formValidation", "bootstrapValidation", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css", "css!/Content/css/vendor/formValidation.min.css"], function() {
-                    //                require("css!/Content/css/vendor/formValidation.min.css");
-                    //                var formValidation = require("formValidation");
-                    //                var bootstrapValidation = require("bootstrapValidation");
-
-                    //                requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css", "css!/Content/css/vendor/formValidation.min.css", "bootstrapTable", "formValidation", "bootstrapValidation"], function () {
                 }, function() {
                     var findPerson = require('findPerson');
                     findPerson.callback = callback;
@@ -318,71 +277,6 @@ define(function(require) {
         } else {
             system.relogin();
         }
-    }
-
-    function incompleteOrdinances(e) {
-        if (system.isAuthenticated()) {
-            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
-            requireOnce(["jqueryUiOptions", "bootstrapTable", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
-            }, function () {
-                $.ajax({
-                    url: constants.INCOMPLETE_ORDINANCES_URL,
-                    success: function (data) {
-                        var $dialogContainer = $("#incompleteOrdinancesForm");
-                        var $detachedChildren = $dialogContainer.children().detach();
-                        $("<div id=\"incompleteOrdinancesForm\"></div>").dialog({
-                            width: 775,
-                            title: "Incomplete Ordinances",
-                            open: function () {
-                                $detachedChildren.appendTo($dialogContainer);
-                            }
-                        });
-                        $("#incompleteOrdinancesForm").empty().append(data);
-                        if (_incompleteOrdinancesController) {
-                            _incompleteOrdinancesController.open();
-            if (personUrlOptions.id && system.isAuthenticated()) {
-                $.ajax({
-                    url: constants.DISPLAY_PERSON_URLS_URL,
-                    data: {
-                        "personId": personUrlOptions.id,
-                        "includeMaidenName": person.includeMaidenName,
-                        "includeMiddleName": person.includeMiddleName,
-                        "includePlace": person.includePlace,
-                        "yearRange": person.yearRange
-                    },
-                    success: function(data) {
-                        var $dialogContainer = $("#personUrlsForm");
-                        var $detachedChildren = $dialogContainer.children().detach();
-                        $("<div id=\"personUrlsForm\"></div>").dialog({
-                            width: 600,
-                            title: "Research Family",
-                            resizable: false,
-                            minHeight: 0,
-                            maxHeight: $(window).height(),
-                            create: function() {
-                                $(this).css("maxHeight", 700);
-                            },
-                            open: function() {
-                                $detachedChildren.appendTo($dialogContainer);
-                                $(this).dialog("option", "maxHeight", $(window).height());
-                            },
-                            close: function(event, ui) {
-                                event.preventDefault();
-                                $(this).dialog("destroy").remove();
-                            }
-                        });
-                        $("#personUrlsForm").empty().append(data);
-                        if (_personUrlsController) {
-                            _personUrlsController.open();
-                        }
-
-                    }
-                });
-            } else {
-                system.relogin();
-            }
-        });
-        return false;
     }
 
     function personUrlOptions(id, name) {

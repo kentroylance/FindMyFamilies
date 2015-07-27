@@ -418,7 +418,6 @@
     <Content Include="Content\js\views\Research\Hints.js" />
     <Content Include="Content\js\views\Research\findClues.js" />
     <Content Include="Content\js\views\Research\findCluesController.js" />
-    <Content Include="Content\js\views\Research\startingPointEvents.js" />
     <Content Include="Content\js\lib\constants.js" />
     <Content Include="Content\js\views\Research\research.js" />
     <Content Include="Content\js\views\Research\findCluesReport.js" />
@@ -470,8 +469,6 @@
     <Content Include="Content\js\views\home\indexController.js" />
     <Content Include="Content\js\views\Research\dateProblems.js" />
     <Content Include="Content\js\views\Research\DateProblemsReport.js" />
-    <Content Include="Content\js\views\Research\FindClues1.js" />
-    <Content Include="Content\js\views\Research\FindCluesReport1.js" />
     <Content Include="Content\js\views\Research\hintsController.js" />
     <Content Include="Content\js\views\Research\HintsReport.js" />
     <Content Include="Content\js\views\Research\incompleteOrdinances.js" />
