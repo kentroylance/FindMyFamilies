@@ -14,9 +14,9 @@ define(function(require) {
     var _spinner = "dateProblemsSpinner";
 
     var _empty = true;
-    var _invalid = true;
-    var _invalidFormat = true;
-    var _incomplete = true;
+    var _invalid = false;
+    var _invalidFormat = false;
+    var _incomplete = false;
 
     function DateProblemsDO(empty, invalid, invalidFormat, incomplete) {
         this.empty = empty;
@@ -47,7 +47,7 @@ define(function(require) {
             dateProblemsDO = new DateProblemsDO();
         }
         if (!dateProblemsDO.researchType) {
-            _empty = true;
+            dateProblemsDO.empty = true;
         }
         _empty = dateProblemsDO.empty;
         _invalid = dateProblemsDO.invalid;

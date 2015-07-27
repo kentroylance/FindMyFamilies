@@ -1,39 +1,40 @@
-﻿<script type="text/javascript" src="~/Views/Home/Research/bootstrap-table.min.js"></script>
-
-<div>
-    <table id="datesTable"
+﻿<div class ="dateProblems-table">
+    <table id="dateProblemsReportTable"
            data-toggle="table"
-           data-height="600"
-           data-pageSize="50"
-           data-pageList="[10, 25, 50, 100, 200]"
+           data-height="800"
+           data-pagesize="50"
+           data-pagelist="[10, 25, 50, 100, 200]"
            data-pagination="true"
-           data-search="true"
+           data-search="false"
            data-show-refresh="false"
-           data-show-toggle="true"
-           data-show-columns="true"
+           data-show-toggle="false"
+           data-show-columns="false"
            data-toolbar="#toolbar"
            data-click-to-select="false"
            data-single-select="false">
         <thead>
             <tr>
-                <th data-field="Name" data-formatter="nameFormatter">Name</th>
+                <th data-field="Name" data-formatter="nameFormatter" data-events="nameEvents">Name</th>
                 <th data-field="BirthDate" data-formatter="dateFormatter">Birth</th>
                 <th data-field="DeathDate" data-formatter="dateFormatter">Death</th>
                 <th data-field="MarriageDate" data-formatter="dateFormatter">Marriage</th>
             </tr>
         </thead>
     </table>
+    <br />
 </div>
-<div id="getDatesSpinner" style="position: fixed; top: 50%; left: 50%"></div>
 
-<script type="text/javascript" src="~/Views/Home/Research/bootstrap-table.min.js"></script>
+<div class="row">
+<div class="text-center">
+    <button id="dateProblemsReportSaveButton" class ="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class ="fa fmf-save24 dialog-buttons"></i> Save </button>
+    <button type='button' id="dateProblemsReportOptionsButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-options24 dialog-buttons"></i> Options </button>
+    <button type='button' id="dateProblemsReportHelpButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-help24 dialog-buttons"></i> Help </button>
+    <button type='button' id="dateProblemsReportCloseButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-close24 dialog-buttons"></i> Close </button>
+</div>
+</div>
 
-<script type="text/javascript">
-    $(function () {
-        var scriptTag = document.createElement("script");
-        scriptTag.src = "/Views/Home/Research/DateProblems/DateProblemsReport.js";
-        document.head.appendChild(scriptTag);
-    });
-</script>
 
-@*<script type="text/javascript" src="~/Views/Home/Research/DateProblems/DateProblemsReport.js"></script>*@
+<div id="dateProblemsReportSpinner" />
+
+<script type="text/javascript" src="~/Content/js/vendor/bootstrap-table.min.js"></script>
+<script type="text/javascript">require(['main'], function (main) { require(['dateProblemsReportController']); });</script>

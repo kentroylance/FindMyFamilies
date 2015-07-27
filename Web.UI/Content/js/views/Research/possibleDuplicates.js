@@ -23,7 +23,7 @@
 
     function save() {
         if (window.localStorage) {
-            var possibleDuplicates = new PossibleDuplicatesDO(_includePossibleDuplicates, _includePossibleMatches);
+            var possibleDuplicatesDO = new PossibleDuplicatesDO(_includePossibleDuplicates, _includePossibleMatches);
             localStorage.setItem(constants.POSSIBLE_DUPLICATES, JSON.stringify(possibleDuplicatesDO));
         }
         person.save();
@@ -36,14 +36,13 @@
             }
         }
     }
-    
     if (window.localStorage) {
         var possibleDuplicatesDO = JSON.parse(localStorage.getItem(constants.POSSIBLE_DUPLICATES));
         if (!possibleDuplicatesDO) {
             possibleDuplicatesDO = new PossibleDuplicatesDO();
         }
         if (!possibleDuplicatesDO.researchType) {
-            _includePossibleDuplicates = true;
+            possibleDuplicatesDO.includePossibleDuplicates = true;
         }
         _includePossibleDuplicates = possibleDuplicatesDO.includePossibleDuplicates;
         _includePossibleMatches = possibleDuplicatesDO.includePossibleMatches;
@@ -71,6 +70,12 @@
         set generationDescendants(value) {
             _generationDescendants = value;
         },
+        get previous() {
+            return _previous;
+        },
+        set previous(value) {
+            _previous = value;
+        },
         get includePossibleDuplicates() {
             return _includePossibleDuplicates;
         },
@@ -82,12 +87,6 @@
         },
         set includePossibleMatches(value) {
             _includePossibleMatches = value;
-        },
-        get previous() {
-            return _previous;
-        },
-        set previous(value) {
-            _previous = value;
         },
         get displayType() {
             return _displayType;

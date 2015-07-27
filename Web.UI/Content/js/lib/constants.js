@@ -33,9 +33,13 @@
     var STARTING_POINT = "startingPoint";
     var STARTING_POINT_REPORT = "startingPointReport";
     var HINTS = "hints";
+    var HINTS_REPORT = "hintsReport";
     var DATE_PROBLEMS = "dateProblems";
+    var DATE_PROBLEMS_REPORT = "dateProblemsReport";
     var INCOMPLETE_ORDINANCES = "incompleteOrdinances";
+    var INCOMPLETE_ORDINANCES_REPORT = "incompleteOrdinancesReport";
     var POSSIBLE_DUPLICATES = "possibleDuplicates";
+    var POSSIBLE_DUPLICATES_REPORT = "possibleDuplicatesReport";
 
     // Urls
     var GET_REPORT_LIST_URL = '/Home/GetReportList';
@@ -46,19 +50,24 @@
     var STARTING_POINT_URL = '/Home/StartingPoint';
     var STARTING_POINT_REPORT_HTML_URL = '/Home/StartingPointReportHtml';
     var STARTING_POINT_REPORT_DATA_URL = '/Home/StartingPointReportData';
-    var POSSIBLE_DUPLICATES_REPORT_HTML_URL = '/Home/PossibleDuplicatesReportHtml';
+    var HINTS_URL = '/Home/Hints';
     var HINTS_REPORT_HTML_URL = '/Home/HintsReportHtml';
+    var HINTS_REPORT_DATA_URL = '/Home/HintsReportData';
+    var POSSIBLE_DUPLICATES_URL = '/Home/PossibleDuplicates';
+    var POSSIBLE_DUPLICATES_REPORT_HTML_URL = '/Home/PossibleDuplicatesReportHtml';
+    var POSSIBLE_DUPLICATES_REPORT_DATA_URL = '/Home/PossibleDuplicatesReportData';
+    var DATE_PROBLEMS_URL = '/Home/DateProblems';
     var DATE_PROBLEMS_REPORT_HTML_URL = '/Home/DateProblemsReportHtml';
+    var DATE_PROBLEMS_REPORT_DATA_URL = '/Home/DateProblemsReportData';
+    var INCOMPLETE_ORDINANCES_URL = '/Home/IncompleteOrdinances';
     var INCOMPLETE_ORDINANCES_REPORT_HTML_URL = '/Home/IncompleteOrdinancesReportHtml';
+    var INCOMPLETE_ORDINANCES_REPORT_DATA_URL = '/Home/IncompleteOrdinancesReportData';
     var FIND_PERSON_URL = '/Home/FindPerson';
     var DISPLAY_PERSON_URLS_URL = "/Home/DisplayPersonUrls";
     var PERSON_URL_OPTIONS_URL = "/Home/PersonUrlOptions";
     var INCOMPLETE_ORDINANCES_URL = "/Home/incompleteOrdinances";
     var POSSIBLE_DUPLICATES_URL = "/Home/PossibleDuplicates";
-    var DATE_PROBLEMS_URL = "/Home/DateProblems";
     var PLACE_PROBLEMS_URL = "/Home/PlaceProblems";
-    var HINTS_URL = "/Home/Hints";
-    var DATE_PROBLEMS_URL = "/Home/DateProblems";
     var DISPLAY_PERSON_URL = "/Home/DisplayPerson";
     var FIND_PERSONS_URL = "/Home/FindPersons";
     var FIND_PERSON_OPTIONS_URL = "/Home/FindPersonOptions";
@@ -151,12 +160,103 @@
         get STARTING_POINT_PREVIOUS() {
             return STARTING_POINT_PREVIOUS;
         },
-        get GET_REPORT_LIST_URL() {
-            return GET_REPORT_LIST_URL;
-        },
         get STARTING_POINT_REPORT_HTML_URL() {
             return STARTING_POINT_REPORT_HTML_URL;
         },
+        get STARTING_POINT_REPORT_DATA_URL() {
+            return STARTING_POINT_REPORT_DATA_URL;
+        },
+        get STARTING_POINT_HTML() {
+            return STARTING_POINT_HTML;
+        },
+        get POSSIBLE_DUPLICATES() {
+            return POSSIBLE_DUPLICATES;
+        },
+        get POSSIBLE_DUPLICATES_REPORT() {
+            return POSSIBLE_DUPLICATES_REPORT;
+        },
+        get POSSIBLE_DUPLICATES_URL() {
+            return POSSIBLE_DUPLICATES_URL;
+        },
+        get POSSIBLE_DUPLICATES_PREVIOUS() {
+            return POSSIBLE_DUPLICATES_PREVIOUS;
+        },
+        get POSSIBLE_DUPLICATES_REPORT_HTML_URL() {
+            return POSSIBLE_DUPLICATES_REPORT_HTML_URL;
+        },
+        get POSSIBLE_DUPLICATES_REPORT_DATA_URL() {
+            return POSSIBLE_DUPLICATES_REPORT_DATA_URL;
+        },
+        get POSSIBLE_DUPLICATES_HTML() {
+            return POSSIBLE_DUPLICATES_HTML;
+        },
+        get HINTS() {
+            return HINTS;
+        },
+        get HINTS_REPORT() {
+            return HINTS_REPORT;
+        },
+        get HINTS_URL() {
+            return HINTS_URL;
+        },
+        get HINTS_PREVIOUS() {
+            return HINTS_PREVIOUS;
+        },
+        get HINTS_REPORT_HTML_URL() {
+            return HINTS_REPORT_HTML_URL;
+        },
+        get HINTS_REPORT_DATA_URL() {
+            return HINTS_REPORT_DATA_URL;
+        },
+        get HINTS_HTML() {
+            return HINTS_HTML;
+        },
+        get INCOMPLETE_ORDINANCES() {
+            return INCOMPLETE_ORDINANCES;
+        },
+        get INCOMPLETE_ORDINANCES_REPORT() {
+            return INCOMPLETE_ORDINANCES_REPORT;
+        },
+        get INCOMPLETE_ORDINANCES_URL() {
+            return INCOMPLETE_ORDINANCES_URL;
+        },
+        get INCOMPLETE_ORDINANCES_PREVIOUS() {
+            return INCOMPLETE_ORDINANCES_PREVIOUS;
+        },
+        get INCOMPLETE_ORDINANCES_REPORT_HTML_URL() {
+            return INCOMPLETE_ORDINANCES_REPORT_HTML_URL;
+        },
+        get INCOMPLETE_ORDINANCES_REPORT_DATA_URL() {
+            return INCOMPLETE_ORDINANCES_REPORT_DATA_URL;
+        },
+        get INCOMPLETE_ORDINANCES_HTML() {
+            return INCOMPLETE_ORDINANCES_HTML;
+        },
+        get DATE_PROBLEMS() {
+            return DATE_PROBLEMS;
+        },
+        get DATE_PROBLEMS_REPORT() {
+            return DATE_PROBLEMS_REPORT;
+        },
+        get DATE_PROBLEMS_URL() {
+            return DATE_PROBLEMS_URL;
+        },
+        get DATE_PROBLEMS_PREVIOUS() {
+            return DATE_PROBLEMS_PREVIOUS;
+        },
+        get DATE_PROBLEMS_REPORT_HTML_URL() {
+            return DATE_PROBLEMS_REPORT_HTML_URL;
+        },
+        get DATE_PROBLEMS_REPORT_DATA_URL() {
+            return DATE_PROBLEMS_REPORT_DATA_URL;
+        },
+        get DATE_PROBLEMS_HTML() {
+            return DATE_PROBLEMS_HTML;
+        },
+        get GET_REPORT_LIST_URL() {
+            return GET_REPORT_LIST_URL;
+        },
+        
         get CLOSE() {
             return CLOSE;
         },
@@ -174,9 +274,6 @@
         },
         get KEEP_SESSION_ALIVE_URL() {
             return KEEP_SESSION_ALIVE_URL;
-        },
-        get POSSIBLE_DUPLICATES_URL() {
-            return POSSIBLE_DUPLICATES_URL;
         },
         get FIND_CLUES_URL() {
             return FIND_CLUES_URL;
@@ -202,26 +299,11 @@
         get DISPLAY_PERSON_URL() {
             return DISPLAY_PERSON_URL;
         },
-        get HINTS_URL() {
-            return HINTS_URL;
-        },
-        get DATE_PROBLEMS_URL() {
-            return DATE_PROBLEMS_URL;
-        },
-        get INCOMPLETE_ORDINANCES_URL() {
-            return INCOMPLETE_ORDINANCES_URL;
-        },
         get PLACE_PROBLEMS_URL() {
             return PLACE_PROBLEMS_URL;
         },
         get BUTTON_ATTR() {
             return BUTTON_ATTR;
-        },
-        get POSSIBLE_DUPLICATES_PREVIOUS() {
-            return POSSIBLE_DUPLICATES_PREVIOUS;
-        },
-        get POSSIBLE_DUPLICATES() {
-            return POSSIBLE_DUPLICATES;
         },
         get FIND_A_GRAVE() {
             return FIND_A_GRAVE;
@@ -241,44 +323,8 @@
         get FIND_MY_PAST() {
             return FIND_MY_PAST;
         },
-        get HINTS_PREVIOUS() {
-            return HINTS_PREVIOUS;
-        },
-        get DATE_PRBLEMS_PREVIOUS() {
-            return DATE_PROBLEMS_PREVIOUS;
-        },
-        get INCOMPLETE_ORDINANCES_PREVIOUS() {
-            return INCOMPLETE_ORDINANCES_PREVIOUS;
-        },
-        get HINTS() {
-            return HINTS;
-        },
-        get DATE_PROBLEMS() {
-            return DATE_PROBLEMS;
-        },
-        get INCOMPLETE_ORDINANCES() {
-            return INCOMPLETE_ORDINANCES;
-        },
         get AMERICAN_ANCESTOR() {
             return AMERICAN_ANCESTOR;
-        },
-        get STARTING_POINT_REPORT_DATA_URL() {
-            return STARTING_POINT_REPORT_DATA_URL;
-        },
-        get STARTING_POINT_HTML() {
-            return STARTING_POINT_HTML;
-        },
-        get POSSIBLE_DUPLICATES_REPORT_HTML_URL() {
-            return POSSIBLE_DUPLICATES_REPORT_HTML_URL;
-        },
-        get HINTS_REPORT_HTML_URL() {
-            return HINTS_REPORT_HTML_URL;
-        },
-        get DATE_PROBLEMS_REPORT_HTML_URL() {
-            return DATE_PROBLEMS_REPORT_HTML_URL;
-        },
-        get INCOMPLETE_ORDINANCES_REPORT_HTML_URL() {
-            return INCOMPLETE_ORDINANCES_REPORT_HTML_URL;
         },
         get RETRIEVE_URL() {
             return RETRIEVE_URL;
@@ -299,8 +345,6 @@
             return FIND_CLUES_REPORT_DATA_URL;
         }
 
-
-        
     }
     return constants;
 });

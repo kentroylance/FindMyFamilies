@@ -74,7 +74,7 @@ namespace FindMyFamilies.Web.Controllers {
         }
 
         [System.Web.Mvc.HttpGet]
-        public JsonResult DateProblemsData(DateInputDO dateProblem) {
+        public JsonResult DateProblemsReportData(DateInputDO dateProblem) {
             List<DateListItemDO> dateProblems = new List<DateListItemDO>();
             if (Request.IsAjaxRequest() && (dateProblem != null)) {
                 session = GetSession();

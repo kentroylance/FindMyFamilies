@@ -23,7 +23,7 @@
 
     function save() {
         if (window.localStorage) {
-            var hints = new HintsDO(_topScore, _count);
+            var hintsDO = new HintsDO(_topScore, _count);
             localStorage.setItem(constants.HINTS, JSON.stringify(hintsDO));
         }
         person.save();
@@ -43,8 +43,7 @@
             hintsDO = new HintsDO();
         }
         if (!hintsDO.researchType) {
-            _topScore = true;
-            _count = false;
+            hintsDO.topScore = true;
         }
         _topScore = hintsDO.topScore;
         _count = hintsDO.count;

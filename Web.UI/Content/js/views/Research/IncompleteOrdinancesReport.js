@@ -1,45 +1,53 @@
-﻿(function($) {
-    $("[data-toggle='tooltip']").tooltip();
-    if (IncompleteOrdinances.displayType === "start") {
-        $.ajax({
-            data: { "personId": IncompleteOrdinances.personId, "personName": IncompleteOrdinances.personName, "generation": IncompleteOrdinances.generation, "researchType": IncompleteOrdinances.researchType, "reportId": IncompleteOrdinances.reportId },
-            url: '/Home/IncompleteOrdinancesReportData',
-            success: function(data) {
-                IncompleteOrdinances.previous = data;
-                $('#ordinancesTable').bootstrapTable("load", data);
-                openForm($("#ordinancesReportForm"), "fmf24-report", "getOrdinancesSpinner");
-            }
-        });
-    } else {
-        $('#ordinancesTable').bootstrapTable("append", IncompleteOrdinances.previous);
-        openForm($("#ordinancesReportForm"), "fmf24-report", "getOrdinancesSpinner");
-    }
-})(jQuery);
+﻿define(function (require) {
+    var constants = require('constants');
+    var _formName = "incompleteOrdinancesReportForm";
+    var _formTitleImage = "fa fmf-search24";
+    var _form = $("#incompleteOrdinancesReportForm");
+    var _spinner = "incompleteOrdinancesReportSpinner";
 
-function nameFormatter(value) {
-    var result = "";
-    if (value != null) {
-        var idNumber = value.substring(0, value.indexOf("~"));
-        var fullname = value.substring(value.indexOf("~") + 1, value.size);
-        var idNumberUrl = "<p><a style=\"color: rgb(0,0,255)\" href=\"" + getFamilySearchSystem() + "/tree/#view=ancestor&person=" + idNumber + "\" target=\"_tab\">" + idNumber + "</a></p>";
-        var fullnameUrl = "<p><a href= \"#\" onClick=\" displayPerson('" + idNumber + "'); \" style= \" color: rgb(0, 153, 0)\" value= \"" + idNumber + "\" data-toggle=\" tooltip\" data-placement= \"top \" title=\" Select to display more info about this person\" >" + fullname + "</a></p>";
-        result = fullnameUrl + idNumberUrl;
-    }
-    return result;
-}
+    var _callerSpinner;
 
-function ordinanceFormatter(value) {
-    var result = "";
-    if (value != null) {
-        if (value.indexOf("~") > -1) {
-            var status = value.substring(0, value.indexOf("~"));
-            var reservable = value.substring(value.indexOf("~") + 1, value.size);
-            result = "<p>" + status + "</p><p>" + reservable + "</p>";
-        } else {
-            result = value;
+    function IncompleteOrdinancesReportDO(previous) {
+        this.previous = previous;
+    }
+
+    function save() {
+        if (window.localStorage) {
+            var incompleteOrdinancesReport = new IncompleteOrdinancesReportDO();
+            localStorage.setItem(constants.INCOMPLETE_ORDINANCES_REPORT, JSON.stringify(incompleteOrdinancesReport));
         }
     }
-    return result;
-}
 
-//# sourceURL=GetOrdinances.js
+    function load() {
+        if (window.localStorage) {
+            var incompleteOrdinancesReport = JSON.parse(localStorage.getItem(constants.INCOMPLETE_ORDINANCES_REPORT));
+            if (!incompleteOrdinancesReport) {
+                incompleteOrdinancesReport = new IncompleteOrdinancesReportDO();
+            }
+        }
+    }
+
+    function clear() {
+    }
+
+    load();
+
+
+    var incompleteOrdinancesReport = {
+        formName: _formName,
+        formTitleImage: _formTitleImage,
+        spinner: _spinner,
+        get form() {
+            return _form;
+        },
+        set form(value) {
+            _form = value;
+        },
+        save: function () {
+            save();
+        }
+    };
+
+    return incompleteOrdinancesReport;
+});
+//# sourceURL=IncompleteOrdinancesReport.js

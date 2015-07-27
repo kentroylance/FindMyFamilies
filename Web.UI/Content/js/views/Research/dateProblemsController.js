@@ -13,29 +13,34 @@ define(function(require) {
 
     // models
     var person = require('person');
-    var possibleDuplicates = require('possibleDuplicates');
-    var possibleDuplicatesReport = require('possibleDuplicatesReport');
-    
+    var dateProblems = require('dateProblems');
+    var dateProblemsReport = require('dateProblemsReport');
     var retrieve = require('retrieve');
 
     function updateForm() {
         if (person.id) {
-            $("#possibleDuplicatesPersonId").val(person.id);
+            $("#dateProblemsPersonId").val(person.id);
         }
         if (person.researchType) {
-            $("#possibleDuplicatesResearchType").val(person.researchType);
+            $("#dateProblemsResearchType").val(person.researchType);
         }
         if (person.generation) {
-            $("#possibleDuplicatesGeneration").val(person.generation);
+            $("#dateProblemsGeneration").val(person.generation);
         }
-        if (possibleDuplicates.includePossibleDuplicates) {
-            $("#includePossibleDuplicates").prop('checked', possibleDuplicates.includePossibleDuplicates);
+        if (dateProblems.empty) {
+            $("#dateProblemsEmpty").prop('checked', dateProblems.empty);
             }
-        if (possibleDuplicates.includePossibleMatches) {
-            $("#includePossibleMatches").prop('checked', possibleDuplicates.includePossibleMatches);
-            }
+        if (dateProblems.invalid) {
+            $("#dateProblemsInvalid").prop('checked', dateProblems.invalid);
+        }
+        if (dateProblems.invalidFormat) {
+            $("#dateProblemsInvalidFormat").prop('checked', dateProblems.invalidFormat);
+        }
+        if (dateProblems.incomplete) {
+            $("#dateProblemsIncomplete").prop('checked', dateProblems.incomplete);
+        }
         if (person.reportId) {
-            $("#possibleDuplicatesReportId").val(person.reportId);
+            $("#dateProblemsReportId").val(person.reportId);
         }
         if (person.addChildren) {
             $('#addChildren').prop('checked', person.addChildren);
@@ -43,18 +48,18 @@ define(function(require) {
     }
 
     function addGenerationOptions(options) {
-        var select = $("<select class=\"form-control select1Digit\" id=\"possibleDuplicatesGeneration\"\>");
+        var select = $("<select class=\"form-control select1Digit\" id=\"dateProblemsGeneration\"\>");
         $.each(options, function (a, b) {
             select.append($("<option/>").attr("value", b).text(b));
         });
-        $('#possibleDuplicatesGenerationDiv').empty();
-        $("#possibleDuplicatesGenerationDiv").append(select);
-        $('#possibleDuplicatesGenerationDiv').nextAll().remove();
+        $('#dateProblemsGenerationDiv').empty();
+        $("#dateProblemsGenerationDiv").append(select);
+        $('#dateProblemsGenerationDiv').nextAll().remove();
         if ((person.researchType === "Ancestors") && (person.reportId === constants.REPORT_ID)) {
-            $("#possibleDuplicatesGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: middle; margin-top: -0.625em; margin-left: .7em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -1.4em\">&nbsp;<span style=\"font-weight: normal\">Add Children</span></label>");
+            $("#dateProblemsGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: middle; margin-top: -0.625em; margin-left: .7em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -1.4em\">&nbsp;<span style=\"font-weight: normal\">Add Children</span></label>");
         }
-        $("#possibleDuplicatesGeneration").change(function (e) {
-            var generation = $("#possibleDuplicatesGeneration").val();
+        $("#dateProblemsGeneration").change(function (e) {
+            var generation = $("#dateProblemsGeneration").val();
             if (person.researchType === constants.DESCENDANTS) {
                 if (generation > 1) {
                     msgBox.warning("Selecting two generations of Descendants will more than double the time to retrieve descendants.");
@@ -64,8 +69,8 @@ define(function(require) {
                     msgBox.warning("Increasing the number of generations will increase the time to retrieve ancestors.");
                 }
             }
-            person.generation = $("#possibleDuplicatesGeneration").val();
-            person.resetReportId($("#possibleDuplicatesReportId"));
+            person.generation = $("#dateProblemsGeneration").val();
+            person.resetReportId($("#dateProblemsReportId"));
         });
 
     }
@@ -76,7 +81,7 @@ define(function(require) {
         options[1] = "2";
         options[2] = "3";
         addGenerationOptions(options);
-        $("#possibleDuplicatesGeneration").val(person.generation);
+        $("#dateProblemsGeneration").val(person.generation);
     }
 
     function addAncestorGenerationOptions() {
@@ -89,12 +94,12 @@ define(function(require) {
         options[5] = "7";
         options[6] = "8";
         addGenerationOptions(options);
-        $("#possibleDuplicatesGeneration").val(person.generation);
+        $("#dateProblemsGeneration").val(person.generation);
     }
 
     function updateResearchData() {
-        $("#possibleDuplicatesReportId").val(person.reportId);
-        var reportText = $("#possibleDuplicatesReportId option:selected").text();
+        $("#dateProblemsReportId").val(person.reportId);
+        var reportText = $("#dateProblemsReportId option:selected").text();
         if (reportText && reportText.length > 8 && reportText !== "Select") {
             var nameIndex = reportText.indexOf("Name: ") + 6;
             var dateIndex = reportText.indexOf(", Date:  ");
@@ -104,8 +109,8 @@ define(function(require) {
             person.name = reportText.substring(nameIndex + 11, dateIndex);
             person.researchType = reportText.substring(researchTypeIndex + 17, generationoIndex);
             person.generation = reportText.substring(generationoIndex + 16, generationoIndex + 17);
-            person.loadPersons($("#possibleDuplicatesPersonId"));
-            //                person.reportId = $("#possibleDuplicatesReportId option:selected").val();
+            person.loadPersons($("#dateProblemsPersonId"));
+            //                person.reportId = $("#dateProblemsReportId option:selected").val();
         }
         if (person.researchType === constants.DESCENDANTS) {
             addDecendantGenerationOptions();
@@ -116,7 +121,7 @@ define(function(require) {
     }
 
     function loadReports(refreshReport) {
-        retrieve.loadReports($("#possibleDuplicatesReportId"), refreshReport);
+        retrieve.loadReports($("#dateProblemsReportId"), refreshReport);
         updateResearchData();
     }
 
@@ -126,16 +131,16 @@ define(function(require) {
         } else {
             person.generation = "2";
         }
-        $("possibleDuplicatesGeneration").val(person.generation);
+        $("dateProblemsGeneration").val(person.generation);
     }
 
     function open() {
-        possibleDuplicates.form = $("#possibleDuplicatesForm");
+        dateProblems.form = $("#dateProblemsForm");
         loadEvents();
         loadReports();
-        person.loadPersons($("#possibleDuplicatesPersonId"));
+        person.loadPersons($("#dateProblemsPersonId"));
         updateForm();
-        system.openForm(possibleDuplicates.form, possibleDuplicates.formTitleImage, possibleDuplicates.spinner);
+        system.openForm(dateProblems.form, dateProblems.formTitleImage, dateProblems.spinner);
     }
 
     function clear() {
@@ -148,31 +153,31 @@ define(function(require) {
     }
 
     function resetReportId() {
-        person.resetReportId($("#possibleDuplicatesReportId"));
+        person.resetReportId($("#dateProblemsReportId"));
         updateResearchData();
     }
 
     function loadEvents() {
-        $('#possibleDuplicatesPerson').change(function (e) {
+        $('#dateProblemsPerson').change(function (e) {
             debugger;
         });
 
-        $("#possibleDuplicatesReportId").change(function (e) {
-            person.reportId = $("#possibleDuplicatesReportId option:selected").val();
+        $("#dateProblemsReportId").change(function (e) {
+            person.reportId = $("#dateProblemsReportId option:selected").val();
             if (person.reportId === constants.REPORT_ID) {
                 msgBox.warning("Even though the \"Select\" option is availiable to retrieve family search data, to avoid performance problems it is best practice to first retrieve the data before analyzing.");
             }
             updateResearchData();
         });
 
-        $('#possibleDuplicatesPersonId').change(function(e) {
+        $('#dateProblemsPersonId').change(function(e) {
             person.id = $('option:selected', $(this)).val();
             person.name = $('option:selected', $(this)).text();
             resetReportId();
         });
 
-        $('#possibleDuplicatesResearchType').change(function(e) {
-            person.researchType = $("#possibleDuplicatesResearchType").val();
+        $('#dateProblemsResearchType').change(function(e) {
+            person.researchType = $("#dateProblemsResearchType").val();
             if (person.researchType === constants.DESCENDANTS) {
                 person.generationAncestors = person.generation;
                 person.generation = person.generationDescendants;
@@ -187,17 +192,17 @@ define(function(require) {
             resetReportId();
         });
 
-        $("#possibleDuplicatesFindPersonButton").unbind('click').bind('click', function(e) {
+        $("#dateProblemsFindPersonButton").unbind('click').bind('click', function(e) {
             researchHelper.findPerson(e, function(result) {
                 var findPersonModel = require('findPerson');
                 if (result) {
-                    var changed = (findPersonModel.id === $("#possibleDuplicatesPersonId").val()) ? false : true;
+                    var changed = (findPersonModel.id === $("#dateProblemsPersonId").val()) ? false : true;
                     if (changed) {
                         person.id = findPersonModel.id;
                         person.name = findPersonModel.name;
                     }
-                    possibleDuplicates.save();
-                    person.loadPersons($("#possibleDuplicatesPersonId"));
+                    dateProblems.save();
+                    person.loadPersons($("#dateProblemsPersonId"));
                     if (changed) {
                         resetReportId();
                     }
@@ -207,12 +212,12 @@ define(function(require) {
             return false;
         });
 
-        $("#possibleDuplicatesRetrieveButton").unbind('click').bind('click', function(e) {
+        $("#dateProblemsRetrieveButton").unbind('click').bind('click', function(e) {
             researchHelper.retrieve(e, function(result) {
                 var retrieve = require('retrieve');
                 if (result) {
                     person.reportId = retrieve.reportId;
-                    possibleDuplicates.save();
+                    dateProblems.save();
                     loadReports(true);
                 }
                 retrieve.reset();
@@ -220,43 +225,43 @@ define(function(require) {
             return false;
         });
 
-        $("#possibleDuplicatesHelpButton").unbind('click').bind('click', function(e) {
+        $("#dateProblemsHelpButton").unbind('click').bind('click', function(e) {
         });
 
-        $("#possibleDuplicatesCloseButton").unbind('click').bind('click', function (e) {
-            possibleDuplicates.form.dialog(constants.CLOSE);
+        $("#dateProblemsCloseButton").unbind('click').bind('click', function (e) {
+            dateProblems.form.dialog(constants.CLOSE);
         });
 
-        $("#possibleDuplicatesResetButton").unbind('click').bind('click', function (e) {
+        $("#dateProblemsResetButton").unbind('click').bind('click', function (e) {
             reset();
         });
 
-        $("#possibleDuplicatesPreviousButton").unbind('click').bind('click', function (e) {
-            if (!possibleDuplicates.previous) {
+        $("#dateProblemsPreviousButton").unbind('click').bind('click', function (e) {
+            if (!dateProblems.previous) {
                 if (window.localStorage) {
-                    possibleDuplicates.previous = JSON.parse(localStorage.getItem(constants.POSSIBLE_DUPLICATES_PREVIOUS));
+                    dateProblems.previous = JSON.parse(localStorage.getItem(constants.DATE_PROBLEMS_PREVIOUS));
                 }
             }
-            if (possibleDuplicates.previous) {
-                system.initSpinner(possibleDuplicates.spinner);
-                possibleDuplicates.callerSpinner = possibleDuplicates.spinner;
+            if (dateProblems.previous) {
+                system.initSpinner(dateProblems.spinner);
+                dateProblems.callerSpinner = dateProblems.spinner;
                 $.ajax({
-                    url: constants.POSSIBLE_DUPLICATES_REPORT_HTML_URL,
+                    url: constants.DATE_PROBLEMS_REPORT_HTML_URL,
                     success: function (data) {
-                        var $dialogContainer = $('#possibleDuplicatesReportForm');
+                        var $dialogContainer = $('#dateProblemsReportForm');
                         var $detachedChildren = $dialogContainer.children().detach();
-                        $('<div id=\"possibleDuplicatesReportForm\"></div>').dialog({
-                            title: "Possible Duplicates",
+                        $('<div id=\"dateProblemsReportForm\"></div>').dialog({
+                            title: "Date Problems",
                             width: 975,
                             open: function() {
                                 $detachedChildren.appendTo($dialogContainer);
                                 $(this).css("maxHeight", 700);
                             }
                         });
-                        possibleDuplicates.displayType = "previous";
-                        $("#possibleDuplicatesReportForm").empty().append(data);
-                        if (researchHelper && researchHelper.possibleDuplicatesReportController) {
-                            researchHelper.possibleDuplicatesReportController.open();
+                        dateProblems.displayType = "previous";
+                        $("#dateProblemsReportForm").empty().append(data);
+                        if (researchHelper && researchHelper.dateProblemsReportController) {
+                            researchHelper.dateProblemsReportController.open();
                         }
                     }
                 });
@@ -265,7 +270,7 @@ define(function(require) {
             }
         });
 
-        $("#possibleDuplicatesSubmitButton").unbind('click').bind('click', function (e) {
+        $("#dateProblemsSubmitButton").unbind('click').bind('click', function (e) {
             if (system.isAuthenticated()) {
                 if (!person.id) {
                     msgBox.message("You must first select a person from Family Search");
@@ -275,26 +280,26 @@ define(function(require) {
                     if (result) {
                         requireOnce(["bootstrapTable", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
                             }, function() {
-                                system.initSpinner(possibleDuplicates.spinner);
-                                possibleDuplicates.callerSpinner = possibleDuplicates.spinner;
+                                system.initSpinner(dateProblems.spinner);
+                                dateProblems.callerSpinner = dateProblems.spinner;
                                 $.ajax({
-                                    url: constants.POSSIBLE_DUPLICATES_REPORT_HTML_URL,
+                                    url: constants.DATE_PROBLEMS_REPORT_HTML_URL,
                                     success: function(data) {
-                                        var $dialogContainer = $('#possibleDuplicatesReportForm');
+                                        var $dialogContainer = $('#dateProblemsReportForm');
                                         var $detachedChildren = $dialogContainer.children().detach();
-                                        $("<div id=\"possibleDuplicatesReportForm\"></div>").dialog({
-                                            title: "Possible Duplicates",
+                                        $("<div id=\"dateProblemsReportForm\"></div>").dialog({
+                                            title: "Date Problems",
                                             width: 975,
                                             height: 515,
                                             open: function() {
                                                 $detachedChildren.appendTo($dialogContainer);
                                             }
                                         });
-                                        possibleDuplicatesReport.displayType = "start";
-                                        possibleDuplicates.save();
-                                        $("#possibleDuplicatesReportForm").empty().append(data);
-                                if (researchHelper && researchHelper.possibleDuplicatesReportController) {
-                                    researchHelper.possibleDuplicatesReportController.open();
+                                        dateProblemsReport.displayType = "start";
+                                        dateProblems.save();
+                                        $("#dateProblemsReportForm").empty().append(data);
+                                        if (researchHelper && researchHelper.dateProblemsReportController) {
+                                            researchHelper.dateProblemsReportController.open();
                                         }
                                     }
                                 });
@@ -303,7 +308,7 @@ define(function(require) {
                     }
                 });
             } else {
-                possibleDuplicatesReport.form.dialog("close");
+                dateProblemsReport.form.dialog("close");
                 system.relogin();
             }
             return false;
@@ -315,39 +320,47 @@ define(function(require) {
             if (person.addChildren) {
                 msgBox.warning("Selecting <b>Add Children</b> check box will probably double the time to retrieve ancestors.");
             }
-            person.resetReportId($("#possibleDuplicatesReportId"));
+            person.resetReportId($("#dateProblemsReportId"));
             updateResearchData();
         });
 
-    $("#includePossibleDuplicates").change(function (e) {
-        possibleDuplicates.includePossibleDuplicates = $("#includePossibleDuplicates").prop("checked");
+    $("#dateProblemsEmpty").change(function (e) {
+        dateProblems.empty = $("#dateProblemsEmpty").prop("checked");
     });
 
-    $("#includePossibleMatches").change(function (e) {
-        possibleDuplicates.includePossibleMatches = $("#includePossibleMatches").prop("checked");
+    $("#dateProblemsInvalid").change(function (e) {
+        dateProblems.invalid = $("#dateProblemsInvalid").prop("checked");
+    });
+
+    $("#dateProblemsInvalidFormat").change(function (e) {
+        dateProblems.invalidFormat = $("#dateProblemsInvalidFormat").prop("checked");
+    });
+
+    $("#dateProblemsIncomplete").change(function (e) {
+        dateProblems.incomplete = $("#dateProblemsIncomplete").prop("checked");
     });
 
 
-        $("#possibleDuplicatesCancelButton").unbind('click').bind('click', function (e) {
-            possibleDuplicates.form.dialog(constants.CLOSE);
+        $("#dateProblemsCancelButton").unbind('click').bind('click', function (e) {
+            dateProblems.form.dialog(constants.CLOSE);
         });
 
-        possibleDuplicates.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
-            possibleDuplicates.save();
+        dateProblems.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
+            dateProblems.save();
         });
     }
 
-    var possibleDuplicatesController = {
+    var dateProblemsController = {
         open: function () {
             open();
         }
     };
 
-    researchHelper.possibleDuplicatesController = possibleDuplicatesController;
+    researchHelper.dateProblemsController = dateProblemsController;
     open();
 
-    return possibleDuplicatesController;
+    return dateProblemsController;
 });
 
 
-//# sourceURL=possibleDuplicatesController.js
+//# sourceURL=dateProblemsController.js

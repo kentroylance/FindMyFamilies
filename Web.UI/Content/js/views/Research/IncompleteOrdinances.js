@@ -1,8 +1,8 @@
-﻿define(function (require) {
+﻿define(function(require) {
 
-    var $ = require("jquery");
-    var person = require("person");
-    var constants = require("constants");
+    var $ = require('jquery');
+    var person = require('person');
+    var constants = require('constants');
 
     var _formName = "incompleteOrdinancesForm";
     var _formTitleImage = "fa fmf-temple24";
@@ -13,17 +13,13 @@
     var _generationDescendants = "1";
     var _spinner = "incompleteOrdinancesSpinner";
 
-    var _topScore = true;
-    var _count = false;
+    function IncompleteOrdinancesDO() {
 
-    function IncompleteOrdinancesDO(topScore, count) {
-        this.topScore = topScore;
-        this.count = count;
     }
 
     function save() {
         if (window.localStorage) {
-            var incompleteOrdinances = new IncompleteOrdinancesDO(_topScore, _count);
+            var incompleteOrdinancesDO = new IncompleteOrdinancesDO();
             localStorage.setItem(constants.INCOMPLETE_ORDINANCES, JSON.stringify(incompleteOrdinancesDO));
         }
         person.save();
@@ -43,11 +39,9 @@
             incompleteOrdinancesDO = new IncompleteOrdinancesDO();
         }
 	if (!incompleteOrdinancesDO.researchType) {
-            _topScore = true;
-            _count = false;
+           
         }
-        _topScore = hintsDO.topScore;
-        _count = hintsDO.count;
+     
     }
 
     var incompleteOrdinances = {
@@ -84,25 +78,13 @@
         set displayType(value) {
             _displayType = value;
         },
-        get topScore() {
-            return _topScore;
-        },
-        set topScore(value) {
-            _topScore = value;
-        },
-        get count() {
-            return _count;
-        },
-        set count(value) {
-            _count = value;
-        },
         save: function() {
             save();
         },
         savePrevious: function () {
             savePrevious();
         },
-        clear: function() {
+        clear: function () {
             clear();
         },
         reset: function() {

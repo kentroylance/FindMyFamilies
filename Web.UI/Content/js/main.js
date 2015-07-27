@@ -33,18 +33,26 @@
             startingPointController: 'views/research/startingPointController',
             startingPointReport: 'views/research/startingPointReport',
             startingPointReportController: 'views/research/startingPointReportController',
+            possibleDuplicates: 'views/research/possibleDuplicates',
+            possibleDuplicatesController: 'views/research/possibleDuplicatesController',
+            possibleDuplicatesReport: 'views/research/possibleDuplicatesReport',
+            possibleDuplicatesReportController: 'views/research/possibleDuplicatesReportController',
+            hints: 'views/research/hints',
+            hintsController: 'views/research/hintsController',
+            hintsReport: 'views/research/hintsReport',
+            hintsReportController: 'views/research/hintsReportController',
+            dateProblems: 'views/research/dateProblems',
+            dateProblemsController: 'views/research/dateProblemsController',
+            dateProblemsReport: 'views/research/dateProblemsReport',
+            dateProblemsReportController: 'views/research/dateProblemsReportController',
+            incompleteOrdinances: 'views/research/incompleteOrdinances',
+            incompleteOrdinancesController: 'views/research/incompleteOrdinancesController',
+            incompleteOrdinancesReport: 'views/research/incompleteOrdinancesReport',
+            incompleteOrdinancesReportController: 'views/research/incompleteOrdinancesReportController',
             findClues: 'views/research/findClues',
             findCluesController: 'views/research/findCluesController',
             findCluesReport: 'views/research/findCluesReport',
             findCluesReportController: 'views/research/findCluesReportController',
-            hintsController: 'views/research/hintsController',
-            hints: 'views/research/hints',
-            dateProblemsController: 'views/research/dateProblemsController',
-            dateProblems: 'views/research/dateProblems',
-            incompleteOrdinancesController: 'views/research/incompleteOrdinancesController',
-            incompleteOrdinances: 'views/research/incompleteOrdinances',
-            possibleDuplicatesController: 'views/research/possibleDuplicatesController',
-            possibleDuplicates: 'views/research/possibleDuplicates',
             findPersonController: 'views/research/findPersonController',
             findPerson: 'views/research/findPerson',
             findPersonOptionsController: 'views/research/findPersonOptionsController',
@@ -93,6 +101,18 @@
             },
             startingPointReport: {
                 exports: 'startingPointReport'
+            },
+            possibleDuplicatesReport: {
+                exports: 'possibleDuplicatesReport'
+            },
+            hintsReport: {
+                exports: 'hintsReport'
+            },
+            dateProblemsReport: {
+                exports: 'dateProblemsReport'
+            },
+            incompleteOrdinancesReport: {
+                exports: 'incompleteOrdinancesReport'
             },
             findCluesReport: {
                 exports: 'findCluesReport'
@@ -152,23 +172,11 @@
             },
             findCluesController: {
                 deps: ['jquery', 'findClues', 'findCluesReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
-                exports: 'startingPointController'
+                exports: 'findCluesController'
             },
             retrieveController: {
                 deps: ['jquery', 'retrieve', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
                 exports: 'retrieveController'
-            },
-            hintsController: {
-                deps: ['jquery', 'hints', 'research', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
-                exports: 'hintsController'
-            },
-            dateProblemsController: {
-                deps: ['jquery', 'hints', 'research', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
-                exports: 'dateProblemsController'
-            },
-            incompleteOrdinancesController: {
-                deps: ['jquery', 'incompleteOrdinances', 'research', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
-                exports: 'incompleteOrdinancesController'
             },
             startingPointReportController: {
                 deps: ['jquery', 'startingPointReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
@@ -178,9 +186,37 @@
                 deps: ['jquery', 'findCluesReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
                 exports: 'findCluesReportController'
             },
+            possibleDuplicatesReportController: {
+                deps: ['jquery', 'possibleDuplicatesReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                exports: 'possibleDuplicatesReportController'
+            },
             possibleDuplicatesController: {
-                deps: ['jquery', 'possibleDuplicates', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'possibleDuplicates', 'possibleDuplicatesReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
                 exports: 'possibleDuplicatesController'
+            },
+            hintsReportController: {
+                deps: ['jquery', 'hintsReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                exports: 'hintsReportController'
+            },
+            hintsController: {
+                deps: ['jquery', 'hints', 'hintsReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                exports: 'hintsController'
+            },
+            dateProblemsReportController: {
+                deps: ['jquery', 'dateProblemsReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                exports: 'dateProblemsReportController'
+            },
+            dateProblemsController: {
+                deps: ['jquery', 'dateProblems', 'dateProblemsReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                exports: 'dateProblemsController'
+            },
+            incompleteOrdinancesReportController: {
+                deps: ['jquery', 'incompleteOrdinancesReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                exports: 'incompleteOrdinancesReportController'
+            },
+            incompleteOrdinancesController: {
+                deps: ['jquery', 'incompleteOrdinances', 'incompleteOrdinancesReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                exports: 'incompleteOrdinancesController'
             },
             findPersonController: {
                 deps: ['jquery', 'formValidation', 'bootstrapValidation', 'bootstrapTable', 'findPerson', 'findPersonHelper', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload', 'string'],
