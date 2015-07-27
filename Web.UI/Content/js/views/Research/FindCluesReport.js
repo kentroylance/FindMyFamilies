@@ -1,28 +1,28 @@
 ﻿define(function (require) {
     var constants = require('constants');
-    var _formName = "startingPointReportForm";
-    var _formTitleImage = "fa fmf-search24";
-    var _form = $("#startingPointReportForm");
-    var _spinner = "startingPointReportSpinner";
+    var _formName = "findCluesReportForm";
+    var _formTitleImage = "fa fmf-clue24";
+    var _form = $("#findCluesReportForm");
+    var _spinner = "findCluesReportSpinner";
 
     var _callerSpinner;
 
-    function StartingPointReportDO(previous) {
+    function FindCluesReportDO(previous) {
         this.previous = previous;
     }
 
     function save() {
         if (window.localStorage) {
-            var startingPointReport = new StartingPointReportDO();
-            localStorage.setItem(constants.STARTING_POINT_REPORT, JSON.stringify(startingPointReport));
+            var findCluesReport = new FindCluesReportDO();
+            localStorage.setItem(constants.FIND_CLUES_REPORT, JSON.stringify(findCluesReport));
         }
     }
 
     function load() {
         if (window.localStorage) {
-            var startingPointReport = JSON.parse(localStorage.getItem(constants.STARTING_POINT_REPORT));
-            if (!startingPointReport) {
-                startingPointReport = new StartingPointReportDO();
+            var findCluesReport = JSON.parse(localStorage.getItem(constants.FIND_CLUES_REPORT));
+            if (!findCluesReport) {
+                findCluesReport = new FindCluesReportDO();
             }
         }
     }
@@ -33,7 +33,7 @@
     load();
 
 
-    var startingPointReport = {
+    var findCluesReport = {
         formName: _formName,
         formTitleImage: _formTitleImage,
         spinner: _spinner,
@@ -48,6 +48,6 @@
         }
     };
 
-    return startingPointReport;
+    return findCluesReport;
 });
-//# sourceURL=StartingPointReport.js
+//# sourceURL=findCluesReport.js

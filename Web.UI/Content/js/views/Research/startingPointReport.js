@@ -50,4 +50,4 @@
 
     return startingPointReport;
 });
-//# sourceURL=StartingPointReport.js
+//# sourceURL=startingPointReport.js

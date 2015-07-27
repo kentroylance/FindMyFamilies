@@ -1,60 +1,65 @@
 ﻿define(function(require) {
 
     var $ = require('jquery');
-    var user = require('user');
     var constants = require('constants');
-    require('vendor/jquery.spin');
     var lazyRequire = require('lazyRequire');
     var requireOnce = lazyRequire.once();
 
     var _familySearchSystem;
     var _debugging;
-    var _jqueryui;
     var _count = 0;
-
-    var _target = document.getElementById(constants.DEFAULT_SPINNER_AREA);
+    var _userId;
+    var _userName;
+    var _target;
+    var _initialized;
 
     function stopSpinner(force) {
-        _count--;
-        if (force || _count === 0) {
-            //            _target.spin();
-            if (!_target) {
-                _target = document.getElementById(constants.DEFAULT_SPINNER_AREA);
+        requireOnce(['vendor/jquery.spin'], function () {
+        }, function () {
+            _count--;
+            if (force || _count === 0) {
+                if (!_target) {
+                    _target = document.getElementById(constants.DEFAULT_SPINNER_AREA);
+                }
+                $('#' + _target.id).spin(false);
+                _count = 0;
+            } else if (_count < 0) {
+                _count = 0;
             }
-            $('#' + _target.id).spin(false);
-            _count = 0;
-        } else if (_count < 0) {
-            _count = 0;
-        }
+        });
     }
 
     function startSpinner(force) {
-        //    alert(_count + " " + _target.id);
-        if (force || _count === 0) {
-            //spinner = new Spinner(options).spin(_target);
-            if (!_target) {
-                _target = document.getElementById(constants.DEFAULT_SPINNER_AREA);
+        requireOnce(['vendor/jquery.spin'], function () {
+        }, function () {
+            if (force || _count === 0) {
+                if (!_target) {
+                    _target = document.getElementById(constants.DEFAULT_SPINNER_AREA);
+                }
+                $('#' + _target.id).spin();
+                _count = 0;
             }
-            $('#' + _target.id).spin();
-            _count = 0;
-        }
 
-        _count++;
+            _count++;
+        });
     }
 
     function initSpinner(spinnerArea, stop) {
-        if (_target && (_target.id !== spinnerArea)) {
+        requireOnce(['vendor/jquery.spin'], function () {
+        }, function () {
             if (_target && (_target.id !== spinnerArea)) {
-                stopSpinner(true);
+                if (_target && (_target.id !== spinnerArea)) {
+                    stopSpinner(true);
+                }
+                _target = document.getElementById(spinnerArea);
+                _count = 0;
             }
-            _target = document.getElementById(spinnerArea);
-            _count = 0;
-        }
-        if (stop) {
-            stopSpinner(true);
-        } else {
-            startSpinner(true);
-        }
+            if (stop) {
+                stopSpinner(true);
+            } else {
+                startSpinner(true);
+            }
+        });
     }
 
     function setCookie(name, value, days) {
@@ -171,11 +176,17 @@
         'type': 'GET',
         'async': true,
         'cache': true,
-        'beforeSend': function() {
-            startSpinner();
+        'beforeSend': function () {
+            if (_initialized) {
+                startSpinner();
+            }
         },
         'complete': function() {
-            stopSpinner();
+            if (_initialized) {
+                stopSpinner();
+            } else {
+                _initialized = true;
+            }
         },
         'error': function(jqXHR, textStatus, errorThrown) {
             stopSpinner(true);
@@ -237,11 +248,8 @@
         load(modules, []);
     };
 
-
-    if (!user || !user.id || !user.name) {
-        user.id = getCookie(constants.USER_ID);
-        user.name = getCookie(constants.USER_NAME);
-    }
+    _userId = getCookie(constants.USER_ID);
+    _userName = getCookie(constants.USER_NAME);
 
     function openForm(form, image, spinnerTarget, firstField) {
         form.parent().children(".ui-dialog-titlebar").prepend('<span style="float:left; margin-top: 1px; margin-right: .3em;" class="fa ' + image + '"></span>');
@@ -328,29 +336,26 @@
         }
     }
 
-    var domReady = require('domReady');
-    domReady(function() {
-        if (isAuthenticated()) {
-            document.getElementById("displayPerson").innerHTML = user.name + "<b>&nbsp;-&nbsp;" + user.id + "</b>&nbsp;";
-        } else {
-            var loginInfoLi = document.getElementById("loginInfo");
-            if (loginInfoLi) {
-                loginInfoLi.className = 'hidden';
-            }
-            var loginInfoDividerLi = document.getElementById("loginInfoDivider");
-            if (loginInfoDividerLi) {
-                loginInfoDividerLi.className = 'hidden';
-            }
-            var logoutLi = document.getElementById("logout");
-            if (logoutLi) {
-                logoutLi.className = 'hidden';
-            }
-            var loginLi = document.getElementById("login");
-            if (loginLi) {
-                loginLi.className = 'unhidden';
-            }
+    if (isAuthenticated()) {
+        document.getElementById("displayPerson").innerHTML = _userName + "<b>&nbsp;-&nbsp;" + _userId + "</b>&nbsp;";
+    } else {
+        var loginInfoLi = document.getElementById("loginInfo");
+        if (loginInfoLi) {
+            loginInfoLi.className = 'hidden';
         }
-    });
+        var loginInfoDividerLi = document.getElementById("loginInfoDivider");
+        if (loginInfoDividerLi) {
+            loginInfoDividerLi.className = 'hidden';
+        }
+        var logoutLi = document.getElementById("logout");
+        if (logoutLi) {
+            logoutLi.className = 'hidden';
+        }
+        var loginLi = document.getElementById("login");
+        if (loginLi) {
+            loginLi.className = 'unhidden';
+        }
+    }
 
     var system = {
         startSpinner: function(force) {
@@ -367,6 +372,18 @@
         },
         set target(value) {
             _target = value;
+        },
+        get userId() {
+            return _userId;
+        },
+        set userId(value) {
+            _userId = value;
+        },
+        get userName() {
+            return _userName;
+        },
+        set userName(value) {
+            _userName = value;
         },
         get domainName() {
             return _domainName;

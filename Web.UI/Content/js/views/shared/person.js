@@ -1,7 +1,6 @@
 ﻿define(function (require) {
 
     var $ = require('jquery');
-    var user = require('user');
     var system = require('system');
     var constants = require('constants');
 
@@ -106,12 +105,12 @@
             }
 
             if (!person.id) {
-                person.id = user.id;
-                person.name = user.name;
+                person.id = system.userId;
+                person.name = system.userName;
             }
             if (!person.name) {
-                person.id = user.id;
-                person.name = user.name;
+                person.id = system.userId;
+                person.name = system.userName;
             }
             if (person.id && $.isEmptyObject(person.history)) {
                 person.history = {};
@@ -136,7 +135,9 @@
                 _findPersonOptions.push('fmf-urls');
                 _findPersonOptions.push('ancestry');
                 _findPersonOptions.push('findagrave');
+                _findPersonOptions.push('puz-descend');
                 _findPersonOptions.push('myheritage');
+                _findPersonOptions.push('findmypast');
                 _findPersonOptions.push('amerancest');
             }
 
@@ -185,8 +186,8 @@
 
     function reset() {
         _researchType = constants.ANCESTORS;
-        _id = user.id;
-        _name = user.name;
+        _id = system.userId;
+        _name = system.userName;
         _generation = constants.GENERATION;
         _reportId = constants.REPORT_ID;
         _addChildren = false;

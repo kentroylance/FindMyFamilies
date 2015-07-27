@@ -52,29 +52,27 @@ define(function(require) {
             event.preventDefault();
             requireOnce(['msgBox'], function(MsgBox) {
                 msgBox = MsgBox;
+            }, function() {
                 msgBox.message("Error!Occured");
-                    if (document.forms[0].checkValidity()) {
-                        var email = document.getElementById("email").value;
-                        $.ajax({
-                            url: "/Home/SubscribeEmail",
-                            data: { "email": email },
-                            success: function(data) {
-                                if ((data != null) && (data != "")) {
-                                    msgBox.message(data);
-                                } else {
-                                    msgBox.message("Thanks for subscribing to our monthly newsletter.");
-                                }
-                                document.getElementById("email").value = "";
-                                document.getElementById("email").focus();
+                if (document.forms[0].checkValidity()) {
+                    var email = document.getElementById("email").value;
+                    $.ajax({
+                        url: "/Home/SubscribeEmail",
+                        data: { "email": email },
+                        success: function(data) {
+                            if ((data != null) && (data != "")) {
+                                msgBox.message(data);
+                            } else {
+                                msgBox.message("Thanks for subscribing to our monthly newsletter.");
                             }
-                        }).fail(function(xhr, textStatus, error) {
-                            msgBox.message("Error!Occured");
-                        });
-                    }
-                },
-                function() {
+                            document.getElementById("email").value = "";
+                            document.getElementById("email").focus();
+                        }
+                    }).fail(function(xhr, textStatus, error) {
+                        msgBox.message("Error!Occured");
+                    });
                 }
-            );
+            });
 
             return false;
         }

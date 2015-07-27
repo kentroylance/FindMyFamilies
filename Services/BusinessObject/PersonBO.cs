@@ -514,6 +514,8 @@ namespace FindMyFamilies.BusinessObject {
         //        }
 
         public List<AnalyzeListItemDO> GetAnalyzeData(FindCluesInputDO findCluesInputDo, ref SessionDO session) {
+            AnalyzeListItemDO analyzeListItemDO = new AnalyzeListItemDO();
+
             var analyzeListItems = new List<AnalyzeListItemDO>();
             try {
                 var persons = new Dictionary<string, PersonDO>();
@@ -1995,8 +1997,11 @@ namespace FindMyFamilies.BusinessObject {
 
         public void validate(ref int id, string personId, Dictionary<string, PersonDO> persons, FindCluesInputDO findCluesInputDo, ref List<AnalyzeListItemDO> analyzeListItems) {
             AnalyzeListItemDO analyzeListItemDO = new AnalyzeListItemDO();
+            FindListItemDO findListItemDO = (FindListItemDO) analyzeListItemDO;
+
             var person = persons[personId];
-            analyzeListItemDO.Name = person.Id + "~" + person.Fullname;
+            personDAO.PopulateFindListItem(person, ref findListItemDO);
+//            analyzeListItemDO.Name = person.Id + "~" + person.Fullname;
             if (person.Id.Equals("KWCN-2VW")) {
                 string test= "";
             }
@@ -2011,8 +2016,8 @@ namespace FindMyFamilies.BusinessObject {
                         //                    analyzeListItemDO.DirectLine = person.DirectLine;
                         //                    analyzeListItemDO.Male = person.IsMale;
                         //                    analyzeListItemDO.FullName = person.Fullname;
-                        analyzeListItemDO.Clue = "Person's death date is \"Deceased\" and was born between 1850 and 1940~" + criteriaId;
-                        analyzeListItemDO.Helpers = criteriaId;
+                        analyzeListItemDO.clue = "Person's death date is \"Deceased\" and was born between 1850 and 1940";
+                        analyzeListItemDO.helpers = criteriaId;
                         analyzeListItems.Add(analyzeListItemDO);
                     }
                     if ((MeetsCriteria(findCluesInputDo, person, 2) && ((person.BirthYear > 1849) && (person.BirthYear < 1941)) && (person.IsFemale) && (person.DeathYear < 1) && (!person.HasSpouse))) {
@@ -2023,8 +2028,8 @@ namespace FindMyFamilies.BusinessObject {
                         //                    analyzeListItemDO.AscendancyNumber = person.AscendancyNumber;
                         //                    analyzeListItemDO.DirectLine = person.DirectLine;
                         //                    analyzeListItemDO.Male = person.IsMale;
-                        analyzeListItemDO.Clue = "Female child with no spouse and no death date, lived between (between 1850 and 1940)~" + criteriaId;
-                        analyzeListItemDO.Helpers = criteriaId;
+                        analyzeListItemDO.clue = "Female child with no spouse and no death date, lived between (between 1850 and 1940)";
+                        analyzeListItemDO.helpers = criteriaId;
                         analyzeListItems.Add(analyzeListItemDO);
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 4) && ((person.HasSpouse) && (!person.HasChildrenLink))) {
@@ -2036,8 +2041,8 @@ namespace FindMyFamilies.BusinessObject {
                         //                    analyzeListItemDO.DirectLine = person.DirectLine;
                         //                    analyzeListItemDO.Male = person.IsMale;
                         criteriaId = 4;
-                        analyzeListItemDO.Clue = "Person has a spouse" + (person.YearsLived > 0 ? ", lived " + person.YearsLived + " years" : "") + ", and no children.~" + criteriaId;
-                        analyzeListItemDO.Helpers = criteriaId;
+                        analyzeListItemDO.clue = "Person has a spouse" + (person.YearsLived > 0 ? ", lived " + person.YearsLived + " years" : "") + ", and no children.";
+                        analyzeListItemDO.helpers = criteriaId;
                         analyzeListItems.Add(analyzeListItemDO);
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 5) && ((person.HasSpouse) && (person.NumberOfChildren == 1) && ((person.YearsLived > 0) && person.YearsLived > findCluesInputDo.AgeLimit))) {
@@ -2049,8 +2054,8 @@ namespace FindMyFamilies.BusinessObject {
                         //                    analyzeListItemDO.DirectLine = person.DirectLine;
                         //                    analyzeListItemDO.Male = person.IsMale;
                         criteriaId = 5;
-                        analyzeListItemDO.Clue = "Person has a spouse" + (person.YearsLived > 0 ? ", lived " + person.YearsLived + " years" : "") + (((person.YearsLived > 0) && person.YearsLived > findCluesInputDo.AgeLimit) ? ", lived longer than " + findCluesInputDo.AgeLimit + " years" : "") + ", and only one child.~" + criteriaId;
-                        analyzeListItemDO.Helpers = criteriaId;
+                        analyzeListItemDO.clue = "Person has a spouse" + (person.YearsLived > 0 ? ", lived " + person.YearsLived + " years" : "") + (((person.YearsLived > 0) && person.YearsLived > findCluesInputDo.AgeLimit) ? ", lived longer than " + findCluesInputDo.AgeLimit + " years" : "") + ", and only one child.";
+                        analyzeListItemDO.helpers = criteriaId;
                         analyzeListItems.Add(analyzeListItemDO);
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 6) && ((!person.HasSpouse) && (!person.HasChildrenLink) && ((person.YearsLived > 0) && person.YearsLived > findCluesInputDo.AgeLimit))) {
@@ -2062,8 +2067,8 @@ namespace FindMyFamilies.BusinessObject {
                         //                    analyzeListItemDO.DirectLine = person.DirectLine;
                         //                    analyzeListItemDO.Male = person.IsMale;
                         criteriaId = 6;
-                        analyzeListItemDO.Clue = "Person has no spouse " + (person.YearsLived > 0 ? ", lived " + person.YearsLived + " years" : "") + (((person.YearsLived > 0) && person.YearsLived > findCluesInputDo.AgeLimit) ? ", lived longer than " + findCluesInputDo.AgeLimit + " years" : "") + ", and no children.~" + criteriaId;
-                        analyzeListItemDO.Helpers = criteriaId;
+                        analyzeListItemDO.clue = "Person has no spouse " + (person.YearsLived > 0 ? ", lived " + person.YearsLived + " years" : "") + (((person.YearsLived > 0) && person.YearsLived > findCluesInputDo.AgeLimit) ? ", lived longer than " + findCluesInputDo.AgeLimit + " years" : "") + ", and no children.";
+                        analyzeListItemDO.helpers = criteriaId;
                         analyzeListItems.Add(analyzeListItemDO);
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 7) && ((!person.HasSpouse) && (person.NumberOfChildren == 1))) {
@@ -2075,8 +2080,8 @@ namespace FindMyFamilies.BusinessObject {
                         //                    analyzeListItemDO.DirectLine = person.DirectLine;
                         //                    analyzeListItemDO.Male = person.IsMale;
                         criteriaId = 7;
-                        analyzeListItemDO.Clue = "Person has no spouse " + (person.YearsLived > 0 ? "lived " + person.YearsLived + " years " : "") + ", and only one child.~" + criteriaId;
-                        analyzeListItemDO.Helpers = criteriaId;
+                        analyzeListItemDO.clue = "Person has no spouse " + (person.YearsLived > 0 ? "lived " + person.YearsLived + " years " : "") + ", and only one child.";
+                        analyzeListItemDO.helpers = criteriaId;
                         analyzeListItems.Add(analyzeListItemDO);
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 10) && (person.BirthYear > 1000) && (!person.Mother.IsEmpty && ((person.Mother.DeathYear > 1000) && (person.BirthYear > person.Mother.DeathYear)))) {
@@ -2088,8 +2093,8 @@ namespace FindMyFamilies.BusinessObject {
                         //                    analyzeListItemDO.DirectLine = person.DirectLine;
                         //                    analyzeListItemDO.Male = person.IsMale;
                         criteriaId = 10;
-                        analyzeListItemDO.Clue = "Person's birth year " + person.BirthYear + " is after mother's death year " + person.Mother.DeathYear + ".~" + criteriaId;
-                        analyzeListItemDO.Helpers = criteriaId;
+                        analyzeListItemDO.clue = "Person's birth year " + person.BirthYear + " is after mother's death year " + person.Mother.DeathYear + ".";
+                        analyzeListItemDO.helpers = criteriaId;
                         analyzeListItems.Add(analyzeListItemDO);
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 11) && ((person.DeathYear > 1000) && (person.MarriageYear > 1000) && (person.DeathYear < person.MarriageYear))) {
@@ -2101,8 +2106,8 @@ namespace FindMyFamilies.BusinessObject {
                         //                    analyzeListItemDO.DirectLine = person.DirectLine;
                         //                    analyzeListItemDO.Male = person.IsMale;
                         criteriaId = 11;
-                        analyzeListItemDO.Clue = "Person's death year " + person.DeathYear + " is earlier than the marriage year " + person.MarriageYear + ".~" + criteriaId;
-                        analyzeListItemDO.Helpers = criteriaId;
+                        analyzeListItemDO.clue = "Person's death year " + person.DeathYear + " is earlier than the marriage year " + person.MarriageYear + ".";
+                        analyzeListItemDO.helpers = criteriaId;
                         analyzeListItems.Add(analyzeListItemDO);
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 12) && (person.IsFemale  && ((person.NumberOfChildren > 0) && (person.LastChild.BirthYear > 1000) && (person.YearsLived > 39) && ((person.LastChild.BirthYear + 35) < (person.BirthYear + 40))))) {
@@ -2114,8 +2119,8 @@ namespace FindMyFamilies.BusinessObject {
                         //                    analyzeListItemDO.DirectLine = person.DirectLine;
                         //                    analyzeListItemDO.Male = person.IsMale;
                         criteriaId = 12;
-                        analyzeListItemDO.Clue = "Last child was born 4 or more years before turning 40.~" + criteriaId;
-                        analyzeListItemDO.Helpers = criteriaId;
+                        analyzeListItemDO.clue = "Last child was born 4 or more years before turning 40.";
+                        analyzeListItemDO.helpers = criteriaId;
                         analyzeListItems.Add(analyzeListItemDO);
                     }
 
@@ -2150,8 +2155,8 @@ namespace FindMyFamilies.BusinessObject {
                                             //                                        analyzeListItemDO.DirectLine = person.DirectLine;
                                             //                                        analyzeListItemDO.Male = person.IsMale;
                                             criteriaId = 3;
-                                            analyzeListItemDO.Clue = problem + "~" + criteriaId;
-                                            analyzeListItemDO.Helpers = criteriaId;
+                                            analyzeListItemDO.clue = problem + "";
+                                            analyzeListItemDO.helpers = criteriaId;
                                             analyzeListItems.Add(analyzeListItemDO);
                                             id++;
                                             validatedGap = true;
@@ -2288,7 +2293,7 @@ namespace FindMyFamilies.BusinessObject {
             var isDuplicate = false;
 
             foreach (var analyzeListItemDO in analyzeListItems) {
-                if (analyzeListItemDO.Clue.Equals(clue)) {
+                if (analyzeListItemDO.clue.Equals(clue)) {
                     isDuplicate = true;
                 }
             }

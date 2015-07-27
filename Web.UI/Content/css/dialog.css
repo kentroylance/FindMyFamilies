@@ -230,6 +230,11 @@ hr {
     height: 423px;
 }
 
+.findClues-table {
+    margin-top: -1.4em;
+    height: 423px;
+}
+
 /*Rounded and Circle Classes
 ------------------------------------*/
 .rounded { border-radius: 4px !important;}

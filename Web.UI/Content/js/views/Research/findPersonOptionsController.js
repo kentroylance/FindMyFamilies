@@ -17,6 +17,8 @@ define(function(require) {
             person.findPersonOptions[2] = $("#findPersonOptions3").val();
             person.findPersonOptions[3] = $("#findPersonOptions4").val();
             person.findPersonOptions[4] = $("#findPersonOptions5").val();
+            person.findPersonOptions[5] = $("#findPersonOptions6").val();
+            person.findPersonOptions[6] = $("#findPersonOptions7").val();
             person.save();
             findPersonOptions.form.dialog(constants.CLOSE);
         });
@@ -29,32 +31,44 @@ define(function(require) {
     function loadOptions() {
         var select1 = $("#findPersonOptions1");
         $.each(findPersonHelper.findUrls, function (i, value) {
-            var optionhtml = '<option value="' + i + '" selected>' + value + '</option>';
+            var optionhtml = '<option value="' + i + '">' + value + '</option>';
             select1.append(optionhtml);
         });
 
         var select2 = $("#findPersonOptions2");
         $.each(findPersonHelper.findUrls, function (i, value) {
-            var optionhtml = '<option value="' + i + '" selected>' + value + '</option>';
+            var optionhtml = '<option value="' + i + '">' + value + '</option>';
             select2.append(optionhtml);
         });
 
         var select3 = $("#findPersonOptions3");
         $.each(findPersonHelper.findUrls, function (i, value) {
-            var optionhtml = '<option value="' + i + '" selected>' + value + '</option>';
+            var optionhtml = '<option value="' + i + '">' + value + '</option>';
             select3.append(optionhtml);
         });
 
         var select4 = $("#findPersonOptions4");
         $.each(findPersonHelper.findUrls, function (i, value) {
-            var optionhtml = '<option value="' + i + '" selected>' + value + '</option>';
+            var optionhtml = '<option value="' + i + '">' + value + '</option>';
             select4.append(optionhtml);
         });
 
         var select5 = $("#findPersonOptions5");
         $.each(findPersonHelper.findUrls, function (i, value) {
-            var optionhtml = '<option value="' + i + '" selected>' + value + '</option>';
+            var optionhtml = '<option value="' + i + '">' + value + '</option>';
             select5.append(optionhtml);
+        });
+
+        var select6 = $("#findPersonOptions6");
+        $.each(findPersonHelper.findUrls, function (i, value) {
+            var optionhtml = '<option value="' + i + '">' + value + '</option>';
+            select6.append(optionhtml);
+        });
+
+        var select7 = $("#findPersonOptions7");
+        $.each(findPersonHelper.findUrls, function (i, value) {
+            var optionhtml = '<option value="' + i + '">' + value + '</option>';
+            select7.append(optionhtml);
         });
 
         select1.val(person.findPersonOptions[0]);
@@ -62,6 +76,8 @@ define(function(require) {
         select3.val(person.findPersonOptions[2]);
         select4.val(person.findPersonOptions[3]);
         select5.val(person.findPersonOptions[4]);
+        select6.val(person.findPersonOptions[5]);
+        select7.val(person.findPersonOptions[6]);
     }
 
     function open() {

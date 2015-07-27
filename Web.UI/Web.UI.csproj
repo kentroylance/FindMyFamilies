@@ -437,7 +437,6 @@
     <Content Include="Content\js\lib\knockout\package.js" />
     <Content Include="Content\js\lib\msgBox.js" />
     <Content Include="Content\js\lib\system.js" />
-    <Content Include="Content\js\views\shared\user.js" />
     <Content Include="Content\js\main.js" />
     <Content Include="Content\js\vendor\back-to-top.js" />
     <Content Include="Content\js\vendor\bootstrap-table.min.js" />
