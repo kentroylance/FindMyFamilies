@@ -6,10 +6,8 @@
             jquery: 'vendor/jquery1.11.1',
             jqueryui: 'vendor/jquery-ui-1.11.2',
             jqueryUiOptions: 'lib/jqueryUiOptions',
-            bootstrapTable: 'vendor/bootstrap-table.min',
             formValidation: 'vendor/formvalidation/formValidation.min',
             bootstrapValidation: 'vendor/formvalidation/framework/bootstrap.min',
-            domReady: 'vendor/domReady',
             underscore: 'vendor/underscore-min',
             greensock: 'vendor/greensock',
             transitions: 'vendor/layerslider.transitions',
@@ -25,7 +23,6 @@
             _layoutEvents: 'views/shared/_layoutEvents',
             msgBox: 'lib/msgBox',
             constants: 'lib/constants',
-            user: 'views/shared/user',
             system: 'lib/system',
             researchController: 'views/research/researchController',
             research: 'views/research/research',
@@ -107,7 +104,6 @@
                 exports: 'personUrls'
             },
             formValidation: { deps: ['jquery'], exports: "FormValidation" },
-            bootstrapTable: { deps: ["jquery", "bootstrap"] },
             bootstrapValidation: { deps: ["jquery", "bootstrap", "formValidation"] },
             layerslider: ["jquery", "greensock", "transitions"],
             jqueryui: {
@@ -119,20 +115,20 @@
                 exports: "$"
             },
             _layoutController: {
-                deps: ['jquery', 'bootstrap', 'system'],
+                deps: ['jquery'],
                 exports: '_layoutController'
+            },
+            indexController: {
+                deps: ['jquery', 'system'],
+                exports: 'indexController'
             },
             fancybox: {
                 deps: ['jquery'],
                 exports: 'fancybox'
             },
             person: {
-                deps: ['jquery', 'system', 'user', 'constants'],
+                deps: ['jquery', 'system', 'constants'],
                 exports: 'person'
-            },
-            user: {
-                deps: ['jquery', 'constants'],
-                exports: 'user'
             },
             startingPoint: {
                 deps: ['jquery', 'person', 'constants'],
@@ -143,76 +139,76 @@
                 exports: 'findClues'
             },
             researchController: {
-                deps: ['jquery', 'researchHelper', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload', 'research'],
+                deps: ['jquery'],
                 exports: 'researchController'
             },
             startingPointController: {
-                deps: ['jquery', 'startingPoint', 'startingPointReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'startingPoint', 'startingPointReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'startingPointController'
             },
             findCluesController: {
-                deps: ['jquery', 'findClues', 'findCluesReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'findClues', 'findCluesReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'startingPointController'
             },
             retrieveController: {
-                deps: ['jquery', 'retrieve', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'retrieve', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'retrieveController'
             },
             hintsController: {
-                deps: ['jquery', 'hints', 'research', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'hints', 'research', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'hintsController'
             },
             dateProblemsController: {
-                deps: ['jquery', 'hints', 'research', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'hints', 'research', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'dateProblemsController'
             },
             incompleteOrdinancesController: {
-                deps: ['jquery', 'incompleteOrdinances', 'research', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'incompleteOrdinances', 'research', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'incompleteOrdinancesController'
             },
             startingPointReportController: {
-                deps: ['jquery', 'startingPointReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'startingPointReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'startingPointReportController'
             },
             findCluesReportController: {
-                deps: ['jquery', 'findCluesReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'findCluesReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'findCluesReportController'
             },
             possibleDuplicatesController: {
-                deps: ['jquery', 'possibleDuplicates', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'possibleDuplicates', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'possibleDuplicatesController'
             },
             findPersonController: {
-                deps: ['jquery', 'formValidation', 'bootstrapValidation', 'bootstrapTable', 'findPerson', 'findPersonHelper', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload', 'string'],
+                deps: ['jquery', 'formValidation', 'bootstrapValidation', 'findPerson', 'findPersonHelper', 'system', 'constants', 'person', 'lazyload', 'string'],
                 exports: 'findPersonController'
             },
             findPersonOptionsController: {
-                deps: ['jquery', 'findPersonOptions', 'findPersonHelper', 'findPerson', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload', 'string'],
+                deps: ['jquery', 'findPersonOptions', 'findPersonHelper', 'findPerson', 'system', 'constants', 'person', 'lazyload', 'string'],
                 exports: 'findPersonOptionsController'
             },
             personUrlOptionsController: {
-                deps: ['jquery', 'personUrlOptions', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload', 'string'],
+                deps: ['jquery', 'personUrlOptions', 'system', 'constants', 'person', 'lazyload', 'string'],
                 exports: 'personUrlOptionsController'
             },
             personUrlsController: {
-                deps: ['jquery', 'personUrls', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload', 'string'],
+                deps: ['jquery', 'personUrls', 'system', 'constants', 'person', 'lazyload', 'string'],
                 exports: 'personUrlsController'
             },
             findPersonHelper: {
-                deps: ['jquery', 'researchHelper', 'system', 'user', 'constants', 'person', 'string'],
+                deps: ['jquery', 'researchHelper', 'system', 'constants', 'person', 'string'],
                 exports: 'findPersonHelper'
             },
             researchHelper: {
-                deps: ['jquery', 'system', 'user', 'findPerson', 'constants', 'person', 'string'],
+                deps: ['jquery', 'system', 'findPerson', 'constants', 'person', 'string'],
                 exports: 'researchHelper'
             },
             lazyload: ["jquery"],
             system: {
-                deps: ["jquery", "user", "constants"],
+                deps: ["jquery", "constants"],
                 exports: 'system'
             },
             retrieve: {
-                deps: ["jquery", "system", "person", "user"]
+                deps: ["jquery", "system", "person"]
             },
             msgBox: {
                 deps: ["jquery", "jqueryui", "jqueryUiOptions"]
@@ -227,7 +223,7 @@
 //        }
 //    );
     require([
-            "css", //require plugins
+//            "css", //require plugins
             "jquery",
 //            "css!/Content/css/lib/common/bootstrap3.2.0",
 //            "css!/Content/css/lib/common/font-awesome-4.3.0/css/font-awesome.min",
@@ -235,7 +231,6 @@
             "bootstrap",
 //            "bootstrapTable",
             "_layoutController", // app lib modules
-            "user",
             "system"
 //            "formValidation",
 //            "bootstrapValidation"

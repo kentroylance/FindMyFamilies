@@ -7,7 +7,6 @@ define(function(require) {
     var researchHelper = require("researchHelper");
 
     // models
-    var user = require("user");
     var person = require("person");
     var retrieve = require("retrieve");
 

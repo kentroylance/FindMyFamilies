@@ -36,6 +36,7 @@
     var DATE_PROBLEMS = "dateProblems";
     var INCOMPLETE_ORDINANCES = "incompleteOrdinances";
     var POSSIBLE_DUPLICATES = "possibleDuplicates";
+    var FIND_CLUES_REPORT = "findCluesReport";
 
     // Urls
     var GET_REPORT_LIST_URL = '/Home/GetReportList';
@@ -72,7 +73,7 @@
     var BILLION_GRAVES = "http://billiongraves.com/pages/search/#";
     var MY_HERITAGE = "http://www.myheritage.com/research?formId=master&formMode=&action=query&exactSearch=0&useTranslation=0&catId=1";
     var FIND_MY_PAST = "http://search.findmypast.com/search/united-states-records?";
-    var AMERICAN_ANCESTOR = "";
+    var AMERICAN_ANCESTORS = "http://www.americanancestors.org/search/database-search?";
 
     // Spinner
     var DEFAULT_SPINNER_AREA = 'spinnerArea';
@@ -241,6 +242,9 @@
         get FIND_MY_PAST() {
             return FIND_MY_PAST;
         },
+        get AMERICAN_ANCESTORS() {
+            return AMERICAN_ANCESTORS;
+        },
         get HINTS_PREVIOUS() {
             return HINTS_PREVIOUS;
         },
@@ -297,9 +301,10 @@
         },
         get FIND_CLUES_REPORT_DATA_URL() {
             return FIND_CLUES_REPORT_DATA_URL;
+        },
+        get FIND_CLUES_REPORT() {
+            return FIND_CLUES_REPORT;
         }
-
-
         
     }
     return constants;

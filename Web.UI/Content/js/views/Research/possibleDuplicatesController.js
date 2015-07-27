@@ -3,20 +3,17 @@ define(function(require) {
     var $ = require('jquery');
     var system = require('system');
     var msgBox = require('msgBox');
-    var retrieve = require('retrieve');
     var constants = require('constants');
     var researchHelper = require("researchHelper");
 
     var lazyRequire = require("lazyRequire");
     var requireOnce = lazyRequire.once();
-    require("lazyload");
 
 
     // models
     var person = require('person');
     var possibleDuplicates = require('possibleDuplicates');
 //    var possibleDuplicatesReport = require('possibleDuplicatesReport');
-    
     var retrieve = require('retrieve');
 
     function updateForm() {
@@ -273,7 +270,7 @@ define(function(require) {
 
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
-                        requireOnce(["bootstrapTable", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
+                        requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
                             }, function() {
                                 system.initSpinner(possibleDuplicates.spinner);
                                 possibleDuplicates.callerSpinner = possibleDuplicates.spinner;

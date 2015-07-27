@@ -20,6 +20,7 @@ define(function(require) {
     _findUrls['amerancest'] = 'American Ancestors';
     _findUrls['fmf-retrieve'] = 'Retrieve';
     _findUrls['fmf-starting'] = 'Starting Point';
+    _findUrls['fmf-clues'] = 'Find Clues';
     _findUrls['fs-fan'] = 'Family Search - Fan Chart';
     _findUrls['fs-desc'] = 'Family Search - Descendancy';
     _findUrls['fs-tree'] = 'Family Search - Tree';
@@ -47,6 +48,8 @@ define(function(require) {
             } else if (website === constants.MY_HERITAGE) {
                 result = "%2F3" + middleName;
             } else if (website === constants.FIND_MY_PAST) {
+                result = "%20" + middleName;
+            } else if (website === constants.AMERICAN_ANCESTORS) {
                 result = "%20" + middleName;
             } else if (website === system.familySearchSystem()) {
                 result = "%20" + middleName;
@@ -105,6 +108,21 @@ define(function(require) {
 //                        }
             } else if (webSite === constants.FIND_MY_PAST) {
                 result = birthPlace;
+            } else if (webSite === constants.AMERICAN_ANCESTORS) {
+                //Rawcliffe%2C%20Yorkshire%2C%20England
+                result = "&location=";
+                birthPlaceParts = birthPlace.split(',');
+                $.each(birthPlaceParts, function (key, value) {
+                    if (value === " United States") {
+                        result += "United%2C%20States";
+                        isUnitedStates = true;
+                    } else {
+                        result += string(value).trim() + "%2C%20";
+                    }
+                });
+                if (isUnitedStates === false) {
+                    result = result.substring(0, result.length - 6);
+                }
             } else if (webSite === system.familySearchSystem()) {
                 birthPlaceParts = birthPlace.split(',');
                 result = "~%20%2Bbirth_place%3A%22";
@@ -128,7 +146,7 @@ define(function(require) {
                 if (person.yearRange === 0) {
                     result = "&GSbyrel=in&GSby=" + birthYear;
                 } else {
-                    result = "&GSbyrel=after&GSby=" + (string(birthYear).toInt() - person.yearRange - 1);
+                    result = "&GSbyrel=after&GSby=" + (string(birthYear).toInt() - string(person.yearRange).toInt() - 1);
                 }
             } else if (webSite === constants.BILLION_GRAVES) {
                 result = "&birth_year=" + birthYear;
@@ -136,8 +154,10 @@ define(function(require) {
                 result = "&qbirth=Event+et.birth+ey." + birthYear;
             } else if (webSite === constants.FIND_MY_PAST) {
                 result = "&yearofbirth=" + birthYear + "&yearofbirth_offset=" + person.yearRange;
+            } else if (webSite === constants.AMERICAN_ANCESTORS) {
+                result = "&fromyear=" + (string(birthYear).toInt() - string(person.yearRange).toInt());
             } else if (webSite === system.familySearchSystem()) {
-                result = "~%20%2Bbirth_year%3A" + (string(birthYear).toInt() - person.yearRange) + "-" + (string(birthYear).toInt() + person.yearRange);
+                result = "~%20%2Bbirth_year%3A" + (string(birthYear).toInt() - string(person.yearRange).toInt()) + "-" + (string(birthYear).toInt() + string(person.yearRange).toInt());
             } else if (webSite === constants.GOOGLE) {
                 result = birthYear + "";
             }
@@ -155,14 +175,16 @@ define(function(require) {
                 if (person.yearRange == 0) {
                     result = "&GSdyrel=in&GSdy=" + deathYear;
                 } else {
-                    result = "&GSdyrel=before&GSdy=" + (string(deathYear).toInt() + person.yearRange + 1);
+                    result = "&GSdyrel=before&GSdy=" + (string(deathYear).toInt() + string(person.yearRange).toInt() + 1);
                 }
             } else if (webSite === constants.BILLION_GRAVES) {
                 result = "&death_year=" + (deathYear);
             } else if (webSite === constants.MY_HERITAGE) {
             } else if (webSite === constants.FIND_MY_PAST) {
+            } else if (webSite === constants.AMERICAN_ANCESTORS) {
+                result = "&toyear=" + (string(deathYear).toInt() + string(person.yearRange).toInt());
             } else if (webSite === system.familySearchSystem()) {
-                result = "~%20%2Bdeath_year%3A" + +(string(deathYear).toInt() - person.yearRange) + "-" + (string(deathYear).toInt() + person.yearRange);
+                result = "~%20%2Bdeath_year%3A" + (string(deathYear).toInt() - string(person.yearRange).toInt()) + "-" + (string(deathYear).toInt() + string(person.yearRange).toInt());
             } else if (webSite === constants.GOOGLE) {
                 result = "" + deathYear;
             }
@@ -191,13 +213,38 @@ define(function(require) {
         window.researchHelper = researchHelper;
 
         menuOptions += "<ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"dLabel\" >";
+        var isOpen = false;
         $.each(person.findPersonOptions, function(key, value) {
             switch (value) {
-                case 'fmf-urls':
-                    var isOpen = $("#personUrlsForm").is(':visible');
+            case 'fmf-urls':
+                    isOpen = $("#personUrlsForm").is(':visible');
                     if (!isOpen) {
                         menuOptions += "<li><a onclick=\"researchHelper.personUrlOptions('" + row.id + "','" + row.fullName + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-family16\"></span> Family Research Urls</a></li>";
                     }
+                break;
+            case 'fmf-starting':
+                    isOpen = $("#startingPointForm").is(':visible');
+                    if (!isOpen) {
+                        menuOptions += "<li><a onclick=\"researchHelper.startingPoint('" + row.id + "','" + row.fullName + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-compass16\"></span> Starting Point</a></li>";
+                    }
+                break;
+            case 'fmf-hints':
+                    isOpen = $("#hintsForm").is(':visible');
+                    if (!isOpen) {
+                        menuOptions += "<li><a onclick=\"researchHelper.hints('" + row.id + "','" + row.fullName + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-hints16\"></span> Hints</a></li>";
+                    }
+                break;
+            case 'fmf-clues':
+                    isOpen = $("#findCluesForm").is(':visible');
+                    if (!isOpen) {
+                        menuOptions += "<li><a onclick=\"researchHelper.findClues('" + row.id + "','" + row.fullName + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-clues16\"></span> Find Clues</a></li>";
+                    }
+                    break;
+            case 'fmf-retrieve':
+                isOpen = $("#retrieveForm").is(':visible');
+                if (!isOpen) {
+                    menuOptions += "<li><a onclick=\"researchHelper.retrieve(null, '" + row.id + "','" + row.fullName + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-retrieve16\"></span> Retrieve</a></li>";
+                }
                 break;
             case 'google':
                 menuOptions += "<li><a href=\"" + constants.GOOGLE + row.firstName + getMiddleName(row.middleName, constants.GOOGLE) + "+" + getLastName(row.lastName) + "+" + getBirthYear(row.birthYear, constants.GOOGLE) + "+" + getDeathYear(row.deathYear, constants.GOOGLE) + "+" + getPlace(row.birthPlace, constants.GOOGLE) + "\" target=\" _tab\" ><span class=\"fa fmf-google16\"></span> Google</a></li>";
@@ -213,6 +260,10 @@ define(function(require) {
                 break;
             case 'findagrave':
                 menuOptions += "<li><a href=\"" + constants.FIND_A_GRAVE + "&GSfn=" + row.firstName + getMiddleName(row.middleName, constants.FIND_A_GRAVE) + "&GSln=" + getLastName(row.lastName) + getBirthYear(row.birthYear, constants.FIND_A_GRAVE) + getDeathYear(row.deathYear, constants.FIND_A_GRAVE) + "&GScntry=0&GSst=0&GSgrid=&df=all&GSob=n\" target=\" _tab\" ><span class=\"fa fmf-findagrave16\"></span> Find-A-Grave</a></li>";
+                break;
+            case 'amerancest':
+                //http://www.americanancestors.org/search/database-search?firstname=Frederick%20Charles&lastname=Vevers&fromyear=1847&toyear=1876&location=Rawcliffe%2C%20Yorkshire%2C%20England&
+                    menuOptions += "<li><a href=\"" + constants.AMERICAN_ANCESTORS + "firstname=" + row.firstName + getMiddleName(row.middleName, constants.AMERICAN_ANCESTORS) + "&lastname=" + getLastName(row.lastName) + getBirthYear(row.birthYear, constants.AMERICAN_ANCESTORS) + getDeathYear(row.deathYear, constants.AMERICAN_ANCESTORS) + getPlace(row.birthPlace, constants.AMERICAN_ANCESTORS) + "&\" target=\" _tab\" ><span class=\"fa fmf-ancestry16\"></span> American Ancestors</a></li>";
                 break;
             case 'puz-descend':
                 menuOptions += "<li><a href=\"https://puzzilla.org/descendants?id=" + row.id + "&changeToId=" + row.id + "&depth=6&ancestorsView=false\" target=\" _tab\" ><span class=\"fa fmf-puzilla16\"></span> Puzilla - Descendants</a></li>";
