@@ -8,7 +8,6 @@ define(function(require) {
 
     var lazyRequire = require("lazyRequire");
     var requireOnce = lazyRequire.once();
-    require("lazyload");
 
 
     // models
@@ -202,7 +201,7 @@ define(function(require) {
         });
 
         $("#incompleteOrdinancesRetrieveButton").unbind('click').bind('click', function(e) {
-            researchHelper.retrieve(e, function(result) {
+            researchHelper.retrieve(function(result) {
                 var retrieve = require('retrieve');
                 if (result) {
                     person.reportId = retrieve.reportId;
@@ -267,7 +266,7 @@ define(function(require) {
 
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
-                        requireOnce(["bootstrapTable", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
+                        requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
                             }, function() {
                                 system.initSpinner(incompleteOrdinances.spinner);
                                 incompleteOrdinances.callerSpinner = incompleteOrdinances.spinner;

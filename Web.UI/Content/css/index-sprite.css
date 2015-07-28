@@ -11,85 +11,31 @@ Icon classes can be used entirely standalone. They are named after their origina
 */
 .fmf-bg2 {
   background-image: url(index.png);
-  background-position: 0px -1500px;
-  width: 1920px;
+  background-position: 0px 0px;
+  width: 1172px;
   height: 500px;
 }
 .fmf-bg5 {
   background-image: url(index.png);
-  background-position: -2300px 0px;
-  width: 1600px;
-  height: 1200px;
-}
-.fmf-computer2 {
-  background-image: url(index.png);
-  background-position: -1920px -1500px;
-  width: 595px;
-  height: 357px;
-}
-.fmf-facebook {
-  background-image: url(index.png);
-  background-position: -2300px -1239px;
-  width: 28px;
-  height: 66px;
-}
-.fmf-findmyfamilies_new1 {
-  background-image: url(index.png);
-  background-position: 0px -2000px;
-  width: 480px;
-  height: 553px;
+  background-position: 0px -500px;
+  width: 1170px;
+  height: 500px;
 }
 .fmf-findmyfamiliesbottom {
   background-image: url(index.png);
-  background-position: -2300px -1200px;
+  background-position: -1172px -500px;
   width: 252px;
   height: 39px;
 }
 .fmf-findmyfamiliestop {
   background-image: url(index.png);
-  background-position: -2552px -1200px;
+  background-position: -1424px -500px;
   width: 252px;
   height: 39px;
 }
-.fmf-googleplus {
-  background-image: url(index.png);
-  background-position: -2468px -1239px;
-  width: 28px;
-  height: 66px;
-}
 .fmf-img1 {
   background-image: url(index.png);
-  background-position: 0px 0px;
-  width: 2300px;
-  height: 1500px;
-}
-.fmf-linkedin {
-  background-image: url(index.png);
-  background-position: -2356px -1239px;
-  width: 28px;
-  height: 66px;
-}
-.fmf-pintrest {
-  background-image: url(index.png);
-  background-position: -2384px -1239px;
-  width: 28px;
-  height: 66px;
-}
-.fmf-rss {
-  background-image: url(index.png);
-  background-position: -2412px -1239px;
-  width: 28px;
-  height: 66px;
-}
-.fmf-twitter {
-  background-image: url(index.png);
-  background-position: -2440px -1239px;
-  width: 28px;
-  height: 66px;
-}
-.fmf-vimeo {
-  background-image: url(index.png);
-  background-position: -2328px -1239px;
-  width: 28px;
-  height: 66px;
+  background-position: -1172px 0px;
+  width: 1170px;
+  height: 500px;
 }

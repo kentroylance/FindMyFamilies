@@ -1,0 +1,92 @@
+﻿@using FindMyFamiles.Web.Helpers
+@model HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!--=== Breadcrumbs v3 ===-->
+<div class="breadcrumbs-v3 margin-top-0">
+    <div class="container">
+        <h1 class="pull-left"><b>Error</b></h1>
+        <ul class="pull-right breadcrumb">
+            <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+            <li class="active">Error</li>
+        </ul>
+    </div>
+</div>
+<!--=== End Breadcrumbs v3 ===-->
+
+
+<!--=== Content Part ===-->
+<div class="panel panel-blue margin-top-0 margin-bottom-0">
+    <div class="panel-heading">
+        <h3 class="panel-title center"><i class="fa fa-bug"></i>Sorry, an error occurred while processing your request.</h3>
+    </div>
+    <div class="panel-body">
+        <h3>@ErrorHelper.GetTitle(@ViewContext, @Model)</h3>
+        <p style="text-indent: 25px">@ErrorHelper.GetUri(@ViewContext, @Model)</p>
+
+        <h3>
+            Next Steps
+        </h3>
+
+        <ul>
+            <li>
+                <a style="color: rgb(50, 205, 50)" href="javascript:history.back()">Go Back to Previous Page</a>
+            </li>
+            <li>
+                <a style="color: rgb(50, 205, 50)" href="@Url.Action("Index", "Home")">Go to Home Page</a>
+            </li>
+        </ul>
+
+
+
+        @if (Model != null && HttpContext.Current.IsDebuggingEnabled) {
+            <div>
+                <p>
+                    @if (@Model != null) {
+                        <h3>
+                            Technical Information
+                        </h3>
+                        <p style="text-indent: 25px">
+                            <b>Exception:</b>
+                            @ErrorHelper.GetExceptionMessage(@ViewContext, @Model)
+                        </p>
+                        <p style="text-indent: 25px">
+                            <b>Controller:</b>
+                            @ErrorHelper.GetControllerName(@ViewContext, @Model)
+                        </p>
+                        <p style="text-indent: 25px">
+                            <b>Action:</b>
+                            @ErrorHelper.GetActionName(@ViewContext, @Model)
+                        </p>
+                        <p style="text-indent: 25px">
+                            <b>Title:</b>
+                            @ErrorHelper.GetTitle(@ViewContext, @Model)
+                        </p>
+                        <p style="text-indent: 25px">
+                            <b>Status Code:</b>
+                            @ErrorHelper.GetStatusCode(@ViewContext, @Model)
+                        </p>
+                        <p style="text-indent: 25px">
+                            <b>Path:</b>
+                            @ErrorHelper.GetPath(@ViewContext, @Model)
+                        </p>
+                        <p style="text-indent: 25px">
+                            <b>Uri:</b>
+                            @ErrorHelper.GetUri(@ViewContext, @Model)
+                        </p>
+                        <div style="overflow: scroll">
+                            <pre>
+                                @ErrorHelper.GetStackTrace(@ViewContext, @Model)
+                            </pre>
+                        </div>
+                    }
+                </p>
+            </div>
+        }
+    </div>
+</div>

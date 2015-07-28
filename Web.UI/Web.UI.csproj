@@ -401,7 +401,9 @@
     <Content Include="Content\js\views\Research\dateProblemsController.js" />
     <Content Include="Content\js\views\Research\dateProblemsReportController.js" />
     <Content Include="Content\js\views\Research\hintsReportController.js" />
+    <Content Include="Content\js\views\Research\placeProblemsController.js" />
     <Content Include="Content\js\views\Research\incompleteOrdinancesController.js" />
+    <Content Include="Content\js\views\Research\placeProblemsReportController.js" />
     <Content Include="Content\js\views\Research\incompleteOrdinancesReportController.js" />
     <Content Include="Content\js\views\Research\personUrlOptionsController.js" />
     <Content Include="Content\js\views\Research\personUrls.js" />

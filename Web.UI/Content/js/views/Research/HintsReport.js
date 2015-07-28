@@ -50,4 +50,4 @@
 
     return hintsReport;
 });
-//# sourceURL=HintsReport.js
+//# sourceURL=hintsReport.js

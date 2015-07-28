@@ -261,7 +261,7 @@ hr {
 
 .ui-dialog-titlebar-close .ui-icon {
     background-image: url(research.png);
-    background-position: -136px -206px;
+    background-position: -192px -166px;
     margin-left: -12px;
     margin-top:-12px;
     width: 24px;
@@ -293,4 +293,17 @@ hr {
     margin-bottom: 14.33px;
     margin-top: 14.33px;
     margin-left: 14.33px;
+}
+
+.research-dropdown {
+    padding-left: 18px !important
+}
+
+.dropdown-btn {
+    width: 250px !important;
+    text-align: left !important;
+}
+
+.addChildren-box {
+    width: 190px !important;
 }

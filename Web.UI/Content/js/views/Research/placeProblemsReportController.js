@@ -7,38 +7,38 @@ define(function (require) {
 
     // models
     var person = require('person');
-    var hints = require('hints');
-    var hintsReport = require('hintsReport');
+    var placeProblems = require('placeProblems');
+    var placeProblemsReport = require('placeProblemsReport');
 
     function loadEvents() {
 
-        $("#hintsReportOptionsButton").unbind('click').bind('click', function (e) {
-            findPersonHelper.findOptions(e, hintsReport);
+        $("#placeProblemsReportOptionsButton").unbind('click').bind('click', function (e) {
+            findPersonHelper.findOptions(e, placeProblemsReport);
         });
 
-        $("#hintsReportSaveButton").unbind('click').bind('click', function (e) {
-            hints.savePrevious();
-            hintsReport.form.dialog(constants.CLOSE);
+        $("#placeProblemsReportSaveButton").unbind('click').bind('click', function (e) {
+            placeProblems.savePrevious();
+            placeProblemsReport.form.dialog(constants.CLOSE);
         });
 
 
-        $("#hintsReportCancelButton").unbind('click').bind('click', function (e) {
-            hintsReport.form.dialog(constants.CLOSE);
+        $("#placeProblemsReportCancelButton").unbind('click').bind('click', function (e) {
+            placeProblemsReport.form.dialog(constants.CLOSE);
         });
 
-        $("#hintsReportCloseButton").unbind('click').bind('click', function(e) {
-            hintsReport.form.dialog(constants.CLOSE);
+        $("#placeProblemsReportCloseButton").unbind('click').bind('click', function(e) {
+            placeProblemsReport.form.dialog(constants.CLOSE);
         });
 
-        hintsReport.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
-            system.initSpinner(hintsReport.callerSpinner, true);
+        placeProblemsReport.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
+            system.initSpinner(placeProblemsReport.callerSpinner, true);
             person.save();
-            if (hintsReport.callback) {
-                if (typeof (hintsReport.callback) === "function") {
-                    hintsReport.callback(person.selected);
+            if (placeProblemsReport.callback) {
+                if (typeof (placeProblemsReport.callback) === "function") {
+                    placeProblemsReport.callback(person.selected);
                 }
             }
-//            hintsReport.reset();
+//            placeProblemsReport.reset();
         });
 
         window.nameEvents = {
@@ -51,7 +51,7 @@ define(function (require) {
 
         var $result = $('#eventsResult');
 
-        $('#hintsTable').on('all.bs.table', function (e, name, args) {
+        $('#placeProblemssTable').on('all.bs.table', function (e, name, args) {
                 console.log('Event:', name, ', data:', args);
             })
             .on('click-row.bs.table', function(e, row, $element) {
@@ -95,30 +95,30 @@ define(function (require) {
     function open() {
         var currentSpinnerTarget = system.target.id;
         if (system.target) {
-            hintsReport.callerSpinner = system.target.id;
+            placeProblemsReport.callerSpinner = system.target.id;
         }
 
-        hintsReport.form = $("#hintsReportForm");
+        placeProblemsReport.form = $("#placeProblemsReportForm");
         loadEvents();
 
-        if (hints.displayType === "start") {
+        if (placeProblems.displayType === "start") {
             $.ajax({
-                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "topScore": hints.topScore, "count": hints.count, "reportId": person.reportId },
-                url: constants.HINTS_REPORT_DATA_URL,
+                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "nonMormon": placeProblems.nonMormon, "born18101850": placeProblems.born18101850, "livedInUSA": placeProblems.livedInUSA, "needOrdinances": placeProblems.ordinances, "hint": placeProblems.hints, "duplicate": placeProblems.duplicates, "reportId": person.reportId },
+                url: constants.PLACE_PROBLEMS_REPORT_DATA_URL,
                 success: function (data) {
-                    hints.previous = data;
-                    $("#hintsReportTable").bootstrapTable("append", data);
-                    system.openForm(hintsReport.form, hintsReport.formTitleImage, hintsReport.spinner);
+                    placeProblems.previous = data;
+                    $("#placeProblemsReportTable").bootstrapTable("append", data);
+                    system.openForm(placeProblemsReport.form, placeProblemsReport.formTitleImage, placeProblemsReport.spinner);
                 }
             });
         } else {
-            $("#hintsReportTable").bootstrapTable("append", hints.previous);
-            system.openForm(hintsReport.form, hintsReport.formTitleImage, hintsReport.spinner);
+            $("#placeProblemsReportTable").bootstrapTable("append", placeProblems.previous);
+            system.openForm(placeProblemsReport.form, placeProblemsReport.formTitleImage, placeProblemsReport.spinner);
         }
 
     }
 
-    var hintsReportController = {
+    var placeProblemsReportController = {
         open: function() {
             open();
         },
@@ -127,14 +127,14 @@ define(function (require) {
         }
     };
 
-    researchHelper.hintsReportController = hintsReportController;
+    researchHelper.placeProblemsReportController = placeProblemsReportController;
     open();
 
-    return hintsReportController;
+    return placeProblemsReportController;
 });
 
-var _hintsPerson = require('person');
-var _hintsSystem = require('system');
+var _placeProblemsPerson = require('person');
+var _placeProblemsSystem = require('system');
 
 function nameFormatter(value, row, index) {
     var result = "";
@@ -180,9 +180,9 @@ function reasonsFormatter(value) {
                 result += "<p>Possible Duplicate - <b>" + possibleDuplicate + "</b></p>";
             } else if (reason.indexOf("NoBirthPlace") > -1) {
                 result += "<p>No birth place</p>";
-            } else if (reason.indexOf("IncompleteOrdinances") > -1) {
+            } else if (reason.indexOf("PlaceProblems") > -1) {
                 var ordinances = reason.substring(reason.indexOf("[") + 1, reason.length - 2);
-                result += "<p>IncompleteOrdinances - <b>" + ordinances + "</b></p>";
+                result += "<p>PlaceProblems - <b>" + ordinances + "</b></p>";
             } else {
                 result = value;
             }
@@ -192,4 +192,4 @@ function reasonsFormatter(value) {
     return result;
 }
 
-//# sourceURL=hintsReportController.js
+//# sourceURL=placeProblemsReportController.js

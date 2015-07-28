@@ -91,12 +91,12 @@ namespace FindMyFamilies.Web.Controllers {
         }
 
         [System.Web.Mvc.HttpGet]
-        public ActionResult PlaceProblemsRepotHtml() {
+        public ActionResult PlaceProblemsReportHtml() {
             return PartialView("~/Views/Research/PlaceProblemsReport.cshtml");
         }
 
         [System.Web.Mvc.HttpGet]
-        public JsonResult PlaceProblemsRepotData(PlaceInputDO place) {
+        public JsonResult PlaceProblemsReportData(PlaceInputDO place) {
             List<PlaceListItemDO> placeProblems = new List<PlaceListItemDO>();
             if (Request.IsAjaxRequest() && (place != null)) {
                 session = GetSession();

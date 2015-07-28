@@ -24,6 +24,8 @@ define(function(require) {
     var _incompleteOrdinancesReportController;
     var _dateProblemsController;
     var _dateProblemsReportController;
+    var _placeProblemsController;
+    var _placeProblemsReportController;
     var _findCluesController;
     var _findCluesReportController;
 
@@ -188,7 +190,7 @@ define(function(require) {
                         var $dialogContainer = $("#personUrlsForm");
                         var $detachedChildren = $dialogContainer.children().detach();
                         $("<div id=\"personUrlsForm\"></div>").dialog({
-                            width: 600,
+                            width: 402,
                             title: "Research Family",
                             resizable: false,
                             minHeight: 0,
@@ -218,11 +220,47 @@ define(function(require) {
         });
         return false;
     }
-
-    function hints(e) {
+    
+    function possibleDuplicates(id, name) {
         if (system.isAuthenticated()) {
+	    system.startSpinner();
             system.initSpinner(constants.DEFAULT_SPINNER_AREA);
-            requireOnce(["jqueryUiOptions", "bootstrapTable", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
+            requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
+            }, function () {
+                $.ajax({
+                    url: constants.POSSIBLE_DUPLICATES_URL,
+                    success: function (data) {
+                        var $dialogContainer = $("#possibleDuplicatesForm");
+                        var $detachedChildren = $dialogContainer.children().detach();
+                        $("<div id=\"possibleDuplicatesForm\"></div>").dialog({
+                            width: 775,
+                            title: "Possible Duplicates",
+                            open: function () {
+                                $detachedChildren.appendTo($dialogContainer);
+                            }
+                        });
+                        $("#possibleDuplicatesForm").empty().append(data);
+			if (id) {
+	                    person.id = id;
+	                    person.name = name;
+                        }
+                        if (_possibleDuplicatesController) {
+                            _possibleDuplicatesController.open();
+                        }
+                    }
+                });
+            }
+            );
+        } else {
+            system.relogin();
+        }
+    }
+
+    function hints(id, name) {
+        if (system.isAuthenticated()) {
+	    system.startSpinner();
+            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
+            requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
             }, function () {
                 $.ajax({
                     url: constants.HINTS_URL,
@@ -237,6 +275,10 @@ define(function(require) {
                             }
                         });
                         $("#hintsForm").empty().append(data);
+			if (id) {
+                            person.id = id;
+                            person.name = name;
+                        }
                         if (_hintsController) {
                             _hintsController.open();
                         }
@@ -249,10 +291,11 @@ define(function(require) {
         }
     }
 
-    function dateProblems(e) {
+    function dateProblems(id, name) {
         if (system.isAuthenticated()) {
+	    system.startSpinner();
             system.initSpinner(constants.DEFAULT_SPINNER_AREA);
-            requireOnce(["jqueryUiOptions", "bootstrapTable", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
+            requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
             }, function () {
                 $.ajax({
                     url: constants.DATE_PROBLEMS_URL,
@@ -267,8 +310,82 @@ define(function(require) {
                             }
                         });
                         $("#dateProblemsForm").empty().append(data);
+			if (id) {
+                            person.id = id;
+                            person.name = name;
+                        }
                         if (_dateProblemsController) {
                             _dateProblemsController.open();
+                        }
+                    }
+                });
+            }
+            );
+        } else {
+            system.relogin();
+        }
+    }
+
+    function incompleteOrdinances(id, name) {
+        if (system.isAuthenticated()) {
+	    system.startSpinner();
+            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
+            requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
+            }, function () {
+                $.ajax({
+                    url: constants.INCOMPLETE_ORDINANCES_URL,
+                    success: function (data) {
+                        var $dialogContainer = $("#incompleteOrdinancesForm");
+                        var $detachedChildren = $dialogContainer.children().detach();
+                        $("<div id=\"incompleteOrdinancesForm\"></div>").dialog({
+                            width: 775,
+                            title: "Incomplete Ordinances",
+                            open: function () {
+                                $detachedChildren.appendTo($dialogContainer);
+                            }
+                        });
+                        $("#incompleteOrdinancesForm").empty().append(data);
+			if (id) {
+                            person.id = id;
+                            person.name = name;
+                        }
+                        if (_incompleteOrdinancesController) {
+                            _incompleteOrdinancesController.open();
+                        }
+                    }
+                });
+            }
+            );
+        } else {
+            system.relogin();
+        }
+    }
+
+    function placeProblems(id, name) {
+        if (system.isAuthenticated()) {
+            system.startSpinner();
+            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
+            requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
+            }, function () {
+                $.ajax({
+                    url: constants.PLACE_PROBLEMS_URL,
+                    success: function (data) {
+                        var $dialogContainer = $("#placeProblemsForm");
+                        var $detachedChildren = $dialogContainer.children().detach();
+                        $("<div id=\"placeProblemsForm\"></div>").dialog({
+                            width: 775,
+                            title: "Place Problems",
+                            open: function () {
+                                $detachedChildren.appendTo($dialogContainer);
+                            }
+                        });
+                        $("#placeProblemsForm").empty().append(data);
+                        if (id) {
+                            person.id = id;
+                            person.name = name;
+                        }
+                        if (_placeProblemsController) {
+                            _placeProblemsController.open();
                         }
                     }
                 });
@@ -328,14 +445,17 @@ define(function(require) {
         possibleDuplicates: function(id, name) {
             return possibleDuplicates(id, name);
         },
-        hints: function (e) {
-            return hints(e);
+        hints: function (id, name) {
+            return hints(id, name);
         },
-        dateProblems: function (e) {
-            return dateProblems(e);
+        dateProblems: function (id, name) {
+            return dateProblems(id, name);
         },
-        incompleteOrdinances: function (e) {
-            return incompleteOrdinances(e);
+        placeProblems: function (id, name) {
+            return placeProblems(id, name);
+        },
+        incompleteOrdinances: function (id, name) {
+            return incompleteOrdinances(id, name);
         },
         displayPersonUrls: function() {
             displayPersonUrls();
@@ -408,6 +528,18 @@ define(function(require) {
         },
         set dateProblemsReportController(value) {
             _dateProblemsReportController = value;
+        },
+        get placeProblemsController() {
+            return _placeProblemsController;
+        },
+        set placeProblemsController(value) {
+            _placeProblemsController = value;
+        },
+        get placeProblemsReportController() {
+            return _placeProblemsReportController;
+        },
+        set placeProblemsReportController(value) {
+            _placeProblemsReportController = value;
         },
         get retrieveController() {
             return _retrieveController;

@@ -45,7 +45,7 @@ define(function(require) {
     });
 
     $("#possibleDuplicates").unbind("click").bind("click", function (e) {
-        requireOnce(['researchHelper'], function (ResearchHelper) {
+         requireOnce(['researchHelper'], function (ResearchHelper) {
             researchHelper = ResearchHelper;
         }, function () {
             researchHelper.possibleDuplicates();
@@ -54,7 +54,7 @@ define(function(require) {
     });
 
     $("#hints").unbind("click").bind("click", function (e) {
-        requireOnce(['researchHelper'], function (ResearchHelper) {
+         requireOnce(['researchHelper'], function (ResearchHelper) {
             researchHelper = ResearchHelper;
         }, function () {
             researchHelper.hints();
@@ -76,6 +76,15 @@ define(function(require) {
             researchHelper = ResearchHelper;
         }, function () {
             researchHelper.dateProblems();
+        });
+        return false;
+    });
+
+    $("#placeProblems").unbind("click").bind("click", function (e) {
+        requireOnce(['researchHelper'], function (ResearchHelper) {
+            researchHelper = ResearchHelper;
+        }, function () {
+            researchHelper.placeProblems();
         });
         return false;
     });

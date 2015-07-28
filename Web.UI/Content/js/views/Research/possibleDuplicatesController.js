@@ -206,7 +206,7 @@ define(function(require) {
         });
 
         $("#possibleDuplicatesRetrieveButton").unbind('click').bind('click', function(e) {
-            researchHelper.retrieve(e, function(result) {
+            researchHelper.retrieve(function(result) {
                 var retrieve = require('retrieve');
                 if (result) {
                     person.reportId = retrieve.reportId;

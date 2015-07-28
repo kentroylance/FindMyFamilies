@@ -42,6 +42,10 @@
             dateProblemsController: 'views/research/dateProblemsController',
             dateProblemsReport: 'views/research/dateProblemsReport',
             dateProblemsReportController: 'views/research/dateProblemsReportController',
+            placeProblems: 'views/research/placeProblems',
+            placeProblemsController: 'views/research/placeProblemsController',
+            placeProblemsReport: 'views/research/placeProblemsReport',
+            placeProblemsReportController: 'views/research/placeProblemsReportController',
             incompleteOrdinances: 'views/research/incompleteOrdinances',
             incompleteOrdinancesController: 'views/research/incompleteOrdinancesController',
             incompleteOrdinancesReport: 'views/research/incompleteOrdinancesReport',
@@ -88,6 +92,10 @@
                 deps: ['jquery', 'person', 'constants'],
                 exports: 'dateProblems'
             },
+            placeProblems: {
+                deps: ['jquery', 'person', 'constants'],
+                exports: 'placeProblems'
+            },
             hints: {
                 deps: ['jquery', 'person', 'constants'],
                 exports: 'hints'
@@ -107,6 +115,9 @@
             },
             dateProblemsReport: {
                 exports: 'dateProblemsReport'
+            },
+            placeProblemsReport: {
+                exports: 'placeProblemsReport'
             },
             incompleteOrdinancesReport: {
                 exports: 'incompleteOrdinancesReport'
@@ -183,7 +194,7 @@
                 exports: 'findCluesReportController'
             },
             possibleDuplicatesReportController: {
-                deps: ['jquery', 'possibleDuplicatesReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'possibleDuplicatesReport', 'researchHelper', 'msgBox', 'system','constants', 'person', 'lazyload'],
                 exports: 'possibleDuplicatesReportController'
             },
             possibleDuplicatesController: {
@@ -191,27 +202,35 @@
                 exports: 'possibleDuplicatesController'
             },
             hintsReportController: {
-                deps: ['jquery', 'hintsReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'hintsReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'hintsReportController'
             },
             hintsController: {
-                deps: ['jquery', 'hints', 'hintsReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'hints', 'hintsReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'hintsController'
             },
             dateProblemsReportController: {
-                deps: ['jquery', 'dateProblemsReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'dateProblemsReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'dateProblemsReportController'
             },
             dateProblemsController: {
-                deps: ['jquery', 'dateProblems', 'dateProblemsReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'dateProblems', 'dateProblemsReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'dateProblemsController'
             },
+            placeProblemsReportController: {
+                deps: ['jquery', 'placeProblemsReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
+                exports: 'dateProblemsReportController'
+            },
+            placeProblemsController: {
+                deps: ['jquery', 'placeProblems', 'placeProblemsReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
+                exports: 'placeProblemsController'
+            },
             incompleteOrdinancesReportController: {
-                deps: ['jquery', 'incompleteOrdinancesReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'incompleteOrdinancesReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'incompleteOrdinancesReportController'
             },
             incompleteOrdinancesController: {
-                deps: ['jquery', 'incompleteOrdinances', 'incompleteOrdinancesReport', 'researchHelper', 'msgBox', 'system', 'user', 'constants', 'person', 'domReady', 'lazyload'],
+                deps: ['jquery', 'incompleteOrdinances', 'incompleteOrdinancesReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'incompleteOrdinancesController'
             },
             findPersonController: {
