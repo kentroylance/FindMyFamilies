@@ -4,7 +4,6 @@
     var _formTitleImage = "fa fmf-search24";
     var _form = $("#incompleteOrdinancesReportForm");
     var _spinner = "incompleteOrdinancesReportSpinner";
-
     var _callerSpinner;
 
     function IncompleteOrdinancesReportDO(previous) {
@@ -42,6 +41,12 @@
         },
         set form(value) {
             _form = value;
+        },
+        get callerSpinner() {
+            return _callerSpinner;
+        },
+        set callerSpinner(value) {
+            _callerSpinner = value;
         },
         save: function () {
             save();

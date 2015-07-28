@@ -4,7 +4,6 @@
     var _formTitleImage = "fa fmf-hint24";
     var _form = $("#hintsReportForm");
     var _spinner = "hintsReportSpinner";
-
     var _callerSpinner;
 
     function HintsReportDO(previous) {
@@ -42,6 +41,12 @@
         },
         set form(value) {
             _form = value;
+        },
+        get callerSpinner() {
+            return _callerSpinner;
+        },
+        set callerSpinner(value) {
+            _callerSpinner = value;
         },
         save: function () {
             save();

@@ -368,11 +368,14 @@ define(function(require) {
             }
         });
 
-        $("#startingPointCancelButton").unbind('click').bind('click', function(e) {
+        $("#startingPointCancelButton").unbind('click').bind('click', function (e) {
             startingPoint.form.dialog(constants.CLOSE);
         });
 
         startingPoint.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function(e) {
+            if (startingPoint.callerSpinner) {
+                system.initSpinner(startingPoint.callerSpinner, true);
+            }
             startingPoint.save();
         });
     }

@@ -12,6 +12,7 @@ define(function(require) {
     var _generationAncestors = constants.GENERATION;
     var _generationDescendants = "1";
     var _spinner = "placeProblemsSpinner";
+    var _callerSpinner;
 
     function PlaceProblemsDO() {
 
@@ -77,6 +78,12 @@ define(function(require) {
         },
         set displayType(value) {
             _displayType = value;
+        },
+        get callerSpinner() {
+            return _callerSpinner;
+        },
+        set callerSpinner(value) {
+            _callerSpinner = value;
         },
         save: function() {
             save();

@@ -12,6 +12,7 @@
     var _generationAncestors = constants.GENERATION;
     var _generationDescendants = "1";
     var _spinner = "findCluesSpinner";
+    var _callerSpinner;
 
     var _searchCriteria = "0";
     var _gapInChildren = "3";
@@ -88,6 +89,12 @@
         },
         set previous(value) {
             _previous = value;
+        },
+        get callerSpinner() {
+            return _callerSpinner;
+        },
+        set callerSpinner(value) {
+            _callerSpinner = value;
         },
         get searchCriteria() {
             return _searchCriteria;

@@ -50,25 +50,6 @@ define(function(require) {
                                     retrieve.selected = false;
                                 }
                                 retrieve.reportId = data.ReportId;
-//                                if (retrieve.caller === "IncompleteOrdinances") {
-//                                    IncompleteOrdinances.reportId = data.ReportId;
-//                                    IncompleteOrdinances.loadReports(true);
-//                                } else if (retrieve.caller === "PossibleDuplicates") {
-//                                    PossibleDuplicates.reportId = data.ReportId;
-//                                    PossibleDuplicates.loadReports(true);
-//                                } else if (retrieve.caller === "Hints") {
-//                                    Hints.reportId = data.ReportId;
-//                                    Hints.loadReports(true);
-//                                } else if (retrieve.caller === "StartingPoint") {
-//                                    StartingPoint.reportId = retrieve.ReportId;
-//                                    StartingPoint.loadReports(true);
-//                                } else if (retrieve.caller === "DateProblems") {
-//                                    DateProblems.reportId = data.ReportId;
-//                                    DateProblems.loadReports(true);
-//                                } else if (retrieve.caller === "FindClues") {
-//                                    FindClues.reportId = data.ReportId;
-//                                    FindClues.loadReports(true);
-//                                }
                                 system.stopSpinner();
                                 msgBox.message("Successfully retrieved <b>" + data.RetrievedRecords + "</b> " + person.researchType + ".");
                                 retrieve.form.dialog("close");
@@ -153,10 +134,6 @@ define(function(require) {
     }
 
     function open() {
-        var currentSpinnerTarget = system.target.id;
-        if (system.target) {
-            retrieve.callerSpinner = system.target.id;
-        }
         retrieve.form = $("#retrieveForm");
         loadEvents();
         person.loadPersons($("#retrievePersonId"), false);
@@ -164,10 +141,6 @@ define(function(require) {
         updateForm();
         system.openForm(retrieve.form, retrieve.formTitleImage, retrieve.spinner);
         //        $('#firstName').focus();
-        if (currentSpinnerTarget !== constants.DEFAULT_SPINNER_AREA) {
-            //            var retrieveButtons = document.getElementById("retrieveButtons");
-            //            retrieveButtons.style.display = 'block';
-        }
     }
 
     function clear() {
@@ -281,7 +254,9 @@ define(function(require) {
         });
 
         retrieve.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
-            system.initSpinner(retrieve.callerSpinner, true);
+            if (retrieve.callerSpinner) {
+                system.initSpinner(retrieve.callerSpinner, true);
+            }
             person.save();
             if (retrieve.callback) {
                 if (typeof (retrieve.callback) === "function") {

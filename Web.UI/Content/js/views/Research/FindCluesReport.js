@@ -4,7 +4,6 @@
     var _formTitleImage = "fa fmf-clue24";
     var _form = $("#findCluesReportForm");
     var _spinner = "findCluesReportSpinner";
-
     var _callerSpinner;
 
     function FindCluesReportDO(previous) {
@@ -42,6 +41,12 @@
         },
         set form(value) {
             _form = value;
+        },
+        get callerSpinner() {
+            return _callerSpinner;
+        },
+        set callerSpinner(value) {
+            _callerSpinner = value;
         },
         save: function () {
             save();

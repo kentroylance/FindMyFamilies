@@ -16,6 +16,7 @@
     var CLOSE = "close";
     var DIALOG_CLOSE = "dialogclose";
     var FIND_CLUES = "findClues";
+    var POSSIBLE_DUPLICATES_REPORT = "POSSIBLE_DUPLICATES_REPORT";
 
 
     // Default values
@@ -42,6 +43,7 @@
     var POSSIBLE_DUPLICATES = "possibleDuplicates";
     var PLACE_PROBLEMS = "placeProblems";
     var PLACE_PROBLEMS_REPORT = "placeProblemsReport";
+    var FIND_CLUES_REPORT = "findCluesReport";
 
     // Urls
     var GET_REPORT_LIST_URL = '/Home/GetReportList';

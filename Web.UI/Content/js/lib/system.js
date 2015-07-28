@@ -62,6 +62,17 @@
         });
     }
 
+    function spinnerArea() {
+        var spinnerArea;
+        if (_target) {
+            spinnerArea = _target.id;
+        } else {
+            spinnerArea = constants.DEFAULT_SPINNER_AREA;
+        }
+
+        return spinnerArea;
+    }
+
     function setCookie(name, value, days) {
         var expires;
         if (days) {
@@ -397,7 +408,10 @@
         isAuthenticated: function() {
             return isAuthenticated();
         },
-        keepSessionAlive: function() {
+        spinnerArea: function () {
+            return spinnerArea();
+        },
+        keepSessionAlive: function () {
             keepSessionAlive();
         },
         familySearchSystem: function () {

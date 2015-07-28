@@ -12,6 +12,7 @@
     var _generationAncestors = constants.GENERATION;
     var _generationDescendants = "1";
     var _spinner = "possibleDuplicatesSpinner";
+    var _callerSpinner;
 
     var _includePossibleDuplicates = true;
     var _includePossibleMatches;
@@ -93,6 +94,12 @@
         },
         set displayType(value) {
             _displayType = value;
+        },
+        get callerSpinner() {
+            return _callerSpinner;
+        },
+        set callerSpinner(value) {
+            _callerSpinner = value;
         },
         save: function() {
             save();

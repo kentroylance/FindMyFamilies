@@ -12,6 +12,7 @@
     var _generationAncestors = constants.GENERATION;
     var _generationDescendants = "1";
     var _spinner = "incompleteOrdinancesSpinner";
+    var _callerSpinner;
 
     function IncompleteOrdinancesDO() {
 
@@ -77,6 +78,12 @@
         },
         set displayType(value) {
             _displayType = value;
+        },
+        get callerSpinner() {
+            return _callerSpinner;
+        },
+        set callerSpinner(value) {
+            _callerSpinner = value;
         },
         save: function() {
             save();
