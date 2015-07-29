@@ -28,13 +28,18 @@ define(function(require) {
     var _placeProblemsReportController;
     var _findCluesController;
     var _findCluesReportController;
+    var spinnerArea;
 
+    function loadSpinner() {
+        spinnerArea = system.spinnerArea();
+        system.startSpinner();
+    }
 
     function startingPoint(id, name) {
         if (system.isAuthenticated()) {
-            system.startSpinner();
-            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
-            requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
+            loadSpinner();
+            requireOnce(["startingPoint", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function(StartingPoint) {
+                    StartingPoint.callerSpinner = spinnerArea;
                 }, function() {
                     $.ajax({
                         url: constants.STARTING_POINT_URL,
@@ -67,8 +72,9 @@ define(function(require) {
 
     function findClues(id, name) {
         if (system.isAuthenticated()) {
-            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
-            requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
+            loadSpinner();
+            requireOnce(["findClues", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function(FindClues) {
+                    FindClues.callerSpinner = spinnerArea;
                 }, function() {
                     $.ajax({
                         url: constants.FIND_CLUES_URL,
@@ -101,25 +107,25 @@ define(function(require) {
 
     function retrieve(callback, id, name) {
         if (system.isAuthenticated()) {
-            system.startSpinner();
+            loadSpinner();
             requireOnce(["retrieve", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function(Retrieve) {
                 retrieve = Retrieve;
             }, function() {
                 retrieve.callback = callback;
-                retrieve.callerSpinner = system.target.id;
+                retrieve.callerSpinner = spinnerArea;
                 $.ajax({
                     url: constants.RETRIEVE_URL,
-                    success: function (data) {
+                    success: function(data) {
                         var $dialogContainer = $("#retrieveForm");
                         var $detachedChildren = $dialogContainer.children().detach();
                         $("<div id=\"retrieveForm\"></div>").dialog({
-                            width: 825,
-                            title: "Retrieve",
-                            open: function () {
-                                $detachedChildren.appendTo($dialogContainer);
-                                $(this).css("maxHeight", 700);
+                                width: 825,
+                                title: "Retrieve",
+                                open: function() {
+                                    $detachedChildren.appendTo($dialogContainer);
+                                    $(this).css("maxHeight", 700);
+                                }
                             }
-                        }
                         );
                         $("#retrieveForm").empty().append(data);
                         if (id) {
@@ -138,13 +144,13 @@ define(function(require) {
     }
 
     function findPerson(callback) {
-        system.startSpinner();
         if (system.isAuthenticated()) {
-            requireOnce(["formValidation", "bootstrapValidation", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css", "css!/Content/css/vendor/formValidation.min.css"], function() {
+            loadSpinner();
+            requireOnce(["formValidation", "bootstrapValidation", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css", "css!/Content/css/vendor/formValidation.min.css"], function () {
                 }, function() {
                     var findPerson = require('findPerson');
                     findPerson.callback = callback;
-                    findPerson.callerSpinner = system.target.id;
+                    findPerson.callerSpinner = spinnerArea;
                     $.ajax({
                         url: constants.FIND_PERSON_URL,
                         success: function(data) {
@@ -173,8 +179,10 @@ define(function(require) {
     }
 
     function displayPersonUrls() {
+        loadSpinner();
         requireOnce(['personUrlOptions'], function(PersonUrlOptions) {
             personUrlOptions = PersonUrlOptions;
+            personUrlOptions.callerSpinner = spinnerArea;
         }, function() {
             if (personUrlOptions.id && system.isAuthenticated()) {
                 $.ajax({
@@ -220,36 +228,36 @@ define(function(require) {
         });
         return false;
     }
-    
+
     function possibleDuplicates(id, name) {
         if (system.isAuthenticated()) {
-	    system.startSpinner();
-            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
-            requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
-            }, function () {
-                $.ajax({
-                    url: constants.POSSIBLE_DUPLICATES_URL,
-                    success: function (data) {
-                        var $dialogContainer = $("#possibleDuplicatesForm");
-                        var $detachedChildren = $dialogContainer.children().detach();
-                        $("<div id=\"possibleDuplicatesForm\"></div>").dialog({
-                            width: 775,
-                            title: "Possible Duplicates",
-                            open: function () {
-                                $detachedChildren.appendTo($dialogContainer);
+            loadSpinner();
+            requireOnce(["possibleDuplicates", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function(PossibleDuplicates) {
+                    PossibleDuplicates.callerSpinner = spinnerArea;
+                }, function() {
+                    $.ajax({
+                        url: constants.POSSIBLE_DUPLICATES_URL,
+                        success: function(data) {
+                            var $dialogContainer = $("#possibleDuplicatesForm");
+                            var $detachedChildren = $dialogContainer.children().detach();
+                            $("<div id=\"possibleDuplicatesForm\"></div>").dialog({
+                                width: 775,
+                                title: "Possible Duplicates",
+                                open: function() {
+                                    $detachedChildren.appendTo($dialogContainer);
+                                }
+                            });
+                            $("#possibleDuplicatesForm").empty().append(data);
+                            if (id) {
+                                person.id = id;
+                                person.name = name;
                             }
-                        });
-                        $("#possibleDuplicatesForm").empty().append(data);
-			if (id) {
-	                    person.id = id;
-	                    person.name = name;
+                            if (_possibleDuplicatesController) {
+                                _possibleDuplicatesController.open();
+                            }
                         }
-                        if (_possibleDuplicatesController) {
-                            _possibleDuplicatesController.open();
-                        }
-                    }
-                });
-            }
+                    });
+                }
             );
         } else {
             system.relogin();
@@ -258,33 +266,33 @@ define(function(require) {
 
     function hints(id, name) {
         if (system.isAuthenticated()) {
-	    system.startSpinner();
-            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
-            requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
-            }, function () {
-                $.ajax({
-                    url: constants.HINTS_URL,
-                    success: function (data) {
-                        var $dialogContainer = $("#hintsForm");
-                        var $detachedChildren = $dialogContainer.children().detach();
-                        $("<div id=\"hintsForm\"></div>").dialog({
-                            width: 775,
-                            title: "Hints",
-                            open: function () {
-                                $detachedChildren.appendTo($dialogContainer);
+            loadSpinner();
+            requireOnce(["hints", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function (Hints) {
+                    Hints.callerSpinner = spinnerArea;
+                }, function() {
+                    $.ajax({
+                        url: constants.HINTS_URL,
+                        success: function(data) {
+                            var $dialogContainer = $("#hintsForm");
+                            var $detachedChildren = $dialogContainer.children().detach();
+                            $("<div id=\"hintsForm\"></div>").dialog({
+                                width: 775,
+                                title: "Hints",
+                                open: function() {
+                                    $detachedChildren.appendTo($dialogContainer);
+                                }
+                            });
+                            $("#hintsForm").empty().append(data);
+                            if (id) {
+                                person.id = id;
+                                person.name = name;
                             }
-                        });
-                        $("#hintsForm").empty().append(data);
-			if (id) {
-                            person.id = id;
-                            person.name = name;
+                            if (_hintsController) {
+                                _hintsController.open();
+                            }
                         }
-                        if (_hintsController) {
-                            _hintsController.open();
-                        }
-                    }
-                });
-            }
+                    });
+                }
             );
         } else {
             system.relogin();
@@ -293,33 +301,33 @@ define(function(require) {
 
     function dateProblems(id, name) {
         if (system.isAuthenticated()) {
-	    system.startSpinner();
-            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
-            requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
+            loadSpinner();
+            requireOnce(["dateProblems", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function (DateProblems) {
+                DateProblems.callerSpinner = spinnerArea;
             }, function () {
-                $.ajax({
-                    url: constants.DATE_PROBLEMS_URL,
-                    success: function (data) {
-                        var $dialogContainer = $("#dateProblemsForm");
-                        var $detachedChildren = $dialogContainer.children().detach();
-                        $("<div id=\"dateProblemsForm\"></div>").dialog({
-                            width: 775,
-                            title: "Date Problems",
-                            open: function () {
-                                $detachedChildren.appendTo($dialogContainer);
+                    $.ajax({
+                        url: constants.DATE_PROBLEMS_URL,
+                        success: function(data) {
+                            var $dialogContainer = $("#dateProblemsForm");
+                            var $detachedChildren = $dialogContainer.children().detach();
+                            $("<div id=\"dateProblemsForm\"></div>").dialog({
+                                width: 775,
+                                title: "Date Problems",
+                                open: function() {
+                                    $detachedChildren.appendTo($dialogContainer);
+                                }
+                            });
+                            $("#dateProblemsForm").empty().append(data);
+                            if (id) {
+                                person.id = id;
+                                person.name = name;
                             }
-                        });
-                        $("#dateProblemsForm").empty().append(data);
-			if (id) {
-                            person.id = id;
-                            person.name = name;
+                            if (_dateProblemsController) {
+                                _dateProblemsController.open();
+                            }
                         }
-                        if (_dateProblemsController) {
-                            _dateProblemsController.open();
-                        }
-                    }
-                });
-            }
+                    });
+                }
             );
         } else {
             system.relogin();
@@ -328,33 +336,33 @@ define(function(require) {
 
     function incompleteOrdinances(id, name) {
         if (system.isAuthenticated()) {
-	    system.startSpinner();
-            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
-            requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
+            loadSpinner();
+            requireOnce(["incompleteOrdinances", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function (IncompleteOrdinances) {
+                IncompleteOrdinances.callerSpinner = spinnerArea;
             }, function () {
-                $.ajax({
-                    url: constants.INCOMPLETE_ORDINANCES_URL,
-                    success: function (data) {
-                        var $dialogContainer = $("#incompleteOrdinancesForm");
-                        var $detachedChildren = $dialogContainer.children().detach();
-                        $("<div id=\"incompleteOrdinancesForm\"></div>").dialog({
-                            width: 775,
-                            title: "Incomplete Ordinances",
-                            open: function () {
-                                $detachedChildren.appendTo($dialogContainer);
+                    $.ajax({
+                        url: constants.INCOMPLETE_ORDINANCES_URL,
+                        success: function(data) {
+                            var $dialogContainer = $("#incompleteOrdinancesForm");
+                            var $detachedChildren = $dialogContainer.children().detach();
+                            $("<div id=\"incompleteOrdinancesForm\"></div>").dialog({
+                                width: 775,
+                                title: "Incomplete Ordinances",
+                                open: function() {
+                                    $detachedChildren.appendTo($dialogContainer);
+                                }
+                            });
+                            $("#incompleteOrdinancesForm").empty().append(data);
+                            if (id) {
+                                person.id = id;
+                                person.name = name;
                             }
-                        });
-                        $("#incompleteOrdinancesForm").empty().append(data);
-			if (id) {
-                            person.id = id;
-                            person.name = name;
+                            if (_incompleteOrdinancesController) {
+                                _incompleteOrdinancesController.open();
+                            }
                         }
-                        if (_incompleteOrdinancesController) {
-                            _incompleteOrdinancesController.open();
-                        }
-                    }
-                });
-            }
+                    });
+                }
             );
         } else {
             system.relogin();
@@ -363,33 +371,33 @@ define(function(require) {
 
     function placeProblems(id, name) {
         if (system.isAuthenticated()) {
-            system.startSpinner();
-            system.initSpinner(constants.DEFAULT_SPINNER_AREA);
-            requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
-            }, function () {
-                $.ajax({
-                    url: constants.PLACE_PROBLEMS_URL,
-                    success: function (data) {
-                        var $dialogContainer = $("#placeProblemsForm");
-                        var $detachedChildren = $dialogContainer.children().detach();
-                        $("<div id=\"placeProblemsForm\"></div>").dialog({
-                            width: 775,
-                            title: "Place Problems",
-                            open: function () {
-                                $detachedChildren.appendTo($dialogContainer);
+            loadSpinner();
+            requireOnce(["placeProblems", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function (PlaceProblems) {
+                    PlaceProblems.callerSpinner = spinnerArea;
+                }, function() {
+                    $.ajax({
+                        url: constants.PLACE_PROBLEMS_URL,
+                        success: function(data) {
+                            var $dialogContainer = $("#placeProblemsForm");
+                            var $detachedChildren = $dialogContainer.children().detach();
+                            $("<div id=\"placeProblemsForm\"></div>").dialog({
+                                width: 775,
+                                title: "Place Problems",
+                                open: function() {
+                                    $detachedChildren.appendTo($dialogContainer);
+                                }
+                            });
+                            $("#placeProblemsForm").empty().append(data);
+                            if (id) {
+                                person.id = id;
+                                person.name = name;
                             }
-                        });
-                        $("#placeProblemsForm").empty().append(data);
-                        if (id) {
-                            person.id = id;
-                            person.name = name;
+                            if (_placeProblemsController) {
+                                _placeProblemsController.open();
+                            }
                         }
-                        if (_placeProblemsController) {
-                            _placeProblemsController.open();
-                        }
-                    }
-                });
-            }
+                    });
+                }
             );
         } else {
             system.relogin();
@@ -398,10 +406,11 @@ define(function(require) {
 
     function personUrlOptions(id, name) {
         if (id && system.isAuthenticated()) {
-            system.startSpinner();
+            loadSpinner();
             requireOnce(['personUrlOptions'], function(PersonUrlOptions) {
                 personUrlOptions = PersonUrlOptions;
-            }, function() {
+                personUrlOptions.callerSpinner = spinnerArea;
+            }, function () {
                 $.ajax({
                     url: constants.PERSON_URL_OPTIONS_URL,
                     success: function(data) {
@@ -445,16 +454,16 @@ define(function(require) {
         possibleDuplicates: function(id, name) {
             return possibleDuplicates(id, name);
         },
-        hints: function (id, name) {
+        hints: function(id, name) {
             return hints(id, name);
         },
-        dateProblems: function (id, name) {
+        dateProblems: function(id, name) {
             return dateProblems(id, name);
         },
-        placeProblems: function (id, name) {
+        placeProblems: function(id, name) {
             return placeProblems(id, name);
         },
-        incompleteOrdinances: function (id, name) {
+        incompleteOrdinances: function(id, name) {
             return incompleteOrdinances(id, name);
         },
         displayPersonUrls: function() {

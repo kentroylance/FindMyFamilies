@@ -43,6 +43,12 @@
         set form(value) {
             _form = value;
         },
+        get callerSpinner() {
+            return _callerSpinner;
+        },
+        set callerSpinner(value) {
+            _callerSpinner = value;
+        },
         save: function () {
             save();
         }

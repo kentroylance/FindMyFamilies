@@ -470,7 +470,7 @@
     <Content Include="Content\js\vendor\underscore-min.js" />
     <Content Include="Content\js\views\home\indexController.js" />
     <Content Include="Content\js\views\Research\dateProblems.js" />
-    <Content Include="Content\js\views\Research\DateProblemsReport.js" />
+    <Content Include="Content\js\views\Research\dateProblemsReport.js" />
     <Content Include="Content\js\views\Research\hintsController.js" />
     <Content Include="Content\js\views\Research\HintsReport.js" />
     <Content Include="Content\js\views\Research\incompleteOrdinances.js" />

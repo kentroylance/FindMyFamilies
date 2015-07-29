@@ -170,7 +170,7 @@
                 exports: 'findClues'
             },
             researchController: {
-                deps: ['jquery'],
+                deps: ['jquery', 'system'],
                 exports: 'researchController'
             },
             startingPointController: {

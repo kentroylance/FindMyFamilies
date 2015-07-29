@@ -12,6 +12,7 @@ define(function(require) {
     var _generationAncestors = constants.GENERATION;
     var _generationDescendants = "1";
     var _spinner = "dateProblemsSpinner";
+    var _callerSpinner;
 
     var _empty = true;
     var _invalid = false;
@@ -106,6 +107,12 @@ define(function(require) {
         },
         set previous(value) {
             _previous = value;
+        },
+        get callerSpinner() {
+            return _callerSpinner;
+        },
+        set callerSpinner(value) {
+            _callerSpinner = value;
         },
         get displayType() {
             return _displayType;

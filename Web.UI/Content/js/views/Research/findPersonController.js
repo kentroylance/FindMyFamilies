@@ -70,7 +70,9 @@ define(function(require) {
         });
 
         findPerson.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
-            system.initSpinner(findPerson.callerSpinner, true);
+            if (findPerson.callerSpinner) {
+                system.initSpinner(findPerson.callerSpinner, true);
+            }
             person.save();
             if (findPerson.callback) {
                 if (typeof (findPerson.callback) === "function") {
@@ -273,17 +275,15 @@ define(function(require) {
     }
 
     function open() {
-        var currentSpinnerTarget = system.target.id;
-        if (system.target) {
-            findPerson.callerSpinner = system.target.id;
-        }
         findPerson.form = $("#findPersonForm");
         loadEvents();
         system.openForm(findPerson.form, findPerson.formTitleImage, findPerson.spinner);
         $('#firstName').focus();
-        if (currentSpinnerTarget !== constants.DEFAULT_SPINNER_AREA) {
-            var findPersonButtons = document.getElementById("findPersonButtons");
-            findPersonButtons.style.display = 'block';
+        var selectButton = document.getElementById("findPersonSelectButton");
+        if (findPerson.callerSpinner === constants.DEFAULT_SPINNER_AREA) {
+            $('#findPersonSelectButton').hide();
+        } else {
+            $('#findPersonSelectButton').show();
         }
 
     }

@@ -4,7 +4,6 @@
     var _formTitleImage = "fa fmf-place24";
     var _form = $("#placeProblemsReportForm");
     var _spinner = "placeProblemsReportSpinner";
-
     var _callerSpinner;
 
     function PlaceProblemsReportDO(previous) {
@@ -42,6 +41,12 @@
         },
         set form(value) {
             _form = value;
+        },
+        get callerSpinner() {
+            return _callerSpinner;
+        },
+        set callerSpinner(value) {
+            _callerSpinner = value;
         },
         save: function () {
             save();
