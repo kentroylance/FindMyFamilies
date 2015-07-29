@@ -296,14 +296,19 @@ hr {
 }
 
 .research-dropdown {
-    padding-left: 18px !important
+    padding-left: 18px !important;
 }
 
 .dropdown-btn {
+    overflow: hidden !important;
     width: 250px !important;
     text-align: left !important;
 }
 
 .addChildren-box {
     width: 190px !important;
+}
+
+.name-colom {
+    width: 305px !important;
 }
