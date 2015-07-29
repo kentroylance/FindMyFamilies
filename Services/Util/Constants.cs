@@ -144,7 +144,7 @@ namespace FindMyFamilies.Util {
         public const string TEMPLATE_PERSON_PARENTS = " /platform/tree/persons/{pid}/parents{?access_token}";
         public const string TEMPLATE_CHILD_PARENT_RELATIONSHIPS = " /platform/tree/persons/{pid}/fs-child-relationships{?access_token}";
         public const string TEMPLATE_THROTTLE = "/platform/throttled{?access_token}";
-        public const string TEMPLATE_PERSON_TEMPLE = "/reservation/v1/person/{pid}?access_token={access_token}";    //{?access_token}";   https://api.familysearch.org
+        public const string TEMPLATE_PERSON_TEMPLE = "/oss/person/{pid}?access_token={access_token}";    //{?access_token}";   https://api.familysearch.org
         
 
         public const string TEMPLATE_PERSON_ANCESTRY_WITH_SPOUSE =
