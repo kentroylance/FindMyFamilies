@@ -40,6 +40,7 @@
     var INCOMPLETE_ORDINANCES = "incompleteOrdinances";
     var INCOMPLETE_ORDINANCES_REPORT = "incompleteOrdinancesReport";
     var POSSIBLE_DUPLICATES = "possibleDuplicates";
+    var POSSIBLE_DUPLICATES_REPORT = "possibleDuplicatesReport";
     var PLACE_PROBLEMS = "placeProblems";
     var PLACE_PROBLEMS_REPORT = "placeProblemsReport";
 
