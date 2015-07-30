@@ -272,10 +272,9 @@ define(function(require) {
 
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
-                        requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
-                            }, function() {
-                                system.initSpinner(hints.spinner);
-                                hints.callerSpinner = hints.spinner;
+                        system.initSpinner(hints.spinner);
+                        requireOnce(["css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
+                        }, function () {
                                 $.ajax({
                                     url: constants.HINTS_REPORT_HTML_URL,
                                     success: function(data) {

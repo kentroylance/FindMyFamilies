@@ -31,7 +31,7 @@ define(function (require) {
         });
 
         hintsReport.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
-            system.initSpinner(hintsReport.callerSpinner, true);
+            system.initSpinner(hints.spinner, true);
             person.save();
             if (hintsReport.callback) {
                 if (typeof (hintsReport.callback) === "function") {
@@ -93,11 +93,6 @@ define(function (require) {
     }
 
     function open() {
-        var currentSpinnerTarget = system.target.id;
-        if (system.target) {
-            hintsReport.callerSpinner = system.target.id;
-        }
-
         hintsReport.form = $("#hintsReportForm");
         loadEvents();
 
@@ -139,7 +134,7 @@ var _hintsSystem = require('system');
 function nameFormatter(value, row, index) {
     var result = "";
     if (row.id) {
-        result = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\"><span style=\"color: " + _startingPointPerson.getPersonColor(row.gender) + "\">" + _startingPointPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
+        result = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\"><span style=\"color: " + _hintsPerson.getPersonColor(row.gender) + "\">" + _hintsPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
     }
     return [result].join('');
 //    if (value != null) {
@@ -152,7 +147,7 @@ function nameFormatter(value, row, index) {
     return result;
 }
 
-function reasonsFormatter(value) {
+function reasonsFormatter(value, row, index) {
     var result = "";
     if (value) {
         var reasons = value.split("~");
