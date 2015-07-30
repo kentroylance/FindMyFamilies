@@ -147,44 +147,14 @@ function nameFormatter(value, row, index) {
     return result;
 }
 
-function reasonsFormatter(value, row, index) {
+function linkFormatter(value) {
     var result = "";
     if (value) {
-        var reasons = value.split("~");
-        for (var i = 0; i < reasons.length - 1; i++) {
-            var reason = reasons[i];
-            if (reason.indexOf("BornBetween1810and1850") > -1) {
-                var birthDate = reason.substring(reason.indexOf("[") + 1, reason.length - 1);
-                result += "<p>Born between 1810 and 1850 - <b>" + birthDate + "</b></p>";
-            } else if (reason.indexOf("DiedInUSA") > -1) {
-                var deathPlace = reason.substring(reason.indexOf("[") + 1, reason.length - 1);
-                result += "<p>Died in the United States - <b>" + deathPlace + "</b></p>";
-            } else if (reason.indexOf("BornInUSA") > -1) {
-                var birthPlace = reason.substring(reason.indexOf("[") + 1, reason.length - 1);
-                result += "<p>Born in United States - <b>" + birthPlace + "</b></p>";
-            } else if (reason.indexOf("NoBirthDate") > -1) {
-                var noBirthDate = reason.substring(reason.indexOf("[") + 1, reason.length - 1);
-                result += "<p>Invalid birth date - <b>" + noBirthDate + "</b></p>";
-            } else if (reason.indexOf("NonMormon") > -1) {
-                result += "<p>Non-Mormon</p>";
-            } else if (reason.indexOf("Hint") > -1) {
-                var hint = reason.substring(reason.indexOf("[") + 1, reason.length - 1);
-                result += "<p>Hint - <b>" + hint + "</b></p>";
-            } else if (reason.indexOf("PossibleDuplicate") > -1) {
-                var possibleDuplicate = reason.substring(reason.indexOf("[") + 1, reason.length - 1);
-                result += "<p>Possible Duplicate - <b>" + possibleDuplicate + "</b></p>";
-            } else if (reason.indexOf("NoBirthPlace") > -1) {
-                result += "<p>No birth place</p>";
-            } else if (reason.indexOf("IncompleteOrdinances") > -1) {
-                var ordinances = reason.substring(reason.indexOf("[") + 1, reason.length - 2);
-                result += "<p>IncompleteOrdinances - <b>" + ordinances + "</b></p>";
-            } else {
-                result = value;
-            }
-
-        }
+        result = _hintsSystem.familySearchSystem() + "/tree/#view=hints&person=" + value;
+        result = "<a style=\"color: rgb(50,205,50)\" href=\"" + result + "\" target=\"_tab\">Duplicate</a>&nbsp;";
     }
     return result;
 }
+
 
 //# sourceURL=hintsReportController.js

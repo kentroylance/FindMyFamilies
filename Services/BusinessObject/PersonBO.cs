@@ -605,20 +605,24 @@ namespace FindMyFamilies.BusinessObject {
             string marriageDate = ValidateDate(datesInputDO, personDO.MarriageYear, personDO.MarriageDate, "marriage", personDO.MarriageDateString);
 
             if (!string.IsNullOrEmpty(birthDate)) {
-                listItem = new DateListItemDO(personDO.Id + "~" + personDO.Fullname);
+                listItem = new DateListItemDO();
                 listItem.BirthDate = birthDate;
             }
             if (!string.IsNullOrEmpty(deathDate)) {
                 if (listItem == null) {
-                    listItem = new DateListItemDO(personDO.Id + "~" + personDO.Fullname);
+                    listItem = new DateListItemDO();
                 }
                 listItem.DeathDate = deathDate;
             }
             if (!string.IsNullOrEmpty(marriageDate)) {
                 if (listItem == null) {
-                    listItem = new DateListItemDO(personDO.Id + "~" + personDO.Fullname);
+                    listItem = new DateListItemDO();
                 }
                 listItem.MarriageDate = marriageDate;
+            }
+            if (listItem != null) {
+                FindListItemDO findListItemDO = (FindListItemDO) listItem;
+                personDAO.PopulateFindListItem(personDO, ref findListItemDO);
             }
             return listItem;
         }
@@ -709,20 +713,24 @@ namespace FindMyFamilies.BusinessObject {
             string marriagePlace = ValiplacePlace(placesInputDO, personDO.MarriagePlace, "marriage");
 
             if (!string.IsNullOrEmpty(birthPlace)) {
-                listItem = new PlaceListItemDO(personDO.Id + "~" + personDO.Fullname);
+                listItem = new PlaceListItemDO();
                 listItem.BirthPlace = birthPlace;
             }
             if (!string.IsNullOrEmpty(deathPlace)) {
                 if (listItem == null) {
-                    listItem = new PlaceListItemDO(personDO.Id + "~" + personDO.Fullname);
+                    listItem = new PlaceListItemDO();
                 }
                 listItem.DeathPlace = deathPlace;
             }
             if (!string.IsNullOrEmpty(marriagePlace)) {
                 if (listItem == null) {
-                    listItem = new PlaceListItemDO(personDO.Id + "~" + personDO.Fullname);
+                    listItem = new PlaceListItemDO();
                 }
                 listItem.MarriagePlace = marriagePlace;
+            }
+            if (listItem != null) {
+                FindListItemDO findListItemDO = (FindListItemDO) listItem;
+                personDAO.PopulateFindListItem(personDO, ref findListItemDO);
             }
             return listItem;
         }
@@ -892,9 +900,11 @@ namespace FindMyFamilies.BusinessObject {
 //            return null;
 //        }
 
-        public OrdinanceListItemDO GetOrdinanceListItem(OrdinanceDO ordinance) {
+        public OrdinanceListItemDO GetOrdinanceListItem(OrdinanceDO ordinance, PersonDO personDO) {
             OrdinanceListItemDO listItem = new OrdinanceListItemDO();
-            listItem.Name = ordinance.Id + "~" + ordinance.Fullname;
+            FindListItemDO findListItemDO = (FindListItemDO) listItem;
+            personDAO.PopulateFindListItem(personDO, ref findListItemDO);
+
             if (ordinance.Baptism != null) {
                 listItem.Baptism = ordinance.Baptism.status;
                 if (!ordinance.Baptism.completed) {
@@ -999,11 +1009,11 @@ namespace FindMyFamilies.BusinessObject {
                         if ((ordinance != null) && !ancestor.Value.Living) {
                             if ((ordinance.Baptism.reservable) || (ordinance.Confirmation.reservable) || (ordinance.Initiatory.reservable) || (ordinance.Endowment.reservable)) {
                                 ordinances.Add(ancestor.Value.Id, ordinance);
-                                ordinanceListItems.Add(GetOrdinanceListItem(ordinance));
+                                ordinanceListItems.Add(GetOrdinanceListItem(ordinance, ancestor.Value));
                             } else {
                                 if (((ordinance.SealedToParent != null) && ordinance.SealedToParent.reservable) || ((ordinance.SealedToSpouse != null) && ordinance.SealedToSpouse.reservable)) {
                                     ordinances.Add(ancestor.Value.Id, ordinance);
-                                    ordinanceListItems.Add(GetOrdinanceListItem(ordinance));
+                                    ordinanceListItems.Add(GetOrdinanceListItem(ordinance, ancestor.Value));
                                 }
                             }
                                 
@@ -1242,9 +1252,11 @@ namespace FindMyFamilies.BusinessObject {
             return startingPointListItems.OrderByDescending(o=>o.Count).ToList();
         }
 
-        public PossibleDuplicateListItemDO GetPossibleDuplicateListItem(PossibleDuplicateDO possibleDuplicate) {
+        public PossibleDuplicateListItemDO GetPossibleDuplicateListItem(PossibleDuplicateDO possibleDuplicate, PersonDO personDO) {
             PossibleDuplicateListItemDO listItem = new PossibleDuplicateListItemDO();
-            listItem.Name = possibleDuplicate.Id + "~" + possibleDuplicate.Fullname;
+            FindListItemDO findListItemDO = (FindListItemDO) listItem;
+            personDAO.PopulateFindListItem(personDO, ref findListItemDO);
+
             listItem.Link = possibleDuplicate.Id;
 //            if (possibleDuplicate.Duplicates) {
 //                listItem.Link = "<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.PossibleDuplicateUrl(possibleDuplicate.Id) + "\" target=\"_tab\">Possible Duplicate</a>&nbsp;";
@@ -1291,7 +1303,7 @@ namespace FindMyFamilies.BusinessObject {
                         if ((possibleDuplicate != null) && (possibleDuplicate.Results > 0)) {
                             if ((possibleDuplicateInputDO.IncludePossibleDuplicates && possibleDuplicate.Duplicates) || (possibleDuplicateInputDO.IncludePossibleMatches && possibleDuplicate.Matches)) {
                                 possibleDuplicates.Add(ancestor.Value.Id, possibleDuplicate);
-                                possibleDuplicateListItems.Add(GetPossibleDuplicateListItem(possibleDuplicate));
+                                possibleDuplicateListItems.Add(GetPossibleDuplicateListItem(possibleDuplicate, ancestor.Value));
                             }
                         }
                     }

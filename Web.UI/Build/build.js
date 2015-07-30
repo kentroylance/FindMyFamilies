@@ -7,7 +7,6 @@
         main: "../js/main"
     },
     keepBuildDir: false,
-    optimize: "none",
     modules: [
         //First set up the common build layer.
         {
@@ -33,7 +32,7 @@
         {
             //module names are relative to baseUrl/paths config
             name: 'views/home/indexController',
-            include: ['jquery', 'constants', 'lazyRequire', 'system', 'lazyload','greensock', 'transitions', 'layerslider'],
+            include: ['jquery', 'lazyload', 'greensock', 'transitions', 'layerslider'],
             exclude: ['main']
         },
         //Now set up a build layer for each page, but exclude

@@ -73,7 +73,7 @@ define(function(require) {
     function findClues(id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["findClues", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function(FindClues) {
+            requireOnce(["findClues", "jqueryUiOptions"], function(FindClues) {
                     FindClues.callerSpinner = spinnerArea;
                 }, function() {
                     $.ajax({
@@ -108,7 +108,7 @@ define(function(require) {
     function retrieve(callback, id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["retrieve", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function(Retrieve) {
+            requireOnce(["retrieve", "jqueryUiOptions"], function(Retrieve) {
                 retrieve = Retrieve;
             }, function() {
                 retrieve.callback = callback;
@@ -146,7 +146,7 @@ define(function(require) {
     function findPerson(callback) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["formValidation", "bootstrapValidation", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css", "css!/Content/css/vendor/formValidation.min.css"], function () {
+            requireOnce(["formValidation", "jqueryUiOptions", "bootstrapValidation", "css!/Content/css/lib/research/bootstrap-table.min.css", "css!/Content/css/vendor/formValidation.min.css"], function () {
                 }, function() {
                     var findPerson = require('findPerson');
                     findPerson.callback = callback;
@@ -232,7 +232,7 @@ define(function(require) {
     function possibleDuplicates(id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["possibleDuplicates", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function(PossibleDuplicates) {
+            requireOnce(["possibleDuplicates", "jqueryUiOptions"], function(PossibleDuplicates) {
                     PossibleDuplicates.callerSpinner = spinnerArea;
                 }, function() {
                     $.ajax({
@@ -267,7 +267,7 @@ define(function(require) {
     function hints(id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["hints", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function (Hints) {
+            requireOnce(["hints", "jqueryUiOptions"], function (Hints) {
                     Hints.callerSpinner = spinnerArea;
                 }, function() {
                     $.ajax({
@@ -302,7 +302,7 @@ define(function(require) {
     function dateProblems(id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["dateProblems", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function (DateProblems) {
+            requireOnce(["dateProblems", "jqueryUiOptions"], function (DateProblems) {
                 DateProblems.callerSpinner = spinnerArea;
             }, function () {
                     $.ajax({
@@ -337,7 +337,7 @@ define(function(require) {
     function incompleteOrdinances(id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["incompleteOrdinances", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function (IncompleteOrdinances) {
+            requireOnce(["incompleteOrdinances", "jqueryUiOptions"], function (IncompleteOrdinances) {
                 IncompleteOrdinances.callerSpinner = spinnerArea;
             }, function () {
                     $.ajax({
@@ -372,7 +372,7 @@ define(function(require) {
     function placeProblems(id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["placeProblems", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function (PlaceProblems) {
+            requireOnce(["placeProblems", "jqueryUiOptions"], function (PlaceProblems) {
                     PlaceProblems.callerSpinner = spinnerArea;
                 }, function() {
                     $.ajax({

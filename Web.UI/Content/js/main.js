@@ -150,7 +150,7 @@
                 exports: '_layoutController'
             },
             indexController: {
-                deps: ['jquery', 'system', 'layerslider'],
+                deps: ['jquery', 'system'],
                 exports: 'indexController'
             },
             fancybox: {

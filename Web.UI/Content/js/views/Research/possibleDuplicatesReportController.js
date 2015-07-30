@@ -93,11 +93,6 @@ define(function (require) {
     }
 
     function open() {
-        var currentSpinnerTarget = system.target.id;
-        if (system.target) {
-            possibleDuplicatesReport.callerSpinner = system.target.id;
-        }
-
         possibleDuplicatesReport.form = $("#possibleDuplicatesReportForm");
         loadEvents();
 
@@ -139,55 +134,16 @@ var _possibleDuplicatesSystem = require('system');
 function nameFormatter(value, row, index) {
     var result = "";
     if (row.id) {
-        result = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\"><span style=\"color: " + _startingPointPerson.getPersonColor(row.gender) + "\">" + _startingPointPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
+        result = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\"><span style=\"color: " + _possibleDuplicatesPerson.getPersonColor(row.gender) + "\">" + _possibleDuplicatesPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
     }
-    return [result].join('');
-//    if (value != null) {
-//        var idNumber = value.substring(0, value.indexOf("~"));
-//        var fullname = value.substring(value.indexOf("~") + 1, value.size);
-//        var idNumberUrl = "<p><a style=\"color: rgb(0,0,255)\" href=\"" + getFamilySearchSystem() + "/tree/#view=ancestor&person=" + idNumber + "\" target=\"_tab\">" + idNumber + "</a></p>";
-//        var fullnameUrl = "<p><a href= \"#\" onClick=\" displayPerson('" + idNumber + "'); \" style= \" color: rgb(0, 153, 0)\" value= \"" + idNumber + "\" data-toggle=\" tooltip\" data-placement= \"top \" title=\" Select to display more info about this person\" >" + fullname + "</a></p>";
-//        result = fullnameUrl + idNumberUrl;
-//    }
     return result;
 }
 
-function reasonsFormatter(value) {
+function linkFormatter(value) {
     var result = "";
     if (value) {
-        var reasons = value.split("~");
-        for (var i = 0; i < reasons.length - 1; i++) {
-            var reason = reasons[i];
-            if (reason.indexOf("BornBetween1810and1850") > -1) {
-                var birthDate = reason.substring(reason.indexOf("[") + 1, reason.length - 1);
-                result += "<p>Born between 1810 and 1850 - <b>" + birthDate + "</b></p>";
-            } else if (reason.indexOf("DiedInUSA") > -1) {
-                var deathPlace = reason.substring(reason.indexOf("[") + 1, reason.length - 1);
-                result += "<p>Died in the United States - <b>" + deathPlace + "</b></p>";
-            } else if (reason.indexOf("BornInUSA") > -1) {
-                var birthPlace = reason.substring(reason.indexOf("[") + 1, reason.length - 1);
-                result += "<p>Born in United States - <b>" + birthPlace + "</b></p>";
-            } else if (reason.indexOf("NoBirthDate") > -1) {
-                var noBirthDate = reason.substring(reason.indexOf("[") + 1, reason.length - 1);
-                result += "<p>Invalid birth date - <b>" + noBirthDate + "</b></p>";
-            } else if (reason.indexOf("NonMormon") > -1) {
-                result += "<p>Non-Mormon</p>";
-            } else if (reason.indexOf("Hint") > -1) {
-                var hint = reason.substring(reason.indexOf("[") + 1, reason.length - 1);
-                result += "<p>Hint - <b>" + hint + "</b></p>";
-            } else if (reason.indexOf("PossibleDuplicate") > -1) {
-                var possibleDuplicate = reason.substring(reason.indexOf("[") + 1, reason.length - 1);
-                result += "<p>Possible Duplicate - <b>" + possibleDuplicate + "</b></p>";
-            } else if (reason.indexOf("NoBirthPlace") > -1) {
-                result += "<p>No birth place</p>";
-            } else if (reason.indexOf("IncompleteOrdinances") > -1) {
-                var ordinances = reason.substring(reason.indexOf("[") + 1, reason.length - 2);
-                result += "<p>IncompleteOrdinances - <b>" + ordinances + "</b></p>";
-            } else {
-                result = value;
-            }
-
-        }
+        result = _possibleDuplicatesSystem.familySearchSystem() + "/tree/#view=possibleDuplicates&person=" + value;
+        result = "<a style=\"color: rgb(50,205,50)\" href=\"" + result + "\" target=\"_tab\">Duplicate</a>&nbsp;";
     }
     return result;
 }

@@ -1,0 +1,75 @@
+<div class="panel-body">
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="feedbackReportId" class="col-sm-2 control-label">Retrieved:</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <select class="form-control" id="feedbackReportId">
+                        <option value="0">Select</option>
+                    </select>
+                    <span class="input-group-btn">
+                        <button id="feedbackRetrieveButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-retrieve24 dialog-buttons btn-retrieve-find"></i> Retrieve</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="feedbackResearchType" class="col-sm-2 control-label">Research:</label>
+            <div class="col-sm-3">
+                <select class="form-control researchType" id="feedbackResearchType">
+                    <option>Ancestors</option>
+                    <option>Descendants</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="feedbackPersonId" class="col-sm-2 control-label">Name:</label>
+            <div class="col-sm-7">
+                <div class="input-group">
+                    <select class="form-control" id="feedbackPersonId"></select>
+                    <span class="input-group-btn">
+                        <button id="feedbackFindPersonButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-search24 dialog-buttons btn-retrieve-find"></i> Find</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="feedbackSendThoughtsDiv" class="col-sm-2 control-label">Send us your thoughts:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="personId" id="personId"/>
+                <textarea class="form-control" rows="5" id="feedbackSend"></textarea>
+                <div class="input-group addChildren-box">
+                    <div id="feedbackGenerationDiv"></div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" >Options:</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <div class="radio">
+                        <label><input type="radio" id="feedbackBug" name="optradio">Bug</label>&nbsp;&nbsp;
+                        <label><input type="radio" id="feedbackFeatureRequest" name="optradio">Feature Request</label>&nbsp;&nbsp;
+                        <label><input type="radio" id="feedbackOther" name="optradio">Other</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        <div class="row" >
+            <div class="text-center">
+                <button id="feedbackSubmitButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-submit24 dialog-buttons"></i> Send Feedback</button>
+                <button type='button' id="feedbackResetButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-clear24 dialog-buttons"></i> Clear</button>
+                <button type='button' id="feedbackHelpButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-help24 dialog-buttons"></i> Help</button>
+                <button type='button' id="feedbackCloseButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-close24 dialog-buttons"></i> Close</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="feedbackSpinner"/>
+
+<script type="text/javascript">require(['main'], function (main) { require(['feedbackController']); });</script>
+
+
+
+

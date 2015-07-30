@@ -1,11 +1,10 @@
 namespace FindMyFamilies.Data {
 
-    public class OrdinanceListItemDO {
+    public class OrdinanceListItemDO : FindListItemDO {
         public OrdinanceListItemDO() {
         } 
 
-        public OrdinanceListItemDO(string name, string baptism, string confirmation, string initiatory, string endowment, string sealedToParent, string sealedToSpouse) {
-            this.Name = name;
+        public OrdinanceListItemDO(string baptism, string confirmation, string initiatory, string endowment, string sealedToParent, string sealedToSpouse) {
             this.Baptism = baptism;
             this.Confirmation = confirmation;
             this.Initiatory = Initiatory;
@@ -13,7 +12,6 @@ namespace FindMyFamilies.Data {
             this.SealedToParent = sealedToParent;
             this.SealedToSpouse = sealedToSpouse;
         } 
-		public string Name { get; set; }
 		public string Baptism { get; set; }
         public string Confirmation { get; set; }
         public string Initiatory { get; set; }

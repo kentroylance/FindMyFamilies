@@ -266,10 +266,9 @@ define(function(require) {
 
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
+                        system.initSpinner(incompleteOrdinances.spinner);
                         requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
                             }, function() {
-                                system.initSpinner(incompleteOrdinances.spinner);
-                                incompleteOrdinances.callerSpinner = incompleteOrdinances.spinner;
                                 $.ajax({
                                     url: constants.INCOMPLETE_ORDINANCES_REPORT_HTML_URL,
                                     success: function(data) {

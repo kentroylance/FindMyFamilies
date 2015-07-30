@@ -93,11 +93,6 @@ define(function (require) {
     }
 
     function open() {
-        var currentSpinnerTarget = system.target.id;
-        if (system.target) {
-            startingPointReport.callerSpinner = system.target.id;
-        }
-
         startingPointReport.form = $("#startingPointReportForm");
         loadEvents();
 
@@ -141,14 +136,6 @@ function nameFormatter(value, row, index) {
     if (row.id) {
         result = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\"><span style=\"color: " + _startingPointPerson.getPersonColor(row.gender) + "\">" + _startingPointPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
     }
-    return [result].join('');
-//    if (value != null) {
-//        var idNumber = value.substring(0, value.indexOf("~"));
-//        var fullname = value.substring(value.indexOf("~") + 1, value.size);
-//        var idNumberUrl = "<p><a style=\"color: rgb(0,0,255)\" href=\"" + getFamilySearchSystem() + "/tree/#view=ancestor&person=" + idNumber + "\" target=\"_tab\">" + idNumber + "</a></p>";
-//        var fullnameUrl = "<p><a href= \"#\" onClick=\" displayPerson('" + idNumber + "'); \" style= \" color: rgb(0, 153, 0)\" value= \"" + idNumber + "\" data-toggle=\" tooltip\" data-placement= \"top \" title=\" Select to display more info about this person\" >" + fullname + "</a></p>";
-//        result = fullnameUrl + idNumberUrl;
-//    }
     return result;
 }
 
