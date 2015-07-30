@@ -13,7 +13,7 @@
             lazyLoad: true,
             pauseOnHover: false,
             autoPlayVideos: false,
-            autoStart: false,
+            autoStart: true,
             firstLayer: 1,
             showBarTimer: true,
             showCircleTimer: false,
