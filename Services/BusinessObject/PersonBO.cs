@@ -1017,9 +1017,11 @@ namespace FindMyFamilies.BusinessObject {
 
 
 
-        public HintListItemDO GetHintListItem(HintDO hint) {
+        public HintListItemDO GetHintListItem(HintDO hint, PersonDO personDO) {
             HintListItemDO listItem = new HintListItemDO();
-            listItem.Name = hint.Id + "~" + hint.Fullname;
+            FindListItemDO findListItemDO = (FindListItemDO) listItem;
+
+            personDAO.PopulateFindListItem(personDO, ref findListItemDO);
 
             var hints = "";
             if ((hint.Entries != null) && (hint.Entries.Count > 0)) {
@@ -1048,11 +1050,11 @@ namespace FindMyFamilies.BusinessObject {
             var personName = "";
 
             ResearchDO researchDO = new ResearchDO();
-            researchDO.PersonId = hintInputDO.PersonId;
+            researchDO.PersonId = hintInputDO.Id;
             researchDO.ResearchType = hintInputDO.ResearchType;
             researchDO.Generation = hintInputDO.Generation;
             researchDO.ReportId = hintInputDO.ReportId;
-            researchDO.PersonName = hintInputDO.PersonName;
+            researchDO.PersonName = hintInputDO.FullName;
 
             var ancestors = getPersons(ref researchDO, ref session);
 
@@ -1063,7 +1065,7 @@ namespace FindMyFamilies.BusinessObject {
                         hint = personDAO.GetHints(ancestor.Value, ref session);
                         if ((hint != null) && (hint.Results > 0)) {
                             hints.Add(ancestor.Value.Id, hint);
-                            hintListItems.Add(GetHintListItem(hint));
+                            hintListItems.Add(GetHintListItem(hint, ancestor.Value));
                         }
                     }
                 }

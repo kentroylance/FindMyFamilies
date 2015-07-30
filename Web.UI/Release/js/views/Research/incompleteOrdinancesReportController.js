@@ -7,38 +7,38 @@ define(function (require) {
 
     // models
     var person = require('person');
-    var hints = require('hints');
-    var hintsReport = require('hintsReport');
+    var incompleteOrdinances = require('incompleteOrdinances');
+    var incompleteOrdinancesReport = require('incompleteOrdinancesReport');
 
     function loadEvents() {
 
-        $("#hintsReportOptionsButton").unbind('click').bind('click', function (e) {
-            findPersonHelper.findOptions(e, hintsReport);
+        $("#incompleteOrdinancesReportOptionsButton").unbind('click').bind('click', function (e) {
+            findPersonHelper.findOptions(e, incompleteOrdinancesReport);
         });
 
-        $("#hintsReportSaveButton").unbind('click').bind('click', function (e) {
-            hints.savePrevious();
-            hintsReport.form.dialog(constants.CLOSE);
+        $("#incompleteOrdinancesReportSaveButton").unbind('click').bind('click', function (e) {
+            incompleteOrdinances.savePrevious();
+            incompleteOrdinancesReport.form.dialog(constants.CLOSE);
         });
 
 
-        $("#hintsReportCancelButton").unbind('click').bind('click', function (e) {
-            hintsReport.form.dialog(constants.CLOSE);
+        $("#incompleteOrdinancesReportCancelButton").unbind('click').bind('click', function (e) {
+            incompleteOrdinancesReport.form.dialog(constants.CLOSE);
         });
 
-        $("#hintsReportCloseButton").unbind('click').bind('click', function(e) {
-            hintsReport.form.dialog(constants.CLOSE);
+        $("#incompleteOrdinancesReportCloseButton").unbind('click').bind('click', function(e) {
+            incompleteOrdinancesReport.form.dialog(constants.CLOSE);
         });
 
-        hintsReport.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
-            system.initSpinner(hints.spinner, true);
+        incompleteOrdinancesReport.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
+            system.initSpinner(incompleteOrdinancesReport.callerSpinner, true);
             person.save();
-            if (hintsReport.callback) {
-                if (typeof (hintsReport.callback) === "function") {
-                    hintsReport.callback(person.selected);
+            if (incompleteOrdinancesReport.callback) {
+                if (typeof (incompleteOrdinancesReport.callback) === "function") {
+                    incompleteOrdinancesReport.callback(person.selected);
                 }
             }
-//            hintsReport.reset();
+//            incompleteOrdinancesReport.reset();
         });
 
         window.nameEvents = {
@@ -51,7 +51,7 @@ define(function (require) {
 
         var $result = $('#eventsResult');
 
-        $('#hintsTable').on('all.bs.table', function (e, name, args) {
+        $('#incompleteOrdinancessTable').on('all.bs.table', function (e, name, args) {
                 console.log('Event:', name, ', data:', args);
             })
             .on('click-row.bs.table', function(e, row, $element) {
@@ -93,27 +93,32 @@ define(function (require) {
     }
 
     function open() {
-        hintsReport.form = $("#hintsReportForm");
+        var currentSpinnerTarget = system.target.id;
+        if (system.target) {
+            incompleteOrdinancesReport.callerSpinner = system.target.id;
+        }
+
+        incompleteOrdinancesReport.form = $("#incompleteOrdinancesReportForm");
         loadEvents();
 
-        if (hints.displayType === "start") {
+        if (incompleteOrdinances.displayType === "start") {
             $.ajax({
-                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "topScore": hints.topScore, "count": hints.count, "reportId": person.reportId },
-                url: constants.HINTS_REPORT_DATA_URL,
+                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "nonMormon": incompleteOrdinances.nonMormon, "born18101850": incompleteOrdinances.born18101850, "livedInUSA": incompleteOrdinances.livedInUSA, "needOrdinances": incompleteOrdinances.ordinances, "hint": incompleteOrdinances.hints, "duplicate": incompleteOrdinances.duplicates, "reportId": person.reportId },
+                url: constants.INCOMPLETE_ORDINANCES_REPORT_DATA_URL,
                 success: function (data) {
-                    hints.previous = data;
-                    $("#hintsReportTable").bootstrapTable("append", data);
-                    system.openForm(hintsReport.form, hintsReport.formTitleImage, hintsReport.spinner);
+                    incompleteOrdinances.previous = data;
+                    $("#incompleteOrdinancesReportTable").bootstrapTable("append", data);
+                    system.openForm(incompleteOrdinancesReport.form, incompleteOrdinancesReport.formTitleImage, incompleteOrdinancesReport.spinner);
                 }
             });
         } else {
-            $("#hintsReportTable").bootstrapTable("append", hints.previous);
-            system.openForm(hintsReport.form, hintsReport.formTitleImage, hintsReport.spinner);
+            $("#incompleteOrdinancesReportTable").bootstrapTable("append", incompleteOrdinances.previous);
+            system.openForm(incompleteOrdinancesReport.form, incompleteOrdinancesReport.formTitleImage, incompleteOrdinancesReport.spinner);
         }
 
     }
 
-    var hintsReportController = {
+    var incompleteOrdinancesReportController = {
         open: function() {
             open();
         },
@@ -122,19 +127,19 @@ define(function (require) {
         }
     };
 
-    researchHelper.hintsReportController = hintsReportController;
+    researchHelper.incompleteOrdinancesReportController = incompleteOrdinancesReportController;
     open();
 
-    return hintsReportController;
+    return incompleteOrdinancesReportController;
 });
 
-var _hintsPerson = require('person');
-var _hintsSystem = require('system');
+var _incompleteOrdinancesPerson = require('person');
+var _incompleteOrdinancesSystem = require('system');
 
 function nameFormatter(value, row, index) {
     var result = "";
     if (row.id) {
-        result = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\"><span style=\"color: " + _hintsPerson.getPersonColor(row.gender) + "\">" + _hintsPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
+        result = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\"><span style=\"color: " + _startingPointPerson.getPersonColor(row.gender) + "\">" + _startingPointPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
     }
     return [result].join('');
 //    if (value != null) {
@@ -147,7 +152,7 @@ function nameFormatter(value, row, index) {
     return result;
 }
 
-function reasonsFormatter(value, row, index) {
+function reasonsFormatter(value) {
     var result = "";
     if (value) {
         var reasons = value.split("~");
@@ -187,4 +192,4 @@ function reasonsFormatter(value, row, index) {
     return result;
 }
 
-//# sourceURL=hintsReportController.js
+//# sourceURL=incompleteOrdinancesReportController.js

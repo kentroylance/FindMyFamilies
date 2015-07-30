@@ -7,38 +7,38 @@ define(function (require) {
 
     // models
     var person = require('person');
-    var hints = require('hints');
-    var hintsReport = require('hintsReport');
+    var dateProblems = require('dateProblems');
+    var dateProblemsReport = require('dateProblemsReport');
 
     function loadEvents() {
 
-        $("#hintsReportOptionsButton").unbind('click').bind('click', function (e) {
-            findPersonHelper.findOptions(e, hintsReport);
+        $("#dateProblemsReportOptionsButton").unbind('click').bind('click', function (e) {
+            findPersonHelper.findOptions(e, dateProblemsReport);
         });
 
-        $("#hintsReportSaveButton").unbind('click').bind('click', function (e) {
-            hints.savePrevious();
-            hintsReport.form.dialog(constants.CLOSE);
+        $("#dateProblemsReportSaveButton").unbind('click').bind('click', function (e) {
+            dateProblems.savePrevious();
+            dateProblemsReport.form.dialog(constants.CLOSE);
         });
 
 
-        $("#hintsReportCancelButton").unbind('click').bind('click', function (e) {
-            hintsReport.form.dialog(constants.CLOSE);
+        $("#dateProblemsReportCancelButton").unbind('click').bind('click', function (e) {
+            dateProblemsReport.form.dialog(constants.CLOSE);
         });
 
-        $("#hintsReportCloseButton").unbind('click').bind('click', function(e) {
-            hintsReport.form.dialog(constants.CLOSE);
+        $("#dateProblemsReportCloseButton").unbind('click').bind('click', function(e) {
+            dateProblemsReport.form.dialog(constants.CLOSE);
         });
 
-        hintsReport.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
-            system.initSpinner(hints.spinner, true);
+        dateProblemsReport.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
+            system.initSpinner(dateProblemsReport.callerSpinner, true);
             person.save();
-            if (hintsReport.callback) {
-                if (typeof (hintsReport.callback) === "function") {
-                    hintsReport.callback(person.selected);
+            if (dateProblemsReport.callback) {
+                if (typeof (dateProblemsReport.callback) === "function") {
+                    dateProblemsReport.callback(person.selected);
                 }
             }
-//            hintsReport.reset();
+//            dateProblemsReport.reset();
         });
 
         window.nameEvents = {
@@ -51,7 +51,7 @@ define(function (require) {
 
         var $result = $('#eventsResult');
 
-        $('#hintsTable').on('all.bs.table', function (e, name, args) {
+        $('#dateProblemssTable').on('all.bs.table', function (e, name, args) {
                 console.log('Event:', name, ', data:', args);
             })
             .on('click-row.bs.table', function(e, row, $element) {
@@ -93,27 +93,32 @@ define(function (require) {
     }
 
     function open() {
-        hintsReport.form = $("#hintsReportForm");
+        var currentSpinnerTarget = system.target.id;
+        if (system.target) {
+            dateProblemsReport.callerSpinner = system.target.id;
+        }
+
+        dateProblemsReport.form = $("#dateProblemsReportForm");
         loadEvents();
 
-        if (hints.displayType === "start") {
+        if (dateProblems.displayType === "start") {
             $.ajax({
-                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "topScore": hints.topScore, "count": hints.count, "reportId": person.reportId },
-                url: constants.HINTS_REPORT_DATA_URL,
+                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "empty": dateProblems.empty, "invalid": dateProblems.invalid, "invalidFormat": dateProblems.invalidFormat, "incomplete": dateProblems.incomplete, "reportId": person.reportId },
+                url: constants.DATE_PROBLEMS_REPORT_DATA_URL,
                 success: function (data) {
-                    hints.previous = data;
-                    $("#hintsReportTable").bootstrapTable("append", data);
-                    system.openForm(hintsReport.form, hintsReport.formTitleImage, hintsReport.spinner);
+                    dateProblems.previous = data;
+                    $("#dateProblemsReportTable").bootstrapTable("append", data);
+                    system.openForm(dateProblemsReport.form, dateProblemsReport.formTitleImage, dateProblemsReport.spinner);
                 }
             });
         } else {
-            $("#hintsReportTable").bootstrapTable("append", hints.previous);
-            system.openForm(hintsReport.form, hintsReport.formTitleImage, hintsReport.spinner);
+            $("#dateProblemsReportTable").bootstrapTable("append", dateProblems.previous);
+            system.openForm(dateProblemsReport.form, dateProblemsReport.formTitleImage, dateProblemsReport.spinner);
         }
 
     }
 
-    var hintsReportController = {
+    var dateProblemsReportController = {
         open: function() {
             open();
         },
@@ -122,19 +127,19 @@ define(function (require) {
         }
     };
 
-    researchHelper.hintsReportController = hintsReportController;
+    researchHelper.dateProblemsReportController = dateProblemsReportController;
     open();
 
-    return hintsReportController;
+    return dateProblemsReportController;
 });
 
-var _hintsPerson = require('person');
-var _hintsSystem = require('system');
+var _dateProblemsPerson = require('person');
+var _dateProblemsSystem = require('system');
 
 function nameFormatter(value, row, index) {
     var result = "";
     if (row.id) {
-        result = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\"><span style=\"color: " + _hintsPerson.getPersonColor(row.gender) + "\">" + _hintsPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
+        result = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\"><span style=\"color: " + _startingPointPerson.getPersonColor(row.gender) + "\">" + _startingPointPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
     }
     return [result].join('');
 //    if (value != null) {
@@ -147,7 +152,7 @@ function nameFormatter(value, row, index) {
     return result;
 }
 
-function reasonsFormatter(value, row, index) {
+function reasonsFormatter(value) {
     var result = "";
     if (value) {
         var reasons = value.split("~");
@@ -187,4 +192,4 @@ function reasonsFormatter(value, row, index) {
     return result;
 }
 
-//# sourceURL=hintsReportController.js
+//# sourceURL=dateProblemsReportController.js

@@ -421,7 +421,7 @@ namespace FindMyFamilies.DataAccess {
             if (!findPersonDO.Mother.IsEmpty) {
                 findListItemDO.motherName = findPersonDO.Mother.Fullname;
             }
-            if (findPersonDO.HasSpouse) {
+            if (!findPersonDO.Spouse.IsEmpty) {
                 findListItemDO.spouseName = findPersonDO.Spouse.Fullname;
                 findListItemDO.spouseGender = (findPersonDO.Spouse.IsMale) ? "Male" : "Female";
             }
