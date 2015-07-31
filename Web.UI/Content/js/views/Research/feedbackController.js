@@ -12,38 +12,88 @@ define(function(require) {
 
     // models
     var person = require('person');
-    var hints = require('hints');
-    var hintsReport = require('hintsReport');
+    var feedback = require('feedback');
+    var feedbackReport = require('feedbackReport');
 
     var retrieve = require('retrieve');
 
         function updateForm() {
             if (person.id) {
-                $("#hintsPersonId").val(person.id);
+                $("#feedbackPersonId").val(person.id);
             }
             if (person.researchType) {
-                $("#hintsResearchType").val(person.researchType);
+                $("#feedbackResearchType").val(person.researchType);
             }
             if (person.generation) {
-                $("#hintsGeneration").val(person.generation);
+                $("#feedbackGeneration").val(person.generation);
             }
-            if (hints.topScore) {
-                $("#hintsTopScore").prop('checked', hints.topScore);
+            if (feedback.topScore) {
+                $("#feedbackTopScore").prop('checked', feedback.topScore);
             }
-            if (hints.count) {
-                $("#hintsCount").prop('checked', hints.count);
+            if (feedback.count) {
+                $("#feedbackCount").prop('checked', feedback.count);
             }
         if (person.reportId) {
-            $("#hintsReportId").val(person.reportId);
+            $("#feedbackReportId").val(person.reportId);
         }
         if (person.addChildren) {
             $('#addChildren').prop('checked', person.addChildren);
         }
     }
 
+    function addGenerationOptions(options) {
+        var select = $("<select class=\"form-control select1Digit\" id=\"feedbackGeneration\"\>");
+        $.each(options, function (a, b) {
+            select.append($("<option/>").attr("value", b).text(b));
+        });
+        $('#feedbackGenerationDiv').empty();
+        $("#feedbackGenerationDiv").append(select);
+        $('#feedbackGenerationDiv').nextAll().remove();
+        if ((person.researchType === "Ancestors") && (person.reportId === constants.REPORT_ID)) {
+            $("#feedbackGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: middle; margin-top: -0.625em; margin-left: .7em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -1.4em\">&nbsp;<span style=\"font-weight: normal\">Add Children</span></label>");
+        }
+        $("#feedbackGeneration").change(function (e) {
+            var generation = $("#feedbackGeneration").val();
+            if (person.researchType === constants.DESCENDANTS) {
+                if (generation > 1) {
+                    msgBox.warning("Selecting two generations of Descendants will more than double the time to retrieve descendants.");
+                }
+            } else {
+                if (generation > person.generation) {
+                    msgBox.warning("Increasing the number of generations will increase the time to retrieve ancestors.");
+                }
+            }
+            person.generation = $("#feedbackGeneration").val();
+            person.resetReportId($("#feedbackReportId"));
+        });
+
+    }
+
+    function addDecendantGenerationOptions() {
+        var options = [];
+        options[0] = "1";
+        options[1] = "2";
+        options[2] = "3";
+        addGenerationOptions(options);
+        $("#feedbackGeneration").val(person.generation);
+    }
+
+        function addAncestorGenerationOptions() {
+            var options = [];
+            options[0] = "2";
+            options[1] = "3";
+            options[2] = "4";
+            options[3] = "5";
+            options[4] = "6";
+            options[5] = "7";
+            options[6] = "8";
+            addGenerationOptions(options);
+            $("#feedbackGeneration").val(person.generation);
+        }
+
     function updateResearchData() {
-        $("#hintsReportId").val(person.reportId);
-        var reportText = $("#hintsReportId option:selected").text();
+        $("#feedbackReportId").val(person.reportId);
+        var reportText = $("#feedbackReportId option:selected").text();
         if (reportText && reportText.length > 8 && reportText !== "Select") {
             var nameIndex = reportText.indexOf("Name: ") + 6;
             var dateIndex = reportText.indexOf(", Date:  ");
@@ -53,8 +103,8 @@ define(function(require) {
             person.name = reportText.substring(nameIndex + 11, dateIndex);
             person.researchType = reportText.substring(researchTypeIndex + 17, generationoIndex);
             person.generation = reportText.substring(generationoIndex + 16, generationoIndex + 17);
-            person.loadPersons($("#hintsPersonId"));
-            //                person.reportId = $("#hintsReportId option:selected").val();
+            person.loadPersons($("#feedbackPersonId"));
+            //                person.reportId = $("#feedbackReportId option:selected").val();
         }
         if (person.researchType === constants.DESCENDANTS) {
             addDecendantGenerationOptions();
@@ -65,7 +115,7 @@ define(function(require) {
     }
 
     function loadReports(refreshReport) {
-        retrieve.loadReports($("#hintsReportId"), refreshReport);
+        retrieve.loadReports($("#feedbackReportId"), refreshReport);
         updateResearchData();
     }
 
@@ -75,16 +125,16 @@ define(function(require) {
         } else {
             person.generation = "2";
         }
-        $("hintsGeneration").val(person.generation);
+        $("feedbackGeneration").val(person.generation);
     }
 
     function open() {
-        hints.form = $("#hintsForm");
+        feedback.form = $("#feedbackForm");
         loadEvents();
         loadReports();
-        person.loadPersons($("#hintsPersonId"));
+        person.loadPersons($("#feedbackPersonId"));
         updateForm();
-        system.openForm(hints.form, hints.formTitleImage, hints.spinner);
+        system.openForm(feedback.form, feedback.formTitleImage, feedback.spinner);
     }
 
     function clear() {
@@ -97,38 +147,38 @@ define(function(require) {
     }
 
     function resetReportId() {
-        person.resetReportId($("#hintsReportId"));
+        person.resetReportId($("#feedbackReportId"));
         updateResearchData();
     }
 
     function loadEvents() {
-        $('#hintsPerson').change(function (e) {
+        $('#feedbackPerson').change(function (e) {
             debugger;
         });
 
-        $("#hintsReportId").change(function (e) {
-            person.reportId = $("#hintsReportId option:selected").val();
+        $("#feedbackReportId").change(function (e) {
+            person.reportId = $("#feedbackReportId option:selected").val();
             if (person.reportId === constants.REPORT_ID) {
                 msgBox.warning("Even though the \"Select\" option is availiable to retrieve family search data, to avoid performance problems it is best practice to first retrieve the data before analyzing.");
             }
             updateResearchData();
         });
 
-        $('#hintsPersonId').change(function(e) {
+        $('#feedbackPersonId').change(function(e) {
             person.id = $('option:selected', $(this)).val();
             person.name = $('option:selected', $(this)).text();
             resetReportId();
         });
 
-        $('#hintsResearchType').change(function(e) {
-            person.researchType = $("#hintsResearchType").val();
+        $('#feedbackResearchType').change(function(e) {
+            person.researchType = $("#feedbackResearchType").val();
             if (person.researchType === constants.DESCENDANTS) {
-                hints.generationAncestors = person.generation;
-                person.generation = hints.generationDescendants;
+                feedback.generationAncestors = person.generation;
+                person.generation = feedback.generationDescendants;
                 addDecendantGenerationOptions();
             } else {
-                hints.generationDescendants = person.generation;
-                person.generation = hints.generationAncestors;
+                feedback.generationDescendants = person.generation;
+                person.generation = feedback.generationAncestors;
                 addAncestorGenerationOptions();
             }
 
@@ -136,17 +186,17 @@ define(function(require) {
             resetReportId();
         });
 
-        $("#hintsFindPersonButton").unbind('click').bind('click', function(e) {
+        $("#feedbackFindPersonButton").unbind('click').bind('click', function(e) {
             researchHelper.findPerson(e, function(result) {
                 var findPersonModel = require('findPerson');
                 if (result) {
-                    var changed = (findPersonModel.id === $("#hintsPersonId").val()) ? false : true;
+                    var changed = (findPersonModel.id === $("#feedbackPersonId").val()) ? false : true;
                     if (changed) {
                         person.id = findPersonModel.id;
                         person.name = findPersonModel.name;
                     }
-                    hints.save();
-                    person.loadPersons($("#hintsPersonId"));
+                    feedback.save();
+                    person.loadPersons($("#feedbackPersonId"));
                     if (changed) {
                         resetReportId();
                     }
@@ -156,12 +206,12 @@ define(function(require) {
             return false;
         });
 
-        $("#hintsRetrieveButton").unbind('click').bind('click', function(e) {
+        $("#feedbackRetrieveButton").unbind('click').bind('click', function(e) {
             researchHelper.retrieve(function(result) {
                 var retrieve = require('retrieve');
                 if (result) {
                     person.reportId = retrieve.reportId;
-                    hints.save();
+                    feedback.save();
                     loadReports(true);
                 }
                 retrieve.reset();
@@ -169,43 +219,43 @@ define(function(require) {
             return false;
         });
 
-        $("#hintsHelpButton").unbind('click').bind('click', function(e) {
+        $("#feedbackHelpButton").unbind('click').bind('click', function(e) {
         });
 
-        $("#hintsCloseButton").unbind('click').bind('click', function (e) {
-            hints.form.dialog(constants.CLOSE);
+        $("#feedbackCloseButton").unbind('click').bind('click', function (e) {
+            feedback.form.dialog(constants.CLOSE);
         });
 
-        $("#hintsResetButton").unbind('click').bind('click', function (e) {
+        $("#feedbackResetButton").unbind('click').bind('click', function (e) {
             reset();
         });
 
-        $("#hintsPreviousButton").unbind('click').bind('click', function (e) {
-            if (!hints.previous) {
+        $("#feedbackPreviousButton").unbind('click').bind('click', function (e) {
+            if (!feedback.previous) {
                 if (window.localStorage) {
-                    hints.previous = JSON.parse(localStorage.getItem(constants.HINTS_PREVIOUS));
+                    feedback.previous = JSON.parse(localStorage.getItem(constants.FEEDBACK_PREVIOUS));
                 }
             }
-            if (hints.previous) {
-                system.initSpinner('hints.spinner');
-                hints.callerSpinner = hints.spinner;
+            if (feedback.previous) {
+                system.initSpinner('feedback.spinner');
+                feedback.callerSpinner = feedback.spinner;
                 $.ajax({
-                    url: constants.HINTS_REPORT_HTML_URL,
+                    url: constants.FEEDBACK_REPORT_HTML_URL,
                     success: function (data) {
-                        var $dialogContainer = $('#hintsReportForm');
+                        var $dialogContainer = $('#feedbackReportForm');
                         var $detachedChildren = $dialogContainer.children().detach();
-                        $('<div id=\"hintsReportForm\"></div>').dialog({
-                            title: "Hints",
+                        $('<div id=\"feedbackReportForm\"></div>').dialog({
+                            title: "Feedback",
                             width: 975,
                             open: function() {
                                 $detachedChildren.appendTo($dialogContainer);
                                 $(this).css("maxHeight", 700);
                             }
                         });
-                        hints.displayType = "previous";
-                        $("#hintsReportForm").empty().append(data);
-                        if (researchHelper && researchHelper.hintsReportController) {
-                            researchHelper.hintsReportController.open();
+                        feedback.displayType = "previous";
+                        $("#feedbackReportForm").empty().append(data);
+                        if (researchHelper && researchHelper.feedbackReportController) {
+                            researchHelper.feedbackReportController.open();
                         }
                     }
                 });
@@ -214,7 +264,7 @@ define(function(require) {
             }
         });
 
-        $("#hintsSubmitButton").unbind('click').bind('click', function (e) {
+        $("#feedbackSubmitButton").unbind('click').bind('click', function (e) {
             if (system.isAuthenticated()) {
                 if (!person.id) {
                     msgBox.message("You must first select a person from Family Search");
@@ -222,27 +272,27 @@ define(function(require) {
 
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
-                        system.initSpinner(hints.spinner);
+                        system.initSpinner(feedback.spinner);
                         requireOnce(["css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
                         }, function () {
                                 $.ajax({
-                                    url: constants.HINTS_REPORT_HTML_URL,
+                                    url: constants.FEEDBACK_REPORT_HTML_URL,
                                     success: function(data) {
-                                        var $dialogContainer = $('#hintsReportForm');
+                                        var $dialogContainer = $('#feedbackReportForm');
                                         var $detachedChildren = $dialogContainer.children().detach();
-                                        $("<div id=\"hintsReportForm\"></div>").dialog({
-                                            title: "Hints",
+                                        $("<div id=\"feedbackReportForm\"></div>").dialog({
+                                            title: "Feedback",
                                             width: 975,
                                             height: 515,
                                             open: function() {
                                                 $detachedChildren.appendTo($dialogContainer);
                                             }
                                         });
-                                        hintsReport.displayType = "start";
-                                        hints.save();
-                                        $("#hintsReportForm").empty().append(data);
-                                        if (researchHelper && researchHelper.hintsReportController) {
-                                            researchHelper.hintsReportController.open();
+                                        feedbackReport.displayType = "start";
+                                        feedback.save();
+                                        $("#feedbackReportForm").empty().append(data);
+                                        if (researchHelper && researchHelper.feedbackReportController) {
+                                            researchHelper.feedbackReportController.open();
                                         }
                                     }
                                 });
@@ -251,7 +301,7 @@ define(function(require) {
                     }
                 });
             } else {
-                hintsReport.form.dialog("close");
+                feedbackReport.form.dialog("close");
                 system.relogin();
             }
             return false;
@@ -263,48 +313,48 @@ define(function(require) {
             if (person.addChildren) {
                 msgBox.warning("Selecting <b>Add Children</b> check box will probably double the time to retrieve ancestors.");
             }
-            person.resetReportId($("#hintsReportId"));
+            person.resetReportId($("#feedbackReportId"));
             updateResearchData();
         });
 
-    $("#hintsTopScore").change(function (e) {
-        hints.topScore = $("#hintsTopScore").prop("checked");
-        if (hints.topScore) {
-            hints.count = false;
+    $("#feedbackTopScore").change(function (e) {
+        feedback.topScore = $("#feedbackTopScore").prop("checked");
+        if (feedback.topScore) {
+            feedback.count = false;
         } else {
-            hints.count = true;
+            feedback.count = true;
         }
     });
-    $("#hintsCount").change(function (e) {
-        hints.count = $('#hintsCount').prop("checked");
-        if (hints.count) {
-            hints.topScore = false;
+    $("#feedbackCount").change(function (e) {
+        feedback.count = $('#feedbackCount').prop("checked");
+        if (feedback.count) {
+            feedback.topScore = false;
         } else {
-            hints.topScore = true;
+            feedback.topScore = true;
         }
     });
 
 
-        $("#hintsCancelButton").unbind('click').bind('click', function (e) {
-            hints.form.dialog(constants.CLOSE);
+        $("#feedbackCancelButton").unbind('click').bind('click', function (e) {
+            feedback.form.dialog(constants.CLOSE);
         });
 
-        hints.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
-            hints.save();
+        feedback.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
+            feedback.save();
         });
     }
 
-    var hintsController = {
+    var feedbackController = {
         open: function () {
             open();
         }
     };
 
-    researchHelper.hintsController = hintsController;
+    researchHelper.feedbackController = feedbackController;
     open();
 
-    return hintsController;
+    return feedbackController;
 });
 
 
-//# sourceURL=hintsController.js
+//# sourceURL=feedbackController.js

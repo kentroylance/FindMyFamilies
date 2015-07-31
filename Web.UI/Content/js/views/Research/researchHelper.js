@@ -19,6 +19,7 @@ define(function(require) {
     var _personUrlsController;
     var _hintsController;
     var _hintsReportController;
+    var _feedbackController;
     var _incompleteOrdinancesController;
     var _incompleteOrdinancesReportController;
     var _dateProblemsController;
@@ -299,6 +300,41 @@ define(function(require) {
         }
     }
 
+    function feedback(id, name) {
+        if (system.isAuthenticated()) {
+            loadSpinner();
+            requireOnce(["feedback", "jqueryUiOptions"], function (Feedback) {
+                Feedback.callerSpinner = spinnerArea;
+            }, function () {
+                $.ajax({
+                    url: constants.FEEDBACK_URL,
+                    success: function (data) {
+                        var $dialogContainer = $("#feedbackForm");
+                        var $detachedChildren = $dialogContainer.children().detach();
+                        $("<div id=\"feedbackForm\"></div>").dialog({
+                            width: 775,
+                            title: "Feedback",
+                            open: function () {
+                                $detachedChildren.appendTo($dialogContainer);
+                            }
+                        });
+                        $("#feedbackForm").empty().append(data);
+                        if (id) {
+                            person.id = id;
+                            person.name = name;
+                        }
+                        if (_feedbackController) {
+                            _feedbackController.open();
+                        }
+                    }
+                });
+            }
+            );
+        } else {
+            system.relogin();
+        }
+    }
+
     function dateProblems(id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
@@ -457,6 +493,9 @@ define(function(require) {
         hints: function(id, name) {
             return hints(id, name);
         },
+        feedback: function (id, name) {
+            return feedback(id, name);
+        },
         dateProblems: function(id, name) {
             return dateProblems(id, name);
         },
@@ -507,6 +546,12 @@ define(function(require) {
         },
         set hintsController(value) {
             _hintsController = value;
+        },
+        get feedbackController() {
+            return _feedbackController;
+        },
+        set feedbackController(value) {
+            _feedbackController = value;
         },
         get hintsReportController() {
             return _hintsReportController;
