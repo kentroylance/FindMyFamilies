@@ -225,14 +225,13 @@ hr {
     margin-bottom: 0px;
 }
 
-.startingPoint-table {
+.report-table {
     margin-top: -1.4em;
     height: 423px;
 }
 
-.findClues-table {
-    margin-top: -1.4em;
-    height: 423px;
+.no-records-found {
+    visibility: hidden !important;
 }
 
 /*Rounded and Circle Classes
