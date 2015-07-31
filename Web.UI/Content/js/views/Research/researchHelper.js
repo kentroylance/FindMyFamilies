@@ -5,7 +5,6 @@ define(function(require) {
     var constants = require('constants');
     var person = require('person');
     var personUrlOptions;
-    var retrieve;
     var msgBox;
     var lazyRequire = require("lazyRequire");
     var requireOnce = lazyRequire.once();
@@ -108,9 +107,10 @@ define(function(require) {
     function retrieve(callback, id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["retrieve", "jqueryUiOptions"], function(Retrieve) {
-                retrieve = Retrieve;
-            }, function() {
+
+            requireOnce(["jqueryUiOptions"], function () {
+            }, function () {
+                var retrieve = require('retrieve');
                 retrieve.callback = callback;
                 retrieve.callerSpinner = spinnerArea;
                 $.ajax({

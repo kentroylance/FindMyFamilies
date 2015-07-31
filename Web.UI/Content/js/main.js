@@ -254,7 +254,7 @@
                 exports: 'findPersonHelper'
             },
             researchHelper: {
-                deps: ['jquery', 'system', 'findPerson', 'constants', 'person', 'string'],
+                deps: ['jquery', 'system', 'findPerson', 'retrieve', 'constants', 'person', 'string'],
                 exports: 'researchHelper'
             },
             lazyload: ["jquery"],

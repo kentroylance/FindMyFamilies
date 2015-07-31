@@ -127,6 +127,7 @@ define(function(require) {
         loadEvents();
         loadReports();
         person.loadPersons($("#incompleteOrdinancesPersonId"));
+        retrieve.findReport();
         updateForm();
         system.openForm(incompleteOrdinances.form, incompleteOrdinances.formTitleImage, incompleteOrdinances.spinner);
     }
@@ -161,7 +162,11 @@ define(function(require) {
         $('#incompleteOrdinancesPersonId').change(function(e) {
             person.id = $('option:selected', $(this)).val();
             person.name = $('option:selected', $(this)).text();
-            resetReportId();
+            if (retrieve.findReport()) {
+                updateResearchData();
+            } else {
+                resetReportId();
+            }
         });
 
         $('#incompleteOrdinancesResearchType').change(function(e) {
@@ -180,7 +185,7 @@ define(function(require) {
             resetReportId();
         });
 
-        $("#incompleteOrdinancesFindPersonButton").unbind('click').bind('click', function(e) {
+        $("#incompleteOrdinancesFindPersonButton").unbind('click').bind('click', function() {
             researchHelper.findPerson(e, function(result) {
                 var findPersonModel = require('findPerson');
                 if (result) {
@@ -188,19 +193,21 @@ define(function(require) {
                     if (changed) {
                         person.id = findPersonModel.id;
                         person.name = findPersonModel.name;
+                        if (retrieve.findReport()) {
+                            updateResearchData();
+                        } else {
+                            resetReportId();
+                        }
                     }
                     incompleteOrdinances.save();
                     person.loadPersons($("#incompleteOrdinancesPersonId"));
-                    if (changed) {
-                        resetReportId();
-                    }
                 }
                 findPersonModel.reset();
             });
             return false;
         });
 
-        $("#incompleteOrdinancesRetrieveButton").unbind('click').bind('click', function(e) {
+        $("#incompleteOrdinancesRetrieveButton").unbind('click').bind('click', function() {
             researchHelper.retrieve(function(result) {
                 var retrieve = require('retrieve');
                 if (result) {
@@ -266,9 +273,10 @@ define(function(require) {
 
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
-                        system.initSpinner(incompleteOrdinances.spinner);
-                        requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
+                        requireOnce(["css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
                             }, function() {
+                                system.initSpinner(incompleteOrdinances.spinner);
+                                incompleteOrdinances.callerSpinner = incompleteOrdinances.spinner;
                                 $.ajax({
                                     url: constants.INCOMPLETE_ORDINANCES_REPORT_HTML_URL,
                                     success: function(data) {

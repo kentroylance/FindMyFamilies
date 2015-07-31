@@ -31,6 +31,21 @@
         _title = "";
     }
 
+
+    function findReport() {
+        var found = false;
+        if (_reports) {
+            $.each(_reports, function (i) {
+                if (_reports[i].DisplayMember.indexOf(person.id) > -1) {
+                    person.reportId = _reports[i].ValueMember;
+                    found = true;
+                    return false;
+                }
+            });
+        }
+        return found;
+    }
+
     function loadReports(reportId, refreshReport) {
         var optionhtml;
         if (!_reports) {
@@ -130,6 +145,9 @@
         },
         save: function () {
             save();
+        },
+        findReport: function () {
+            return findReport();
         },
         get callerSpinner() {
             return _callerSpinner;
