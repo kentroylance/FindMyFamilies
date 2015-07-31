@@ -35,7 +35,7 @@ define(function(require) {
         return false;
     });
 
-    $("#researchFamily").unbind("click").bind("click", function (e) {
+    $("#findPerson").unbind("click").bind("click", function (e) {
         requireOnce(['researchHelper'], function (ResearchHelper) {
             researchHelper = ResearchHelper;
         }, function () {
