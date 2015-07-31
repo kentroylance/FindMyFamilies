@@ -72,7 +72,7 @@ define(function(require) {
     function findClues(id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["findClues", "jqueryUiOptions"], function(FindClues) {
+            requireOnce(["findClues", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function(FindClues) {
                     FindClues.callerSpinner = spinnerArea;
                 }, function() {
                     $.ajax({
@@ -108,7 +108,7 @@ define(function(require) {
         if (system.isAuthenticated()) {
             loadSpinner();
 
-            requireOnce(["jqueryUiOptions"], function () {
+            requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
             }, function () {
                 var retrieve = require('retrieve');
                 retrieve.callback = callback;
@@ -232,7 +232,7 @@ define(function(require) {
     function possibleDuplicates(id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["possibleDuplicates", "jqueryUiOptions"], function(PossibleDuplicates) {
+            requireOnce(["possibleDuplicates", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function(PossibleDuplicates) {
                     PossibleDuplicates.callerSpinner = spinnerArea;
                 }, function() {
                     $.ajax({
@@ -267,7 +267,7 @@ define(function(require) {
     function hints(id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["hints", "jqueryUiOptions"], function (Hints) {
+            requireOnce(["hints", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function (Hints) {
                     Hints.callerSpinner = spinnerArea;
                 }, function() {
                     $.ajax({
@@ -302,7 +302,7 @@ define(function(require) {
     function dateProblems(id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["dateProblems", "jqueryUiOptions"], function (DateProblems) {
+            requireOnce(["dateProblems", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function (DateProblems) {
                 DateProblems.callerSpinner = spinnerArea;
             }, function () {
                     $.ajax({
@@ -337,7 +337,7 @@ define(function(require) {
     function incompleteOrdinances(id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["incompleteOrdinances", "jqueryUiOptions"], function (IncompleteOrdinances) {
+            requireOnce(["incompleteOrdinances", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function (IncompleteOrdinances) {
                 IncompleteOrdinances.callerSpinner = spinnerArea;
             }, function () {
                     $.ajax({
@@ -372,7 +372,7 @@ define(function(require) {
     function placeProblems(id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["placeProblems", "jqueryUiOptions"], function (PlaceProblems) {
+            requireOnce(["placeProblems", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function (PlaceProblems) {
                     PlaceProblems.callerSpinner = spinnerArea;
                 }, function() {
                     $.ajax({

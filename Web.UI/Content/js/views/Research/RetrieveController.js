@@ -185,28 +185,29 @@ define(function(require) {
             updateResearchData();
         });
 
-        $("#retrieveFindPersonButton").unbind('click').bind('click', function(e) {
-            researchHelper.findPerson(e, function(result) {
+        $("#retrieveFindPersonButton").unbind('click').bind('click', function() {
+            researchHelper.findPerson(function(result) {
                 var findPersonModel = require('findPerson');
                 if (result) {
                     var changed = (findPersonModel.id === $("#retrievePersonId").val()) ? false : true;
                     if (changed) {
                         person.id = findPersonModel.id;
                         person.name = findPersonModel.name;
+                        if (retrieve.findReport()) {
+                            updateResearchData();
+                        } else {
+                            resetReportId();
+                        }
                     }
                     retrieve.save();
-                    person.loadPersons($("#retrievePersonId"), true);
-                    if (changed) {
-                        person.resetReportId($("#retrieveReportId"));
-                        updateResearchData();
-                    }
+                    person.loadPersons($("#retrievePersonId"));
                 }
                 findPersonModel.reset();
             });
             return false;
         });
 
-        $("#retrieveButton").unbind('click').bind('click', function (e) {
+        $("#retrieveButton").unbind('click').bind('click', function () {
             retrieveFamilySearchData();
             return false;
         });
