@@ -186,7 +186,7 @@ define(function(require) {
         });
 
         $("#incompleteOrdinancesFindPersonButton").unbind('click').bind('click', function() {
-            researchHelper.findPerson(e, function(result) {
+            researchHelper.findPerson(function(result) {
                 var findPersonModel = require('findPerson');
                 if (result) {
                     var changed = (findPersonModel.id === $("#incompleteOrdinancesPersonId").val()) ? false : true;

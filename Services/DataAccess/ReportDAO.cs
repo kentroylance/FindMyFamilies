@@ -174,9 +174,6 @@ namespace FindMyFamilies.DataAccess {
 				}
 				if (reader.NextResult()) {
 					reader.Read();
-					if (reports.Count < 1) {
-						reports.Add(new ListItemDO());
-					}
 				}
 				ProcessResult(reader, reportDO, logCategory);
 			} catch (Exception ex) {
