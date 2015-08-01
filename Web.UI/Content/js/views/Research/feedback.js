@@ -5,13 +5,16 @@
     var constants = require('constants');
 
     var _formName = "feedbackForm";
-    var _formTitleImage = "fa fmf-feedback24";
+    var _formTitleImage = "glyphicon glyphicon-bullhorn";
     var _form = $("#feedbackForm");
     var _spinner = "feedbackSpinner";
 
     var _bug = true;
     var _featureRequest = false;
     var _other = false;
+
+    var _email;
+    var _message;
 
     function FeedbackDO(bug, featureRequest, other) {
         this.bug = bug;

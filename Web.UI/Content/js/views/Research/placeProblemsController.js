@@ -127,6 +127,7 @@ define(function(require) {
         loadEvents();
         loadReports();
         person.loadPersons($("#placeProblemsPersonId"));
+        retrieve.findReport();
         updateForm();
         system.openForm(placeProblems.form, placeProblems.formTitleImage, placeProblems.spinner);
     }
@@ -161,7 +162,11 @@ define(function(require) {
         $('#placeProblemsPersonId').change(function(e) {
             person.id = $('option:selected', $(this)).val();
             person.name = $('option:selected', $(this)).text();
-            resetReportId();
+            if (retrieve.findReport()) {
+                updateResearchData();
+            } else {
+                resetReportId();
+            }
         });
 
         $('#placeProblemsResearchType').change(function(e) {
@@ -180,27 +185,29 @@ define(function(require) {
             resetReportId();
         });
 
-        $("#placeProblemsFindPersonButton").unbind('click').bind('click', function(e) {
-            researchHelper.findPerson(e, function(result) {
+        $("#placeProblemsFindPersonButton").unbind('click').bind('click', function() {
+            researchHelper.findPerson(function(result) {
                 var findPersonModel = require('findPerson');
                 if (result) {
                     var changed = (findPersonModel.id === $("#placeProblemsPersonId").val()) ? false : true;
                     if (changed) {
                         person.id = findPersonModel.id;
                         person.name = findPersonModel.name;
+                        if (retrieve.findReport()) {
+                            updateResearchData();
+                        } else {
+                            resetReportId();
+                        }
                     }
                     placeProblems.save();
                     person.loadPersons($("#placeProblemsPersonId"));
-                    if (changed) {
-                        resetReportId();
-                    }
                 }
                 findPersonModel.reset();
             });
             return false;
         });
 
-        $("#placeProblemsRetrieveButton").unbind('click').bind('click', function(e) {
+        $("#placeProblemsRetrieveButton").unbind('click').bind('click', function() {
             researchHelper.retrieve(function(result) {
                 var retrieve = require('retrieve');
                 if (result) {
@@ -266,7 +273,7 @@ define(function(require) {
 
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
-                        requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
+                        requireOnce(["css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
                             }, function() {
                                 system.initSpinner(placeProblems.spinner);
                                 placeProblems.callerSpinner = placeProblems.spinner;

@@ -14,7 +14,7 @@
            data-single-select="false">
         <thead>
             <tr>
-                <th data-field="Name" data-formatter="nameFormatter" data-events="nameEvents">Name</th>
+                <th data-field="Name" data-formatter="nameFormatter" data-events="nameEvents" class="name-colom">Name</th>
                 <th data-field="Baptism" data-formatter="baptismFormatter">Baptism</th>
                 <th data-field="Confirmation" data-formatter="confirmationFormatter">Confirmation</th>
                 <th data-field="Initiatory" data-formatter="initiatoryFormatter">Initiatory</th>
@@ -31,7 +31,17 @@
 <div class="text-center">
     <button id="incompleteOrdinancesReportSaveButton" class ="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class ="fa fmf-save24 dialog-buttons"></i> Save </button>
     <button type='button' id="incompleteOrdinancesReportOptionsButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-options24 dialog-buttons"></i> Options </button>
-    <button type='button' id="incompleteOrdinancesReportHelpButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-help24 dialog-buttons"></i> Help </button>
+                <div class="btn-group">
+                    <button type="button" id="incompleteOrdinancesReportHelpButton" class=" btn-u btn-brd btn-brd-hover rounded btn-u-blue btn btn-primary dropdown-toggle" data-toggle="dropdown" data-style="expand-left">
+                        <i class="fa fmf-help24 dialog-buttons"></i>
+                        Help
+                        <i class="fa fa-angle-up"></i>
+                    </button>
+                    <ul class="dropdown-menu help-dropdown" role="menu">
+                        <li><a href="#">Video</a></li>
+                        <li><a href="#">Tutorial</a></li>
+                    </ul>
+                </div>
     <button type='button' id="incompleteOrdinancesReportCloseButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-close24 dialog-buttons"></i> Close </button>
 </div>
 </div>

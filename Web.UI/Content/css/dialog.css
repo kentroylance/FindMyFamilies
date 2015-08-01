@@ -311,3 +311,35 @@ hr {
 .name-colom {
     width: 305px !important;
 }
+
+.help-dropdown {
+    top: -185% !important;
+}
+ .feedback-textarea {
+     height: 200px !important;
+ }
+ legend {
+    font-size: 1em !important;
+    background: #fff;
+    text-align: left !important;
+    width:auto;
+    padding:0 10px;
+    border-bottom:none;
+    margin-bottom: 10px !important;
+ }
+ fieldset {
+    border: 1px #ccc solid;
+    border-radius: 4px !important;
+    box-shadow: 0 0 5px #a9a9a9;
+    padding-left: 14.3px !important;
+    padding-right: 14.3px !important;
+    padding-bottom: 14.3px !important;
+ }
+ .left-section {
+     width: 20% !important;
+     float: left !important;
+ }
+ .right-section {
+     width: 100% !important;
+     float: right !important;
+ }

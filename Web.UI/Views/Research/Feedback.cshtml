@@ -1,19 +1,13 @@
-<div class="panel-body">
-    <form class="form-horizontal" role="form">
-        <div class="form-group">
-            <label for="feedbackSendThoughtsDiv" class="col-sm-2 control-label">Send us your thoughts:</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" name="personId" id="personId"/>
-                <textarea class="form-control" rows="5" id="feedbackSend"></textarea>
-                <div class="input-group addChildren-box">
-                    <div id="feedbackGenerationDiv"></div>
-                </div>
-            </div>
+<form class="form-horizontal" action=" " method="post" id="feedbackform">
+        <div class="left-section">
+            <img class="row" style="position: relative; top: 90px;" src="/Images/feedback.png" alt="">
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label" >Options:</label>
-            <div class="col-sm-10">
-                <div class="input-group">
+    <fieldset>
+        <legend>Send Us Your Thoughts</legend>
+
+        <div class="right-section">
+            <div class="form-group">
+                <div class="col-sm-12">
                     <div class="radio">
                         <label><input type="radio" id="feedbackBug" name="optradio">Bug</label>&nbsp;&nbsp;
                         <label><input type="radio" id="feedbackFeatureRequest" name="optradio">Feature Request</label>&nbsp;&nbsp;
@@ -21,22 +15,29 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <textarea class="form-control feedback-textarea" id ="feedbackMessage" name="message" placeholder="Message"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <input name="email" id="feedbackEmail" placeholder="Email Address" class="form-control" type="text">
+                </div>
+            </div>
         </div>
-        <hr/>
-        <div class="row" >
+    </fieldset>
+        <div class="col-lg-12">
+            <hr />
             <div class="text-center">
                 <button id="feedbackSubmitButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-submit24 dialog-buttons"></i> Send Feedback</button>
-                <button type='button' id="feedbackResetButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-clear24 dialog-buttons"></i> Clear</button>
-                <button type='button' id="feedbackHelpButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-help24 dialog-buttons"></i> Help</button>
+                <button type='button' id="feedbackResetButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-clean24 dialog-buttons"></i> Clear</button>
                 <button type='button' id="feedbackCloseButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-close24 dialog-buttons"></i> Close</button>
             </div>
         </div>
-    </form>
-</div>
-<div id="feedbackSpinner"/>
+  
+</form>
+
+<div id="feedbackSpinner" />
 
 <script type="text/javascript">require(['main'], function (main) { require(['feedbackController']); });</script>
-
-
-
-

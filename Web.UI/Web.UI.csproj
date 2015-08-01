@@ -1038,6 +1038,7 @@
     <Content Include="Images\family.png" />
     <Content Include="Images\FamilySearch.png" />
     <Content Include="Images\FamilySearch2.png" />
+    <Content Include="Images\feedback.png" />
     <Content Include="Images\find.png" />
     <Content Include="Images\findagrave.png" />
     <Content Include="Images\FindAGrave1.png" />

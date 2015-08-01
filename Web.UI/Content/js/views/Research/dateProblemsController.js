@@ -48,7 +48,7 @@ define(function(require) {
 
     function addGenerationOptions(options) {
         var select = $("<select class=\"form-control select1Digit\" id=\"dateProblemsGeneration\"\>");
-        $.each(options, function (a, b) {
+        $.each(options, function(a, b) {
             select.append($("<option/>").attr("value", b).text(b));
         });
         $('#dateProblemsGenerationDiv').empty();
@@ -138,6 +138,7 @@ define(function(require) {
         loadEvents();
         loadReports();
         person.loadPersons($("#dateProblemsPersonId"));
+        retrieve.findReport();
         updateForm();
         system.openForm(dateProblems.form, dateProblems.formTitleImage, dateProblems.spinner);
     }
@@ -172,7 +173,11 @@ define(function(require) {
         $('#dateProblemsPersonId').change(function(e) {
             person.id = $('option:selected', $(this)).val();
             person.name = $('option:selected', $(this)).text();
-            resetReportId();
+            if (retrieve.findReport()) {
+                updateResearchData();
+            } else {
+                resetReportId();
+            }
         });
 
         $('#dateProblemsResearchType').change(function(e) {
@@ -191,27 +196,29 @@ define(function(require) {
             resetReportId();
         });
 
-        $("#dateProblemsFindPersonButton").unbind('click').bind('click', function(e) {
-            researchHelper.findPerson(e, function(result) {
+        $("#dateProblemsFindPersonButton").unbind('click').bind('click', function() {
+            researchHelper.findPerson(function(result) {
                 var findPersonModel = require('findPerson');
                 if (result) {
                     var changed = (findPersonModel.id === $("#dateProblemsPersonId").val()) ? false : true;
                     if (changed) {
                         person.id = findPersonModel.id;
                         person.name = findPersonModel.name;
+                        if (retrieve.findReport()) {
+                            updateResearchData();
+                        } else {
+                            resetReportId();
+                        }
                     }
                     dateProblems.save();
                     person.loadPersons($("#dateProblemsPersonId"));
-                    if (changed) {
-                        resetReportId();
-                    }
                 }
                 findPersonModel.reset();
             });
             return false;
         });
 
-        $("#dateProblemsRetrieveButton").unbind('click').bind('click', function(e) {
+        $("#dateProblemsRetrieveButton").unbind('click').bind('click', function() {
             researchHelper.retrieve(function(result) {
                 var retrieve = require('retrieve');
                 if (result) {
@@ -246,7 +253,7 @@ define(function(require) {
                 dateProblems.callerSpinner = dateProblems.spinner;
                 $.ajax({
                     url: constants.DATE_PROBLEMS_REPORT_HTML_URL,
-                    success: function (data) {
+                    success: function(data) {
                         var $dialogContainer = $('#dateProblemsReportForm');
                         var $detachedChildren = $dialogContainer.children().detach();
                         $('<div id=\"dateProblemsReportForm\"></div>').dialog({
@@ -353,7 +360,7 @@ define(function(require) {
     }
 
     var dateProblemsController = {
-        open: function () {
+        open: function() {
             open();
         }
     };
