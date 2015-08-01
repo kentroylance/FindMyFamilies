@@ -149,6 +149,9 @@
         save: function () {
             save();
         },
+        findReport: function () {
+            return findReport();
+        },
         get callerSpinner() {
             return _callerSpinner;
         },

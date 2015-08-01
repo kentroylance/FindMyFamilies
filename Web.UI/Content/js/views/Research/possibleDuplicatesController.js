@@ -331,6 +331,9 @@ define(function(require) {
         });
 
         possibleDuplicates.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
+            if (possibleDuplicates.callerSpinner) {
+                system.initSpinner(possibleDuplicates.callerSpinner, true);
+            }
             possibleDuplicates.save();
         });
     }

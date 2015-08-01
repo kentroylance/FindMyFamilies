@@ -401,6 +401,9 @@ define(function(require) {
         });
 
         findClues.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function(e) {
+            if (findClues.callerSpinner) {
+                system.initSpinner(findClues.callerSpinner, true);
+            }
             findClues.save();
         });
     }

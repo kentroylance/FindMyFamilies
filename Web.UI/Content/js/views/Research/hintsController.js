@@ -340,6 +340,9 @@ define(function(require) {
         });
 
         hints.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
+            if (hints.callerSpinner) {
+                system.initSpinner(hints.callerSpinner, true);
+            }
             hints.save();
         });
     }
