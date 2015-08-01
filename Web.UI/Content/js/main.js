@@ -40,8 +40,6 @@
             hintsReportController: 'views/research/hintsReportController',
             feedback: 'views/research/feedback',
             feedbackController: 'views/research/feedbackController',
-            feedbackReport: 'views/research/feedbackReport',
-            feedbackReportController: 'views/research/feedbackReportController',
             dateProblems: 'views/research/dateProblems',
             dateProblemsController: 'views/research/dateProblemsController',
             dateProblemsReport: 'views/research/dateProblemsReport',
@@ -120,9 +118,6 @@
             },
             hintsReport: {
                 exports: 'hintsReport'
-            },
-            feedbackReport: {
-                exports: 'feedbackReport'
             },
             dateProblemsReport: {
                 exports: 'dateProblemsReport'
@@ -220,12 +215,8 @@
                 deps: ['jquery', 'hints', 'hintsReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'hintsController'
             },
-            feedbackReportController: {
-                deps: ['jquery', 'feedbackReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
-                exports: 'feedbackReportController'
-            },
             feedbackController: {
-                deps: ['jquery', 'feedback', 'feedbackReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
+                deps: ['jquery', 'feedback', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'feedbackController'
             },
             dateProblemsReportController: {

@@ -319,6 +319,9 @@ define(function(require) {
         });
 
         placeProblems.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function(e) {
+            if (placeProblems.callerSpinner) {
+                system.initSpinner(placeProblems.callerSpinner, true);
+            }
             placeProblems.save();
         });
     }
