@@ -9,6 +9,12 @@ Icon classes can be used entirely standalone. They are named after their origina
 <img class="icon-home" />
 ```
 */
+.fmf-Computer2 {
+  background-image: url(index.png);
+  background-position: -1172px -500px;
+  width: 595px;
+  height: 357px;
+}
 .fmf-bg2 {
   background-image: url(index.png);
   background-position: 0px 0px;
@@ -21,15 +27,21 @@ Icon classes can be used entirely standalone. They are named after their origina
   width: 1170px;
   height: 500px;
 }
+.fmf-findmyfamilies_new1 {
+  background-image: url(index.png);
+  background-position: 0px -1000px;
+  width: 480px;
+  height: 553px;
+}
 .fmf-findmyfamiliesbottom {
   background-image: url(index.png);
-  background-position: -1172px -500px;
+  background-position: -1767px -500px;
   width: 252px;
   height: 39px;
 }
 .fmf-findmyfamiliestop {
   background-image: url(index.png);
-  background-position: -1424px -500px;
+  background-position: -2019px -500px;
   width: 252px;
   height: 39px;
 }

@@ -11,211 +11,217 @@ Icon classes can be used entirely standalone. They are named after their origina
 */
 .fmf-about16 {
   background-image: url(research.png);
-  background-position: -192px -254px;
+  background-position: -216px -270px;
   width: 16px;
   height: 16px;
 }
 .fmf-ancestry16 {
   background-image: url(research.png);
-  background-position: -248px -230px;
+  background-position: -240px -254px;
   width: 16px;
   height: 16px;
 }
 .fmf-billiongraves16 {
   background-image: url(research.png);
-  background-position: -176px -254px;
+  background-position: -192px -126px;
   width: 16px;
   height: 16px;
 }
 .fmf-calendar16 {
   background-image: url(research.png);
-  background-position: -160px -254px;
+  background-position: -208px -254px;
   width: 16px;
   height: 16px;
 }
 .fmf-cancel24 {
   background-image: url(research.png);
-  background-position: -192px -102px;
+  background-position: -216px -142px;
   width: 24px;
   height: 24px;
 }
 .fmf-clean24 {
   background-image: url(research.png);
-  background-position: -216px -142px;
+  background-position: -216px -102px;
   width: 24px;
   height: 24px;
 }
 .fmf-close24 {
   background-image: url(research.png);
-  background-position: -192px -166px;
+  background-position: -216px -166px;
   width: 24px;
   height: 24px;
 }
 .fmf-clue16 {
   background-image: url(research.png);
-  background-position: -144px -254px;
+  background-position: -168px -270px;
   width: 16px;
   height: 16px;
 }
 .fmf-clue24 {
   background-image: url(research.png);
-  background-position: -160px -206px;
+  background-position: -264px -230px;
   width: 24px;
   height: 24px;
 }
 .fmf-clue64 {
   background-image: url(research.png);
-  background-position: 0px -78px;
+  background-position: -128px -142px;
   width: 64px;
   height: 64px;
 }
 .fmf-compass16 {
   background-image: url(research.png);
-  background-position: -128px -254px;
+  background-position: -192px -190px;
   width: 16px;
   height: 16px;
 }
 .fmf-compass24 {
   background-image: url(research.png);
-  background-position: -184px -230px;
+  background-position: -192px -102px;
   width: 24px;
   height: 24px;
 }
 .fmf-compass64 {
   background-image: url(research.png);
-  background-position: -64px -78px;
+  background-position: 0px -78px;
   width: 64px;
   height: 64px;
 }
 .fmf-dates24 {
   background-image: url(research.png);
-  background-position: -216px -78px;
+  background-position: -192px -142px;
   width: 24px;
   height: 24px;
 }
 .fmf-dates64 {
   background-image: url(research.png);
-  background-position: -128px -78px;
+  background-position: -64px -78px;
   width: 64px;
   height: 64px;
 }
 .fmf-duplicate16 {
   background-image: url(research.png);
-  background-position: -112px -254px;
+  background-position: -208px -126px;
   width: 16px;
   height: 16px;
 }
 .fmf-duplicates24 {
   background-image: url(research.png);
-  background-position: -192px -142px;
+  background-position: -264px -206px;
   width: 24px;
   height: 24px;
 }
 .fmf-duplicates64 {
   background-image: url(research.png);
-  background-position: 0px -142px;
+  background-position: -128px -78px;
   width: 64px;
   height: 64px;
 }
 .fmf-earth-icon16 {
   background-image: url(research.png);
-  background-position: -96px -254px;
+  background-position: -224px -254px;
   width: 16px;
   height: 16px;
 }
 .fmf-exclamation24 {
   background-image: url(research.png);
-  background-position: -216px -166px;
+  background-position: 0px -270px;
   width: 24px;
   height: 24px;
 }
 .fmf-execute24 {
   background-image: url(research.png);
-  background-position: -64px -206px;
+  background-position: -72px -270px;
   width: 24px;
   height: 24px;
 }
 .fmf-family16 {
   background-image: url(research.png);
-  background-position: -80px -254px;
+  background-position: -232px -270px;
   width: 16px;
   height: 16px;
 }
 .fmf-family24 {
   background-image: url(research.png);
-  background-position: -112px -206px;
+  background-position: -192px -78px;
   width: 24px;
   height: 24px;
 }
 .fmf-family64 {
   background-image: url(research.png);
-  background-position: -128px -142px;
+  background-position: 0px -142px;
   width: 64px;
   height: 64px;
 }
 .fmf-familysearch16 {
   background-image: url(research.png);
-  background-position: -192px -126px;
+  background-position: -224px -126px;
   width: 16px;
   height: 16px;
+}
+.fmf-find64 {
+  background-image: url(research.png);
+  background-position: -64px -142px;
+  width: 64px;
+  height: 64px;
 }
 .fmf-findagrave16 {
-  background-image: url(research.png);
-  background-position: -280px -230px;
-  width: 16px;
-  height: 16px;
-}
-.fmf-findmyfamilies16 {
-  background-image: url(research.png);
-  background-position: -264px -230px;
-  width: 16px;
-  height: 16px;
-}
-.fmf-findmyfamiliesbottom {
-  background-image: url(research.png);
-  background-position: 0px -39px;
-  width: 252px;
-  height: 39px;
-}
-.fmf-findmyfamiliestop {
-  background-image: url(research.png);
-  background-position: 0px 0px;
-  width: 252px;
-  height: 39px;
-}
-.fmf-findmypast16 {
-  background-image: url(research.png);
-  background-position: -224px -190px;
-  width: 16px;
-  height: 16px;
-}
-.fmf-google16 {
   background-image: url(research.png);
   background-position: -208px -190px;
   width: 16px;
   height: 16px;
 }
+.fmf-findmyfamilies16 {
+  background-image: url(research.png);
+  background-position: -192px -254px;
+  width: 16px;
+  height: 16px;
+}
+.fmf-findmyfamiliesbottom {
+  background-image: url(research.png);
+  background-position: 0px 0px;
+  width: 252px;
+  height: 39px;
+}
+.fmf-findmyfamiliestop {
+  background-image: url(research.png);
+  background-position: 0px -39px;
+  width: 252px;
+  height: 39px;
+}
+.fmf-findmypast16 {
+  background-image: url(research.png);
+  background-position: -280px -270px;
+  width: 16px;
+  height: 16px;
+}
+.fmf-google16 {
+  background-image: url(research.png);
+  background-position: -272px -254px;
+  width: 16px;
+  height: 16px;
+}
 .fmf-help16 {
   background-image: url(research.png);
-  background-position: -192px -190px;
+  background-position: -288px -254px;
   width: 16px;
   height: 16px;
 }
 .fmf-help24 {
   background-image: url(research.png);
-  background-position: -112px -230px;
+  background-position: -144px -270px;
   width: 24px;
   height: 24px;
 }
 .fmf-hint16 {
   background-image: url(research.png);
-  background-position: -224px -126px;
+  background-position: -200px -270px;
   width: 16px;
   height: 16px;
 }
 .fmf-hint24 {
   background-image: url(research.png);
-  background-position: -160px -230px;
+  background-position: -192px -166px;
   width: 24px;
   height: 24px;
 }
@@ -227,31 +233,31 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .fmf-information16 {
   background-image: url(research.png);
-  background-position: -296px -230px;
+  background-position: -248px -270px;
   width: 16px;
   height: 16px;
 }
 .fmf-myheritage16 {
   background-image: url(research.png);
-  background-position: -208px -126px;
+  background-position: -264px -270px;
   width: 16px;
   height: 16px;
 }
 .fmf-ok24 {
   background-image: url(research.png);
-  background-position: -208px -230px;
+  background-position: -192px -206px;
   width: 24px;
   height: 24px;
 }
 .fmf-options24 {
   background-image: url(research.png);
-  background-position: -136px -230px;
+  background-position: -216px -206px;
   width: 24px;
   height: 24px;
 }
 .fmf-place24 {
   background-image: url(research.png);
-  background-position: -88px -230px;
+  background-position: -240px -206px;
   width: 24px;
   height: 24px;
 }
@@ -263,91 +269,103 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .fmf-previous24 {
   background-image: url(research.png);
-  background-position: -280px -206px;
+  background-position: -288px -206px;
   width: 24px;
   height: 24px;
 }
 .fmf-puzilla16 {
   background-image: url(research.png);
-  background-position: -232px -230px;
+  background-position: -224px -190px;
   width: 16px;
   height: 16px;
 }
 .fmf-question24 {
   background-image: url(research.png);
-  background-position: -256px -206px;
+  background-position: -192px -230px;
   width: 24px;
   height: 24px;
 }
 .fmf-report24 {
   background-image: url(research.png);
-  background-position: -208px -206px;
+  background-position: -216px -230px;
   width: 24px;
   height: 24px;
 }
 .fmf-reset24 {
   background-image: url(research.png);
-  background-position: -184px -206px;
+  background-position: -240px -230px;
   width: 24px;
   height: 24px;
 }
 .fmf-reset64 {
   background-image: url(research.png);
-  background-position: -252px 0px;
+  background-position: 0px -206px;
   width: 64px;
   height: 64px;
 }
 .fmf-retrieve16 {
   background-image: url(research.png);
-  background-position: -64px -254px;
+  background-position: -256px -254px;
   width: 16px;
   height: 16px;
 }
 .fmf-retrieve24 {
   background-image: url(research.png);
-  background-position: -88px -206px;
+  background-position: -288px -230px;
   width: 24px;
   height: 24px;
 }
 .fmf-retrieve64 {
   background-image: url(research.png);
-  background-position: 0px -206px;
+  background-position: -64px -206px;
   width: 64px;
   height: 64px;
 }
 .fmf-save24 {
   background-image: url(research.png);
-  background-position: -216px -102px;
+  background-position: -24px -270px;
   width: 24px;
   height: 24px;
+}
+.fmf-search16 {
+  background-image: url(research.png);
+  background-position: -184px -270px;
+  width: 16px;
+  height: 16px;
 }
 .fmf-search24 {
   background-image: url(research.png);
-  background-position: -64px -230px;
+  background-position: -48px -270px;
   width: 24px;
   height: 24px;
 }
+.fmf-search64 {
+  background-image: url(research.png);
+  background-position: -128px -206px;
+  width: 64px;
+  height: 64px;
+}
 .fmf-submit24 {
   background-image: url(research.png);
-  background-position: -136px -206px;
+  background-position: -96px -270px;
   width: 24px;
   height: 24px;
 }
 .fmf-temple24 {
   background-image: url(research.png);
-  background-position: -192px -78px;
+  background-position: -120px -270px;
   width: 24px;
   height: 24px;
 }
 .fmf-temple64 {
   background-image: url(research.png);
-  background-position: -64px -142px;
+  background-position: -252px 0px;
   width: 64px;
   height: 64px;
 }
 .fmf-warning24 {
   background-image: url(research.png);
-  background-position: -232px -206px;
+  background-position: -216px -78px;
   width: 24px;
   height: 24px;
 }
