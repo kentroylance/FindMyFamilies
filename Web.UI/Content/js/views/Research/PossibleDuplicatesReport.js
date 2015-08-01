@@ -1,7 +1,7 @@
 ﻿define(function (require) {
     var constants = require('constants');
     var _formName = "possibleDuplicatesReportForm";
-    var _formTitleImage = "fa fmf-search24";
+    var _formTitleImage = "fa fmf-duplicates24";
     var _form = $("#possibleDuplicatesReportForm");
     var _spinner = "possibleDuplicatesReportSpinner";
     var _callerSpinner;
