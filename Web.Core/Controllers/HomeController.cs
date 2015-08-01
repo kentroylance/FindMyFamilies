@@ -157,11 +157,6 @@ namespace FindMyFamilies.Web.Controllers {
         }
 
         [System.Web.Mvc.HttpGet]
-        public ActionResult FeedbackReportHtml() {
-            return PartialView("~/Views/Research/FeedbackReport.cshtml");
-        }
-
-        [System.Web.Mvc.HttpGet]
         public ActionResult Hints() {
             return PartialView("~/Views/Research/Hints.cshtml");
         }
