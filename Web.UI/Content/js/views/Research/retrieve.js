@@ -134,6 +134,9 @@
         set retrievedRecords(value) {
             _retrievedRecords = value;
         },
+        findReport: function () {
+            return findReport();
+        },
         loadReports: function (reportId, refreshReport) {
             loadReports(reportId, refreshReport);
         },

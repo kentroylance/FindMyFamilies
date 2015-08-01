@@ -8,7 +8,6 @@
     var FIND_PERSON = "findPerson";
     var STARTING_POINT_PREVIOUS = "startingPointPrevious";
     var HINTS_PREVIOUS = "hintsPrevious";
-    var FEEDBACK_PREVIOUS = "feedbackPrevious";
     var DATE_PROBLEMS_PREVIOUS = "dateProblemsPrevious";
     var INCOMPLETE_ORDINANCES_PREVIOUS = "incompleteOrdinancesPrevious";
     var POSSIBLE_DUPLICATES_PREVIOUS = "possibleDuplicatesPrevious";
