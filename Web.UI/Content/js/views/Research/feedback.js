@@ -7,6 +7,10 @@
     var _formName = "feedbackForm";
     var _formTitleImage = "fa fmf-feedback24";
     var _form = $("#feedbackForm");
+    var _previous;
+    var _displayType = "start";
+    var _generationAncestors = constants.GENERATION;
+    var _generationDescendants = "1";
     var _spinner = "feedbackSpinner";
 
     var _bug = true;
@@ -46,11 +50,29 @@
         set form(value) {
             _form = value;
         },
+        get generationAncestors() {
+            return _generationAncestors;
+        },
+        set generationAncestors(value) {
+            _generationAncestors = value;
+        },
+        get generationDescendants() {
+            return _generationDescendants;
+        },
+        set generationDescendants(value) {
+            _generationDescendants = value;
+        },
         get other() {
             return _other;
         },
         set other(value) {
             _other = value;
+        },
+        get displayType() {
+            return _displayType;
+        },
+        set displayType(value) {
+            _displayType = value;
         },
         get bug() {
             return _bug;

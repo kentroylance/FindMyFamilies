@@ -8,6 +8,7 @@
     var FIND_PERSON = "findPerson";
     var STARTING_POINT_PREVIOUS = "startingPointPrevious";
     var HINTS_PREVIOUS = "hintsPrevious";
+    var FEEDBACK_PREVIOUS = "feedbackPrevious";
     var DATE_PROBLEMS_PREVIOUS = "dateProblemsPrevious";
     var INCOMPLETE_ORDINANCES_PREVIOUS = "incompleteOrdinancesPrevious";
     var POSSIBLE_DUPLICATES_PREVIOUS = "possibleDuplicatesPrevious";
@@ -36,6 +37,8 @@
     var STARTING_POINT_REPORT = "startingPointReport";
     var HINTS = "hints";
     var HINTS_REPORT = "hintsReport";
+    var FEEDBACK = "feedback";
+    var FEEDBACK_REPORT = "feedbackReport";
     var DATE_PROBLEMS = "dateProblems";
     var DATE_PROBLEMS_REPORT = "dateProblemsReport";
     var INCOMPLETE_ORDINANCES = "incompleteOrdinances";
@@ -58,6 +61,9 @@
     var HINTS_URL = '/Home/Hints';
     var HINTS_REPORT_HTML_URL = '/Home/HintsReportHtml';
     var HINTS_REPORT_DATA_URL = '/Home/HintsReportData';
+    var FEEDBACK_URL = '/Home/Feedback';
+    var FEEDBACK_REPORT_HTML_URL = '/Home/FeedbackReportHtml';
+    var FEEDBACK_REPORT_DATA_URL = '/Home/FeedbackReportData';
     var POSSIBLE_DUPLICATES_URL = '/Home/PossibleDuplicates';
     var POSSIBLE_DUPLICATES_REPORT_HTML_URL = '/Home/PossibleDuplicatesReportHtml';
     var POSSIBLE_DUPLICATES_REPORT_DATA_URL = '/Home/PossibleDuplicatesReportData';
@@ -218,6 +224,27 @@
         },
         get HINTS_HTML() {
             return HINTS_HTML;
+        },
+        get FEEDBACK() {
+            return FEEDBACK;
+        },
+        get FEEDBACK_REPORT() {
+            return FEEDBACK_REPORT;
+        },
+        get FEEDBACK_URL() {
+            return FEEDBACK_URL;
+        },
+        get FEEDBACK_PREVIOUS() {
+            return FEEDBACK_PREVIOUS;
+        },
+        get FEEDBACK_REPORT_HTML_URL() {
+            return FEEDBACK_REPORT_HTML_URL;
+        },
+        get FEEDBACK_REPORT_DATA_URL() {
+            return FEEDBACK_REPORT_DATA_URL;
+        },
+        get FEEDBACK_HTML() {
+            return FEEDBACK_HTML;
         },
         get INCOMPLETE_ORDINANCES() {
             return INCOMPLETE_ORDINANCES;

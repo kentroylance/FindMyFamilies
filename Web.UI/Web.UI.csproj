@@ -402,6 +402,8 @@
     <Content Include="Content\js\views\Research\dateProblemsReportController.js" />
     <Content Include="Content\js\views\Research\feedback.js" />
     <Content Include="Content\js\views\Research\feedbackController.js" />
+    <Content Include="Content\js\views\Research\feedbackReport.js" />
+    <Content Include="Content\js\views\Research\feedbackReportController.js" />
     <Content Include="Content\js\views\Research\hintsReportController.js" />
     <Content Include="Content\js\views\Research\placeProblemsController.js" />
     <Content Include="Content\js\views\Research\incompleteOrdinancesController.js" />
@@ -1364,6 +1366,7 @@
     <Content Include="Views\Research\StartingPointReport.cshtml" />
     <Content Include="Views\Research\FindPersonOptions.cshtml" />
     <Content Include="Views\Research\Feedback.cshtml" />
+    <Content Include="Views\Research\FeedbackReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />

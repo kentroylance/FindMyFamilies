@@ -38,6 +38,10 @@
             hintsController: 'views/research/hintsController',
             hintsReport: 'views/research/hintsReport',
             hintsReportController: 'views/research/hintsReportController',
+            feedback: 'views/research/feedback',
+            feedbackController: 'views/research/feedbackController',
+            feedbackReport: 'views/research/feedbackReport',
+            feedbackReportController: 'views/research/feedbackReportController',
             dateProblems: 'views/research/dateProblems',
             dateProblemsController: 'views/research/dateProblemsController',
             dateProblemsReport: 'views/research/dateProblemsReport',
@@ -100,6 +104,10 @@
                 deps: ['jquery', 'person', 'constants'],
                 exports: 'hints'
             },
+            feedback: {
+                deps: ['jquery', 'person', 'constants'],
+                exports: 'feedback'
+            },
             incompleteOrdinances: {
                 deps: ['jquery', 'person', 'constants'],
                 exports: 'incompleteOrdinances'
@@ -112,6 +120,9 @@
             },
             hintsReport: {
                 exports: 'hintsReport'
+            },
+            feedbackReport: {
+                exports: 'feedbackReport'
             },
             dateProblemsReport: {
                 exports: 'dateProblemsReport'
@@ -208,6 +219,14 @@
             hintsController: {
                 deps: ['jquery', 'hints', 'hintsReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'hintsController'
+            },
+            feedbackReportController: {
+                deps: ['jquery', 'feedbackReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
+                exports: 'feedbackReportController'
+            },
+            feedbackController: {
+                deps: ['jquery', 'feedback', 'feedbackReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
+                exports: 'feedbackController'
             },
             dateProblemsReportController: {
                 deps: ['jquery', 'dateProblemsReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
