@@ -14,19 +14,18 @@ define(function(require) {
     var person = require('person');
     var hints = require('hints');
     var hintsReport = require('hintsReport');
-
     var retrieve = require('retrieve');
 
-        function updateForm() {
-            if (person.id) {
+    function updateForm() {
+        if (person.id) {
                 $("#hintsPersonId").val(person.id);
-            }
-            if (person.researchType) {
+        }
+        if (person.researchType) {
                 $("#hintsResearchType").val(person.researchType);
-            }
-            if (person.generation) {
+        }
+        if (person.generation) {
                 $("#hintsGeneration").val(person.generation);
-            }
+        }
             if (hints.topScore) {
                 $("#hintsTopScore").prop('checked', hints.topScore);
             }
@@ -43,7 +42,7 @@ define(function(require) {
 
     function addGenerationOptions(options) {
         var select = $("<select class=\"form-control select1Digit\" id=\"hintsGeneration\"\>");
-        $.each(options, function (a, b) {
+        $.each(options, function(a, b) {
             select.append($("<option/>").attr("value", b).text(b));
         });
         $('#hintsGenerationDiv').empty();
@@ -78,18 +77,18 @@ define(function(require) {
         $("#hintsGeneration").val(person.generation);
     }
 
-        function addAncestorGenerationOptions() {
-            var options = [];
-            options[0] = "2";
-            options[1] = "3";
-            options[2] = "4";
-            options[3] = "5";
-            options[4] = "6";
-            options[5] = "7";
-            options[6] = "8";
-            addGenerationOptions(options);
+    function addAncestorGenerationOptions() {
+        var options = [];
+        options[0] = "2";
+        options[1] = "3";
+        options[2] = "4";
+        options[3] = "5";
+        options[4] = "6";
+        options[5] = "7";
+        options[6] = "8";
+        addGenerationOptions(options);
             $("#hintsGeneration").val(person.generation);
-        }
+    }
 
     function updateResearchData() {
         $("#hintsReportId").val(person.reportId);
@@ -133,6 +132,7 @@ define(function(require) {
         loadEvents();
         loadReports();
         person.loadPersons($("#hintsPersonId"));
+        retrieve.findReport();
         updateForm();
         system.openForm(hints.form, hints.formTitleImage, hints.spinner);
     }
@@ -167,7 +167,11 @@ define(function(require) {
         $('#hintsPersonId').change(function(e) {
             person.id = $('option:selected', $(this)).val();
             person.name = $('option:selected', $(this)).text();
-            resetReportId();
+            if (retrieve.findReport()) {
+                updateResearchData();
+            } else {
+                resetReportId();
+            }
         });
 
         $('#hintsResearchType').change(function(e) {
@@ -186,27 +190,29 @@ define(function(require) {
             resetReportId();
         });
 
-        $("#hintsFindPersonButton").unbind('click').bind('click', function(e) {
-            researchHelper.findPerson(e, function(result) {
+        $("#hintsFindPersonButton").unbind('click').bind('click', function() {
+            researchHelper.findPerson(function(result) {
                 var findPersonModel = require('findPerson');
                 if (result) {
                     var changed = (findPersonModel.id === $("#hintsPersonId").val()) ? false : true;
                     if (changed) {
                         person.id = findPersonModel.id;
                         person.name = findPersonModel.name;
+                        if (retrieve.findReport()) {
+                            updateResearchData();
+                        } else {
+                            resetReportId();
+                        }
                     }
                     hints.save();
                     person.loadPersons($("#hintsPersonId"));
-                    if (changed) {
-                        resetReportId();
-                    }
                 }
                 findPersonModel.reset();
             });
             return false;
         });
 
-        $("#hintsRetrieveButton").unbind('click').bind('click', function(e) {
+        $("#hintsRetrieveButton").unbind('click').bind('click', function() {
             researchHelper.retrieve(function(result) {
                 var retrieve = require('retrieve');
                 if (result) {
@@ -241,7 +247,7 @@ define(function(require) {
                 hints.callerSpinner = hints.spinner;
                 $.ajax({
                     url: constants.HINTS_REPORT_HTML_URL,
-                    success: function (data) {
+                    success: function(data) {
                         var $dialogContainer = $('#hintsReportForm');
                         var $detachedChildren = $dialogContainer.children().detach();
                         $('<div id=\"hintsReportForm\"></div>').dialog({
@@ -272,9 +278,10 @@ define(function(require) {
 
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
-                        system.initSpinner(hints.spinner);
                         requireOnce(["css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
-                        }, function () {
+                            }, function() {
+                                system.initSpinner(hints.spinner);
+                                hints.callerSpinner = hints.spinner;
                                 $.ajax({
                                     url: constants.HINTS_REPORT_HTML_URL,
                                     success: function(data) {
@@ -348,7 +355,7 @@ define(function(require) {
     }
 
     var hintsController = {
-        open: function () {
+        open: function() {
             open();
         }
     };

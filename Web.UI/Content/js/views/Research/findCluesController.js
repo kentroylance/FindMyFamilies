@@ -17,8 +17,8 @@ define(function(require) {
     var retrieve = require('retrieve');
 
     function updateForm() {
-        if (person.name) {
-            $("#findCluesPersonId").val(person.name);
+        if (person.id) {
+            $("#findCluesPersonId").val(person.id);
         }
         if (person.researchType) {
             $("#findCluesResearchType").val(person.researchType);
@@ -93,7 +93,7 @@ define(function(require) {
     function updateResearchData() {
         $("#findCluesReportId").val(person.reportId);
         var reportText = $("#findCluesReportId option:selected").text();
-        if (reportText && reportText.length > 8) {
+        if (reportText && reportText.length > 8 && reportText !== "Select") {
             var nameIndex = reportText.indexOf("Name: ") + 6;
             var dateIndex = reportText.indexOf(", Date:  ");
             var researchTypeIndex = reportText.indexOf(", Research Type: ");
@@ -115,14 +115,6 @@ define(function(require) {
 
     function loadReports(refreshReport) {
         retrieve.loadReports($("#findCluesReportId"), refreshReport);
-        if (retrieve.reports && retrieve.reports.length > 0) {
-            if (retrieve.reports[0].ValueMember === "0") {
-                delete retrieve.reports[0];
-            }
-        }
-        if (retrieve.reports && person.reportId === "0") {
-            person.reportId = retrieve.reports[0].ValueMember;
-        }
         updateResearchData();
     }
 
@@ -141,10 +133,10 @@ define(function(require) {
         loadSearchCriteria(); 
         loadReports();
         person.loadPersons($("#findCluesPersonId"));
+        retrieve.findReport();
         updateForm();
         system.openForm(findClues.form, findClues.formTitleImage, findClues.spinner);
     }
-    
 
     function clear() {
         person.clear();
@@ -205,7 +197,11 @@ define(function(require) {
         $('#findCluesPersonId').change(function(e) {
             person.id = $('option:selected', $(this)).val();
             person.name = $('option:selected', $(this)).text();
-            resetReportId();
+            if (retrieve.findReport()) {
+                updateResearchData();
+            } else {
+                resetReportId();
+            }
         });
 
         $('#findCluesResearchType').change(function(e) {
@@ -224,28 +220,30 @@ define(function(require) {
             resetReportId();
         });
 
-        $("#findCluesFindPersonButton").unbind('click').bind('click', function(e) {
-            researchHelper.findPerson(e, function(result) {
+        $("#findCluesFindPersonButton").unbind('click').bind('click', function() {
+            researchHelper.findPerson(function(result) {
                 var findPersonModel = require('findPerson');
                 if (result) {
                     var changed = (findPersonModel.id === $("#findCluesPersonId").val()) ? false : true;
                     if (changed) {
                         person.id = findPersonModel.id;
                         person.name = findPersonModel.name;
+                        if (retrieve.findReport()) {
+                            updateResearchData();
+                        } else {
+                            resetReportId();
+                        }
                     }
                     findClues.save();
                     person.loadPersons($("#findCluesPersonId"));
-                    if (changed) {
-                        resetReportId();
-                    }
                 }
                 findPersonModel.reset();
             });
             return false;
         });
 
-        $("#findCluesRetrieveButton").unbind('click').bind('click', function(e) {
-            researchHelper.retrieve(e, function(result) {
+        $("#findCluesRetrieveButton").unbind('click').bind('click', function() {
+            researchHelper.retrieve(function(result) {
                 var retrieve = require('retrieve');
                 if (result) {
                     person.reportId = retrieve.reportId;
@@ -256,7 +254,6 @@ define(function(require) {
             });
             return false;
         });
-
 
         $("#findCluesHelpButton").unbind('click').bind('click', function(e) {
         });
@@ -311,7 +308,7 @@ define(function(require) {
 
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
-                        requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
+                        requireOnce(["css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
                             }, function() {
                                 system.initSpinner(findClues.spinner);
                                 findClues.callerSpinner = findClues.spinner;

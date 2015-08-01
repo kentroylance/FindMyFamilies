@@ -17,11 +17,14 @@ define(function(require) {
     var retrieve = require('retrieve');
 
         function updateForm() {
-            if (feedback.topScore) {
-                $("#feedbackTopScore").prop('checked', feedback.topScore);
+            if (feedback.bug) {
+                $("#feedbackBug").prop('checked', feedback.bug);
             }
-            if (feedback.count) {
-                $("#feedbackCount").prop('checked', feedback.count);
+            if (feedback.featureRequest) {
+                $("#feedbackFeatureRequest").prop('checked', feedback.featureRequest);
+            }
+	    if (feedback.other) {
+                $("#feedbackOther").prop('checked', feedback.other);
             }
     }
 
@@ -54,20 +57,36 @@ define(function(require) {
             return false;
         });
 
-    $("#feedbackTopScore").change(function (e) {
-        feedback.topScore = $("#feedbackTopScore").prop("checked");
-        if (feedback.topScore) {
+        $("#feedbackEmail").change(function (e) {
+            retrieve.email = $("#feedbackEmail").val();
+        });
+
+        $("#feedbackMessage").change(function (e) {
+            retrieve.email = $("#feedbackMessage").val();
+        });
+
+    $("#feedbackBug").change(function (e) {
+        feedback.bug = $("#feedbackBug").prop("checked");
+        if (feedback.bug) {
             feedback.count = false;
         } else {
             feedback.count = true;
         }
     });
-    $("#feedbackCount").change(function (e) {
-        feedback.count = $('#feedbackCount').prop("checked");
+    $("#feedbackFeatureRequest").change(function (e) {
+        feedback.featureRequest = $('#feedbackFeatureRequest').prop("checked");
         if (feedback.count) {
-            feedback.topScore = false;
+            feedback.bug = false;
         } else {
-            feedback.topScore = true;
+            feedback.bug = true;
+        }
+    });
+    $("#feedbackOther").change(function (e) {
+        feedback.other = $('#feedbackOther').prop("checked");
+        if (feedback.count) {
+            feedback.bug = false;
+        } else {
+            feedback.bug = true;
         }
     });
 

@@ -132,6 +132,7 @@ define(function(require) {
         loadEvents();
         loadReports();
         person.loadPersons($("#possibleDuplicatesPersonId"));
+        retrieve.findReport();
         updateForm();
         system.openForm(possibleDuplicates.form, possibleDuplicates.formTitleImage, possibleDuplicates.spinner);
     }
@@ -166,7 +167,11 @@ define(function(require) {
         $('#possibleDuplicatesPersonId').change(function(e) {
             person.id = $('option:selected', $(this)).val();
             person.name = $('option:selected', $(this)).text();
-            resetReportId();
+            if (retrieve.findReport()) {
+                updateResearchData();
+            } else {
+                resetReportId();
+            }
         });
 
         $('#possibleDuplicatesResearchType').change(function(e) {
@@ -185,27 +190,29 @@ define(function(require) {
             resetReportId();
         });
 
-        $("#possibleDuplicatesFindPersonButton").unbind('click').bind('click', function(e) {
-            researchHelper.findPerson(e, function(result) {
+        $("#possibleDuplicatesFindPersonButton").unbind('click').bind('click', function() {
+            researchHelper.findPerson(function(result) {
                 var findPersonModel = require('findPerson');
                 if (result) {
                     var changed = (findPersonModel.id === $("#possibleDuplicatesPersonId").val()) ? false : true;
                     if (changed) {
                         person.id = findPersonModel.id;
                         person.name = findPersonModel.name;
+                        if (retrieve.findReport()) {
+                            updateResearchData();
+                        } else {
+                            resetReportId();
+                        }
                     }
                     possibleDuplicates.save();
                     person.loadPersons($("#possibleDuplicatesPersonId"));
-                    if (changed) {
-                        resetReportId();
-                    }
                 }
                 findPersonModel.reset();
             });
             return false;
         });
 
-        $("#possibleDuplicatesRetrieveButton").unbind('click').bind('click', function(e) {
+        $("#possibleDuplicatesRetrieveButton").unbind('click').bind('click', function() {
             researchHelper.retrieve(function(result) {
                 var retrieve = require('retrieve');
                 if (result) {
@@ -271,7 +278,7 @@ define(function(require) {
 
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
-                        requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
+                        requireOnce(["css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
                             }, function() {
                                 system.initSpinner(possibleDuplicates.spinner);
                                 possibleDuplicates.callerSpinner = possibleDuplicates.spinner;

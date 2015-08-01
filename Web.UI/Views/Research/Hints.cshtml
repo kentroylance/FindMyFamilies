@@ -58,7 +58,17 @@
                 <button id="hintsSubmitButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-submit24 dialog-buttons"></i> Find Hints</button>
                 <button type='button' id="hintsPreviousButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-previous24 dialog-buttons"></i> Previous</button>
                 <button type='button' id="hintsResetButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-reset24 dialog-buttons"></i> Reset</button>
-                <button type='button' id="hintsHelpButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-help24 dialog-buttons"></i> Help</button>
+                <div class="btn-group">
+                    <button type="button" id="hintsHelpButton" class=" btn-u btn-brd btn-brd-hover rounded btn-u-blue btn btn-primary dropdown-toggle" data-toggle="dropdown" data-style="expand-left">
+                        <i class="fa fmf-help24 dialog-buttons"></i>
+                        Help
+                        <i class="fa fa-angle-up"></i>
+                    </button>
+                    <ul class="dropdown-menu help-dropdown" role="menu">
+                        <li><a href="#">Video</a></li>
+                        <li><a href="#">Tutorial</a></li>
+                    </ul>
+                </div>
                 <button type='button' id="hintsCloseButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-close24 dialog-buttons"></i> Close</button>
             </div>
         </div>
