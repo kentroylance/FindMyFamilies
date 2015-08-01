@@ -123,9 +123,9 @@ namespace FindMyFamilies.BusinessObject {
                             persons.Add(spouseDO.Id, spouseDO);
                             persons[person.Id].Spouses.Add(spouseDO.Id, persons[spouseDO.Id]);
                             var childrenRelationship = personDAO.GetChildren(spouseDO.Id, ref session);
-//                            if ((childrenRelationship == null) && (!persons[person.Id].HasChildren)) {
-//                                childrenRelationship = personDAO.GetChildren(person.Id, ref session);
-//                            }
+                            //                            if ((childrenRelationship == null) && (!persons[person.Id].HasChildren)) {
+                            //                                childrenRelationship = personDAO.GetChildren(person.Id, ref session);
+                            //                            }
                             if (childrenRelationship != null) {
                                 if (childrenRelationship.Persons != null) {
                                     foreach (var childGx in childrenRelationship.Persons) {
@@ -261,8 +261,6 @@ namespace FindMyFamilies.BusinessObject {
             var person = getPersonWithParents(researchDO.PersonId, ref persons, ref session);
             string generationValue = (researchDO.Generation - 1).ToString();
             researchDO.PersonName = person.Fullname;
-            
-
 
             if (!person.Father.IsEmpty && !person.Mother.IsEmpty) {
                 var ancestors = personDAO.GetPersonAncestryWithSpouse(person.Father.Id, person.Mother.Id, generationValue, ref session);
@@ -271,12 +269,12 @@ namespace FindMyFamilies.BusinessObject {
                     try {
                         for (var i = ancestors.Persons.Count - 1; i > -1; i--) {
                             personDO = personDAO.GetPerson(ancestors.Persons[i]);
-                            if ((personDO != null) && !personDO.IsEmpty && !persons.ContainsKey(personDO.Id))  {
+                            if ((personDO != null) && !personDO.IsEmpty && !persons.ContainsKey(personDO.Id)) {
                                 persons.Add(personDO.Id, personDO);
                                 personsPedigree.Add((string.IsNullOrEmpty(personDO.AscendancyNumber) ? personDO.DescendancyNumber : personDO.AscendancyNumber), personDO);
                             }
-    //                       PopulatePerson(personDO.Id, ref persons, ref session, Constants.RESEARCH_TYPE_ANCESTORS);
-    //                        logger.Info("PopulatePerson = " + personDO.Fullname);
+                            //                       PopulatePerson(personDO.Id, ref persons, ref session, Constants.RESEARCH_TYPE_ANCESTORS);
+                            //                        logger.Info("PopulatePerson = " + personDO.Fullname);
                         }
                     } catch (Exception e) {
                         logger.Error("GetAncestors " + e.Message, e);
@@ -289,7 +287,7 @@ namespace FindMyFamilies.BusinessObject {
                             var descen = personDo.Value.DescendancyNumber;
                             if (!string.IsNullOrEmpty(personDo.Value.AscendancyNumber)) {
                                 var parentAscNo = (Convert.ToInt16(personDo.Value.AscendancyNumber) + Convert.ToInt16(personDo.Value.AscendancyNumber)).ToString();
-                                if (personsPedigree.ContainsKey(parentAscNo))  {
+                                if (personsPedigree.ContainsKey(parentAscNo)) {
                                     var parent = personsPedigree[parentAscNo];
                                     if (parent.IsFemale) {
                                         persons[personDo.Value.Id].Mother = parent;
@@ -298,12 +296,13 @@ namespace FindMyFamilies.BusinessObject {
                                     }
                                 }
                                 parentAscNo = (Convert.ToInt16(personDo.Value.AscendancyNumber) + Convert.ToInt16(personDo.Value.AscendancyNumber) + 1).ToString();
-                                if (personsPedigree.ContainsKey(parentAscNo))  {
+                                if (personsPedigree.ContainsKey(parentAscNo)) {
                                     var parent = personsPedigree[parentAscNo];
                                     if (parent.IsFemale) {
                                         persons[personDo.Value.Id].Mother = persons[parent.Id];
                                     } else {
-                                        persons[personDo.Value.Id].Father = persons[parent.Id];;
+                                        persons[personDo.Value.Id].Father = persons[parent.Id];
+                                        ;
                                     }
                                 }
                             } else {
@@ -317,7 +316,7 @@ namespace FindMyFamilies.BusinessObject {
                                     } else {
                                         var parentPedigree = personDo.Value.DescendancyNumber.Substring(0, personDo.Value.DescendancyNumber.IndexOf("."));
                                         var parentAscNo = (Convert.ToInt16(parentPedigree) + Convert.ToInt16(parentPedigree)).ToString();
-                                        if (personsPedigree.ContainsKey(parentAscNo))  {
+                                        if (personsPedigree.ContainsKey(parentAscNo)) {
                                             var parent = personsPedigree[parentAscNo];
                                             persons[parent.Id].Children.Add(personDo.Value.Id, persons[personDo.Value.Id]);
                                             persons[parent.Spouse.Id].Children.Add(personDo.Value.Id, persons[personDo.Value.Id]);
@@ -328,7 +327,7 @@ namespace FindMyFamilies.BusinessObject {
                         }
                     } catch (Exception e) {
                         logger.Error("GetAncestors " + e.Message, e);
-                        
+
                         throw;
                     }
 
@@ -345,14 +344,12 @@ namespace FindMyFamilies.BusinessObject {
                                 }
                             }
                         }
-
                     } catch (Exception e) {
                         logger.Error("GetAncestors " + e.Message, e);
                         throw;
                     }
                 }
             }
-
 
             return persons;
         }
@@ -534,10 +531,9 @@ namespace FindMyFamilies.BusinessObject {
                 throw;
             }
             return analyzeListItems;
-         }
+        }
 
-
-        public void GetPersonAncestryValidations(ref ResearchDO researchDO, ref SessionDO session) {  
+        public void GetPersonAncestryValidations(ref ResearchDO researchDO, ref SessionDO session) {
             try {
                 var persons = new Dictionary<string, PersonDO>();
                 if (session.Action.Equals(Constants.ACTION_RETRIEVE) || session.Action.Equals(Constants.ACTION_RETRIEVE_ANALYZE)) {
@@ -569,7 +565,6 @@ namespace FindMyFamilies.BusinessObject {
 
             return persons;
         }
-
 
         public List<DateListItemDO> GetDates(DateInputDO datesInputDO, ref SessionDO session) {
             var dates = new Dictionary<string, string>();
@@ -670,14 +665,12 @@ namespace FindMyFamilies.BusinessObject {
                     }
                 } else {
                     if (dateInputDO.Incomplete) {
-                        validateDate = "Missing Month & Day~" + eventYear;  // Incomplete
+                        validateDate = "Missing Month & Day~" + eventYear; // Incomplete
                     }
                 }
             }
             return validateDate;
         }
-
-
 
         public List<PlaceListItemDO> GetPlaces(PlaceInputDO placesInputDO, ref SessionDO session) {
             var places = new Dictionary<string, string>();
@@ -743,162 +736,158 @@ namespace FindMyFamilies.BusinessObject {
             return valiplacePlace;
         }
 
+        //  "DEAD"
+        //  marriage place but no marriage date
+        //        private List<DatesListItemDO> getDateProblems1(DatesInputDO datesInputDO, ref SessionDO session) {
+        //            var datesDO = new DatesDO();
+        //            if (!personDO.Living && !datesDO.ContainsKey(personDO.Id + "-1") && !datesDO.ContainsKey(personDO.Id + "-2")) {
+        //                if (personDO.BirthYear == 0) {
+        //                    datesPlacesDO.DateFlag = true;
+        //                    datesPlacesDO.BirthDate = personDO.BirthDateString;
+        //                } else if (personDO.BirthDate == null) {
+        //                    if (!string.IsNullOrEmpty(personDO.BirthDateString)) {
+        //                        var date = personDO.BirthDateString.Trim().ToLower();
+        //                        if (date.IndexOf("abt") > -1) {
+        //                            datesPlacesDO.DateFlag = true;
+        //                            datesPlacesDO.BirthDate = personDO.BirthDateString;
+        //                        } else if (date.IndexOf("about") > -1) {
+        //                            datesPlacesDO.DateFlag = true;
+        //                            datesPlacesDO.BirthDate = personDO.BirthDateString;
+        //                        } else if (date.IndexOf("aft") > -1) {
+        //                            datesPlacesDO.DateFlag = true;
+        //                            datesPlacesDO.BirthDate = personDO.BirthDateString;
+        //                        } else if (date.IndexOf("bef") > -1) {
+        //                            datesPlacesDO.DateFlag = true;
+        //                            datesPlacesDO.BirthDate = personDO.BirthDateString;
+        //                        } else if (date.IndexOf("<") > -1) {
+        //                            datesPlacesDO.DateFlag = true;
+        //                            datesPlacesDO.BirthDate = personDO.BirthDateString;
+        //                        } else if (date.IndexOf(">") > -1) {
+        //                            datesPlacesDO.DateFlag = true;
+        //                            datesPlacesDO.BirthDate = personDO.BirthDateString;
+        //                        } else if (date.IndexOf(">") > -1) {
+        //                            datesPlacesDO.DateFlag = true;
+        //                            datesPlacesDO.BirthDate = personDO.BirthDateString;
+        //                        }
+        //                    } else {
+        //                        datesPlacesDO.DateFlag = true;
+        //                        datesPlacesDO.BirthDate = "Blank";
+        //                        ;
+        //                    }
+        //                }
+        //                if (personDO.DeathYear == 0) {
+        //                    datesPlacesDO.DateFlag = true;
+        //                    datesPlacesDO.DeathDate = personDO.DeathDateString;
+        //                } else if (personDO.DeathDate == null) {
+        //                    if (!string.IsNullOrEmpty(personDO.DeathDateString)) {
+        //                        var date = personDO.DeathDateString.Trim().ToLower();
+        //                        if (date.IndexOf("abt") > -1) {
+        //                            datesPlacesDO.DateFlag = true;
+        //                            datesPlacesDO.DeathDate = personDO.DeathDateString;
+        //                        } else if (date.IndexOf("about") > -1) {
+        //                            datesPlacesDO.DateFlag = true;
+        //                            datesPlacesDO.DeathDate = personDO.DeathDateString;
+        //                        } else if (date.IndexOf("<") > -1) {
+        //                            datesPlacesDO.DateFlag = true;
+        //                            datesPlacesDO.DeathDate = personDO.DeathDateString;
+        //                        } else if (date.IndexOf("aft") > -1) {
+        //                            datesPlacesDO.DateFlag = true;
+        //                            datesPlacesDO.DeathDate = personDO.DeathDateString;
+        //                        } else if (date.IndexOf("bef") > -1) {
+        //                            datesPlacesDO.DateFlag = true;
+        //                            datesPlacesDO.DeathDate = personDO.DeathDateString;
+        //                        } else if (date.IndexOf("dead") > -1) {
+        //                            datesPlacesDO.DateFlag = true;
+        //                            datesPlacesDO.DeathDate = personDO.DeathDateString;
+        //                        } else if (date.IndexOf(">") > -1) {
+        //                            datesPlacesDO.DateFlag = true;
+        //                            datesPlacesDO.DeathDate = personDO.DeathDateString;
+        //                        }
+        //                    } else {
+        //                        datesPlacesDO.DateFlag = true;
+        //                        datesPlacesDO.DeathDate = "Blank";
+        //                    }
+        //                }
+        //                if (datesPlacesDO.DateFlag) {
+        //                    datesPlacesDO.Id = personDO.Id;
+        //                    datesPlacesDO.ProblemType = "Date";
+        //                    datesPlacesDO.Fullname = personDO.Fullname;
+        //                    datesPlaces.Add(personDO.Id + "-1", datesPlacesDO);
+        //                }
+        //
+        //                datesPlacesDO = new DatesPlacesDO();
+        //                if (!personDO.IsPlaceValid(personDO.BirthPlace)) {
+        //                    datesPlacesDO.PlaceFlag = true;
+        //                    datesPlacesDO.BirthPlace = string.IsNullOrEmpty(personDO.BirthPlace) ? "Blank" : personDO.BirthPlace;
+        //                } else if (string.IsNullOrEmpty(personDO.BirthPlace)) {
+        //                    datesPlacesDO.PlaceFlag = true;
+        //                    datesPlacesDO.BirthPlace = "Blank";
+        //                }
+        //                if (!personDO.IsPlaceValid(personDO.DeathPlace)) {
+        //                    datesPlacesDO.PlaceFlag = true;
+        //                    datesPlacesDO.DeathPlace = string.IsNullOrEmpty(personDO.DeathPlace) ? "Blank" : personDO.DeathPlace;
+        //                } else if (string.IsNullOrEmpty(personDO.DeathPlace)) {
+        //                    datesPlacesDO.PlaceFlag = true;
+        //                    datesPlacesDO.DeathPlace = "Blank";
+        //                }
+        //                if (!personDO.IsPlaceValid(personDO.MarriagePlace)) {
+        //                    datesPlacesDO.PlaceFlag = true;
+        //                    datesPlacesDO.MarriagePlace = string.IsNullOrEmpty(personDO.MarriagePlace) ? "Blank" : personDO.MarriagePlace;
+        //                } else if (string.IsNullOrEmpty(personDO.MarriagePlace)) {
+        //                    datesPlacesDO.PlaceFlag = true;  
+        //                    datesPlacesDO.MarriagePlace = "Blank";
+        //                }
+        //
+        //                if (datesPlacesDO.PlaceFlag) {
+        //                    datesPlacesDO.Id = personDO.Id;
+        //                    datesPlacesDO.Fullname = personDO.Fullname;
+        //                    datesPlacesDO.ProblemType = "Place";
+        //                    datesPlaces.Add(datesPlacesDO.Id + "-2", datesPlacesDO);
+        //                }
+        //            }
+        //        }
 
-
-
-
-//  "DEAD"
-//  marriage place but no marriage date
-//        private List<DatesListItemDO> getDateProblems1(DatesInputDO datesInputDO, ref SessionDO session) {
-//            var datesDO = new DatesDO();
-//            if (!personDO.Living && !datesDO.ContainsKey(personDO.Id + "-1") && !datesDO.ContainsKey(personDO.Id + "-2")) {
-//                if (personDO.BirthYear == 0) {
-//                    datesPlacesDO.DateFlag = true;
-//                    datesPlacesDO.BirthDate = personDO.BirthDateString;
-//                } else if (personDO.BirthDate == null) {
-//                    if (!string.IsNullOrEmpty(personDO.BirthDateString)) {
-//                        var date = personDO.BirthDateString.Trim().ToLower();
-//                        if (date.IndexOf("abt") > -1) {
-//                            datesPlacesDO.DateFlag = true;
-//                            datesPlacesDO.BirthDate = personDO.BirthDateString;
-//                        } else if (date.IndexOf("about") > -1) {
-//                            datesPlacesDO.DateFlag = true;
-//                            datesPlacesDO.BirthDate = personDO.BirthDateString;
-//                        } else if (date.IndexOf("aft") > -1) {
-//                            datesPlacesDO.DateFlag = true;
-//                            datesPlacesDO.BirthDate = personDO.BirthDateString;
-//                        } else if (date.IndexOf("bef") > -1) {
-//                            datesPlacesDO.DateFlag = true;
-//                            datesPlacesDO.BirthDate = personDO.BirthDateString;
-//                        } else if (date.IndexOf("<") > -1) {
-//                            datesPlacesDO.DateFlag = true;
-//                            datesPlacesDO.BirthDate = personDO.BirthDateString;
-//                        } else if (date.IndexOf(">") > -1) {
-//                            datesPlacesDO.DateFlag = true;
-//                            datesPlacesDO.BirthDate = personDO.BirthDateString;
-//                        } else if (date.IndexOf(">") > -1) {
-//                            datesPlacesDO.DateFlag = true;
-//                            datesPlacesDO.BirthDate = personDO.BirthDateString;
-//                        }
-//                    } else {
-//                        datesPlacesDO.DateFlag = true;
-//                        datesPlacesDO.BirthDate = "Blank";
-//                        ;
-//                    }
-//                }
-//                if (personDO.DeathYear == 0) {
-//                    datesPlacesDO.DateFlag = true;
-//                    datesPlacesDO.DeathDate = personDO.DeathDateString;
-//                } else if (personDO.DeathDate == null) {
-//                    if (!string.IsNullOrEmpty(personDO.DeathDateString)) {
-//                        var date = personDO.DeathDateString.Trim().ToLower();
-//                        if (date.IndexOf("abt") > -1) {
-//                            datesPlacesDO.DateFlag = true;
-//                            datesPlacesDO.DeathDate = personDO.DeathDateString;
-//                        } else if (date.IndexOf("about") > -1) {
-//                            datesPlacesDO.DateFlag = true;
-//                            datesPlacesDO.DeathDate = personDO.DeathDateString;
-//                        } else if (date.IndexOf("<") > -1) {
-//                            datesPlacesDO.DateFlag = true;
-//                            datesPlacesDO.DeathDate = personDO.DeathDateString;
-//                        } else if (date.IndexOf("aft") > -1) {
-//                            datesPlacesDO.DateFlag = true;
-//                            datesPlacesDO.DeathDate = personDO.DeathDateString;
-//                        } else if (date.IndexOf("bef") > -1) {
-//                            datesPlacesDO.DateFlag = true;
-//                            datesPlacesDO.DeathDate = personDO.DeathDateString;
-//                        } else if (date.IndexOf("dead") > -1) {
-//                            datesPlacesDO.DateFlag = true;
-//                            datesPlacesDO.DeathDate = personDO.DeathDateString;
-//                        } else if (date.IndexOf(">") > -1) {
-//                            datesPlacesDO.DateFlag = true;
-//                            datesPlacesDO.DeathDate = personDO.DeathDateString;
-//                        }
-//                    } else {
-//                        datesPlacesDO.DateFlag = true;
-//                        datesPlacesDO.DeathDate = "Blank";
-//                    }
-//                }
-//                if (datesPlacesDO.DateFlag) {
-//                    datesPlacesDO.Id = personDO.Id;
-//                    datesPlacesDO.ProblemType = "Date";
-//                    datesPlacesDO.Fullname = personDO.Fullname;
-//                    datesPlaces.Add(personDO.Id + "-1", datesPlacesDO);
-//                }
-//
-//                datesPlacesDO = new DatesPlacesDO();
-//                if (!personDO.IsPlaceValid(personDO.BirthPlace)) {
-//                    datesPlacesDO.PlaceFlag = true;
-//                    datesPlacesDO.BirthPlace = string.IsNullOrEmpty(personDO.BirthPlace) ? "Blank" : personDO.BirthPlace;
-//                } else if (string.IsNullOrEmpty(personDO.BirthPlace)) {
-//                    datesPlacesDO.PlaceFlag = true;
-//                    datesPlacesDO.BirthPlace = "Blank";
-//                }
-//                if (!personDO.IsPlaceValid(personDO.DeathPlace)) {
-//                    datesPlacesDO.PlaceFlag = true;
-//                    datesPlacesDO.DeathPlace = string.IsNullOrEmpty(personDO.DeathPlace) ? "Blank" : personDO.DeathPlace;
-//                } else if (string.IsNullOrEmpty(personDO.DeathPlace)) {
-//                    datesPlacesDO.PlaceFlag = true;
-//                    datesPlacesDO.DeathPlace = "Blank";
-//                }
-//                if (!personDO.IsPlaceValid(personDO.MarriagePlace)) {
-//                    datesPlacesDO.PlaceFlag = true;
-//                    datesPlacesDO.MarriagePlace = string.IsNullOrEmpty(personDO.MarriagePlace) ? "Blank" : personDO.MarriagePlace;
-//                } else if (string.IsNullOrEmpty(personDO.MarriagePlace)) {
-//                    datesPlacesDO.PlaceFlag = true;  
-//                    datesPlacesDO.MarriagePlace = "Blank";
-//                }
-//
-//                if (datesPlacesDO.PlaceFlag) {
-//                    datesPlacesDO.Id = personDO.Id;
-//                    datesPlacesDO.Fullname = personDO.Fullname;
-//                    datesPlacesDO.ProblemType = "Place";
-//                    datesPlaces.Add(datesPlacesDO.Id + "-2", datesPlacesDO);
-//                }
-//            }
-//        }
-
-//        public List<DatesPlacesListItemDO> GetDatesPlaces(DatesPlacesInputDO datesPlacesInputDO, ref SessionDO session) {
-////            var datesPlaces = new Dictionary<string, DatesPlacesDO>();
-////            var persons = new Dictionary<string, PersonDO>();
-////            var children = new Dictionary<string, PersonDO>();
-////
-////            if (!String.IsNullOrEmpty(ResearchDO.PersonId)) {
-////                var person = GetPerson(ResearchDO.PersonId, ref session);
-////                ResearchDO.PersonName = person.Fullname;
-////                if (ResearchDO.ResearchType.Equals("Descendants")) {
-////                    persons = GetDescendants(ref ResearchDO, ref session, false);
-////                    if ((persons != null) && (persons.Count > 0)) {
-////                        foreach (var personDO in persons.Values) {
-////                            processDatePlace(personDO, ref datesPlaces);
-////                        }
-////                        ResearchDO.DatesPlaces = new List<DatesPlacesDO>(datesPlaces.Values);
-////                    }
-////                } else {
-////                    AddPerson(person, persons, 0);
-////                    person = getParents(ResearchDO.PersonId, ref persons, ref children, ref session);
-////
-////                    var fatherAncestors = personDAO.GetAncestors(person.Father.Id, ResearchDO.Generation.ToString(), ref session);
-////                    if ((fatherAncestors != null) && (fatherAncestors.Persons.Count > 0)) {
-////                        foreach (var fatherAncestor in fatherAncestors.Persons) {
-////                            var personDO = personDAO.GetPerson(fatherAncestor);
-////                            processDatePlace(personDO, ref datesPlaces);
-////                        }
-////                    }
-////
-////                    var motherAncestors = personDAO.GetAncestors(person.Mother.Id, ResearchDO.Generation.ToString(), ref session);
-////                    if ((motherAncestors != null) && (motherAncestors.Persons.Count > 0)) {
-////                        foreach (var motherAncestor in motherAncestors.Persons) {
-////                            var personDO = personDAO.GetPerson(motherAncestor);
-////                            processDatePlace(personDO, ref datesPlaces);
-////                        }
-////                    }
-////                    ResearchDO.DatesPlaces = new List<DatesPlacesDO>(datesPlaces.Values);
-////                    ResearchDO.RetrievedRecords = ResearchDO.DatesPlaces.Count;
-////                }
-////            }
-//            return null;
-//        }
+        //        public List<DatesPlacesListItemDO> GetDatesPlaces(DatesPlacesInputDO datesPlacesInputDO, ref SessionDO session) {
+        ////            var datesPlaces = new Dictionary<string, DatesPlacesDO>();
+        ////            var persons = new Dictionary<string, PersonDO>();
+        ////            var children = new Dictionary<string, PersonDO>();
+        ////
+        ////            if (!String.IsNullOrEmpty(ResearchDO.PersonId)) {
+        ////                var person = GetPerson(ResearchDO.PersonId, ref session);
+        ////                ResearchDO.PersonName = person.Fullname;
+        ////                if (ResearchDO.ResearchType.Equals("Descendants")) {
+        ////                    persons = GetDescendants(ref ResearchDO, ref session, false);
+        ////                    if ((persons != null) && (persons.Count > 0)) {
+        ////                        foreach (var personDO in persons.Values) {
+        ////                            processDatePlace(personDO, ref datesPlaces);
+        ////                        }
+        ////                        ResearchDO.DatesPlaces = new List<DatesPlacesDO>(datesPlaces.Values);
+        ////                    }
+        ////                } else {
+        ////                    AddPerson(person, persons, 0);
+        ////                    person = getParents(ResearchDO.PersonId, ref persons, ref children, ref session);
+        ////
+        ////                    var fatherAncestors = personDAO.GetAncestors(person.Father.Id, ResearchDO.Generation.ToString(), ref session);
+        ////                    if ((fatherAncestors != null) && (fatherAncestors.Persons.Count > 0)) {
+        ////                        foreach (var fatherAncestor in fatherAncestors.Persons) {
+        ////                            var personDO = personDAO.GetPerson(fatherAncestor);
+        ////                            processDatePlace(personDO, ref datesPlaces);
+        ////                        }
+        ////                    }
+        ////
+        ////                    var motherAncestors = personDAO.GetAncestors(person.Mother.Id, ResearchDO.Generation.ToString(), ref session);
+        ////                    if ((motherAncestors != null) && (motherAncestors.Persons.Count > 0)) {
+        ////                        foreach (var motherAncestor in motherAncestors.Persons) {
+        ////                            var personDO = personDAO.GetPerson(motherAncestor);
+        ////                            processDatePlace(personDO, ref datesPlaces);
+        ////                        }
+        ////                    }
+        ////                    ResearchDO.DatesPlaces = new List<DatesPlacesDO>(datesPlaces.Values);
+        ////                    ResearchDO.RetrievedRecords = ResearchDO.DatesPlaces.Count;
+        ////                }
+        ////            }
+        //            return null;
+        //        }
 
         public OrdinanceListItemDO GetOrdinanceListItem(OrdinanceDO ordinance, PersonDO personDO) {
             OrdinanceListItemDO listItem = new OrdinanceListItemDO();
@@ -908,37 +897,51 @@ namespace FindMyFamilies.BusinessObject {
             if (ordinance.Baptism != null) {
                 listItem.Baptism = ordinance.Baptism.status;
                 if (!ordinance.Baptism.completed) {
-                    listItem.Baptism += "~Reservable: " + ordinance.Baptism.reservable;
+                    if (ordinance.Baptism.reservable) {
+                        listItem.Baptism += " - Reservable"; // + ordinance.Baptism.reservable;
+                    } else {
+                        listItem.Baptism += " - " + ordinance.Baptism.reservable;
+                    }
                 }
             }
             if (ordinance.Confirmation != null) {
                 listItem.Confirmation = ordinance.Confirmation.status;
                 if (!ordinance.Confirmation.completed) {
-                    listItem.Confirmation += "~Reservable: " + ordinance.Confirmation.reservable;
+                    listItem.Confirmation += " - Reservable"; // + ordinance.Confirmation.reservable;
+                } else {
+                    listItem.Confirmation += " - " + ordinance.Confirmation.reservable;
                 }
             }
             if (ordinance.Initiatory != null) {
                 listItem.Initiatory = ordinance.Initiatory.status;
                 if (!ordinance.Initiatory.completed) {
-                    listItem.Initiatory += "~Reservable: " + ordinance.Initiatory.reservable;
+                    listItem.Initiatory += " - Reservable"; // + ordinance.Initiatory.reservable;
+                } else {
+                    listItem.Initiatory += " - " + ordinance.Initiatory.reservable;
                 }
             }
             if (ordinance.Endowment != null) {
                 listItem.Endowment = ordinance.Endowment.status;
                 if (!ordinance.Endowment.completed) {
-                    listItem.Endowment += "~Reservable: " + ordinance.Endowment.reservable;
+                    listItem.Endowment += " - Reservable"; // + ordinance.Endowment.reservable;
+                } else {
+                    listItem.Endowment += " - " + ordinance.Endowment.reservable;
                 }
             }
             if (ordinance.SealedToParent != null) {
                 listItem.SealedToParent = ordinance.SealedToParent.status;
                 if (!ordinance.SealedToParent.completed) {
-                    listItem.SealedToParent += "~Reservable: " + ordinance.SealedToParent.reservable;
+                    listItem.SealedToParent += " - Reservable"; // + ordinance.SealedToParent.reservable;
+                } else {
+                    listItem.SealedToParent += " - " + ordinance.SealedToParent.reservable;
                 }
             }
             if (ordinance.SealedToSpouse != null) {
                 listItem.SealedToSpouse = ordinance.SealedToSpouse.status;
                 if (!ordinance.SealedToSpouse.completed) {
-                    listItem.SealedToSpouse += "~Reservable: " + ordinance.SealedToSpouse.reservable;
+                    listItem.SealedToSpouse += " - Reservable"; // + ordinance.SealedToSpouse.reservable;
+                } else {
+                    listItem.SealedToSpouse += " - " + ordinance.SealedToSpouse.reservable;
                 }
             } else {
                 if (ordinance.Baptism.status.Equals("Not Needed")) {
@@ -957,27 +960,27 @@ namespace FindMyFamilies.BusinessObject {
             }
             if (ordinance.Confirmation != null) {
                 if (!ordinance.Confirmation.completed) {
-                    ordinanceInfo += "Confirmation: " + ordinance.Confirmation.status + " Reservable: " + ordinance.Confirmation.reservable+ ", ";
+                    ordinanceInfo += "Confirmation: " + ordinance.Confirmation.status + " Reservable: " + ordinance.Confirmation.reservable + ", ";
                 }
             }
             if (ordinance.Initiatory != null) {
                 if (!ordinance.Initiatory.completed) {
-                    ordinanceInfo += "Initiatory: " + ordinance.Initiatory.status + " Reservable: " + ordinance.Initiatory.reservable+ ", ";
+                    ordinanceInfo += "Initiatory: " + ordinance.Initiatory.status + " Reservable: " + ordinance.Initiatory.reservable + ", ";
                 }
             }
             if (ordinance.Endowment != null) {
                 if (!ordinance.Endowment.completed) {
-                    ordinanceInfo += "Endowment: " + ordinance.Endowment.status + " Reservable: " + ordinance.Endowment.reservable+ ", ";
+                    ordinanceInfo += "Endowment: " + ordinance.Endowment.status + " Reservable: " + ordinance.Endowment.reservable + ", ";
                 }
             }
             if (ordinance.SealedToParent != null) {
                 if (!ordinance.SealedToParent.completed) {
-                    ordinanceInfo += "SealedToParent: " + ordinance.SealedToParent.status + " Reservable: " + ordinance.SealedToParent.reservable+ ", ";
+                    ordinanceInfo += "SealedToParent: " + ordinance.SealedToParent.status + " Reservable: " + ordinance.SealedToParent.reservable + ", ";
                 }
             }
             if (ordinance.SealedToSpouse != null) {
                 if (!ordinance.SealedToSpouse.completed) {
-                    ordinanceInfo += "SealedToSpouse: " + ordinance.SealedToSpouse.status + " Reservable: " + ordinance.SealedToSpouse.reservable+ ", ";
+                    ordinanceInfo += "SealedToSpouse: " + ordinance.SealedToSpouse.status + " Reservable: " + ordinance.SealedToSpouse.reservable + ", ";
                 }
             } else {
                 if (ordinance.Baptism.status.Equals("Not Needed")) {
@@ -993,11 +996,11 @@ namespace FindMyFamilies.BusinessObject {
             var personName = "";
 
             ResearchDO researchDO = new ResearchDO();
-            researchDO.PersonId = incompleteOrdinanceDo.PersonId;
+            researchDO.PersonId = incompleteOrdinanceDo.Id;
             researchDO.ResearchType = incompleteOrdinanceDo.ResearchType;
             researchDO.Generation = incompleteOrdinanceDo.Generation;
             researchDO.ReportId = incompleteOrdinanceDo.ReportId;
-            researchDO.PersonName = incompleteOrdinanceDo.PersonName;
+            researchDO.PersonName = incompleteOrdinanceDo.FullName;
 
             var ancestors = getPersons(ref researchDO, ref session);
 
@@ -1016,16 +1019,12 @@ namespace FindMyFamilies.BusinessObject {
                                     ordinanceListItems.Add(GetOrdinanceListItem(ordinance, ancestor.Value));
                                 }
                             }
-                                
-                                
                         }
                     }
                 }
             }
             return ordinanceListItems;
         }
-
-
 
         public HintListItemDO GetHintListItem(HintDO hint, PersonDO personDO) {
             HintListItemDO listItem = new HintListItemDO();
@@ -1081,9 +1080,9 @@ namespace FindMyFamilies.BusinessObject {
                 }
             }
             if (hintInputDO.topScore) {
-                return hintListItems.OrderByDescending(o=>o.TopScore).ToList();
+                return hintListItems.OrderByDescending(o => o.TopScore).ToList();
             } else {
-                return hintListItems.OrderByDescending(o=>o.Count).ToList();
+                return hintListItems.OrderByDescending(o => o.Count).ToList();
             }
         }
 
@@ -1130,15 +1129,15 @@ namespace FindMyFamilies.BusinessObject {
                     OrdinanceDO ordinance = personDAO.GetOrdinances(personDO, ref session);
                     if ((ordinance != null) && !personDO.Living) {
                         if ((ordinance.Baptism.reservable) || (ordinance.Confirmation.reservable) || (ordinance.Initiatory.reservable) || (ordinance.Endowment.reservable)) {
-                            startingPointListItemDO.Reasons += "IncompleteOrdinances[" + GetOrdinanceInfo(ordinance) + "]~";   
+                            startingPointListItemDO.Reasons += "IncompleteOrdinances[" + GetOrdinanceInfo(ordinance) + "]~";
                             startingPointListItemDO.Count++;
                         } else {
                             if (((ordinance.SealedToParent != null) && ordinance.SealedToParent.reservable) || ((ordinance.SealedToSpouse != null) && ordinance.SealedToSpouse.reservable)) {
-                                startingPointListItemDO.Reasons += "IncompleteOrdinances[" + GetOrdinanceInfo(ordinance) + "]~";   
+                                startingPointListItemDO.Reasons += "IncompleteOrdinances[" + GetOrdinanceInfo(ordinance) + "]~";
                                 startingPointListItemDO.Count++;
                             }
                         }
-                        if (ordinance.Baptism.date != null)  {
+                        if (ordinance.Baptism.date != null) {
                             if (personDO.DeathYear > 100) {
                                 if (ordinance.Baptism.date.normalized.Length > 4) {
                                     DateTime? baptismDate = null;
@@ -1204,7 +1203,7 @@ namespace FindMyFamilies.BusinessObject {
                             if (entry.Score > .5) {
                                 startingPointListItemDO.Reasons += "PossibleDuplicate[" + entry.Fullname + " (" + entry.Score + ")]~";
                                 startingPointListItemDO.Count++;
-                           }
+                            }
                         }
                     }
                 }
@@ -1221,7 +1220,6 @@ namespace FindMyFamilies.BusinessObject {
             }
 
             return startingPointListItemDO;
-
         }
 
         public List<StartingPointListItemDO> GetStartingPoints(StartingPointInputDO startingPointInputDO, ref SessionDO session) {
@@ -1249,7 +1247,7 @@ namespace FindMyFamilies.BusinessObject {
                 }
             }
 
-            return startingPointListItems.OrderByDescending(o=>o.Count).ToList();
+            return startingPointListItems.OrderByDescending(o => o.Count).ToList();
         }
 
         public PossibleDuplicateListItemDO GetPossibleDuplicateListItem(PossibleDuplicateDO possibleDuplicate, PersonDO personDO) {
@@ -1258,9 +1256,9 @@ namespace FindMyFamilies.BusinessObject {
             personDAO.PopulateFindListItem(personDO, ref findListItemDO);
 
             listItem.Link = possibleDuplicate.Id;
-//            if (possibleDuplicate.Duplicates) {
-//                listItem.Link = "<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.PossibleDuplicateUrl(possibleDuplicate.Id) + "\" target=\"_tab\">Possible Duplicate</a>&nbsp;";
-//            }
+            //            if (possibleDuplicate.Duplicates) {
+            //                listItem.Link = "<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.PossibleDuplicateUrl(possibleDuplicate.Id) + "\" target=\"_tab\">Possible Duplicate</a>&nbsp;";
+            //            }
             listItem.Title = possibleDuplicate.Title;
             listItem.Results = possibleDuplicate.Results.ToString();
 
@@ -1279,7 +1277,6 @@ namespace FindMyFamilies.BusinessObject {
             return listItem;
         }
 
-
         public List<PossibleDuplicateListItemDO> GetPossibleDuplicates(PossibleDuplicateInputDO possibleDuplicateInputDO, ref SessionDO session) {
             var possibleDuplicates = new Dictionary<string, PossibleDuplicateDO>();
             var possibleDuplicateListItems = new List<PossibleDuplicateListItemDO>();
@@ -1291,7 +1288,6 @@ namespace FindMyFamilies.BusinessObject {
             researchDO.Generation = possibleDuplicateInputDO.Generation;
             researchDO.ReportId = possibleDuplicateInputDO.ReportId;
             researchDO.PersonName = possibleDuplicateInputDO.PersonName;
-
 
             var ancestors = getPersons(ref researchDO, ref session);
 
@@ -1309,9 +1305,9 @@ namespace FindMyFamilies.BusinessObject {
                     }
                 }
             }
-            return possibleDuplicateListItems.OrderByDescending(o=>o.Count).ToList();;
+            return possibleDuplicateListItems.OrderByDescending(o => o.Count).ToList();
+            ;
         }
-
 
         private void AssignAscendancy(ref ResearchDO researchDO, ref SessionDO session, ref Dictionary<string, PersonDO> persons) {
             var totalCount = persons.Count;
@@ -1329,7 +1325,7 @@ namespace FindMyFamilies.BusinessObject {
             //  Assign assendancy to each person
             if ((persons != null) && (persons.Count > 0)) {
                 var currentPerson = persons[researchDO.CurrentPersonId];
-//                currentPerson.AscendancyNumber = 1;
+                //                currentPerson.AscendancyNumber = 1;
                 if (currentPerson.HasSpouse) {
                     foreach (var spouseDo in currentPerson.Spouses) {
                         persons[spouseDo.Value.Id].AscendancyNumber = currentPerson.AscendancyNumber + 1;
@@ -1345,21 +1341,21 @@ namespace FindMyFamilies.BusinessObject {
                 do {
                     foundAsendancyNumberZero = false;
                     foreach (var personDo in persons) {
-//                        if (personDo.Value.Ancestor && personDo.Value.AscendancyNumber > 0) {
-//                            if (currentPerson.HasParents) {
-//                                foreach (var parentDo in personDo.Value.Parents) {
-//                                    if (persons[parentDo.Value.Id].AscendancyNumber == 0) {
-//                                        persons[parentDo.Value.Id].AscendancyNumber = personDo.Value.AscendancyNumber + 1;
-//                                        persons[parentDo.Value.Id].DirectLine = true;
-//                                        break;
-//                                    }
-//                                }
-//                            }
-//                        } else {
-//                            if (personDo.Value.Ancestor) {
-//                                foundAsendancyNumberZero = true;
-//                            }
-//                        }
+                        //                        if (personDo.Value.Ancestor && personDo.Value.AscendancyNumber > 0) {
+                        //                            if (currentPerson.HasParents) {
+                        //                                foreach (var parentDo in personDo.Value.Parents) {
+                        //                                    if (persons[parentDo.Value.Id].AscendancyNumber == 0) {
+                        //                                        persons[parentDo.Value.Id].AscendancyNumber = personDo.Value.AscendancyNumber + 1;
+                        //                                        persons[parentDo.Value.Id].DirectLine = true;
+                        //                                        break;
+                        //                                    }
+                        //                                }
+                        //                            }
+                        //                        } else {
+                        //                            if (personDo.Value.Ancestor) {
+                        //                                foundAsendancyNumberZero = true;
+                        //                            }
+                        //                        }
                     }
                 } while (foundAsendancyNumberZero);
             }
@@ -1384,7 +1380,7 @@ namespace FindMyFamilies.BusinessObject {
             if ((persons != null) && (persons.Count > 0)) {
                 var id = 1;
                 foreach (var personDo in persons) {
-//                    validate(ref id, personDo.Value.Id, ref persons, null, ref ResearchDO);
+                    //                    validate(ref id, personDo.Value.Id, ref persons, null, ref ResearchDO);
                     id++;
                 }
             }
@@ -1400,7 +1396,6 @@ namespace FindMyFamilies.BusinessObject {
             }
             return GetPersonsFromReport(reportFilePath);
         }
-
 
         public Dictionary<string, PersonDO> GetPersonsFromReport(string reportFilePath) {
             Dictionary<string, PersonDO> persons = null;
@@ -1537,10 +1532,10 @@ namespace FindMyFamilies.BusinessObject {
                 foreach (var personDo in persons) {
                     if (personDo.Value.HasParents) {
                         foreach (var parentDo in personDo.Value.Parents) {
-//                            if (persons[parentDo.Value.Id].AscendancyNumber > 0) {
-//                                persons[personDo.Value.Id].AscendancyNumber = persons[parentDo.Value.Id].AscendancyNumber;
-//                                break;
-//                            }
+                            //                            if (persons[parentDo.Value.Id].AscendancyNumber > 0) {
+                            //                                persons[personDo.Value.Id].AscendancyNumber = persons[parentDo.Value.Id].AscendancyNumber;
+                            //                                break;
+                            //                            }
                         }
                     }
                 }
@@ -1548,34 +1543,34 @@ namespace FindMyFamilies.BusinessObject {
                 //  Assign assendancy to each person
                 if ((persons != null) && (persons.Count > 0)) {
                     var currentPerson = persons[researchDO.PersonId];
-//                    currentPerson.AscendancyNumber = 1;
+                    //                    currentPerson.AscendancyNumber = 1;
                     if (currentPerson.HasParents) {
                         foreach (var parentDo in currentPerson.Parents) {
                             persons[parentDo.Value.Id].AscendancyNumber = currentPerson.AscendancyNumber + 1;
                         }
                     }
                     foreach (var personDo in persons) {
-//                        if (personDo.Value.AscendancyNumber > 0) {
-//                            if (currentPerson.HasParents) {
-//                                foreach (var parentDo in personDo.Value.Parents) {
-//                                    persons[parentDo.Value.Id].AscendancyNumber = personDo.Value.AscendancyNumber + 1;
-//                                    persons[parentDo.Value.Id].DirectLine = true;
-//                                }
-//                            }
-//                        }
+                        //                        if (personDo.Value.AscendancyNumber > 0) {
+                        //                            if (currentPerson.HasParents) {
+                        //                                foreach (var parentDo in personDo.Value.Parents) {
+                        //                                    persons[parentDo.Value.Id].AscendancyNumber = personDo.Value.AscendancyNumber + 1;
+                        //                                    persons[parentDo.Value.Id].DirectLine = true;
+                        //                                }
+                        //                            }
+                        //                        }
                     }
                     foreach (var personDo in persons) {
-//                        if (personDo.Value.AscendancyNumber == 0) {
-//                            if (personDo.Value.HasParents) {
-//                                foreach (var parentDo in personDo.Value.Parents) {
-//                                    if (persons[parentDo.Value.Id].AscendancyNumber > 0) {
-//                                        persons[personDo.Value.Id].AscendancyNumber = persons[parentDo.Value.Id].AscendancyNumber - 1;
-//                                        // could this be a cousin
-//                                        break;
-//                                    }
-//                                }
-//                            }
-//                        }
+                        //                        if (personDo.Value.AscendancyNumber == 0) {
+                        //                            if (personDo.Value.HasParents) {
+                        //                                foreach (var parentDo in personDo.Value.Parents) {
+                        //                                    if (persons[parentDo.Value.Id].AscendancyNumber > 0) {
+                        //                                        persons[personDo.Value.Id].AscendancyNumber = persons[parentDo.Value.Id].AscendancyNumber - 1;
+                        //                                        // could this be a cousin
+                        //                                        break;
+                        //                                    }
+                        //                                }
+                        //                            }
+                        //                        }
                     }
                 }
             }
@@ -1614,9 +1609,7 @@ namespace FindMyFamilies.BusinessObject {
                     report.ReportType = "Research";
                     report.ReportBy = session.Username;
                     report.ReportDate = Dates.TodaysDateTime();
-                    report.ReportDescription = (!string.IsNullOrEmpty(researchDO.ReportTitle) ? researchDO.ReportTitle + ". " : "") + "Name: " +researchDO.PersonId + " - " + researchDO.PersonName + ", Date:  " +
-                        report.ReportDate.ToString(Constants.DATETIME_FORMAT_HM) + ", Research Type: " + researchDO.ResearchType + ",  Generations: " + researchDO.Generation + ", Records: " +
-                        persons.Count;
+                    report.ReportDescription = (!string.IsNullOrEmpty(researchDO.ReportTitle) ? researchDO.ReportTitle + ". " : "") + "Name: " + researchDO.PersonId + " - " + researchDO.PersonName + ", Date:  " + report.ReportDate.ToString(Constants.DATETIME_FORMAT_HM) + ", Research Type: " + researchDO.ResearchType + ",  Generations: " + researchDO.Generation + ", Records: " + persons.Count;
                     report.ReportFile = FilePathHelper.GetTempPath() + "/" + researchDO.CurrentPersonId + "_" + DateTime.Now.ToString("yyyyMMddHHmm") + "_Persons.bin";
                     PersonServices.Instance.CreateReport(report);
                     researchDO.ReportId = report.ReportId;
@@ -1915,9 +1908,9 @@ namespace FindMyFamilies.BusinessObject {
             if (!children.ContainsKey(personGx.Id)) {
                 var personDo = personDAO.GetPerson(personGx);
                 if (personDo != null) {
-//                    if (personDo.AscendancyNumber == 0) {
-//                        personDo.AscendancyNumber = asendancyNumber - 1;
-//                    }
+                    //                    if (personDo.AscendancyNumber == 0) {
+                    //                        personDo.AscendancyNumber = asendancyNumber - 1;
+                    //                    }
                     children.Add(personGx.Id, personDo);
                 }
             }
@@ -1925,9 +1918,9 @@ namespace FindMyFamilies.BusinessObject {
 
         private void AddChildren(PersonDO personDo, Dictionary<string, PersonDO> children, int asendancyNumber) {
             if (!children.ContainsKey(personDo.Id)) {
-//                if (personDo.AscendancyNumber == 0) {
-//                    personDo.AscendancyNumber = asendancyNumber - 1;
-//                }
+                //                if (personDo.AscendancyNumber == 0) {
+                //                    personDo.AscendancyNumber = asendancyNumber - 1;
+                //                }
                 children.Add(personDo.Id, personDo);
             }
         }
@@ -1936,9 +1929,9 @@ namespace FindMyFamilies.BusinessObject {
             if (!parents.ContainsKey(personGx.Id)) {
                 var personDo = personDAO.GetPerson(personGx);
                 if (personDo != null) {
-//                    if (personDo.AscendancyNumber == 0) {
-//                        personDo.AscendancyNumber = asendancyNumber + 1;
-//                    }
+                    //                    if (personDo.AscendancyNumber == 0) {
+                    //                        personDo.AscendancyNumber = asendancyNumber + 1;
+                    //                    }
                     parents.Add(personGx.Id, personDo);
                 }
             }
@@ -1946,9 +1939,9 @@ namespace FindMyFamilies.BusinessObject {
 
         private void AddParent(PersonDO personDo, Dictionary<string, PersonDO> parents, int asendancyNumber) {
             if (!parents.ContainsKey(personDo.Id)) {
-//                if (personDo.AscendancyNumber == 0) {
-//                    personDo.AscendancyNumber = asendancyNumber + 1;
-//                }
+                //                if (personDo.AscendancyNumber == 0) {
+                //                    personDo.AscendancyNumber = asendancyNumber + 1;
+                //                }
                 parents.Add(personDo.Id, personDo);
             }
         }
@@ -1958,9 +1951,9 @@ namespace FindMyFamilies.BusinessObject {
                 if (!spouses.ContainsKey(personGx.Id)) {
                     var personDo = personDAO.GetPerson(personGx);
                     if (personDo != null) {
-//                        if (personDo.AscendancyNumber == 0) {
-//                            personDo.AscendancyNumber = asendancyNumber;
-//                        }
+                        //                        if (personDo.AscendancyNumber == 0) {
+                        //                            personDo.AscendancyNumber = asendancyNumber;
+                        //                        }
                         spouses.Add(personGx.Id, personDo);
                     }
                 }
@@ -1973,9 +1966,9 @@ namespace FindMyFamilies.BusinessObject {
 
         private void AddSpouse(PersonDO personDo, Dictionary<string, PersonDO> spouses, int asendancyNumber) {
             if (!spouses.ContainsKey(personDo.Id)) {
-//                if (personDo.AscendancyNumber == 0) {
-//                    personDo.AscendancyNumber = asendancyNumber;
-//                }
+                //                if (personDo.AscendancyNumber == 0) {
+                //                    personDo.AscendancyNumber = asendancyNumber;
+                //                }
                 spouses.Add(personDo.Id, personDo);
             }
         }
@@ -1984,9 +1977,9 @@ namespace FindMyFamilies.BusinessObject {
             if (!persons.ContainsKey(personGx.Id)) {
                 var personDo = personDAO.GetPerson(personGx);
                 if (personDo != null) {
-//                    if (personDo.AscendancyNumber == 0) {
-//                        personDo.AscendancyNumber = asendancyNumber;
-//                    }
+                    //                    if (personDo.AscendancyNumber == 0) {
+                    //                        personDo.AscendancyNumber = asendancyNumber;
+                    //                    }
                     persons.Add(personGx.Id, personDo);
                 }
             }
@@ -1994,9 +1987,9 @@ namespace FindMyFamilies.BusinessObject {
 
         private void AddPerson(PersonDO personDo, Dictionary<string, PersonDO> persons, int asendancyNumber) {
             if (!persons.ContainsKey(personDo.Id)) {
-//                if (personDo.AscendancyNumber == 0) {
-//                    personDo.AscendancyNumber = asendancyNumber;
-//                }
+                //                if (personDo.AscendancyNumber == 0) {
+                //                    personDo.AscendancyNumber = asendancyNumber;
+                //                }
                 persons.Add(personDo.Id, personDo);
             }
         }
@@ -2015,9 +2008,9 @@ namespace FindMyFamilies.BusinessObject {
 
             var person = persons[personId];
             personDAO.PopulateFindListItem(person, ref findListItemDO);
-//            analyzeListItemDO.Name = person.Id + "~" + person.Fullname;
+            //            analyzeListItemDO.Name = person.Id + "~" + person.Fullname;
             if (person.Id.Equals("KWCN-2VW")) {
-                string test= "";
+                string test = "";
             }
             var criteriaId = 2;
             try {
@@ -2124,7 +2117,7 @@ namespace FindMyFamilies.BusinessObject {
                         analyzeListItemDO.helpers = criteriaId;
                         analyzeListItems.Add(analyzeListItemDO);
                     }
-                    if (MeetsCriteria(findCluesInputDo, person, 12) && (person.IsFemale  && ((person.NumberOfChildren > 0) && (person.LastChild.BirthYear > 1000) && (person.YearsLived > 39) && ((person.LastChild.BirthYear + 35) < (person.BirthYear + 40))))) {
+                    if (MeetsCriteria(findCluesInputDo, person, 12) && (person.IsFemale && ((person.NumberOfChildren > 0) && (person.LastChild.BirthYear > 1000) && (person.YearsLived > 39) && ((person.LastChild.BirthYear + 35) < (person.BirthYear + 40))))) {
                         //                    analyzeListItemDO.Id = id;
                         //                    analyzeListItemDO.PersonId = person.Id;
                         //                    analyzeListItemDO.FullName = person.Fullname;
@@ -2279,10 +2272,7 @@ namespace FindMyFamilies.BusinessObject {
                         //}
                     }
                 }
-
-
             } catch (Exception e) {
-                
                 throw e;
             }
 

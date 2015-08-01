@@ -152,6 +152,11 @@ define(function(require) {
         retrieve.reset();
         updateForm();
     }
+    
+    function resetReportId() {
+        person.resetReportId($("#startingPointReportId"));
+        updateResearchData();
+    }
 
     function loadEvents() {
         $("#retrievePerson").change(function(e) {
@@ -193,11 +198,6 @@ define(function(require) {
                     if (changed) {
                         person.id = findPersonModel.id;
                         person.name = findPersonModel.name;
-                        if (retrieve.findReport()) {
-                            updateResearchData();
-                        } else {
-                            resetReportId();
-                        }
                     }
                     retrieve.save();
                     person.loadPersons($("#retrievePersonId"));

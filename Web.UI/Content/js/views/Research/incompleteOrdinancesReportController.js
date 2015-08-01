@@ -98,7 +98,7 @@ define(function (require) {
 
         if (incompleteOrdinances.displayType === "start") {
             $.ajax({
-                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "nonMormon": incompleteOrdinances.nonMormon, "born18101850": incompleteOrdinances.born18101850, "livedInUSA": incompleteOrdinances.livedInUSA, "needOrdinances": incompleteOrdinances.ordinances, "hint": incompleteOrdinances.hints, "duplicate": incompleteOrdinances.duplicates, "reportId": person.reportId },
+                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "reportId": person.reportId },
                 url: constants.INCOMPLETE_ORDINANCES_REPORT_DATA_URL,
                 success: function (data) {
                     incompleteOrdinances.previous = data;
