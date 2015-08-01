@@ -5,7 +5,7 @@
     var constants = require('constants');
 
     var _formName = "feedbackForm";
-    var _formTitleImage = "glyphicon glyphicon-bullhorn";
+    var _formTitleImage = "fa fmf-feedback24";
     var _form = $("#feedbackForm");
     var _spinner = "feedbackSpinner";
 

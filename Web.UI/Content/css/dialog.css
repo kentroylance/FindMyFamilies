@@ -343,3 +343,7 @@ hr {
      width: 100% !important;
      float: right !important;
  }
+
+ textarea {
+     resize: none;
+ }
