@@ -5,7 +5,7 @@
     var constants = require('constants');
 
     var _formName = "findCluesForm";
-    var _formTitleImage = "fa fmf-compass24";
+    var _formTitleImage = "fa fmf-clue24";
     var _form = $("#findCluesForm");
     var _previous;
     var _displayType = "start";
