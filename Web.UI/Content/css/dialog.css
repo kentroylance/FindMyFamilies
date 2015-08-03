@@ -307,6 +307,9 @@ hr {
 .addChildren-box {
     width: 190px !important;
 }
+.decendants-input {
+    width: 70px;
+}
 
 .name-colom {
     width: 305px !important;
