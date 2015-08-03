@@ -10,14 +10,15 @@
         $('#layerslider').layerSlider({
             imgPreload: false,
             lazyLoad: true,
-            pauseOnHover: false,
+            pauseOnHover: true,
             autoPlayVideos: false,
             autoStart: true,
             firstLayer: 1,
             showBarTimer: true,
             showCircleTimer: false,
+            responsive: true,
             skin: 'borderlesslight',
-            skinsPath: '/Release/LayerSlider/layerslider/skins/'
+            skinsPath: '/Content/LayerSlider/layerslider/skins/'
         });
         $("img.lazy").lazyload({
             threshold: 200
