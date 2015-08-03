@@ -733,7 +733,7 @@ h1 i, h2 i, h3 i, h4 i, h5 i, h6 i {
 .btn-slider {
     width: auto;
     height: auto;
-    font-size: 1.1vw;
+    font-size: 1.15vw;
 }
 
 @media (min-width: 767px) and (max-width: 991px) {
