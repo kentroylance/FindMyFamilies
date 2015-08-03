@@ -84,11 +84,47 @@ define(function(require) {
 
         window.nameEvents = {
             'click .personAction': function(e, value, row, index) {
-                if ($(this).children().length <= 1) {
-                    $(this).append(findPersonHelper.getMenuOptions(row));
-                }
+                //                if ($(this).children().length <= 1) {
+               // $(this).empty();
+                $(this).append(findPersonHelper.getMenuOptions(row));
+//                }
+            },
+            'mouseout .personAction1': function (e, value, row, index) {
+                $('#id1').hide();
+//                if ($(this).children().length <= 1) {
+//                    $(this).append(findPersonHelper.getMenuOptions(row));
+//                }
+            },
+            'mouseover .personAction1': function (e, value, row, index) {
+                $('#content').empty();
+                $('#content').append('<label>' + row.fullName + '</label><br>ID: ' + row.id + '<br>Birth: ' + row.birthYear);
+//                var vpWidth = 200;
+//                var diameter = Math.min(vpWidth, window.viewportSize.getHeight() - 68);
+//                var left = vpWidth / 2;
+//                var depth = parseInt($("#depth").val());
+//                var identityDialog = window.document.getElementById('id1');
+//                var $identityDialog = $(identityDialog);
+//                var spacing = 30;//
+//                var idWidth = $identityDialog.width() + 20;//+border+padding
+//                var idx = event.layerX > left ? event.clientX - idWidth - spacing : event.clientX + spacing;
+//                var idHeight = $identityDialog.height() + 20;//+border+padding
+//                var idy = event.layerY > top ? event.clientY - idHeight - spacing : event.clientY + spacing;
+//                if (idx < 15) idx = 15;
+//                var winWidth = window.viewportSize.getWidth();
+//                var winHeight = window.viewportSize.getHeight();
+//                if ((idx + idWidth) > (winWidth - 10)) idx = winWidth - 10 - idWidth;
+//                if ((idy + idHeight) > (winHeight - 8)) idy = winHeight - 8 - idHeight;
+                //                $identityDialog.css("left", idx).css("top", idy).css('border', '2px solid #ddd').show();
+//                $identityDialog.css('border', '2px solid #a8a8a8')
+//                $('#id1Close').show();
+                $('#id1').show();
+
+
+
             }
-        };
+
+            
+    };
 
         var $result = $('#eventsResult');
 
@@ -247,6 +283,7 @@ define(function(require) {
 
             });
 
+
     }
 
     function validateRow1(fv) {
@@ -275,6 +312,7 @@ define(function(require) {
     }
 
     function open() {
+        $("#popover").popover({ trigger: "hover" });
         findPerson.form = $("#findPersonForm");
         loadEvents();
         system.openForm(findPerson.form, findPerson.formTitleImage, findPerson.spinner);
@@ -339,6 +377,15 @@ define(function(require) {
     researchHelper.findPersonController = findPersonController;
     open();
 
+    $(function() {
+//        $('[data-toggle="popover"]').popover();
+        $('a[rel=popover]').popover({
+            html: 'true',
+            placement: 'right'
+        });
+    });
+
+
     return findPersonController;
 });
 
@@ -348,7 +395,7 @@ var _findSystem = require('system');
 function nameFormatter(value, row, index) {
     var result = "";
     if (row && row.id) {
-        result = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default dropdown-btn\"><span style=\"color: " + _findPerson.getPersonColor(row.gender) + "\">" + _findPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
+        result = "<div class=\"btn-group\"><button type=\"button\" rel=\"popover\" data-placement=\"right\" data-original-title=\"Fill in form\" class=\"btn btn-default dropdown-btn personAction1\"><span style=\"color: " + _findPerson.getPersonColor(row.gender) + "\">" + _findPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
     }
     return [result].join('');
 }

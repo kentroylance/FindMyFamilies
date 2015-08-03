@@ -169,7 +169,7 @@ function reasonsFormatter(value) {
                 result += "<p>No birth place</p>";
             } else if (reason.indexOf("IncompleteOrdinances") > -1) {
                 var ordinances = reason.substring(reason.indexOf("[") + 1, reason.length - 2);
-                result += "<p>IncompleteOrdinances - <b>" + ordinances + "</b></p>";
+                result += "<p>IncompleteOrdinances - </p>" + ordinances + "<p></p>";
             } else {
                 result = value;
             }

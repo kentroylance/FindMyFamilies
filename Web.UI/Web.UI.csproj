@@ -157,6 +157,7 @@
     <Content Include="Content\css\research.png" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\transparent.png" />
+    <Content Include="Content\css\vendor\bootstrap-dialog.min.css" />
     <Content Include="Content\css\vendor\formValidation.css" />
     <Content Include="Content\css\vendor\formValidation.min.css" />
     <Content Include="Content\css\vendor\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -410,6 +411,7 @@
     <Content Include="Content\images\Work Sheet-Auto Format.png" />
     <Content Include="Content\images\Work Sheet.png" />
     <Content Include="Content\js\lib\jqueryUiOptions.js" />
+    <Content Include="Content\js\vendor\bootstrap-dialog.min.js" />
     <Content Include="Content\js\vendor\formvalidation\formValidation.js" />
     <Content Include="Content\js\vendor\formvalidation\formValidation.min.js" />
     <Content Include="Content\js\vendor\formvalidation\formValidation.popular.js" />

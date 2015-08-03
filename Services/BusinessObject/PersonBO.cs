@@ -895,57 +895,63 @@ namespace FindMyFamilies.BusinessObject {
             personDAO.PopulateFindListItem(personDO, ref findListItemDO);
 
             if (ordinance.Baptism != null) {
-                listItem.Baptism = ordinance.Baptism.status;
+                listItem.Status += "<p>Baptism: <b>" + ordinance.Baptism.status;
                 if (!ordinance.Baptism.completed) {
                     if (ordinance.Baptism.reservable) {
-                        listItem.Baptism += " - Reservable"; // + ordinance.Baptism.reservable;
+                        listItem.Status += " - Reservable"; // + ordinance.Baptism.reservable;
                     } else {
-                        listItem.Baptism += " - " + ordinance.Baptism.reservable;
+                        listItem.Status += " - " + ordinance.Baptism.reservable;
                     }
                 }
+                listItem.Status += "</b></p>";
             }
             if (ordinance.Confirmation != null) {
-                listItem.Confirmation = ordinance.Confirmation.status;
+                listItem.Status  +=  "<p>Confirmation: <b>" + ordinance.Confirmation.status;
                 if (!ordinance.Confirmation.completed) {
-                    listItem.Confirmation += " - Reservable"; // + ordinance.Confirmation.reservable;
+                    listItem.Status += " - Reservable"; // + ordinance.Confirmation.reservable;
                 } else {
-                    listItem.Confirmation += " - " + ordinance.Confirmation.reservable;
+                    listItem.Status += " - " + ordinance.Confirmation.reservable;
                 }
+                listItem.Status += "</b></p>";
             }
             if (ordinance.Initiatory != null) {
-                listItem.Initiatory = ordinance.Initiatory.status;
+                listItem.Status  +=  "<p>Initiatory: <b>" + ordinance.Initiatory.status;
                 if (!ordinance.Initiatory.completed) {
-                    listItem.Initiatory += " - Reservable"; // + ordinance.Initiatory.reservable;
+                    listItem.Status += " - Reservable"; // + ordinance.Initiatory.reservable;
                 } else {
-                    listItem.Initiatory += " - " + ordinance.Initiatory.reservable;
+                    listItem.Status += " - " + ordinance.Initiatory.reservable;
                 }
+                listItem.Status += "</b></p>";
             }
             if (ordinance.Endowment != null) {
-                listItem.Endowment = ordinance.Endowment.status;
+                listItem.Status  +=  "<p>Endowment: <b>" + ordinance.Endowment.status;
                 if (!ordinance.Endowment.completed) {
-                    listItem.Endowment += " - Reservable"; // + ordinance.Endowment.reservable;
+                    listItem.Status += " - Reservable"; // + ordinance.Endowment.reservable;
                 } else {
-                    listItem.Endowment += " - " + ordinance.Endowment.reservable;
+                    listItem.Status += " - " + ordinance.Endowment.reservable;
                 }
+                listItem.Status += "</b></p>";
             }
             if (ordinance.SealedToParent != null) {
-                listItem.SealedToParent = ordinance.SealedToParent.status;
+                listItem.Status +=  "<p>Sealed To Parent: <b>" + ordinance.SealedToParent.status;
                 if (!ordinance.SealedToParent.completed) {
-                    listItem.SealedToParent += " - Reservable"; // + ordinance.SealedToParent.reservable;
+                    listItem.Status += " - Reservable"; // + ordinance.SealedToParent.reservable;
                 } else {
-                    listItem.SealedToParent += " - " + ordinance.SealedToParent.reservable;
+                    listItem.Status += " - " + ordinance.SealedToParent.reservable;
                 }
+                listItem.Status += "</b></p>";
             }
             if (ordinance.SealedToSpouse != null) {
-                listItem.SealedToSpouse = ordinance.SealedToSpouse.status;
+                listItem.Status  +=  "<p>Sealed To Spouse: <b>" + ordinance.SealedToSpouse.status;
                 if (!ordinance.SealedToSpouse.completed) {
-                    listItem.SealedToSpouse += " - Reservable"; // + ordinance.SealedToSpouse.reservable;
+                    listItem.Status += " - Reservable"; // + ordinance.SealedToSpouse.reservable;
                 } else {
-                    listItem.SealedToSpouse += " - " + ordinance.SealedToSpouse.reservable;
+                    listItem.Status += " - " + ordinance.SealedToSpouse.reservable;
                 }
+                listItem.Status += "</b></p>";
             } else {
                 if (ordinance.Baptism.status.Equals("Not Needed")) {
-                    listItem.SealedToSpouse = "No Spouse";
+                    listItem.Status  +=  "<p>No Spouse</p>";
                 }
             }
             return listItem;
@@ -955,36 +961,36 @@ namespace FindMyFamilies.BusinessObject {
             string ordinanceInfo = "";
             if (ordinance.Baptism != null) {
                 if (!ordinance.Baptism.completed) {
-                    ordinanceInfo += "Baptism: " + ordinance.Baptism.status + " Reservable: " + ordinance.Baptism.reservable + ", ";
+                    ordinanceInfo += "<p>&nbsp;&nbsp;&nbsp;Baptism: <b>" + ordinance.Baptism.status + " Reservable: " + ordinance.Baptism.reservable + "</b></p>";
                 }
             }
             if (ordinance.Confirmation != null) {
                 if (!ordinance.Confirmation.completed) {
-                    ordinanceInfo += "Confirmation: " + ordinance.Confirmation.status + " Reservable: " + ordinance.Confirmation.reservable + ", ";
+                    ordinanceInfo += "<p>&nbsp;&nbsp;&nbsp;Confirmation: <b>" + ordinance.Confirmation.status + " Reservable: " + ordinance.Confirmation.reservable + "</b></p>";
                 }
             }
             if (ordinance.Initiatory != null) {
                 if (!ordinance.Initiatory.completed) {
-                    ordinanceInfo += "Initiatory: " + ordinance.Initiatory.status + " Reservable: " + ordinance.Initiatory.reservable + ", ";
+                    ordinanceInfo += "<p>&nbsp;&nbsp;&nbsp;Initiatory: <b>" + ordinance.Initiatory.status + " Reservable: " + ordinance.Initiatory.reservable + "</b></p>";
                 }
             }
             if (ordinance.Endowment != null) {
                 if (!ordinance.Endowment.completed) {
-                    ordinanceInfo += "Endowment: " + ordinance.Endowment.status + " Reservable: " + ordinance.Endowment.reservable + ", ";
+                    ordinanceInfo += "<p>&nbsp;&nbsp;&nbsp;Endowment: <b>" + ordinance.Endowment.status + " Reservable: " + ordinance.Endowment.reservable + "</b></p>";
                 }
             }
             if (ordinance.SealedToParent != null) {
                 if (!ordinance.SealedToParent.completed) {
-                    ordinanceInfo += "SealedToParent: " + ordinance.SealedToParent.status + " Reservable: " + ordinance.SealedToParent.reservable + ", ";
+                    ordinanceInfo += "<p>&nbsp;&nbsp;&nbsp;SealedToParent: <b>" + ordinance.SealedToParent.status + " Reservable: " + ordinance.SealedToParent.reservable + "</b></p>";
                 }
             }
             if (ordinance.SealedToSpouse != null) {
                 if (!ordinance.SealedToSpouse.completed) {
-                    ordinanceInfo += "SealedToSpouse: " + ordinance.SealedToSpouse.status + " Reservable: " + ordinance.SealedToSpouse.reservable + ", ";
+                    ordinanceInfo += "<p>&nbsp;&nbsp;&nbsp;SealedToSpouse: <b>" + ordinance.SealedToSpouse.status + " Reservable: " + ordinance.SealedToSpouse.reservable + "</b></p>";
                 }
             } else {
                 if (ordinance.Baptism.status.Equals("Not Needed")) {
-                    ordinanceInfo += "No Spouse";
+                    ordinanceInfo += "<p>&nbsp;&nbsp;&nbsp;No Spouse</p>";
                 }
             }
             return ordinanceInfo;
@@ -1240,7 +1246,7 @@ namespace FindMyFamilies.BusinessObject {
                 foreach (var ancestor in ancestors) {
                     if (!startingPoints.ContainsKey(ancestor.Value.Id)) {
                         startingPointListItemDO = GetStartingPoints(ancestor.Value, startingPointInputDO, ref session);
-                        if (startingPointListItemDO.Reasons.Length > 0) {
+                        if ((startingPointListItemDO.Reasons != null) && (startingPointListItemDO.Reasons.Length > 0)) {
                             startingPointListItems.Add(startingPointListItemDO);
                         }
                     }

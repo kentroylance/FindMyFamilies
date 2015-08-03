@@ -1,13 +1,44 @@
 <style type="text/css">
     /* Adjust feedback icon position */
-    #findPersonForm .form-control-feedback {
-        right: 15px;
+    #findPersonForm .form-control-feedback { right: 15px; }
+
+    #findPersonForm .selectContainer .form-control-feedback { right: 25px; }
+
+    .btn-popover-container { display: inline-block; }
+
+    .btn-popover-container .btn-popover-title, .btn-popover-container .btn-popover-content { display: none; }
+
+    .eventsTable {
+        overflow-x: visible !important;
+        overflow-y: visible !important;
     }
 
-    #findPersonForm .selectContainer .form-control-feedback {
-        right: 25px;
+    .identity {
+        background: rgba(240, 240, 240, 0.7);
+        width: 260px;
+        /*height: 4.5em;*/
+        padding: 8px;
+     float: none;
+     margin-left: auto;
+     margin-right: auto;
+        z-index: 2;
+        box-shadow: 4px 7px 5px 2px rgba(200, 200, 200, 0.3);
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -khtml-border-radius: 10px;
+        border-radius: 10px;
+        display: none;
+        margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
     }
+
+
 </style>
+
+@*<link href="~/Content/css/vendor/bootstrap-dialog.min.css" rel="stylesheet" type="text/css"/>*@
 <div class="panel-body">
     <!-- Basic Form -->
     <div class="panel panel-blue">
@@ -17,15 +48,15 @@
                     <div class="row">
                         <div class="col-xs-2">
                             <label class="control-label">ID Number</label>
-                            <input type="text" class="form-control" name="personId" id="personId" />
+                            <input type="text" class="form-control" name="personId" id="personId"/>
                         </div>
                         <div class="col-xs-5">
                             <label class="control-label">First Name</label>
-                            <input type="text" class="form-control" name="firstName" id="firstName" />
+                            <input type="text" class="form-control" name="firstName" id="firstName"/>
                         </div>
                         <div class="col-xs-5">
                             <label class="control-label">Last Name</label>
-                            <input type="text" class="form-control" name="lastName" id="lastName" />
+                            <input type="text" class="form-control" name="lastName" id="lastName"/>
                         </div>
                     </div>
                 </div>
@@ -66,6 +97,7 @@
 
 <div>
     <table id="eventsTable"
+           data-classes="eventsTable"
            data-toggle="table"
            data-height="275"
            data-pagination="true"
@@ -92,20 +124,29 @@
     <div class="text-center">
         <button id="findPersonSelectButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-ok24 dialog-buttons"></i> Select</button>
         <button type='button' id="optionsButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-options24 dialog-buttons"></i> Options</button>
-                <div class="btn-group">
-                    <button type="button" id="helpButton" class=" btn-u btn-brd btn-brd-hover rounded btn-u-blue btn btn-primary dropdown-toggle" data-toggle="dropdown" data-style="expand-left">
-                        <i class="fa fmf-help24 dialog-buttons"></i>
-                        Help
-                    </button>
-                    <ul class="dropdown-menu help-dropdown" role="menu">
-                        <li><a href="#">Video</a></li>
-                        <li><a href="#">Tutorial</a></li>
-                    </ul>
-                </div>
+        <div class="btn-group">
+            <button type="button" id="helpButton" class=" btn-u btn-brd btn-brd-hover rounded btn-u-blue btn btn-primary dropdown-toggle" data-toggle="dropdown" data-style="expand-left">
+                <i class="fa fmf-help24 dialog-buttons"></i>
+                Help
+            </button>
+            <ul class="dropdown-menu help-dropdown" role="menu">
+                <li>
+                    <a href="#">Video</a>
+                </li>
+                <li>
+                    <a href="#">Tutorial</a>
+                </li>
+            </ul>
+        </div>
         <button type='button' id="findPersonCloseButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-close24 dialog-buttons"></i> Close</button>
     </div>
 </div>
-<div id="findPersonSpinner" />
+<div id="findPersonSpinner"/>
+
+<div id="id1" style="border: 2px solid rgb(168, 168, 168); display: none;" class="identity">
+    <div id="content"></div>
+</div>
 
 <script type="text/javascript" src="~/Content/js/vendor/bootstrap-table.min.js"></script>
-<script type="text/javascript">require(['main'], function (main) { require(['findPersonController']); });</script>
+@*<script type="text/javascript" src="~/Content/js/vendor/bootstrap-dialog.min.js"></script>*@
+<script type="text/javascript">require(['main'], function(main) { require(['findPersonController']); });</script>

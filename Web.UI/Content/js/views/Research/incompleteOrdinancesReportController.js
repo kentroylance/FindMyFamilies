@@ -139,18 +139,8 @@ function nameFormatter(value, row, index) {
     return result;
 }
 
-function ordinanceFormatter(value) {
-    var result = "";
-    if (value != null) {
-        if (value.indexOf("~") > -1) {
-            var status = value.substring(0, value.indexOf("~"));
-            var reservable = value.substring(value.indexOf("~") + 1, value.size);
-            result = "<p>" + status + "</p><p>" + reservable + "</p>";
-        } else {
-            result = value;
-        }
-    }
-    return result;
+function statusFormatter(value) {
+    return value;
 }
 
 //# sourceURL=incompleteOrdinancesReportController.js

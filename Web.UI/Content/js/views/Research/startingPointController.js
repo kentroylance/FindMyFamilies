@@ -340,7 +340,7 @@ define(function(require) {
             startingPoint.nonMormon = $("#startingPointNonMormon").prop("checked");
             if (startingPoint.nonMormon) {
                 $('#startingPointOrdinances').prop('checked', true);
-                msgBox.warning("Selecting <b>NonMormon</b> will add 1-3 seconds more time for each " + startingPoint.researchType.substring(0, startingPoint.researchType.length - 1) + " that is processed.");
+                msgBox.warning("Selecting <b>NonMormon</b> will add 1-3 seconds more time for each " + person.researchType.substring(0, person.researchType.length - 1) + " that is processed.");
             }
         });
 
@@ -356,7 +356,7 @@ define(function(require) {
             startingPoint.ordinances = $("#startingPointOrdinances").prop("checked");
             if (startingPoint.ordinances) {
                 $('#startingPointNonMormon').prop('checked', true);
-                msgBox.warning("Selecting <b>IncompleteOrdinances</b> will add 1-3 seconds more time for each " + startingPoint.researchType.substring(0, startingPoint.researchType.length - 1) + " that is processed.");
+                msgBox.warning("Selecting <b>IncompleteOrdinances</b> will add 1-3 seconds more time for each " + person.researchType.substring(0, person.researchType.length - 1) + " that is processed.");
             }
 
         });
@@ -364,14 +364,14 @@ define(function(require) {
         $("#startingPointHints").change(function(e) {
             startingPoint.hints = $("#startingPointHints").prop("checked");
             if (startingPoint.hints) {
-                msgBox.warning("Selecting <b>Hints</b> will add 1-3 seconds more time for each " + startingPoint.researchType.substring(0, startingPoint.researchType.length - 1) + " that is processed.");
+                msgBox.warning("Selecting <b>Hints</b> will add 1-3 seconds more time for each " + person.researchType.substring(0, person.researchType.length - 1) + " that is processed.");
             }
         });
 
         $("#startingPointDuplicates").change(function(e) {
             startingPoint.duplicates = $("#startingPointDuplicates").prop("checked");
             if (startingPoint.duplicates) {
-                msgBox.warning("Selecting <b>Possible Duplicates</b> will add 1-3 seconds more time for each " + startingPoint.researchType.substring(0, startingPoint.researchType.length - 1) + " that is processed.");
+                msgBox.warning("Selecting <b>Possible Duplicates</b> will add 1-3 seconds more time for each " + person.researchType.substring(0, person.researchType.length - 1) + " that is processed.");
             }
         });
 
