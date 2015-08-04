@@ -4,35 +4,23 @@
 
     #findPersonForm .selectContainer .form-control-feedback { right: 25px; }
 
-    .btn-popover-container { display: inline-block; }
-
-    .btn-popover-container .btn-popover-title, .btn-popover-container .btn-popover-content { display: none; }
-
     .eventsTable {
         overflow-x: visible !important;
         overflow-y: visible !important;
     }
 
-    .identity {
-        background: rgba(240, 240, 240, 0.7);
-        width: 260px;
-        /*height: 4.5em;*/
-        padding: 8px;
-     float: none;
-     margin-left: auto;
-     margin-right: auto;
-        z-index: 2;
-        box-shadow: 4px 7px 5px 2px rgba(200, 200, 200, 0.3);
-        -moz-border-radius: 10px;
-        -webkit-border-radius: 10px;
-        -khtml-border-radius: 10px;
+    .personInfo {
+        background: rgba(240, 240, 240, .99);
+        width: 400px;
+        height: 260px;
+        padding: 7px;
+        float: none;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 4px 7px 5px 2px rgba(200, 200, 200, 0.1);
+        border: 1px solid rgb(168, 168, 168);
         border-radius: 10px;
         display: none;
-        margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-
     }
 
 
@@ -143,7 +131,7 @@
 </div>
 <div id="findPersonSpinner"/>
 
-<div id="id1" style="border: 2px solid rgb(168, 168, 168); display: none;" class="identity">
+<div id="personInfoDiv" class="personInfo">
     <div id="content"></div>
 </div>
 
