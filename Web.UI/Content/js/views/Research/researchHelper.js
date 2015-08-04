@@ -200,7 +200,7 @@ define(function(require) {
                         var $detachedChildren = $dialogContainer.children().detach();
                         $("<div id=\"personUrlsForm\"></div>").dialog({
                             width: 402,
-                            title: "ResearchResearch Family",
+                            title: "Research Family",
                             resizable: false,
                             minHeight: 0,
                             maxHeight: $(window).height(),

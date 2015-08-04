@@ -10,8 +10,7 @@
     var _spinner = "retrieveSpinner";
     var _callerSpinner;
     var _callback;
-    var _generationAncestors = constants.GENERATION;
-    var _generationDescendants = "1";
+    
     var _title;
     var _retrievedRecords = 0;
     var _reports;
@@ -123,18 +122,6 @@
         set form(value) {
             _form = value;
         },
-        get generationAncestors() {
-            return _generationAncestors;
-        },
-        set generationAncestors(value) {
-            _generationAncestors = value;
-        },
-        get generationDescendants() {
-            return _generationDescendants;
-        },
-        set generationDescendants(value) {
-            _generationDescendants = value;
-        },
         get reports() {
             return _reports;
         },
@@ -146,6 +133,9 @@
         },
         set retrievedRecords(value) {
             _retrievedRecords = value;
+        },
+        findReport: function () {
+            return findReport();
         },
         loadReports: function (reportId, refreshReport) {
             loadReports(reportId, refreshReport);
