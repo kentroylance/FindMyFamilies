@@ -295,18 +295,19 @@ hr {
 }
 
 .research-dropdown {
+    width: 105%;
     padding-left: 18px !important;
 }
 
+#personUrlsForm {
+    overflow-y: auto;
+}
 .dropdown-btn {
     overflow: hidden !important;
     width: 250px !important;
     text-align: left !important;
 }
 
-.addChildren-box {
-    width: 190px !important;
-}
 .decendants-input {
     width: 70px;
 }

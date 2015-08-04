@@ -237,7 +237,7 @@ define(function(require) {
             case 'fmf-clues':
                     isOpen = $("#findCluesForm").is(':visible');
                     if (!isOpen) {
-                        menuOptions += "<li><a onclick=\"researchHelper.findClues('" + row.id + "','" + row.fullName + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-clues16\"></span> Find Clues</a></li>";
+                        menuOptions += "<li><a onclick=\"researchHelper.findClues('" + row.id + "','" + row.fullName + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-clue16\"></span> Find Clues</a></li>";
                     }
                     break;
             case 'fmf-retrieve':

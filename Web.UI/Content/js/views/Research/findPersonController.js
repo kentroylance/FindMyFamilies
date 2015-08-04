@@ -226,7 +226,6 @@ define(function(require) {
                         }
                     },
                     gender: {
-                        row: '.col-xs-3',
                         validators: {
                             notEmpty: {
                                 message: 'Gender is required'
