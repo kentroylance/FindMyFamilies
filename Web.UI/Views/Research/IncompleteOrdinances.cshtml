@@ -1,0 +1,73 @@
+<div class="panel-body">                                                      
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="incompleteOrdinancesReportId" class="col-sm-2 control-label">Retrieved:</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <select class="form-control" id="incompleteOrdinancesReportId">
+                        <option value="0">Select</option>
+                    </select>
+                    <span class="input-group-btn">
+                        <button id="incompleteOrdinancesRetrieveButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-retrieve24 dialog-buttons btn-retrieve-find"></i> Retrieve</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="incompleteOrdinancesResearchType" class="col-sm-2 control-label">Research:</label>
+            <div class="col-sm-3">
+                <select class="form-control researchType" id="incompleteOrdinancesResearchType">
+                    <option>Ancestors</option>
+                    <option>Descendants</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="incompleteOrdinancesPersonId" class="col-sm-2 control-label">Name:</label>
+            <div class="col-sm-7">
+                <div class="input-group">
+                    <select class="form-control" id="incompleteOrdinancesPersonId"></select>
+                    <span class="input-group-btn">
+                        <button id="incompleteOrdinancesFindPersonButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-search24 dialog-buttons btn-retrieve-find"></i> Find</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="incompleteOrdinancesGenerationDiv" class="col-sm-2 control-label">Generations:</label>
+            <div class="col-sm-4">
+                <div class="input-group addChildren-box">
+                    <div id="incompleteOrdinancesGenerationDiv"></div>
+                </div>
+            </div>
+        </div>
+
+        <hr/>
+        <div class="row" >
+            <div class="text-center">
+                <button id="incompleteOrdinancesSubmitButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-submit24 dialog-buttons"></i> Incomplete Odinances</button>
+                <button type='button' id="incompleteOrdinancesPreviousButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-previous24 dialog-buttons"></i> Previous</button>
+                <button type='button' id="incompleteOrdinancesResetButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-reset24 dialog-buttons"></i> Reset</button>
+                <div class="btn-group">
+                    <button type="button" id="incompleteOrdinancesHelpButton" class=" btn-u btn-brd btn-brd-hover rounded btn-u-blue btn btn-primary dropdown-toggle" data-toggle="dropdown" data-style="expand-left">
+                        <i class="fa fmf-help24 dialog-buttons"></i>
+                        Help
+                    </button>
+                    <ul class="dropdown-menu help-dropdown" role="menu">
+                        <li><a href="#">Video</a></li>
+                        <li><a href="#">Tutorial</a></li>
+                    </ul>
+                </div>
+                <button type='button' id="incompleteOrdinancesCloseButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-close24 dialog-buttons"></i> Close</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="incompleteOrdinancesSpinner"/>
+
+<script type="text/javascript">require(['main'], function (main) { require(['incompleteOrdinancesController']); });</script>
+
+
+
+

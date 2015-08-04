@@ -1,0 +1,352 @@
+/*Change Bootstrap Styles
+------------------------------------*/
+
+/*Button Styles
+------------------------------------*/
+.btn-u {
+   border: 0;
+   color: #fff;
+   font-size: 14px;
+   cursor: pointer;
+   font-weight: 400;
+   padding: 6px 13px;
+   position: relative;
+   background: #72c02c;
+   white-space: nowrap;
+   display: inline-block;
+   text-decoration: none;
+   outline: none;
+}
+.btn-u:hover {
+  color: #fff;
+  text-decoration: none;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+/*Bordered Buttons*/
+.btn-u.btn-brd {
+  color: #555;
+  /*font-weight: 200;*/
+  background: none;
+  padding: 5px 13px;
+  /*margin-left: 14px;
+  margin-bottom: 14px;
+    margin-top: 14px;*/
+  border: solid 1px transparent;
+   -webkit-transition: all 0.1s ease-in-out;
+   -moz-transition: all 0.1s ease-in-out;
+   -o-transition: all 0.1s ease-in-out;
+   transition: all 0.1s ease-in-out;   
+}
+.btn-u.btn-brd:hover {
+  background: none;
+  border: solid 1px #eee;
+}
+.btn-u.btn-brd:focus {
+  background: none;
+}
+.btn-u.btn-brd.btn-brd-hover:hover {
+   color: #fff !important;
+}
+
+.btn-u.btn-brd.btn-u-blue {
+  border-color: #3498db;
+}
+.btn-u.btn-brd.btn-u-blue:hover {
+  color: #2980b9;
+  border-color: #2980b9;
+}
+.btn-u.btn-brd.btn-u-blue.btn-brd-hover:hover {
+   background: #2980b9;
+}
+
+.btn-u.btn-brd.btn-u-green {
+  border-color: #2ecc71;
+}
+.btn-u.btn-brd.btn-u-green:hover {
+  color: #27ae60;
+  border-color: #27ae60;
+}
+.btn-u.btn-brd.btn-u-green.btn-brd-hover:hover {
+   background: #27ae60;
+}
+
+.btn-success {
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+}
+.ui-dialog .ui-dialog-title {
+    width: 87% !important;
+}
+.dialog-buttons {
+   font-size: 22px; 
+   vertical-align: middle 
+}
+
+.btn-retrieve-find {
+    margin-top: -0.1em; 
+    margin-bottom: -.1em;
+}
+
+.input-group-btn {
+    font-size: 14px;
+}
+
+.btn-msg-dialog {
+    width: 24px;
+    height: 24px;
+    top: 16px !important;
+}
+
+.msg-icons {
+    font-size: 22px;
+    vertical-align: middle; 
+    margin-right: .25em;
+    margin-top: -0.225em;
+}
+
+hr {
+    margin-top: 14.33px;
+    margin-bottom: 14.33px;
+}
+/*Icons
+------------------------------------*/
+/*Social Icons*/
+.social-icons {
+   margin: 0;
+   padding: 0; 
+}
+
+.social-icons li {
+   list-style: none;
+   margin-right: 3px;
+   margin-bottom: 5px;
+   text-indent: -9999px;
+   display: inline-block;
+}
+
+.social-icons li a, a.social-icon {
+   width: 28px;
+   height: 28px;
+   display: block;
+   background-position: 0 0;
+   background-repeat: no-repeat;
+   transition: all 0.3s ease-in-out;
+   -o-transition: all 0.3s ease-in-out;
+   -ms-transition: all 0.3s ease-in-out;
+   -moz-transition: all 0.3s ease-in-out;
+   -webkit-transition: all 0.3s ease-in-out;
+}
+
+.social-icons li:hover a {
+   background-position: 0 -38px;
+}
+
+.social-icons-color li a {
+  opacity: 0.7;
+  background-position: 0 -38px !important;
+  -webkit-backface-visibility: hidden; /*For Chrome*/
+}
+
+.social-icons-color li a:hover {
+  opacity: 1;
+}
+
+/*Icons
+------------------------------------*/
+/*Social Icons*/
+.social-icons {
+   margin: 0;
+   padding: 0; 
+}
+
+.social-icons li {
+   list-style: none;
+   margin-right: 3px;
+   margin-bottom: 5px;
+   text-indent: -9999px;
+   display: inline-block;
+}
+
+.social-icons li a, a.social-icon {
+   width: 28px;
+   height: 28px;
+   display: block;
+   background-position: 0 0;
+   background-repeat: no-repeat;
+   transition: all 0.3s ease-in-out;
+   -o-transition: all 0.3s ease-in-out;
+   -ms-transition: all 0.3s ease-in-out;
+   -moz-transition: all 0.3s ease-in-out;
+   -webkit-transition: all 0.3s ease-in-out;
+}
+
+.social-icons li:hover a {
+   background-position: 0 -38px;
+}
+
+.social-icons-color li a {
+  opacity: 0.7;
+  background-position: 0 -38px !important;
+  -webkit-backface-visibility: hidden; /*For Chrome*/
+}
+
+.social-icons-color li a:hover {
+  opacity: 1;
+}
+
+.social_facebook {background: url(../Template/img/icons/social/facebook.png) no-repeat;}
+.social_googleplus {background: url(../Template/img/icons/social/googleplus.png) no-repeat;}
+.social_linkedin {background: url(../Template/img/icons/social/linkedin.png) no-repeat;}
+.social_pintrest {background: url(../Template/img/icons/social/pintrest.png) no-repeat;}
+.social_rss {background: url(../Template/img/icons/social/rss.png) no-repeat;}
+.social_twitter {background: url(../Template/img/icons/social/twitter.png) no-repeat;}
+.social_vimeo {background: url(../Template/img/icons/social/vimeo.png) no-repeat;}
+
+/*Table*/
+.fixed-table-container {
+    height: 347px !important;
+}
+
+.pagination{
+    margin-bottom: -3px !important;
+    margin-top: 6px !important;
+    display: block !important;
+}
+
+.page-list {
+    display: inline-block !important;
+}
+
+.fixed-table-pagination .pagination,.fixed-table-pagination .pagination-detail {
+    margin-bottom: 0px;
+}
+
+.report-table {
+    margin-top: -1.4em;
+    height: 423px;
+}
+
+.no-records-found {
+    visibility: hidden !important;
+}
+
+/*Rounded and Circle Classes
+------------------------------------*/
+.rounded { border-radius: 4px !important;}
+
+/*Change jquery Style
+------------------------------------*/
+/* Content*/
+.ui-dialog .ui-dialog-content {
+    padding: 1em 1em;
+    overflow: hidden;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+    border-width: 1px 0 0 0;
+    background-image: none;
+    margin: 0 0 0 0;
+    padding: .5em 1em .5em 1em;
+    text-align: center !important;
+}
+
+.form-control {
+    border-radius: 4px !important;
+}
+
+.ui-dialog-titlebar-close .ui-icon {
+    background-image: url(research.png);
+    background-position: -216px -166px;
+    margin-left: -12px;
+    margin-top:-12px;
+    width: 24px;
+    height: 24px;
+    opacity: 1;
+}
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    float: none;
+}
+
+.ui-button {
+    overflow: hidden;
+}
+
+.col-sm-4 {
+    height: 34px;
+    width: 213.5px;
+}
+.checkBoxes {
+   height: 40px !important;
+}
+
+.checkbox-bottom {
+    margin-bottom: -.8em;
+}
+
+/*Change the HTML*/
+.twoButtons {
+    margin-bottom: 14.33px;
+    margin-top: 14.33px;
+    margin-left: 14.33px;
+}
+
+.research-dropdown {
+    padding-left: 18px !important;
+}
+
+.dropdown-btn {
+    overflow: hidden !important;
+    width: 250px !important;
+    text-align: left !important;
+}
+
+.addChildren-box {
+    width: 190px !important;
+}
+.decendants-input {
+    width: 70px;
+}
+
+.name-colom {
+    width: 305px !important;
+}
+
+.help-dropdown {
+    top: -185% !important;
+}
+ .feedback-textarea {
+     height: 200px !important;
+ }
+ legend {
+    font-size: 1em !important;
+    background: #fff;
+    text-align: left !important;
+    width:auto;
+    padding:0 10px;
+    border-bottom:none;
+    margin-bottom: 10px !important;
+ }
+ fieldset {
+    border: 1px #ccc solid;
+    border-radius: 4px !important;
+    box-shadow: 0 0 5px #a9a9a9;
+    padding-left: 14.3px !important;
+    padding-right: 14.3px !important;
+    padding-bottom: 14.3px !important;
+ }
+ .left-section {
+     width: 20% !important;
+     float: left !important;
+ }
+ .right-section {
+     width: 100% !important;
+     float: right !important;
+ }
+
+ textarea {
+     resize: none;
+ }
