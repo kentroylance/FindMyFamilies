@@ -122,6 +122,7 @@
 
 
     function KeepSessionAlive() {
+
         $.get(constants.KEEP_SESSION_ALIVE_URL, function(data) {
         });
 

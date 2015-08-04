@@ -69,7 +69,8 @@
             person: 'views/shared/person',
             retrieve: 'views/research/retrieve',
             retrieveController: 'views/research/retrieveController',
-            indexController: 'views/home/indexController'
+            indexController: 'views/home/indexController',
+            hoverIntent: 'lib/jquery.hoverIntent.min'
         },
         map: {
             '*': {
@@ -82,6 +83,9 @@
             },
             string: {
                 exports: 'string'
+            },
+            hoverIntent: {
+                exports: 'hoverIntent'
             },
             findPerson: {
                 exports: 'findPerson'
@@ -256,7 +260,7 @@
                 exports: 'personUrlOptionsController'
             },
             personUrlsController: {
-                deps: ['jquery', 'personUrls', 'system', 'constants', 'person', 'lazyload', 'string'],
+                deps: ['jquery', 'hoverIntent', 'personUrls', 'system', 'constants', 'person', 'lazyload', 'string'],
                 exports: 'personUrlsController'
             },
             findPersonHelper: {

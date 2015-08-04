@@ -69,6 +69,7 @@ namespace FindMyFamilies.BusinessObject {
 
             if ((gedcomx != null) && (gedcomx.Persons != null)) {
                 foreach (var person in gedcomx.Persons) {
+                    person.Display.AscendancyNumber = "0";
                     personDO = personDAO.GetPerson(person);
                     break;
                 }
@@ -109,7 +110,7 @@ namespace FindMyFamilies.BusinessObject {
                 if (persons[person.Id].Mother.IsEmpty && !person.Mother.IsEmpty) {
                     persons[person.Id].Mother = person.Mother;
                 }
-                if (persons[person.Id].HasSpousesLink) {
+                if (persons[person.Id].HasSpouseLink) {
                     spouseRelationship = personDAO.GetSpouses(person.Id, ref session);
                 }
             }
@@ -138,6 +139,9 @@ namespace FindMyFamilies.BusinessObject {
                         } else {
                             if (!persons[person.Id].Spouses.ContainsKey(spouseGx.Id)) {
                                 persons[person.Id].Spouses.Add(spouseGx.Id, persons[spouseGx.Id]);
+                                if (persons[person.Id].Spouse.IsEmpty) {
+                                    persons[person.Id].Spouse = persons[spouseGx.Id];
+                                }
                             }
                         }
                     }

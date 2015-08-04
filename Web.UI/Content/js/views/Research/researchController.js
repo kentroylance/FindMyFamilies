@@ -129,7 +129,15 @@ define(function(require) {
         return false;
     });
 
-
+//    function startSessionAlive() {
+//        create delay 10 second
+//        system.KeepSessionAlive();
+//
+//    }
+//
+//
+//    startSessionAlive();
+//    
     var researchController = {
     };
 
