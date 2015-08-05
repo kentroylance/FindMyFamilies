@@ -351,3 +351,18 @@ hr {
  textarea {
      resize: none;
  }
+
+ .search-url-container-right {
+     border: #a9a9a9 solid 2px;
+     border-radius: 4px;
+     padding: 14.3px !important;
+     width: 52%;
+     float: right;
+ }
+  .search-url-container-left {
+     border: #a9a9a9 solid 2px;
+     border-radius: 4px;
+     padding: 14.3px !important;
+     width: 47%;
+     float: left;
+ }
