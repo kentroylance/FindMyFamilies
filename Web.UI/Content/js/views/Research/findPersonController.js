@@ -322,6 +322,7 @@ define(function(require) {
         loadEvents();
         system.openForm(findPerson.form, findPerson.formTitleImage, findPerson.spinner);
         $('#firstName').focus();
+        $('.no-records-found').hide();
         var selectButton = document.getElementById("findPersonSelectButton");
         if (findPerson.callerSpinner === constants.DEFAULT_SPINNER_AREA) {
             $('#findPersonSelectButton').hide();

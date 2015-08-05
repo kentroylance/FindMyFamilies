@@ -230,10 +230,6 @@ hr {
     height: 423px;
 }
 
-.no-records-found {
-    visibility: hidden !important;
-}
-
 /*Rounded and Circle Classes
 ------------------------------------*/
 .rounded { border-radius: 4px !important;}
