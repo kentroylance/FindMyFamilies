@@ -362,3 +362,7 @@ hr {
      width: 47%;
      float: left;
  }
+
+td {
+    border-bottom: #ddd solid 1px;
+}
