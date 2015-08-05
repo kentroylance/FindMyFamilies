@@ -248,7 +248,7 @@
                 exports: 'incompleteOrdinancesController'
             },
             findPersonController: {
-                deps: ['jquery', 'formValidation', 'bootstrapValidation', 'findPerson', 'findPersonHelper', 'system', 'constants', 'person', 'lazyload', 'string'],
+                deps: ['jquery', 'hoverIntent', 'formValidation', 'bootstrapValidation', 'findPerson', 'findPersonHelper', 'system', 'constants', 'person', 'lazyload', 'string'],
                 exports: 'findPersonController'
             },
             findPersonOptionsController: {

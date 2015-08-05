@@ -40,7 +40,7 @@ define(function(require) {
 
     function loadEvents() {
 
-        $(".personUrlsAction").unbind('click').bind('click', function (e) {
+        $(".personUrlsAction").unbind('click').bind('click', function(e) {
             var dropdown = $(this);
             var dropdownRow = new row(dropdown.data('id'), dropdown.data('firstname'), dropdown.data('middlename'), dropdown.data('lastname'), dropdown.data('fullname'), dropdown.data('gender'), dropdown.data('birthyear'), dropdown.data('deathyear'), dropdown.data('birthplace'));
             if (dropdown.children().length <= 1) {
@@ -49,36 +49,17 @@ define(function(require) {
         });
 
 
-        $("#personUrlsCloseButton").unbind('click').bind('click', function (e) {
+        $("#personUrlsCloseButton").unbind('click').bind('click', function(e) {
             personUrls.form.dialog(constants.CLOSE);
             return false;
         });
 
-        
-        personUrls.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
+
+        personUrls.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function(e) {
             system.initSpinner(personUrls.callerSpinner, true);
+            $(".personAction1").unbind("mouseenter").unbind("mouseleave");
             return false;
         });
-
-
-
-        function mouseOver() {
-            var mouseOver = $(this);
-            var id = mouseOver.data('id');
-            var object1 = $(this).children('a:first');
-            var object2 = $(this).children(":first");
-//            alert("myHandler");
-        }
-
-
-        function mouseOut() {
-            var object = $(this);
-//            alert("myHandler1");
-        }
-
-
-        $(".personAction1").hoverIntent(mouseOver, mouseOut);
-
     }
 
     function updateForm() {
@@ -101,8 +82,42 @@ define(function(require) {
         }
     };
 
+    function mouseOverTrigger() {
+        $('#personInfoDiv').empty();
+        var mouseOver = $(this);
+        var id = mouseOver.data('id');
+        var row = $('#' + id);
+        $('#personUrlsId').val(row.data('id'));
+        $('#personUrlsFullName').val(row.data('fullname'));
+        $('#personUrlsBirthDate').val(row.data('birthyear'));
+        $('#personUrlsBirthPlace').val(row.data('birthplace'));
+        $('#personUrlsDeathDate').val(row.data('deathyear'));
+        $('#personUrlsDeathPlace').val(row.data('deathplace'));
+        $('#personUrlsSpouse').val(row.data('spousename'));
+        $('#personUrlsMother').val(row.data('mothername'));
+        $('#personUrlsFather').val(row.data('fathername'));
+    }
+
+
+    function mouseOutTrigger() {
+        //            var object = $(this);
+    }
+
+
     researchHelper.personUrlsController = personUrlsController;
     open();
+
+    $(document).ready(function () {
+        var hoverIntentConfig = {
+            sensitivity: 1,
+            interval: 100,
+            timeout: 300,
+            over: mouseOverTrigger,
+            out: mouseOutTrigger
+        }
+
+        $(".personAction1").hoverIntent(hoverIntentConfig);
+    });
 
     return personUrlsController;
 });

@@ -782,6 +782,7 @@ namespace FindMyFamilies.Web.Controllers {
                 personDO.Gender = gender.ToUpper();
             }
             List<FindListItemDO> persons = Service.FindPersons(personDO, ref session);
+
             //            checkAuthentication();
             //            if ((person != null) && !person.IsEmpty) {
             //                ancestors.Ancestors.Add(new SelectListItemDO(person.Id, person.Id + " - " + person.Fullname));
