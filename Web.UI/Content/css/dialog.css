@@ -291,7 +291,7 @@ hr {
 }
 
 .research-dropdown {
-    width: 105%;
+    width: 100% !important;
     padding-left: 18px !important;
 }
 
@@ -352,17 +352,34 @@ hr {
      border: #a9a9a9 solid 2px;
      border-radius: 4px;
      padding: 14.3px !important;
-     width: 52%;
+     width: 49%;
      float: right;
+     margin-top: 8px;
  }
   .search-url-container-left {
      border: #a9a9a9 solid 2px;
      border-radius: 4px;
      padding: 14.3px !important;
-     width: 47%;
+     width: 49%;
      float: left;
+      margin-top: 8px;
  }
 
 td {
     border-bottom: #ddd solid 1px;
+}
+
+.research-left-container {
+    padding-left: 0px;
+    padding-right: 3px !important;
+    width: 65% !important;
+}
+
+.research-col-left {
+    width: 32% !important;
+    padding-right: 0px;
+}
+
+.research-left-right-top {
+    margin-top: 0px !important;
 }

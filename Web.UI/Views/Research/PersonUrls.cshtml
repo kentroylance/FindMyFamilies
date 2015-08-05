@@ -7,7 +7,7 @@
 <div class="panel-body">
 <form class="form-horizontal " role="form">
 <div class="search-url-container-right">
-    <div class="form-group">
+    <div class="form-group research-left-right-top">
         <div class="col-sm-2">
             <b>Person:</b>
         </div>
@@ -175,64 +175,66 @@
     </div>
 </div>
 
-<div class="search-url-container-left">
-    <div class="form-group">
-        <div class="col-sm-4">
-            <b>ID:</b>
-        </div>
-        <div class="col-sm-8">
-            <input type="text" class="form-control" id="personUrlsId" value="@Model.Person.Id" style="background-color: #FFFFFF;" readonly="readonly">
-        </div>
-        <div class="col-sm-4">
-            <b>Name:</b>
-        </div>
-        <div class="col-sm-7">
-            <input type="text" class="form-control" id="personUrlsFullName" value="@Model.Person.Fullname" style="background-color: #FFFFFF;" readonly="readonly">
-        </div>
-        <div class="col-sm-4">
-            <b>Birth Date:</b>
-        </div>
-        <div class="col-sm-7">
-            <input type="text" class="form-control" id="personUrlsBirthDate" value="@Model.Person.BirthDateString" style="background-color: #FFFFFF;" readonly="readonly">
-        </div>
-        <div class="col-sm-4">
-            <b>Birth Place:</b>
-        </div>
-        <div class="col-sm-7">
-            <input type="text" class="form-control" id="personUrlsBirthPlace" value="@Model.Person.BirthPlace" style="background-color: #ffffff;" readonly="readonly">
-        </div>
-        <div class="col-sm-4">
-            <b>Death Date:</b>
-        </div>
-        <div class="col-sm-7">
-            <input type="text" class="form-control" id="personUrlsDeathDate" value="@Model.Person.DeathDateString" style="background-color: #FFFFFF;" readonly="readonly">
-        </div>
-        <div class="col-sm-4">
-            <b>Death Place:</b>
-        </div>
-        <div class="col-sm-7">
-            <input type="text" class="form-control" id="personUrlsDeathPlace" value="@Model.Person.DeathPlace" style="background-color: #ffffff;" readonly="readonly">
-        </div>
-        <div class="col-sm-4">
-            <b>Spouse:</b>
-        </div>
-        <div class="col-sm-7">
-            <input type="text" class="form-control" id="personUrlsSpouse" value="@Model.Person.Spouse.Fullname" style="background-color: #FFFFFF;" readonly="readonly">
-        </div>
-        <div class="col-sm-4">
-            <b>Mother:</b>
-        </div>
-        <div class="col-sm-7">
-            <input type="text" class="form-control" id="personUrlsMother" value="@Model.Person.Mother.Fullname" style="background-color: #ffffff;" readonly="readonly">
-        </div>
-        <div class="col-sm-4">
-            <b>Father:</b>
-        </div>
-        <div class="col-sm-7">
-            <input type="text" class="form-control" id="personUrlsFather" value="@Model.Person.Father.Fullname" style="background-color: #FFFFFF;" readonly="readonly">
+    <div class="search-url-container-left">
+        <div class="panel-body">
+            <div class="form-group research-left-right-top">
+                <div class="col-sm-3 research-col-left">
+                    <b>ID:</b>
+                </div>
+                <div class="col-sm-8 research-left-container">
+                    <input type="text" class="form-control" id="personUrlsId" value="@Model.Person.Id" style="background-color: #FFFFFF;" readonly="readonly">
+                </div>
+                <div class="col-sm-3 research-col-left">
+                    <b>Name:</b>
+                </div>
+                <div class="col-sm-8  research-left-container">
+                    <input type="text" class="form-control" id="personUrlsFullName" value="@Model.Person.Fullname" style="background-color: #FFFFFF;" readonly="readonly">
+                </div>
+                <div class="col-sm-3 research-col-left">
+                    <b>Birth Date:</b>
+                </div>
+                <div class="col-sm-8  research-left-container">
+                    <input type="text" class="form-control" id="personUrlsBirthDate" value="@Model.Person.BirthDateString" style="background-color: #FFFFFF;" readonly="readonly">
+                </div>
+                <div class="col-sm-3 research-col-left">
+                    <b>Birth Place:</b>
+                </div>
+                <div class="col-sm-8  research-left-container">
+                    <input type="text" class="form-control" id="personUrlsBirthPlace" value="@Model.Person.BirthPlace" style="background-color: #ffffff;" readonly="readonly">
+                </div>
+                <div class="col-sm-3 research-col-left">
+                    <b>Death Date:</b>
+                </div>
+                <div class="col-sm-8  research-left-container">
+                    <input type="text" class="form-control" id="personUrlsDeathDate" value="@Model.Person.DeathDateString" style="background-color: #FFFFFF;" readonly="readonly">
+                </div>
+                <div class="col-sm-3 research-col-left">
+                    <b>Death Place:</b>
+                </div>
+                <div class="col-sm-8  research-left-container">
+                    <input type="text" class="form-control" id="personUrlsDeathPlace" value="@Model.Person.DeathPlace" style="background-color: #ffffff;" readonly="readonly">
+                </div>
+                <div class="col-sm-3 research-col-left">
+                    <b>Spouse:</b>
+                </div>
+                <div class="col-sm-8 research-left-container">
+                    <input type="text" class="form-control" id="personUrlsSpouse" value="@Model.Person.Spouse.Fullname" style="background-color: #FFFFFF;" readonly="readonly">
+                </div>
+                <div class="col-sm-3 research-col-left">
+                    <b>Mother:</b>
+                </div>
+                <div class="col-sm-8 research-left-container">
+                    <input type="text" class="form-control" id="personUrlsMother" value="@Model.Person.Mother.Fullname" style="background-color: #ffffff;" readonly="readonly">
+                </div>
+                <div class="col-sm-3 research-col-left">
+                    <b>Father:</b>
+                </div>
+                <div class="col-sm-8 research-left-container">
+                    <input type="text" class="form-control" id="personUrlsFather" value="@Model.Person.Father.Fullname" style="background-color: #FFFFFF;" readonly="readonly">
+                </div>
+            </div>
         </div>
     </div>
-</div>
         <div class="col-lg-12">
             <hr />
             <div class="text-center">
