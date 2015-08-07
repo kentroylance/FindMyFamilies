@@ -31,6 +31,8 @@
     var SELECT = "Select";
     var BUTTON_ATTR = "btn-u btn-brd btn-brd-hover rounded btn-u-blue";
 
+    var LAST_CALLED = "lastCalled";
+
     // Forms
     var STARTING_POINT = "startingPoint";
     var STARTING_POINT_REPORT = "startingPointReport";
@@ -81,6 +83,7 @@
     var RETRIEVE_URL = '/Home/Retrieve';
     var RETRIEVE_DATA_URL = '/Home/RetrieveData';
     var SEARCH_CRITERIA_LIST_URL = "/Home/SearchCriteriaList";
+    var RESEARCH_URL = "/Home/Research";
 
     var FIND_A_GRAVE = "http://www.findagrave.com/cgi-bin/fg.cgi?page=gsr";
     var GOOGLE = "https://www.google.com/#q=";
@@ -379,6 +382,12 @@
         },
         get FIND_CLUES_REPORT_DATA_URL() {
             return FIND_CLUES_REPORT_DATA_URL;
+        },
+        get RESEARCH_URL() {
+            return RESEARCH_URL;
+        },
+        get LAST_CALLED() {
+            return LAST_CALLED;
         },
         get FIND_CLUES_REPORT() {
             return FIND_CLUES_REPORT;

@@ -4,37 +4,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Reflection;
 using System.Text;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
-using System.Web.SessionState;
 using FindMyFamiles.Services.Data;
 using FindMyFamilies.Data;
-using FindMyFamilies.DataAccess;
 using FindMyFamilies.Helper;
 using FindMyFamilies.Services;
 using FindMyFamilies.Util;
-using Gx;
 using log4net;
-using ProtoBuf;
 
 namespace FindMyFamilies.Web.Controllers {
-
     public class HomeController : ControllerBase {
+        private const int ITEMSPERPAGE = 10;
         private readonly ILog Logger = LogManager.GetLogger(typeof (HomeController));
-
-        public HomeController() {
-        }
-
-        public ActionResult Logomatic() {
-            List<SelectListItem> ddlLogFolders = ConfigurationReader.ReadLogFolders().Select(x => new SelectListItem {Text = x.Name, Value = x.Name}).ToList();
-
-            var viewModel = new HomeModel {LogFolderChoices = ddlLogFolders,};
-
-            return View(viewModel);
-        }
 
         [System.Web.Mvc.HttpGet]
         public ActionResult StartingPoint() {
@@ -53,14 +37,19 @@ namespace FindMyFamilies.Web.Controllers {
 
         [System.Web.Mvc.HttpGet]
         public JsonResult StartingPointReportData(StartingPointInputDO startingPoint) {
-            List<StartingPointListItemDO> startingPoints = new List<StartingPointListItemDO>();
-            if (Request.IsAjaxRequest() && (startingPoint != null) && (startingPoint.Id != null)) {
-                session = GetSession();
-                startingPoints = Service.GetStartingPoints(startingPoint, ref session);
-                checkAuthentication();
+            var result = new ResultDO();
+
+            if ((startingPoint != null) && (startingPoint.Id != null)) {
+                try {
+                    session = GetSession();
+                    result.list = Service.GetStartingPoints(startingPoint, ref session);
+                    result.errorMessage = session.ErrorMessage;
+                } catch (Exception) {
+                    result.errorMessage = "Error retrieving starting point report data";
+                }
             }
 
-            return Json(startingPoints, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [System.Web.Mvc.HttpGet]
@@ -74,15 +63,20 @@ namespace FindMyFamilies.Web.Controllers {
         }
 
         [System.Web.Mvc.HttpGet]
-        public JsonResult DateProblemsReportData(DateInputDO dateProblem) {
-            List<DateListItemDO> dateProblems = new List<DateListItemDO>();
-            if (Request.IsAjaxRequest() && (dateProblem != null)) {
-                session = GetSession();
-                dateProblems = Service.GetDates(dateProblem, ref session);
-                checkAuthentication();
+        public JsonResult DateProblemsReportData(DateInputDO dateInputDO) {
+            var result = new ResultDO();
+
+            if (dateInputDO != null) {
+                try {
+                    session = GetSession();
+                    result.list = Service.GetDates(dateInputDO, ref session);
+                    result.errorMessage = session.ErrorMessage;
+                } catch (Exception) {
+                    result.errorMessage = "Error retrieving date problems report data";
+                }
             }
 
-            return Json(dateProblems, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [System.Web.Mvc.HttpGet]
@@ -96,15 +90,20 @@ namespace FindMyFamilies.Web.Controllers {
         }
 
         [System.Web.Mvc.HttpGet]
-        public JsonResult PlaceProblemsReportData(PlaceInputDO place) {
-            List<PlaceListItemDO> placeProblems = new List<PlaceListItemDO>();
-            if (Request.IsAjaxRequest() && (place != null)) {
-                session = GetSession();
-                placeProblems = Service.GetPlaces(place, ref session);
-                checkAuthentication();
+        public JsonResult PlaceProblemsReportData(PlaceInputDO placeInputDO) {
+            var result = new ResultDO();
+
+            if (placeInputDO != null) {
+                try {
+                    session = GetSession();
+                    result.list = Service.GetPlaces(placeInputDO, ref session);
+                    result.errorMessage = session.ErrorMessage;
+                } catch (Exception) {
+                    result.errorMessage = "Error retrieving place problems report data";
+                }
             }
 
-            return Json(placeProblems, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [System.Web.Mvc.HttpGet]
@@ -118,15 +117,20 @@ namespace FindMyFamilies.Web.Controllers {
         }
 
         [System.Web.Mvc.HttpGet]
-        public JsonResult FindCluesReportData(FindCluesInputDO findClue) {
-            List<AnalyzeListItemDO> findClues = new List<AnalyzeListItemDO>();
-            if (Request.IsAjaxRequest() && (findClues != null)) {
-                session = GetSession();
-                findClues = Service.GetAnalyzeData(findClue, ref session);
-                checkAuthentication();
+        public JsonResult FindCluesReportData(FindCluesInputDO findCluesInputDO) {
+            var result = new ResultDO();
+
+            if (findCluesInputDO != null) {
+                try {
+                    session = GetSession();
+                    result.list = Service.GetAnalyzeData(findCluesInputDO, ref session);
+                    result.errorMessage = session.ErrorMessage;
+                } catch (Exception) {
+                    result.errorMessage = "Error retrieving find clues report data";
+                }
             }
 
-            return Json(findClues, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [System.Web.Mvc.HttpGet]
@@ -140,15 +144,20 @@ namespace FindMyFamilies.Web.Controllers {
         }
 
         [System.Web.Mvc.HttpGet]
-        public JsonResult IncompleteOrdinancesReportData(IncompleteOrdinanceDO incompleteOrdinance) {
-            List<OrdinanceListItemDO> incompleteOrdinances = new List<OrdinanceListItemDO>();
-            if (Request.IsAjaxRequest() && (incompleteOrdinance != null)) {
-                session = GetSession();
-                incompleteOrdinances = Service.GetOrdinances(incompleteOrdinance, ref session);
-                checkAuthentication();
+        public JsonResult IncompleteOrdinancesReportData(IncompleteOrdinanceDO incompleteOrdinanceDO) {
+            var result = new ResultDO();
+
+            if (incompleteOrdinanceDO != null) {
+                try {
+                    session = GetSession();
+                    result.list = Service.GetOrdinances(incompleteOrdinanceDO, ref session);
+                    result.errorMessage = session.ErrorMessage;
+                } catch (Exception) {
+                    result.errorMessage = "Error retrieving incomplete ordinance report data";
+                }
             }
 
-            return Json(incompleteOrdinances, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [System.Web.Mvc.HttpGet]
@@ -167,17 +176,21 @@ namespace FindMyFamilies.Web.Controllers {
         }
 
         [System.Web.Mvc.HttpGet]
-        public JsonResult HintsReportData(HintInputDO hintInput) {
-            List<HintListItemDO> hints = new List<HintListItemDO>();
-            if (Request.IsAjaxRequest() && (hintInput != null)) {
-                session = GetSession();
-                hints = Service.GetHints(hintInput, ref session);
-                checkAuthentication();
+        public JsonResult HintsReportData(HintInputDO hintInputDO) {
+            var result = new ResultDO();
+
+            if (hintInputDO != null) {
+                try {
+                    session = GetSession();
+                    result.list = Service.GetHints(hintInputDO, ref session);
+                    result.errorMessage = session.ErrorMessage;
+                } catch (Exception) {
+                    result.errorMessage = "Error retrieving hint report data";
+                }
             }
 
-            return Json(hints, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
-
 
         [System.Web.Mvc.HttpGet]
         public ActionResult PossibleDuplicates() {
@@ -191,73 +204,31 @@ namespace FindMyFamilies.Web.Controllers {
 
         [System.Web.Mvc.HttpGet]
         public JsonResult PossibleDuplicatesReportData(PossibleDuplicateInputDO possibleDuplicatesInputDO) {
-            List<PossibleDuplicateListItemDO> possibleDuplicates = new List<PossibleDuplicateListItemDO>();
-            if (Request.IsAjaxRequest() && (possibleDuplicatesInputDO != null)) {
-                session = GetSession();
-                possibleDuplicates = Service.GetPossibleDuplicates(possibleDuplicatesInputDO, ref session);
-                checkAuthentication();
+            var result = new ResultDO();
+
+            if (possibleDuplicatesInputDO != null) {
+                try {
+                    session = GetSession();
+                    result.list = Service.GetPossibleDuplicates(possibleDuplicatesInputDO, ref session);
+                    result.errorMessage = session.ErrorMessage;
+                } catch (Exception) {
+                    result.errorMessage = "Error retrieving possible duplicates report data";
+                }
             }
 
-            return Json(possibleDuplicates, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        private string GetIncludeInfo(ResearchDO researchDO) {
-            string includeInfo = "ancestors";
-            if (researchDO.ResearchType.Equals(Constants.RESEARCH_TYPE_DESCENDANTS)) {
-                includeInfo = "descendants";
-            } else if (researchDO.ResearchType.Equals(Constants.RESEARCH_TYPE_DESCENDANTS)) {
-                includeInfo = "both ancestors and descendants";
-            }
-            return includeInfo;
-        }
-
-        private string GetStartingAt(ResearchDO researchDO) {
-            string startAt = "";
-            switch (researchDO.StartAt) {
-                case 1:
-                    startAt = "FamilySearch ID: " + researchDO.PersonId;
-                    break;
-                case 2:
-                    startAt = "2nd Generation";
-                    break;
-                case 3:
-                    startAt = "3rd Generation";
-                    break;
-                case 4:
-                    startAt = "4th Generation";
-                    break;
-                case 5:
-                    startAt = "5th Generation";
-                    break;
-            }
-
-            return startAt;
-        }
-
-        [System.Web.Mvc.HttpPost]
-        public JsonResult Startup(LoginDO login) {
-            session = new SessionDO();
-            session.DisplayName = login.DisplayName;
-            session.Username = login.PersonId;
-            session.AccessToken = login.Token;
-            if (!string.IsNullOrEmpty(login.Token24HourExpire)) {
-                _Token24HourExpire = Convert.ToDateTime(login.Token24HourExpire);
-            }
-            if (!string.IsNullOrEmpty(login.TokenHourExpire)) {
-                _TokenHourExpire = Convert.ToDateTime(login.TokenHourExpire);
-            }
-            return null;
-        }
-
+        // need to work on this
         [System.Web.Mvc.HttpGet]
         public JsonResult IsAuthenticated() {
             Logger.Debug("IsAuthenticated " + DisplayName + " " + DateTime.Now + " TokenHourExpire:" + TokenHourExpire + "  Token24HourExpire:" + Token24HourExpire);
-            string authenticated = "yes";
+            var authenticated = "yes";
             if ((DateTime.Now > TokenHourExpire) || (DateTime.Now > Token24HourExpire)) {
                 Logger.Debug("Token expired, resetting token");
                 Token = null;
                 authenticated = null;
-            } else if ((DateTime.Now.AddMinutes(16) > TokenHourExpire) || (DateTime.Now.AddMinutes(16) > Token24HourExpire)) {                
+            } else if ((DateTime.Now.AddMinutes(16) > TokenHourExpire) || (DateTime.Now.AddMinutes(16) > Token24HourExpire)) {
                 authenticated = null;
                 session = GetSession();
                 if (session == null) {
@@ -279,27 +250,27 @@ namespace FindMyFamilies.Web.Controllers {
         public ActionResult KeepSessionAlive() {
             Logger.Error("KeepSessionAlive IsAuthenticated " + DisplayName + " " + DateTime.Now + " TokenHourExpire:" + TokenHourExpire + "  Token24HourExpire:" + Token24HourExpire);
             //if ((DateTime.Now.AddMinutes(16) > TokenHourExpire) || (DateTime.Now.AddMinutes(16) > Token24HourExpire)) {
-                session = GetSession();
-                if (session == null) {
-                    session = new SessionDO();
-                    session.DisplayName = DisplayName;
-                    session.Username = PersonId;
-                    session.AccessToken = Token;
-                    session.Token24HourExpire = Token24HourExpire;
-                    session.TokenHourExpire = TokenHourExpire;
-                    Logger.Error("KeepSessionAlive: " + DisplayName + " session = null");
-                }
-                Service.GetCurrentPerson(ref session);
-                ResetTokenHourExpire();
+            session = GetSession();
+            if (session == null) {
+                session = new SessionDO();
+                session.DisplayName = DisplayName;
+                session.Username = PersonId;
+                session.AccessToken = Token;
+                session.Token24HourExpire = Token24HourExpire;
+                session.TokenHourExpire = TokenHourExpire;
+                Logger.Error("KeepSessionAlive: " + DisplayName + " session = null");
+            }
+            Service.GetCurrentPerson(ref session);
+            ResetTokenHourExpire();
             //}
-//            DateTime? tokenHourDataTime = TokenHourExpire;
-//            DateTime? token24HourDataTime = Token24HourExpire;
-//            bool expired = TokenExpired;
-//            if (session != null) {
-//                Service.GetCurrentPerson(ref session);
-//                session.ResetExpiration();
-//                Logger.Error("KeepSessionAlive: " + DateTime.Now);
-//            }
+            //            DateTime? tokenHourDataTime = TokenHourExpire;
+            //            DateTime? token24HourDataTime = Token24HourExpire;
+            //            bool expired = TokenExpired;
+            //            if (session != null) {
+            //                Service.GetCurrentPerson(ref session);
+            //                session.ResetExpiration();
+            //                Logger.Error("KeepSessionAlive: " + DateTime.Now);
+            //            }
             return null;
         }
 
@@ -308,64 +279,31 @@ namespace FindMyFamilies.Web.Controllers {
             return PartialView("~/Views/Research/Retrieve.cshtml");
         }
 
-    [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.HttpGet]
         public JsonResult RetrieveData(RetrieveFamilySearchDO retrieveFamilySearchDO) {
-            session = GetSession();
             var research = new ResearchDO();
             var retrieve = new RetrieveDO();
-            if (Request.IsAjaxRequest()) {
-                try {
-                    research.CurrentPersonId = PersonId;
-                    research.PersonId = retrieveFamilySearchDO.PersonId;
-                    research.PersonName = retrieveFamilySearchDO.Name;
-                    research.Generation = retrieveFamilySearchDO.Generation;
-                    research.ResearchType = retrieveFamilySearchDO.ResearchType;
-                    research.AddChildren = retrieveFamilySearchDO.AddChildren;
-                    research.SearchCriteria = 0;
-                    session.Action = Constants.ACTION_RETRIEVE;
-                    Service.GetPersonAncestryValidations(ref research, ref session);
+            try {
+                session = GetSession();
+                research.CurrentPersonId = PersonId;
+                research.PersonId = retrieveFamilySearchDO.PersonId;
+                research.PersonName = retrieveFamilySearchDO.Name;
+                research.Generation = retrieveFamilySearchDO.Generation;
+                research.ResearchType = retrieveFamilySearchDO.ResearchType;
+                research.AddChildren = retrieveFamilySearchDO.AddChildren;
+                research.SearchCriteria = 0;
+                session.Action = Constants.ACTION_RETRIEVE;
+                Service.GetPersonAncestryValidations(ref research, ref session);
+                retrieve.errorMessage = session.ErrorMessage;
+                if (!session.Error) {
                     retrieve.ReportId = research.ReportId;
                     retrieve.RetrievedRecords = research.RetrievedRecords;
                 }
-                catch (Exception e) {
-                    Logger.Error("Error trying to retrieve data. " + e.Message, e);
-                    throw;
-                }
+            } catch (Exception) {
+                retrieve.errorMessage = "Error retrieving family search data";
             }
+
             return Json(retrieve, JsonRequestBehavior.AllowGet);
-        }
-
-        [System.Web.Mvc.HttpGet]
-        public JsonResult ValidatePersonId(string personId) {
-            var personInfo = new PersonInfoDO();
-            session = GetSession();
-            if (session.Authenticated) {
-                PersonDO person = Service.GetPerson(personId.ToUpper(), ref session);
-                checkAuthentication();
-                if (person == null) {
-                    personInfo.Message = personId + " does not exist on familysearch.org";
-                } else {
-                    personInfo.Name = person.Fullname;
-                }
-            }
-
-            return Json(personInfo, JsonRequestBehavior.AllowGet);
-        }
-
-        private string getFilePath(ResearchDO research) {
-            string filePath = "";
-
-            foreach (ListItemDO listItem in GetReports().Cast<ListItemDO>().ToList()) {
-                if (listItem.ValueMember.Equals(research.ReportId.ToString())) {
-                    var report = new ReportDO();
-                    report.ReportId = Convert.ToInt32(listItem.ValueMember);
-                    report = PersonServices.Instance.ReadReport(report);
-                    checkAuthentication();
-                    filePath = report.ReportFile;
-                    break;
-                }
-            }
-            return filePath;
         }
 
         public ActionResult Index() {
@@ -378,7 +316,7 @@ namespace FindMyFamilies.Web.Controllers {
             var researchDO = new ResearchDO();
             session = GetSession();
             Logger.Debug("Entered Research" + session.AccessToken + " " + session.TokenHourExpire + " " + session.Token24HourExpire);
-          //  getCurrentPerson(ref session);
+            //  getCurrentPerson(ref session);
             if (session.Authenticated) {
                 getCurrentPerson(ref session);
                 Logger.Debug("authenticated = " + session.Authenticated + "; token = " + session.AccessToken); //; isChurchMember = " + Service.IsChurchMember(ref session));
@@ -387,15 +325,15 @@ namespace FindMyFamilies.Web.Controllers {
                 if (!isLocal) {
                     Logger.Debug("Entered Research" + session.AccessToken + " " + session.TokenHourExpire + " " + session.Token24HourExpire);
                     if (!session.Authenticated) {
-                        string code = Request.QueryString["code"];
+                        var code = Request.QueryString["code"];
                         Logger.Debug("!IsAuthenticated Code = " + code);
                         if (string.IsNullOrEmpty(code)) {
                             Logger.Debug("Response.Redirect(GetRedirectUrl()) = " + GetRedirectUrl());
                             try {
                                 Response.Redirect(GetRedirectUrl(), true);
-                                Response.End();   
+                                Response.End();
                             } catch (Exception) {
-                                RedirectToAction("Research", "Home");  
+                                RedirectToAction("Research", "Home");
                             }
                         }
                         return OAuthCallback(code);
@@ -439,8 +377,7 @@ namespace FindMyFamilies.Web.Controllers {
                         Logger.Debug("person id = " + PersonId + " name: " + DisplayName);
                     }
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Logger.Error("Error executing Research: " + e.Message, e);
                 return Redirect("Home/Research");
             }
@@ -460,46 +397,56 @@ namespace FindMyFamilies.Web.Controllers {
 
         [System.Web.Mvc.HttpGet]
         public JsonResult SubscribeEmail(string email) {
-            string message = "";
-            if (IsEmailValid(email)) {
-                Service.Admin.SubscribeEmail(email, session);
-            } else {
-                message = "Email is invalid, please try again";
+            var result = new ResultDO();
+            try {
+                if (IsEmailValid(email)) {
+                    Service.Admin.SubscribeEmail(email, session);
+                    result.errorMessage = session.ErrorMessage;
+                } else {
+                    result.text = "Email is invalid, please try again";
+                }
+            } catch (Exception) {
+                result.errorMessage = "Error subscribing to email";
             }
 
-            return Json(message, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        private ArrayList GetReports() {
+        private ResultDO GetReports() {
+            var result = new ResultDO();
             var report = new ReportDO();
             report.ReportType = "Research";
             report.ReportBy = PersonId; //"KW71-97V";
-            var reports = (ArrayList) PersonServices.Instance.ReadReportsByReport(report);
+            try {
+                result.list = PersonServices.Instance.ReadReportsByReport(report);
+            } catch (Exception) {
+                result.errorMessage = "Error retrieving reports";
+            }
 
-            return reports;
+            return result;
         }
 
         private ActionResult OAuthCallback(string code) {
             try {
                 Logger.Debug("starting OAuthCallback");
-                string error = Request.QueryString["error"];
-                string errorDescription = Request.QueryString["error_description"];
-                string state = Request.QueryString["state"];
+                var error = Request.QueryString["error"];
+                var errorDescription = Request.QueryString["error_description"];
+                var state = Request.QueryString["state"];
                 if (!string.IsNullOrEmpty(code)) {
-                    string grantType = Constants.AUTH2_GRANT_TYPE;
-                    string data = "code={0}&client_id={1}&grant_type={2}";
+                    var grantType = Constants.AUTH2_GRANT_TYPE;
+                    var data = "code={0}&client_id={1}&grant_type={2}";
                     var request = WebRequest.Create(GetTokenUri()) as HttpWebRequest;
                     string result = null;
                     request.Method = "POST";
                     request.KeepAlive = true;
                     request.ContentType = Constants.AUTH2_CONTENT_TYPE;
-                    string param = string.Format(data, code, getClientID(), grantType);
-                    byte[] bs = Encoding.UTF8.GetBytes(param);
-                    using (Stream reqStream = request.GetRequestStream()) {
+                    var param = string.Format(data, code, getClientID(), grantType);
+                    var bs = Encoding.UTF8.GetBytes(param);
+                    using (var reqStream = request.GetRequestStream()) {
                         reqStream.Write(bs, 0, bs.Length);
                     }
 
-                    using (WebResponse response = request.GetResponse()) {
+                    using (var response = request.GetResponse()) {
                         if (response != null) {
                             var sr = new StreamReader(response.GetResponseStream());
                             result = sr.ReadToEnd();
@@ -521,24 +468,10 @@ namespace FindMyFamilies.Web.Controllers {
                     }
                 }
                 return RedirectToAction("Research");
-
             } catch (Exception e) {
                 Logger.Error("Error occured on OAuthCallback: " + e.Message, e);
                 return Redirect("Home/Research");
             }
-        }
-
-        public static List<SelectListItem> GetGapsInChildren() {
-            var gapsInChildren = new List<SelectListItem>();
-            gapsInChildren.Add(new SelectListItem {Text = "3", Value = "3"});
-            gapsInChildren.Add(new SelectListItem {Text = "4", Value = "4"});
-            gapsInChildren.Add(new SelectListItem {Text = "5", Value = "5"});
-            gapsInChildren.Add(new SelectListItem {Text = "6", Value = "6"});
-            gapsInChildren.Add(new SelectListItem {Text = "7", Value = "7"});
-            gapsInChildren.Add(new SelectListItem {Text = "8", Value = "8"});
-            gapsInChildren.Add(new SelectListItem {Text = "9", Value = "9"});
-
-            return gapsInChildren;
         }
 
         public static List<SelectListItem> GetReports(ArrayList reports) {
@@ -550,35 +483,79 @@ namespace FindMyFamilies.Web.Controllers {
             return reportSelectList;
         }
 
-        public static List<SelectListItem> GetActions() {
-            var actions = new List<SelectListItem>();
-            actions.Add(new SelectListItem {Text = "Search for couples without children", Value = "1"});
-            return actions;
+        [System.Web.Mvc.HttpGet]
+        public ActionResult DisplayPersonUrls(RetrieveFamilySearchDO retrieveFamilySearchDO) {
+            var personInfo = new PersonInfoDO();
+            try {
+                session = GetSession();
+                var researchDO = new ResearchDO();
+                researchDO.CurrentPersonId = PersonId;
+                researchDO.PersonId = retrieveFamilySearchDO.PersonId;
+                researchDO.Generation = 1;
+                personInfo.IncludeMaidenName = retrieveFamilySearchDO.IncludeMaidenName;
+                personInfo.IncludeMiddleName = retrieveFamilySearchDO.IncludeMiddleName;
+                personInfo.IncludePlace = retrieveFamilySearchDO.IncludePlace;
+                personInfo.YearRange = retrieveFamilySearchDO.YearRange;
+                personInfo.Person = Service.GetPersonInformation(researchDO, ref session);
+                personInfo.errorMessage = session.ErrorMessage;
+            } catch (Exception) {
+                personInfo.errorMessage = "Error with displaying person urls";
+            }
+
+            return PartialView("~/Views/Research/PersonUrls.cshtml", personInfo);
         }
 
-        #region Nested type: FamilySearchTokenData
-
-        private class FamilySearchTokenData {
-            public string Access_Token {
-                get;
-                set;
-            }
-
-            public string Error {
-                get;
-                set;
-            }
-
-            public string Error_Description {
-                get;
-                set;
-            }
+        [System.Web.Mvc.HttpGet]
+        public ActionResult FindPerson() {
+            return PartialView("~/Views/Research/FindPerson.cshtml");
         }
 
-        #endregion
+        public ActionResult PersonUrlOptions() {
+            return PartialView("~/Views/Research/PersonUrlOptions.cshtml");
+        }
 
+        public ActionResult ResearchFamily() {
+            return PartialView("~/Views/Research/ResearchFamily.cshtml");
+        }
 
-        private const int ITEMSPERPAGE = 10;
+        [System.Web.Mvc.HttpGet]
+        public ActionResult DisplayPerson() {
+            session = GetSession();
+            var person = session.CurrentPerson;
+
+            return PartialView("~/Views/Research/DisplayPerson.cshtml", person);
+        }
+
+        [System.Web.Mvc.HttpGet]
+        public JsonResult FindPersons(string personId, string firstName, string lastName, string gender, string birthYear, string deathYear) {
+            var result = new ResultDO();
+            try {
+                var session = GetSession();
+                personId = personId.ToUpper();
+                var personDO = new PersonDO();
+                if (!string.IsNullOrEmpty(personId)) {
+                    personDO = Service.GetPerson(personId, ref session);
+                } else {
+                    personDO.Id = personId;
+                    personDO.Firstname = firstName;
+                    personDO.Lastname = lastName;
+                    if (!string.IsNullOrEmpty(birthYear)) {
+                        personDO.BirthYear = Convert.ToInt16(birthYear);
+                    }
+                    if (!string.IsNullOrEmpty(deathYear)) {
+                        personDO.DeathYear = Convert.ToInt16(deathYear);
+                    }
+                    personDO.Gender = gender.ToUpper();
+                }
+
+                result.list = Service.FindPersons(personDO, ref session);
+                result.errorMessage = session.ErrorMessage;
+            } catch (Exception) {
+                result.errorMessage = "Error with finding persons";
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
         public LogReader myLogReader {
             get {
@@ -591,10 +568,15 @@ namespace FindMyFamilies.Web.Controllers {
                 HttpContext.Cache["LogReader"] = value;
             }
         }
-  
-        [System.Web.Http.HttpGet]
-        public ActionResult GetEntries(string currentLogFolder, string searchTerm, int page, bool reload) {
 
+        public ActionResult Logomatic() {
+            var ddlLogFolders = ConfigurationReader.ReadLogFolders().Select(x => new SelectListItem {Text = x.Name, Value = x.Name}).ToList();
+            var viewModel = new HomeModel {LogFolderChoices = ddlLogFolders};
+            return View(viewModel);
+        }
+
+                [System.Web.Http.HttpGet]
+        public ActionResult GetEntries(string currentLogFolder, string searchTerm, int page, bool reload) {
             if (string.IsNullOrEmpty(currentLogFolder)) {
                 return Json(new {}, JsonRequestBehavior.AllowGet);
             }
@@ -603,8 +585,8 @@ namespace FindMyFamilies.Web.Controllers {
                 myLogReader = new LogReader();
             }
 
-            List<ConfigurationReader.LogPathEntry> logFolders = ConfigurationReader.ReadLogFolders();
-            ConfigurationReader.LogPathEntry folderEntry = logFolders.FirstOrDefault(x => x.Name == currentLogFolder);
+            var logFolders = ConfigurationReader.ReadLogFolders();
+            var folderEntry = logFolders.FirstOrDefault(x => x.Name == currentLogFolder);
 
             if (folderEntry == null) {
                 return Json(new {}, JsonRequestBehavior.AllowGet);
@@ -615,20 +597,20 @@ namespace FindMyFamilies.Web.Controllers {
                 myLogReader.LoadLogFolder(folderEntry.Name, folderEntry.Path);
             }
 
-            List<LogGrouping> results = myLogReader.GroupedLogEntries.ToList();
+            var results = myLogReader.GroupedLogEntries.ToList();
 
             //Apply Search Critera if provided
             if (string.IsNullOrEmpty(searchTerm) != true) {
                 results = results.Where(x => x.ErrorMessage.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) || x.ErrorDetail.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
-            int pageCount = results.Count / ITEMSPERPAGE;
+            var pageCount = results.Count / ITEMSPERPAGE;
             if ((results.Count % ITEMSPERPAGE) > 0) {
                 pageCount++;
             }
 
             //Apply Paging
-            int skip = (page - 1) * ITEMSPERPAGE;
+            var skip = (page - 1) * ITEMSPERPAGE;
             results = results.Skip(skip).Take(ITEMSPERPAGE).ToList();
 
             return Json(new {Items = results, PageCount = pageCount}, JsonRequestBehavior.AllowGet);
@@ -657,200 +639,5 @@ namespace FindMyFamilies.Web.Controllers {
             myLogReader.ClearLogEntriesInGroup(id);
         }
 
-        [System.Web.Mvc.HttpGet]
-        public ActionResult DisplayPersonUrls(RetrieveFamilySearchDO retrieveFamilySearchDO) {
-            session = GetSession();
-            var personInfo = new PersonInfoDO();
-            var researchDO = new ResearchDO();
-            if (Request.IsAjaxRequest()) {
-                try {
-                    researchDO.CurrentPersonId = PersonId;
-                    researchDO.PersonId = retrieveFamilySearchDO.PersonId;
-                    researchDO.Generation = 1;
-                    personInfo.IncludeMaidenName = retrieveFamilySearchDO.IncludeMaidenName;
-                    personInfo.IncludeMiddleName = retrieveFamilySearchDO.IncludeMiddleName;
-                    personInfo.IncludePlace = retrieveFamilySearchDO.IncludePlace;
-                    personInfo.YearRange = retrieveFamilySearchDO.YearRange;
-                    personInfo.Person = Service.GetPersonInformation(researchDO, ref session);
-                    checkAuthentication();
-                } catch (Exception e) {
-                    return new HttpStatusCodeResult(401, e.Message);
-                }
-            }
-
-            if (personInfo.Person == null) {
-                Logger.Debug("RetrievePersonInfo personInfo == null. ");
-            }
-
-            return PartialView("~/Views/Research/PersonUrls.cshtml", personInfo);
-        }
-
-        [System.Web.Mvc.HttpGet]
-        public ActionResult FindPerson() {
-            return PartialView("~/Views/Research/FindPerson.cshtml");
-        }
-
-
-        public ActionResult PersonUrlOptions() {
-            return PartialView("~/Views/Research/PersonUrlOptions.cshtml");
-        }
-
-
-        public ActionResult ResearchFamily() {
-            return PartialView("~/Views/Research/ResearchFamily.cshtml");
-        }
-
-        [System.Web.Mvc.HttpGet]
-        public ActionResult ResearchFamily(string personId) {
-            PersonDO person = GetPersonInCache(personId);
-
-            var personInfoDO = new PersonInfoDO();
-
-            return PartialView("~/Views/Research/ResearchFamily.cshtml", personInfoDO);
-        }
-
-        [System.Web.Mvc.HttpGet]
-        public ActionResult DisplayPerson() {
-            session = GetSession();
-            PersonDO person = session.CurrentPerson;
-
-            return PartialView("~/Views/Research/DisplayPerson.cshtml", person);
-        }
-
-        [System.Web.Mvc.HttpGet]
-        public JsonResult GetAncestorList(string personId) {
-            var researchDO = new ResearchDO();
-            researchDO.PersonId = personId;
-            return Json(GetAncestors(researchDO), JsonRequestBehavior.AllowGet);
-        }
-
-        [System.Web.Mvc.HttpGet]
-        public JsonResult getAncestorsBornBetween18101850(ResearchDO researchDO) {
-            SessionDO session = GetSession();
-            if (string.IsNullOrEmpty(researchDO.PersonId)) {
-                researchDO.PersonId = PersonId;
-            }
-            List<SelectListItemDO> ancestorList = Service.getAncestorsBornBetween18101850(researchDO, ref session);
-            var ancestors = new AncestorsDO();
-            ancestors.Ancestors = ancestorList;
-
-            if (ancestorList.Count > 0) {
-                int count = ancestorList.Count;
-                var random = new Random();
-                int randomNumber = random.Next(0, count);
-                SelectListItemDO item = ancestorList[randomNumber];
-                ancestors.Id = item.id;
-                ancestors.Text = item.text;
-            }
-
-            return Json(ancestors, JsonRequestBehavior.AllowGet);
-        }
-
-        [System.Web.Mvc.HttpGet]
-        public JsonResult GetAncestorByPersonId(string personId) {
-            personId = personId.ToUpper();
-            var ancestors = new AncestorsDO();
-            SessionDO session = GetSession();
-            PersonDO person = Service.GetPerson(personId, ref session);
-            checkAuthentication();
-            if ((person != null) && !person.IsEmpty) {
-                ancestors.Ancestors.Add(new SelectListItemDO(person.Id, person.Id + " - " + person.Fullname));
-                ancestors.Id = person.Id;
-                ancestors.Text = person.Id + " - " + person.Fullname;
-            }
-
-            return Json(ancestors, JsonRequestBehavior.AllowGet);
-        }
-
-        [System.Web.Mvc.HttpGet]
-        public JsonResult FindPersons(string personId, string firstName, string lastName, string gender, string birthYear, string deathYear) {
-            SessionDO session = GetSession();
-            personId = personId.ToUpper();
-            var personDO = new PersonDO();
-            if (!string.IsNullOrEmpty(personId)) {
-                personDO = Service.GetPerson(personId, ref session);
-            } else {
-                personDO.Id = personId;
-                personDO.Firstname = firstName;
-                personDO.Lastname = lastName;
-                if (!string.IsNullOrEmpty(birthYear)) {
-                    personDO.BirthYear = Convert.ToInt16(birthYear);
-                }
-                if (!string.IsNullOrEmpty(deathYear)) {
-                    personDO.DeathYear = Convert.ToInt16(deathYear);
-                }
-                personDO.Gender = gender.ToUpper();
-            }
-            List<FindListItemDO> persons = Service.FindPersons(personDO, ref session);
-
-            //            checkAuthentication();
-            //            if ((person != null) && !person.IsEmpty) {
-            //                ancestors.Ancestors.Add(new SelectListItemDO(person.Id, person.Id + " - " + person.Fullname));
-            //                ancestors.Id = person.Id;
-            //                ancestors.Text = person.Id + " - " + person.Fullname;
-            //            }
-
-            return Json(persons, JsonRequestBehavior.AllowGet);
-        }
-
-        [System.Web.Mvc.HttpGet]
-        public JsonResult GetAncestors(ResearchDO researchDO) {
-            SessionDO session = GetSession();
-            if (string.IsNullOrEmpty(researchDO.PersonId)) {
-                researchDO.PersonId = PersonId;
-            }
-            List<SelectListItemDO> ancestorList = PersonServices.Instance.GetAncestorsForPersonInfo(researchDO, ref session);
-            checkAuthentication();
-            var ancestors = new AncestorsDO();
-            ancestors.Ancestors = ancestorList;
-
-            if ((ancestorList != null) && ancestorList.Count > 0) {
-                SelectListItemDO item = ancestorList[0];
-                ancestors.Id = item.id;
-                ancestors.Text = item.text;
-            }
-
-            return Json(ancestors, JsonRequestBehavior.AllowGet);
-        }
-
-        [System.Web.Mvc.HttpGet]
-        public JsonResult GetDescendants(string personId) {
-            SessionDO session = GetSession();
-            var researchDO = new ResearchDO();
-            if (string.IsNullOrEmpty(personId)) {
-                personId = PersonId;
-            }
-            researchDO.PersonId = personId;
-            researchDO.Generation = 2;
-            List<SelectListItemDO> descendantList = PersonServices.Instance.GetDescendantsForPersonInfo(researchDO, ref session);
-            checkAuthentication();
-
-            var descendants = new DescendantsDO();
-            descendants.Descendants = descendantList;
-
-            if (descendantList.Count > 0) {
-                SelectListItemDO item = descendantList[0];
-                descendants.Id = item.id;
-                descendants.Text = item.text;
-            }
-
-            return Json(descendants, JsonRequestBehavior.AllowGet);
-        }
-
-        [System.Web.Mvc.HttpGet]
-        public JsonResult RefreshDescendantsForPersonInfo(string personId) {
-            SessionDO session = GetSession();
-            var researchDO = new ResearchDO();
-            if (string.IsNullOrEmpty(personId)) {
-                personId = PersonId;
-            }
-            researchDO.PersonId = personId;
-            researchDO.Generation = 7;
-            researchDO.Refresh = true;
-            List<SelectListItemDO> ancestors = PersonServices.Instance.GetAncestorsForPersonInfo(researchDO, ref session);
-            checkAuthentication();
-
-            return Json(ancestors, JsonRequestBehavior.AllowGet);
-        }
     }
 }

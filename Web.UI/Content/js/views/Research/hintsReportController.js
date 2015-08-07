@@ -101,9 +101,13 @@ define(function (require) {
                 data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "topScore": hints.topScore, "count": hints.count, "reportId": person.reportId },
                 url: constants.HINTS_REPORT_DATA_URL,
                 success: function (data) {
-                    hints.previous = data;
-                    $("#hintsReportTable").bootstrapTable("append", data);
-                    system.openForm(hintsReport.form, hintsReport.formTitleImage, hintsReport.spinner);
+                    if (data && data.errorMessage) {
+                        msgBox.error(data.errorMessage);
+                    } else {
+                        hints.previous = data;
+                        $("#hintsReportTable").bootstrapTable("append", data);
+                        system.openForm(hintsReport.form, hintsReport.formTitleImage, hintsReport.spinner);
+                    }
                 }
             });
         } else {

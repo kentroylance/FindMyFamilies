@@ -147,6 +147,7 @@
     <Compile Include="Data\AddressDO.cs" />
     <Compile Include="Data\Base\FindPersonOptionsDOBase.cs" />
     <Compile Include="Data\FindPersonOptionsDO.cs" />
+    <Compile Include="Data\FamilySearchTokenData.cs" />
     <Compile Include="Data\PlaceInputDO.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
@@ -191,6 +192,7 @@
     </Compile>
     <Compile Include="Data\PossibleDuplicateListItemDO.cs" />
     <Compile Include="Data\RetrieveDO.cs" />
+    <Compile Include="Data\ResultDO.cs" />
     <Compile Include="Data\StartingPointDO.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>

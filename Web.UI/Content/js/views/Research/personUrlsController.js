@@ -40,6 +40,10 @@ define(function(require) {
 
     function loadEvents() {
 
+        $("#personUrlsOptionsButton").unbind('click').bind('click', function (e) {
+            findPersonHelper.findOptions(e, findPerson);
+        });
+
         $(".personUrlsAction").unbind('click').bind('click', function(e) {
             var dropdown = $(this);
             var dropdownRow = new row(dropdown.data('id'), dropdown.data('firstname'), dropdown.data('middlename'), dropdown.data('lastname'), dropdown.data('fullname'), dropdown.data('gender'), dropdown.data('birthyear'), dropdown.data('deathyear'), dropdown.data('birthplace'));
@@ -89,9 +93,9 @@ define(function(require) {
         var row = $('#' + id);
         $('#personUrlsId').val(row.data('id'));
         $('#personUrlsFullName').val(row.data('fullname'));
-        $('#personUrlsBirthDate').val(row.data('birthyear'));
+        $('#personUrlsBirthDate').val(row.data('birthdate'));
         $('#personUrlsBirthPlace').val(row.data('birthplace'));
-        $('#personUrlsDeathDate').val(row.data('deathyear'));
+        $('#personUrlsDeathDate').val(row.data('deathdate'));
         $('#personUrlsDeathPlace').val(row.data('deathplace'));
         $('#personUrlsSpouse').val(row.data('spousename'));
         $('#personUrlsMother').val(row.data('mothername'));

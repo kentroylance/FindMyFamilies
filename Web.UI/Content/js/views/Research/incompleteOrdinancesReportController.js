@@ -1,4 +1,4 @@
-define(function (require) {
+define(function(require) {
     var $ = require('jquery');
     var system = require('system');
     var constants = require('constants');
@@ -12,17 +12,17 @@ define(function (require) {
 
     function loadEvents() {
 
-        $("#incompleteOrdinancesReportOptionsButton").unbind('click').bind('click', function (e) {
+        $("#incompleteOrdinancesReportOptionsButton").unbind('click').bind('click', function(e) {
             findPersonHelper.findOptions(e, incompleteOrdinancesReport);
         });
 
-        $("#incompleteOrdinancesReportSaveButton").unbind('click').bind('click', function (e) {
+        $("#incompleteOrdinancesReportSaveButton").unbind('click').bind('click', function(e) {
             incompleteOrdinances.savePrevious();
             incompleteOrdinancesReport.form.dialog(constants.CLOSE);
         });
 
 
-        $("#incompleteOrdinancesReportCancelButton").unbind('click').bind('click', function (e) {
+        $("#incompleteOrdinancesReportCancelButton").unbind('click').bind('click', function(e) {
             incompleteOrdinancesReport.form.dialog(constants.CLOSE);
         });
 
@@ -30,7 +30,7 @@ define(function (require) {
             incompleteOrdinancesReport.form.dialog(constants.CLOSE);
         });
 
-        incompleteOrdinancesReport.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
+        incompleteOrdinancesReport.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function(e) {
             system.initSpinner(incompleteOrdinancesReport.callerSpinner, true);
             person.save();
             if (incompleteOrdinancesReport.callback) {
@@ -51,7 +51,7 @@ define(function (require) {
 
         var $result = $('#eventsResult');
 
-        $('#incompleteOrdinancessTable').on('all.bs.table', function (e, name, args) {
+        $('#incompleteOrdinancessTable').on('all.bs.table', function(e, name, args) {
                 console.log('Event:', name, ', data:', args);
             })
             .on('click-row.bs.table', function(e, row, $element) {
@@ -100,10 +100,14 @@ define(function (require) {
             $.ajax({
                 data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "reportId": person.reportId },
                 url: constants.INCOMPLETE_ORDINANCES_REPORT_DATA_URL,
-                success: function (data) {
-                    incompleteOrdinances.previous = data;
-                    $("#incompleteOrdinancesReportTable").bootstrapTable("append", data);
-                    system.openForm(incompleteOrdinancesReport.form, incompleteOrdinancesReport.formTitleImage, incompleteOrdinancesReport.spinner);
+                success: function(data) {
+                    if (data && data.errorMessage) {
+                        msgBox.error(data.errorMessage);
+                    } else {
+                        incompleteOrdinances.previous = data;
+                        $("#incompleteOrdinancesReportTable").bootstrapTable("append", data);
+                        system.openForm(incompleteOrdinancesReport.form, incompleteOrdinancesReport.formTitleImage, incompleteOrdinancesReport.spinner);
+                    }
                 }
             });
         } else {

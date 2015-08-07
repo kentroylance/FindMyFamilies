@@ -1,11 +1,12 @@
 define(function(require) {
     var $ = require("jquery");
+    var system = require("system");
+    var constants = require("constants");
     var lazyRequire = require("lazyRequire");
     var requireOnce = lazyRequire.once();
 
     var researchHelper;
     var msgBox;
-    var system;
 
     $("#startingPoint").unbind("click").bind("click", function (e) {
         requireOnce(['researchHelper'], function (ResearchHelper) {
@@ -137,7 +138,15 @@ define(function(require) {
 //
 //
 //    startSessionAlive();
-//    
+    //    
+
+    var lastCalled = system.getCookie(constants.LAST_CALLED);
+
+    if (lastCalled && lastCalled === constants.STARTING_POINT) {
+        system.deleteCookie(constants.LAST_CALLED);
+        $('#startingPoint').click();
+    }
+
     var researchController = {
     };
 

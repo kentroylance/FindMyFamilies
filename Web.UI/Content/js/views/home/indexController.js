@@ -1,6 +1,14 @@
-﻿define(function(require) {
+﻿define(function (require) {
     var $ = require('jquery');
     var system = require('system');
+    var constants = require('constants');
+
+    $("#startingPoint").unbind("click").bind("click", function (e) {
+        system.setCookie(constants.LAST_CALLED, constants.STARTING_POINT, 1);
+        window.location.href = constants.RESEARCH_URL;
+        return false;
+    });
+
     system.requireQueue([
         'lazyload',
         'greensock',

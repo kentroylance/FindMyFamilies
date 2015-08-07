@@ -42,20 +42,25 @@ define(function(require) {
                         url: constants.RETRIEVE_DATA_URL,
                         data: { "personId": person.id, "name": person.name, "generation": person.generation, "researchType": person.researchType, "title": retrieve.title, "addChildren": person.addChildren },
                         success: function(data) {
-                            if (data) {
-                                retrieve.retrievedRecords = data.RetrievedRecords;
-                                if (retrieve.retrievedRecords > 0) {
-                                    retrieve.selected = true;
-                                } else {
-                                    retrieve.selected = false;
-                                }
-                                retrieve.reportId = data.ReportId;
-                                system.stopSpinner();
-                                msgBox.message("Successfully retrieved <b>" + data.RetrievedRecords + "</b> " + person.researchType + ".");
-                                retrieve.form.dialog("close");
+                            if (data && data.errorMessage) {
+                                msgBox.error(data.errorMessage);
                             } else {
-                                msgBox.message("Retrieved no " + person.researchType + ".");
+                                if (data) {
+                                    retrieve.retrievedRecords = data.RetrievedRecords;
+                                    if (retrieve.retrievedRecords > 0) {
+                                        retrieve.selected = true;
+                                    } else {
+                                        retrieve.selected = false;
+                                    }
+                                    retrieve.reportId = data.ReportId;
+                                    system.stopSpinner();
+                                    msgBox.message("Successfully retrieved <b>" + data.RetrievedRecords + "</b> " + person.researchType + ".");
+                                    retrieve.form.dialog("close");
+                                } else {
+                                    msgBox.message("Retrieved no " + person.researchType + ".");
+                                }
                             }
+
                         }
                     });
                 }

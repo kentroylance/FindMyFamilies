@@ -1,5 +1,5 @@
 namespace FindMyFamilies.Data {
-    public class RetrieveDO {
+    public class RetrieveDO : ResultDO {
 
         public int RetrievedRecords {
             get;

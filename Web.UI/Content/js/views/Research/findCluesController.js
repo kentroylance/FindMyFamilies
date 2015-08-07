@@ -156,17 +156,6 @@ define(function(require) {
         if (!findClues.searchCriteria) {
             findClues.searchCriteria = "0";
         }
-        if (!findClues.searchCriteriaList) {
-            $.ajax({
-                'async': false,
-                url: constants.SEARCH_CRITERIA_LIST_URL,
-                success: function (data) {
-                    if (data) {
-                        findClues.searchCriteriaList = data;
-                    }
-                }
-            });
-        }
         $.each(findClues.searchCriteriaList, function (i) {
             var optionhtml = '<option value="' + findClues.searchCriteriaList[i].ValueMember + '">' + findClues.searchCriteriaList[i].DisplayMember + '</option>';
             $("#findCluesSearchCriteria").append(optionhtml);

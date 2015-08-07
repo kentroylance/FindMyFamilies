@@ -101,9 +101,13 @@ define(function (require) {
                 data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "possibleDuplicates": possibleDuplicates.possibleDuplicates, "possibleMatches": possibleDuplicates.possibleMatches, "reportId": person.reportId },
                 url: constants.POSSIBLE_DUPLICATES_REPORT_DATA_URL,
                 success: function (data) {
-                    possibleDuplicates.previous = data;
-                    $("#possibleDuplicatesReportTable").bootstrapTable("append", data);
-                    system.openForm(possibleDuplicatesReport.form, possibleDuplicatesReport.formTitleImage, possibleDuplicatesReport.spinner);
+                    if (data && data.errorMessage) {
+                        msgBox.error(data.errorMessage);
+                    } else {
+                        possibleDuplicates.previous = data;
+                        $("#possibleDuplicatesReportTable").bootstrapTable("append", data);
+                        system.openForm(possibleDuplicatesReport.form, possibleDuplicatesReport.formTitleImage, possibleDuplicatesReport.spinner);
+                    }
                 }
             });
         } else {

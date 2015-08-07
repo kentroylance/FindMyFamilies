@@ -108,8 +108,8 @@ namespace FindMyFamilies.BusinessObject {
 		/// </summary>
 		/// <returns>Returns a Collection of ReportDO Data Objects in a ICollection</returns>
 		/// <param name = "reportDO">ReportDO reportDO</param>
-		public ICollection ReadReportsByReportBy(ReportDO reportDO) {
-			ICollection reports = new ArrayList();
+		public IList ReadReportsByReportBy(ReportDO reportDO) {
+			IList reports = new ArrayList();
 			if (IsValid(this, MethodBase.GetCurrentMethod().Name, reportDO)) {
 				reports = ReportDAO.ReadReportsList(reportDO);
                 if (reports.Count > 4) {

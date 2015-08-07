@@ -195,32 +195,35 @@ define(function(require) {
                         "includePlace": person.includePlace,
                         "yearRange": person.yearRange
                     },
-                    success: function(data) {
-                        var $dialogContainer = $("#personUrlsForm");
-                        var $detachedChildren = $dialogContainer.children().detach();
-                        $("<div id=\"personUrlsForm\"></div>").dialog({
-                            width: 850,
-                            title: "Research Family",
-                            resizable: false,
-                            minHeight: 0,
-                            maxHeight: $(window).height(),
-                            create: function() {
-                                $(this).css("maxHeight", 700);
-                            },
-                            open: function() {
-                                $detachedChildren.appendTo($dialogContainer);
-                                $(this).dialog("option", "maxHeight", $(window).height());
-                            },
-                            close: function(event, ui) {
-                                event.preventDefault();
-                                $(this).dialog("destroy").remove();
+                    success: function (data) {
+                        if (data && data.errorMessage) {
+                            msgBox.error(data.errorMessage);
+                        } else {
+                            var $dialogContainer = $("#personUrlsForm");
+                            var $detachedChildren = $dialogContainer.children().detach();
+                            $("<div id=\"personUrlsForm\"></div>").dialog({
+                                width: 850,
+                                title: "Research Family",
+                                resizable: false,
+                                minHeight: 0,
+                                maxHeight: $(window).height(),
+                                create: function () {
+                                    $(this).css("maxHeight", 700);
+                                },
+                                open: function () {
+                                    $detachedChildren.appendTo($dialogContainer);
+                                    $(this).dialog("option", "maxHeight", $(window).height());
+                                },
+                                close: function (event, ui) {
+                                    event.preventDefault();
+                                    $(this).dialog("destroy").remove();
+                                }
+                            });
+                            $("#personUrlsForm").empty().append(data);
+                            if (_personUrlsController) {
+                                _personUrlsController.open();
                             }
-                        });
-                        $("#personUrlsForm").empty().append(data);
-                        if (_personUrlsController) {
-                            _personUrlsController.open();
                         }
-
                     }
                 });
             } else {

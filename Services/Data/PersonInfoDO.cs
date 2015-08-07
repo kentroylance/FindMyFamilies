@@ -14,6 +14,7 @@ namespace FindMyFamiles.Services.Data
         public int YearRange { get; set; }
         public int Generation { get; set; }
         public string PersonType { get; set; }
+        public string errorMessage { get; set; }
     }
 }
 

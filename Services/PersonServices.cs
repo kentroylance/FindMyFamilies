@@ -146,7 +146,7 @@ namespace FindMyFamilies.Services {
 		/// </summary>
 		/// <returns>Returns Report data objects by page</returns>
 		/// <param name = "reportDO">ReportDO reportDO</param>
-		public ICollection ReadReportsByReport(ReportDO reportDO) {
+		public IList ReadReportsByReport(ReportDO reportDO) {
 			return ReportBO.ReadReportsByReportBy(reportDO);
 		}
 

@@ -53,18 +53,22 @@
                 'async': false,
                 url: constants.GET_REPORT_LIST_URL,
                 success: function (data) {
-                    if (data) {
-                        _reports = data;
-                        var found = false;
-                        $.each(data, function (i) {
-                            if (data[i].ValueMember === person.reportId) {
-                                found = true;
+                    if (data && data.errorMessage) {
+                        msgBox.error(data.errorMessage);
+                    } else {
+                        if (data) {
+                            _reports = data.list;
+                            var found = false;
+                            $.each(_reports, function (i) {
+                                if (_reports[i].ValueMember === person.reportId) {
+                                    found = true;
+                                }
+                                optionhtml = '<option value="' + _reports[i].ValueMember + '">' + _reports[i].DisplayMember + '</option>';
+                                reportId.append(optionhtml);
+                            });
+                            if (!found) {
+                                person.reportId = constants.REPORT_ID;
                             }
-                            optionhtml = '<option value="' + data[i].ValueMember + '">' + data[i].DisplayMember + '</option>';
-                            reportId.append(optionhtml);
-                        });
-                        if (!found) {
-                            person.reportId = constants.REPORT_ID;
                         }
                     }
                 }
@@ -78,17 +82,21 @@
                     'async': false,
                     url: constants.GET_REPORT_LIST_URL,
                     success: function (data) {
-                        if (data) {
-                            _reports = data;
-                            $.each(data, function (i) {
-                                if (person.reportId && (parseInt(person.reportId) === 0)) {
-                                    optionhtml = '<option value="' + data[i].ValueMember + '" selected>' + data[i].DisplayMember + '</option>';
-                                    person.reportId = data[i].ValueMember;
-                                } else {
-                                    optionhtml = '<option value="' + data[i].ValueMember + '">' + data[i].DisplayMember + '</option>';
-                                }
-                                reportId.append(optionhtml);
-                            });
+                        if (data && data.errorMessage) {
+                            msgBox.error(data.errorMessage);
+                        } else {
+                            if (data) {
+                                _reports = data.list;
+                                $.each(_reports, function (i) {
+                                    if (person.reportId && (parseInt(person.reportId) === 0)) {
+                                        optionhtml = '<option value="' + _reports[i].ValueMember + '" selected>' + _reports[i].DisplayMember + '</option>';
+                                        person.reportId = _reports[i].ValueMember;
+                                    } else {
+                                        optionhtml = '<option value="' + _reports[i].ValueMember + '">' + _reports[i].DisplayMember + '</option>';
+                                    }
+                                    reportId.append(optionhtml);
+                                });
+                            }
                         }
                     }
                 });

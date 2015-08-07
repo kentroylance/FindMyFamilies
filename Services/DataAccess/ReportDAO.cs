@@ -157,7 +157,7 @@ namespace FindMyFamilies.DataAccess {
 		/// Purpose: Reads reports by report_by records from table Report by search criteria.
 		/// </summary>
 		/// <returns>Returns a collection of Reports</returns>
-		public virtual ICollection ReadReportsList(ReportDO reportDO) {
+		public virtual IList ReadReportsList(ReportDO reportDO) {
 			IList reports = new ArrayList();
 			IDataReader reader = null;
 			try {

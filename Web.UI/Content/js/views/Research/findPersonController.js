@@ -13,7 +13,7 @@ define(function(require) {
     var researchHelper = require('researchHelper');
 
     function loadEvents() {
-        $("#optionsButton").unbind('click').bind('click', function (e) {
+        $("#findPersonOptionsButton").unbind('click').bind('click', function (e) {
             findPersonHelper.findOptions(e, findPerson);
         });
 
@@ -353,8 +353,12 @@ define(function(require) {
                     "birthYear": findPerson.birthYear,
                     "deathYear": findPerson.deathYear
                 },
-                success: function(data) {
-                    $('#eventsTable').bootstrapTable("load", data);
+                success: function (data) {
+                    if (data && data.errorMessage) {
+                        msgBox.error(data.errorMessage);
+                    } else {
+                        $('#eventsTable').bootstrapTable("load", data.list);
+                    }
                 }
             });
         } else {

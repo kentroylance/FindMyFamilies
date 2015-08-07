@@ -12,6 +12,7 @@
     var _userName;
     var _target;
     var _initialized;
+    var _lastCalled;
 
     function stopSpinner(force) {
         requireOnce(['vendor/jquery.spin'], function () {

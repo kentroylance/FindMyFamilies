@@ -101,9 +101,13 @@ define(function (require) {
                 data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "nonMormon": startingPoint.nonMormon, "born18101850": startingPoint.born18101850, "livedInUSA": startingPoint.livedInUSA, "needOrdinances": startingPoint.ordinances, "hint": startingPoint.hints, "duplicate": startingPoint.duplicates, "reportId": person.reportId },
                 url: constants.STARTING_POINT_REPORT_DATA_URL,
                 success: function (data) {
-                    startingPoint.previous = data;
-                    $("#startingPointReportTable").bootstrapTable("append", data);
-                    system.openForm(startingPointReport.form, startingPointReport.formTitleImage, startingPointReport.spinner);
+                    if (data && data.errorMessage) {
+                        msgBox.error(data.errorMessage);
+                    } else {
+                        startingPoint.previous = data;
+                        $("#startingPointReportTable").bootstrapTable("append", data);
+                        system.openForm(startingPointReport.form, startingPointReport.formTitleImage, startingPointReport.spinner);
+                    }
                 }
             });
         } else {
