@@ -129,6 +129,7 @@ a.btn-u-lg {
 .purchase {
 	padding: 25px 0 30px;
 	border-bottom: solid 1px #eee;
+    border-top: solid 1px #eee;
 }
 .purchase p {
 	margin-bottom: 0;
@@ -779,4 +780,77 @@ h1 i, h2 i, h3 i, h4 i, h5 i, h6 i {
 	.header .navbar-default .navbar-nav > li > a:hover {
 		color: #72c02c;
 	}
+}
+
+.ls-shadow {
+    visibility: hidden !important;
+}
+
+.feature-1 {
+    background: no-repeat;
+    height: 200px;
+    background-image: url("/Images/findPerson1.png");
+    background-position: center center;
+    display: block;
+}
+
+
+.feature-2 {
+    background: no-repeat;
+    height: 200px;
+    background-image: url("/Images/startingPoint1.png");
+    background-position: center center;
+    display: block;
+}
+
+.feature-3 {
+    background: no-repeat;
+    height: 200px;
+    background-image: url("/Images/hints1.png");
+    background-position: center center;
+    display: block;
+}
+
+.feature-4 {
+    background: no-repeat;
+    height: 200px;
+    background-image: url("/Images/incompleteOrdinances1.png");
+    background-position: center center;
+    display: block;
+}
+
+.ftr-col-layout {
+    padding: 0px !important;
+}
+
+.features-layout {
+    min-height: 200px ;
+    display:block;
+    background-position:top center;
+    background-repeat:no-repeat;
+    border-left:1px solid #fff;
+    border-right: 1px solid #fff;
+    border-top: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 100;
+    line-height: 1;
+
+}
+
+.ftr-a{
+    color: #fff;
+    padding-top: 120px;
+}
+
+.features-layout a, a:hover, a:focus {
+    color: #fff;
+    display: block;
+    text-decoration: none;
+}
+.ftr-h5 {
+    color: #666;
+    margin: 0px;
+    margin-bottom: -3px;
 }

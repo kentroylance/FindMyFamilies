@@ -1118,8 +1118,11 @@
     <Content Include="Images\findmyfamilies_new1-3.png" />
     <Content Include="Images\findmyfamilies_new1-4.png" />
     <Content Include="Images\FindMyPast.png" />
+    <Content Include="Images\findPerson1.png" />
     <Content Include="Images\Folder List.png" />
     <Content Include="Images\Form.png" />
+    <Content Include="Images\fp1.png" />
+    <Content Include="Images\fp2.png" />
     <Content Include="Images\gear.png" />
     <Content Include="Images\gearfind.png" />
     <Content Include="Images\gearrun.png" />
@@ -1127,10 +1130,12 @@
     <Content Include="Images\help.png" />
     <Content Include="Images\helpabout.png" />
     <Content Include="Images\hint.png" />
+    <Content Include="Images\hints1.png" />
     <Content Include="Images\history.png" />
     <Content Include="Images\HTML-View-Preview.png" />
     <Content Include="Images\img1.jpg" />
     <Content Include="Images\important.png" />
+    <Content Include="Images\incompleteOrdinances1.png" />
     <Content Include="Images\Information-2.png" />
     <Content Include="Images\information.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1180,6 +1185,8 @@
     <Content Include="Images\Research.png" />
     <Content Include="Images\Save.png" />
     <Content Include="Images\Search.png" />
+    <Content Include="Images\sp1.png" />
+    <Content Include="Images\startingPoint1.png" />
     <Content Include="Images\submit.png" />
     <Content Include="Images\Summary.png" />
     <Content Include="Images\Table.png" />
