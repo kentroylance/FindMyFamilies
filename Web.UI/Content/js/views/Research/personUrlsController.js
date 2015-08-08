@@ -60,7 +60,11 @@ define(function(require) {
 
 
         personUrls.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function(e) {
-            system.spinnerArea = personUrls.callerSpinner;
+            if (personUrls.callerSpinner) {
+                system.spinnerArea = personUrls.callerSpinner;
+            } else {
+                system.spinnerArea = constants.DEFAULT_SPINNER_AREA;
+            }
             $(".personAction1").unbind("mouseenter").unbind("mouseleave");
             return false;
         });

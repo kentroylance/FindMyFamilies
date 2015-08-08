@@ -103,6 +103,8 @@ define(function(require) {
                 url: constants.INCOMPLETE_ORDINANCES_REPORT_DATA_URL,
                 success: function(data) {
                     if (data && data.errorMessage) {
+                        system.spinnerArea = incompleteOrdinances.spinner;
+                        system.stopSpinner(force);
                         msgBox.error(data.errorMessage);
                     } else {
                         incompleteOrdinances.previous = data;

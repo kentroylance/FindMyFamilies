@@ -328,6 +328,8 @@ define(function(require) {
         incompleteOrdinances.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function(e) {
             if (incompleteOrdinances.callerSpinner) {
                 system.spinnerArea = incompleteOrdinances.callerSpinner;
+            } else {
+                system.spinnerArea = constants.DEFAULT_SPINNER_AREA;
             }
             incompleteOrdinances.save();
         });

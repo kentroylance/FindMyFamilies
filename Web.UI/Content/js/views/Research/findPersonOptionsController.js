@@ -92,7 +92,11 @@ define(function(require) {
     }
 
     function close() {
-        system.initSpinner(findPersonOptions.callerSpinner, true);
+        if (findPersonOptions.callerSpinner) {
+                system.spinnerArea = findPersonOptions.callerSpinner;
+            } else {
+                system.spinnerArea = constants.DEFAULT_SPINNER_AREA;
+            }
     }
 
     var findPersonOptionsController = {

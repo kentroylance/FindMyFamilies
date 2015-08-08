@@ -103,7 +103,8 @@ define(function (require) {
                 url: constants.DATE_PROBLEMS_REPORT_DATA_URL,
                 success: function (data) {
                     if (data && data.errorMessage) {
-                        system.initSpinner(dateProblemsReport.callerSpinner, true);
+                        system.spinnerArea = dateProblems.spinner;
+                        system.stopSpinner(force);
                         msgBox.error(data.errorMessage);
                     } else {
                         dateProblems.previous = data;

@@ -103,7 +103,8 @@ define(function (require) {
                 url: constants.PLACE_PROBLEMS_REPORT_DATA_URL,
                 success: function (data) {
                     if (data && data.errorMessage) {
-                        system.initSpinner(placeProblemsReport.callerSpinner, true);
+                        system.spinnerArea = placeProblems.spinner;
+                        system.stopSpinner(force);
                         msgBox.error(data.errorMessage);
                     } else {
                         placeProblems.previous = data;

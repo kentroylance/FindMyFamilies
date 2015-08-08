@@ -323,10 +323,16 @@ namespace FindMyFamilies.Web.Controllers {
             session = GetSession();
             Logger.Debug("Entered Research" + session.AccessToken + " " + session.TokenHourExpire + " " + session.Token24HourExpire);
             //  getCurrentPerson(ref session);
-            if (session.Authenticated) {
-                getCurrentPerson(ref session);
-                Logger.Debug("authenticated = " + session.Authenticated + "; token = " + session.AccessToken); //; isChurchMember = " + Service.IsChurchMember(ref session));
+//            if (session.Authenticated) {
+//                getCurrentPerson(ref session);
+//                Logger.Debug("authenticated = " + session.Authenticated + "; token = " + session.AccessToken); //; isChurchMember = " + Service.IsChurchMember(ref session));
+//            }
+            if (!session.Authenticated) {
+                 Token = null;
+                 TokenHourExpire = null;
+                 Token24HourExpire = null;
             }
+
             try {
                 if (!isLocal) {
                     Logger.Debug("Entered Research" + session.AccessToken + " " + session.TokenHourExpire + " " + session.Token24HourExpire);

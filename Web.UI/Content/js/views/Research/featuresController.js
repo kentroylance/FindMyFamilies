@@ -121,6 +121,11 @@ define(function(require) {
         });
 
         features.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function(e) {
+            if (features.callerSpinner) {
+                system.spinnerArea = features.callerSpinner;
+            } else {
+                system.spinnerArea = constants.DEFAULT_SPINNER_AREA;
+            }
             features.save();
         });
     }

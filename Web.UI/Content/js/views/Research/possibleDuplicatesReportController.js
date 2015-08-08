@@ -103,7 +103,8 @@ define(function (require) {
                 url: constants.POSSIBLE_DUPLICATES_REPORT_DATA_URL,
                 success: function (data) {
                     if (data && data.errorMessage) {
-                        system.initSpinner(possibleDuplicatesReport.callerSpinner, true);
+                        system.spinnerArea = possibleDuplicates.spinner;
+                        system.stopSpinner(force);
                         msgBox.error(data.errorMessage);
                     } else {
                         possibleDuplicates.previous = data;

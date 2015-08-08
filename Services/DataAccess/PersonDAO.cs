@@ -648,7 +648,7 @@ namespace FindMyFamilies.DataAccess {
 
             var inputs = new Dictionary<string, string>();
             inputs.Add(Constants.TEMPLATE_ID_PERSON, personDO.Id);
-            inputs.Add(Constants.TEMPLATE_ID_COLLECTION, "https://familysearch.org/platform/collections/records");
+            inputs.Add(Constants.TEMPLATE_ID_COLLECTION, "https://beta.familysearch.org/platform/collections/records");
             RestClient restClient = null;
             RestRequest request = null;
             IRestResponse<Hint> response = null;
@@ -721,7 +721,7 @@ namespace FindMyFamilies.DataAccess {
                 hintDO.Results = hint.results;
                 if ((hint.results > 0) && (hint.entries != null)) {
                     foreach (var entry in hint.entries) {
-                        var hintEntry = new HintEntryDO();
+                        HintEntryDO hintEntry = new HintEntryDO();
                         hintEntry.Fullname = entry.title;
                         hintEntry.Score = entry.score;
                         hintDO.Score = entry.score;
@@ -733,7 +733,7 @@ namespace FindMyFamilies.DataAccess {
                         hintEntry.Id = entry.id;
                         if (entry.content.gedcomx.persons != null) {
                             foreach (var person2 in entry.content.gedcomx.persons) {
-                                var person = new PersonDO();
+                                PersonDO person = new PersonDO();
                                 person.Id = person2.id;
                                 person.Fullname = person2.display.name;
                                 hintEntry.Persons.Add(person2.id, person);
@@ -811,7 +811,7 @@ namespace FindMyFamilies.DataAccess {
             if (request != null) {
                 request.Method = Method.GET;
                 request.AddHeader("Accept", Constants.MEDIA_TYPE_GEDCOM);
-                //                request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
+//                request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
                 try {
                     response = restClient.Execute<Gedcomx>(request);
                 } catch (Exception e) {

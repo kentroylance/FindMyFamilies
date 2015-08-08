@@ -103,11 +103,12 @@ define(function (require) {
                 url: constants.STARTING_POINT_REPORT_DATA_URL,
                 success: function (data) {
                     if (data && data.errorMessage) {
-                        system.initSpinner(startingPointReport.callerSpinner, true);
+                        system.spinnerArea = startingPoint.spinner;
+                        system.stopSpinner(force);
                         msgBox.error(data.errorMessage);
                     } else {
-                        startingPoint.previous = data;
-                        $("#startingPointReportTable").bootstrapTable("append", data);
+                        startingPoint.previous = data.list;
+                        $("#startingPointReportTable").bootstrapTable("append", data.list);
                         system.openForm(startingPointReport.form, startingPointReport.formTitleImage, startingPointReport.spinner);
                     }
                 }

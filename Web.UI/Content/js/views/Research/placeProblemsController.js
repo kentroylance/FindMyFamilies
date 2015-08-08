@@ -328,6 +328,8 @@ define(function(require) {
         placeProblems.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function(e) {
             if (placeProblems.callerSpinner) {
                 system.spinnerArea = placeProblems.callerSpinner;
+            } else {
+                system.spinnerArea = constants.DEFAULT_SPINNER_AREA;
             }
             placeProblems.save();
         });

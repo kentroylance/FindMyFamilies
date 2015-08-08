@@ -340,6 +340,8 @@ define(function(require) {
         possibleDuplicates.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
             if (possibleDuplicates.callerSpinner) {
                 system.spinnerArea = possibleDuplicates.callerSpinner;
+            } else {
+                system.spinnerArea = constants.DEFAULT_SPINNER_AREA;
             }
             possibleDuplicates.save();
         });

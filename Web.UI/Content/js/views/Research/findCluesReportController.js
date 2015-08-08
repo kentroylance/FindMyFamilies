@@ -103,7 +103,8 @@ define(function (require) {
                 url: constants.FIND_CLUES_REPORT_DATA_URL,
                 success: function (data) {
                     if (data && data.errorMessage) {
-                        system.initSpinner(findCluesReport.callerSpinner, true);
+                        system.spinnerArea = findClues.spinner;
+                        system.stopSpinner(force);
                         msgBox.error(data.errorMessage);
                     } else {
                         findClues.previous = data;
