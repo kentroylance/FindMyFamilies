@@ -63,11 +63,21 @@ define(function(require) {
         return false;
     });
 
+
     $("#feedback").unbind("click").bind("click", function (e) {
         requireOnce(['researchHelper'], function (ResearchHelper) {
             researchHelper = ResearchHelper;
         }, function () {
             researchHelper.feedback();
+        });
+        return false;
+    });
+    
+    $("#features").unbind("click").bind("click", function (e) {
+        requireOnce(['researchHelper'], function (ResearchHelper) {
+            researchHelper = ResearchHelper;
+        }, function () {
+            researchHelper.features();
         });
         return false;
     });

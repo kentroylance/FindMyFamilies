@@ -40,6 +40,8 @@
             hintsReportController: 'views/research/hintsReportController',
             feedback: 'views/research/feedback',
             feedbackController: 'views/research/feedbackController',
+            features: 'views/research/features',
+            featuresController: 'views/research/featuresController',
             dateProblems: 'views/research/dateProblems',
             dateProblemsController: 'views/research/dateProblemsController',
             dateProblemsReport: 'views/research/dateProblemsReport',
@@ -109,6 +111,10 @@
             feedback: {
                 deps: ['jquery', 'person', 'constants'],
                 exports: 'feedback'
+            },
+            features: {
+                deps: ['jquery', 'person', 'constants'],
+                exports: 'features'
             },
             incompleteOrdinances: {
                 deps: ['jquery', 'person', 'constants'],
@@ -222,6 +228,10 @@
             feedbackController: {
                 deps: ['jquery', 'feedback', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'feedbackController'
+            },
+            featuresController: {
+                deps: ['jquery', 'features', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
+                exports: 'featuresController'
             },
             dateProblemsReportController: {
                 deps: ['jquery', 'dateProblemsReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],

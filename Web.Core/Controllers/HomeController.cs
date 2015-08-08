@@ -166,6 +166,12 @@ namespace FindMyFamilies.Web.Controllers {
         }
 
         [System.Web.Mvc.HttpGet]
+        public ActionResult Features()
+        {
+            return PartialView("~/Views/Research/Features.cshtml");
+        }
+
+        [System.Web.Mvc.HttpGet]
         public ActionResult Hints() {
             return PartialView("~/Views/Research/Hints.cshtml");
         }

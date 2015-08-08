@@ -844,11 +844,6 @@ h1 i, h2 i, h3 i, h4 i, h5 i, h6 i {
     padding-top: 120px;
 }
 
-.features-layout a, a:hover, a:focus {
-    color: #fff;
-    display: block;
-    text-decoration: none;
-}
 .ftr-h5 {
     color: #666;
     margin: 0px;

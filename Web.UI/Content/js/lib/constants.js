@@ -39,6 +39,7 @@
     var HINTS = "hints";
     var HINTS_REPORT = "hintsReport";
     var FEEDBACK = "feedback";
+    var FEATURES = "features";
     var DATE_PROBLEMS = "dateProblems";
     var DATE_PROBLEMS_REPORT = "dateProblemsReport";
     var INCOMPLETE_ORDINANCES = "incompleteOrdinances";
@@ -62,6 +63,7 @@
     var HINTS_REPORT_HTML_URL = '/Home/HintsReportHtml';
     var HINTS_REPORT_DATA_URL = '/Home/HintsReportData';
     var FEEDBACK_URL = '/Home/Feedback';
+    var FEATURES_URL = '/Home/Features';
     var POSSIBLE_DUPLICATES_URL = '/Home/PossibleDuplicates';
     var POSSIBLE_DUPLICATES_REPORT_HTML_URL = '/Home/PossibleDuplicatesReportHtml';
     var POSSIBLE_DUPLICATES_REPORT_DATA_URL = '/Home/PossibleDuplicatesReportData';
@@ -232,6 +234,15 @@
         },
         get FEEDBACK_HTML() {
             return FEEDBACK_HTML;
+        },
+        get FEATURES() {
+            return FEATURES;
+        },
+        get FEATURES_URL() {
+            return FEATURES_URL;
+        },
+        get FEATURES_HTML() {
+            return FEATURES_HTML;
         },
         get INCOMPLETE_ORDINANCES() {
             return INCOMPLETE_ORDINANCES;
