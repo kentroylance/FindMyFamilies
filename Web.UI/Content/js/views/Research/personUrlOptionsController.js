@@ -43,7 +43,11 @@ define(function(require) {
         });
 
         personUrlOptions.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
-            system.initSpinner(personUrlOptions.callerSpinner, true);
+            if (personUrlOptions.callerSpinner) {
+                system.spinnerArea = personUrlOptions.callerSpinner;
+            } else {
+                system.spinnerArea = constants.DEFAULT_SPINNER_AREA;
+            }
             person.save();
             return false;
         });

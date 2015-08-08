@@ -2,6 +2,7 @@ define(function(require) {
     var $ = require('jquery');
     var system = require('system');
     var constants = require('constants');
+    var msgBox = require('msgBox');
     var findPersonHelper = require('findPersonHelper');
     var researchHelper = require('researchHelper');
 
@@ -31,7 +32,7 @@ define(function(require) {
         });
 
         incompleteOrdinancesReport.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function(e) {
-            system.initSpinner(incompleteOrdinancesReport.callerSpinner, true);
+            system.spinnerArea = incompleteOrdinances.spinner;
             person.save();
             if (incompleteOrdinancesReport.callback) {
                 if (typeof (incompleteOrdinancesReport.callback) === "function") {

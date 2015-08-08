@@ -65,15 +65,19 @@ namespace FindMyFamilies.BusinessObject {
             }
 
             PersonDO personDO = null;
-            var gedcomx = personDAO.GetPerson(personId, ref session);
 
-            if ((gedcomx != null) && (gedcomx.Persons != null)) {
-                foreach (var person in gedcomx.Persons) {
-                    person.Display.AscendancyNumber = "0";
-                    personDO = personDAO.GetPerson(person);
-                    break;
+            if (!session.Error) {
+                var gedcomx = personDAO.GetPerson(personId, ref session);
+
+                if ((gedcomx != null) && (gedcomx.Persons != null)) {
+                    foreach (var person in gedcomx.Persons) {
+                        person.Display.AscendancyNumber = "0";
+                        personDO = personDAO.GetPerson(person);
+                        break;
+                    }
                 }
             }
+
             return personDO;
         }
 
@@ -158,6 +162,9 @@ namespace FindMyFamilies.BusinessObject {
         public List<SelectListItemDO> getAncestorsBornBetween18101850(ResearchDO researchDO, ref SessionDO session) {
             List<SelectListItemDO> ancestors = null;
 
+            if (session.Error) {
+                return ancestors;
+            }
             var ancestorList = new Dictionary<string, SelectListItemDO>();
             var persons = new Dictionary<string, PersonDO>();
             var children = new Dictionary<string, PersonDO>();
@@ -200,6 +207,10 @@ namespace FindMyFamilies.BusinessObject {
 
         public List<SelectListItemDO> GetAncestorsForPersonInfo(ResearchDO researchDO, ref SessionDO session) {
             List<SelectListItemDO> ancestors = null;
+
+            if (session.Error) {
+                return ancestors;
+            }
 
             if (researchDO.BornBetween18101850) {
                 ancestors = getAncestorsBornBetween18101850(researchDO, ref session);
@@ -244,6 +255,10 @@ namespace FindMyFamilies.BusinessObject {
 
         public List<SelectListItemDO> GetDescendantsForPersonInfo(ResearchDO researchDO, ref SessionDO session) {
             var descendants = new List<SelectListItemDO>();
+            if (session.Error) {
+                return descendants;
+            }
+
             var gedcomx = personDAO.GetDescendants(researchDO.PersonId, researchDO.Generation.ToString(), ref session);
             if ((gedcomx != null) && (gedcomx.Persons.Count > 0)) {
                 foreach (var person in gedcomx.Persons) {
@@ -258,6 +273,11 @@ namespace FindMyFamilies.BusinessObject {
 
         public Dictionary<string, PersonDO> GetAncestors(ref ResearchDO researchDO, ref SessionDO session) {
             var persons = new Dictionary<string, PersonDO>();
+
+            if (session.Error) {
+                return persons;
+            }
+
             var personsPedigree = new Dictionary<string, PersonDO>();
             var motherPersons = new Dictionary<string, PersonDO>();
             var children = new Dictionary<string, PersonDO>();
@@ -359,6 +379,10 @@ namespace FindMyFamilies.BusinessObject {
         }
 
         private void addChildrenAncestry(string id, ref Dictionary<string, PersonDO> persons, ref SessionDO session) {
+            if (session.Error) {
+                return;
+            }
+
             var childrenRelationship = personDAO.GetChildren(id, ref session);
             if (childrenRelationship != null) {
                 if (childrenRelationship.Persons != null) {
@@ -386,8 +410,14 @@ namespace FindMyFamilies.BusinessObject {
 
         public Dictionary<string, PersonDO> GetDescendants(ref ResearchDO researchDO, ref SessionDO session, bool populate) {
             logger.Info("Entered GetDescendants");
-
+ 
+            if (session.Error) {
+                return new Dictionary<string, PersonDO>();
+            }
             var descendants = personDAO.GetDescendants(researchDO.PersonId, researchDO.Generation.ToString(), ref session);
+            if (session.Error) {
+                return new Dictionary<string, PersonDO>();
+            }
             //            logger.Info("PersonDAO().GetDescendants = " + ((gedcomx == null) ? "0" : gedcomx.Persons.Count().ToString()));
             var persons = new Dictionary<string, PersonDO>();
             var personsPedigree = new Dictionary<string, PersonDO>();
@@ -518,6 +548,11 @@ namespace FindMyFamilies.BusinessObject {
             AnalyzeListItemDO analyzeListItemDO = new AnalyzeListItemDO();
 
             var analyzeListItems = new List<AnalyzeListItemDO>();
+
+            if (session.Error) {
+                return analyzeListItems;
+            }
+
             try {
                 var persons = new Dictionary<string, PersonDO>();
                 if (findCluesInputDo.ReportId > 0) {
@@ -538,6 +573,10 @@ namespace FindMyFamilies.BusinessObject {
         }
 
         public void GetPersonAncestryValidations(ref ResearchDO researchDO, ref SessionDO session) {
+            if (session.Error) {
+                return;
+            }
+
             try {
                 var persons = new Dictionary<string, PersonDO>();
                 if (session.Action.Equals(Constants.ACTION_RETRIEVE) || session.Action.Equals(Constants.ACTION_RETRIEVE_ANALYZE)) {
@@ -555,6 +594,9 @@ namespace FindMyFamilies.BusinessObject {
 
         private Dictionary<string, PersonDO> getPersons(ref ResearchDO researchDO, ref SessionDO session) {
             var persons = new Dictionary<string, PersonDO>();
+            if (session.Error) {
+                return persons;
+            }
 
             if (researchDO.ResearchType.Equals(Constants.RESEARCH_TYPE_ANCESTORS)) {
                 RetrieveAncestorsData(ref researchDO, ref session, ref persons);
@@ -573,6 +615,9 @@ namespace FindMyFamilies.BusinessObject {
         public List<DateListItemDO> GetDates(DateInputDO datesInputDO, ref SessionDO session) {
             var dates = new Dictionary<string, string>();
             var dateListItems = new List<DateListItemDO>();
+            if (session.Error) {
+                return dateListItems;
+            }
 
             ResearchDO researchDO = new ResearchDO();
             researchDO.PersonId = datesInputDO.PersonId;
@@ -678,7 +723,12 @@ namespace FindMyFamilies.BusinessObject {
 
         public List<PlaceListItemDO> GetPlaces(PlaceInputDO placesInputDO, ref SessionDO session) {
             var places = new Dictionary<string, string>();
+
             var placeListItems = new List<PlaceListItemDO>();
+            if (session.Error) {
+                return placeListItems;
+            }
+
 
             ResearchDO researchDO = new ResearchDO();
             researchDO.PersonId = placesInputDO.PersonId;
@@ -910,7 +960,7 @@ namespace FindMyFamilies.BusinessObject {
                 listItem.Status += "</b></p>";
             }
             if (ordinance.Confirmation != null) {
-                listItem.Status  +=  "<p>Confirmation: <b>" + ordinance.Confirmation.status;
+                listItem.Status += "<p>Confirmation: <b>" + ordinance.Confirmation.status;
                 if (!ordinance.Confirmation.completed) {
                     listItem.Status += " - Reservable"; // + ordinance.Confirmation.reservable;
                 } else {
@@ -919,7 +969,7 @@ namespace FindMyFamilies.BusinessObject {
                 listItem.Status += "</b></p>";
             }
             if (ordinance.Initiatory != null) {
-                listItem.Status  +=  "<p>Initiatory: <b>" + ordinance.Initiatory.status;
+                listItem.Status += "<p>Initiatory: <b>" + ordinance.Initiatory.status;
                 if (!ordinance.Initiatory.completed) {
                     listItem.Status += " - Reservable"; // + ordinance.Initiatory.reservable;
                 } else {
@@ -928,7 +978,7 @@ namespace FindMyFamilies.BusinessObject {
                 listItem.Status += "</b></p>";
             }
             if (ordinance.Endowment != null) {
-                listItem.Status  +=  "<p>Endowment: <b>" + ordinance.Endowment.status;
+                listItem.Status += "<p>Endowment: <b>" + ordinance.Endowment.status;
                 if (!ordinance.Endowment.completed) {
                     listItem.Status += " - Reservable"; // + ordinance.Endowment.reservable;
                 } else {
@@ -937,7 +987,7 @@ namespace FindMyFamilies.BusinessObject {
                 listItem.Status += "</b></p>";
             }
             if (ordinance.SealedToParent != null) {
-                listItem.Status +=  "<p>Sealed To Parent: <b>" + ordinance.SealedToParent.status;
+                listItem.Status += "<p>Sealed To Parent: <b>" + ordinance.SealedToParent.status;
                 if (!ordinance.SealedToParent.completed) {
                     listItem.Status += " - Reservable"; // + ordinance.SealedToParent.reservable;
                 } else {
@@ -946,7 +996,7 @@ namespace FindMyFamilies.BusinessObject {
                 listItem.Status += "</b></p>";
             }
             if (ordinance.SealedToSpouse != null) {
-                listItem.Status  +=  "<p>Sealed To Spouse: <b>" + ordinance.SealedToSpouse.status;
+                listItem.Status += "<p>Sealed To Spouse: <b>" + ordinance.SealedToSpouse.status;
                 if (!ordinance.SealedToSpouse.completed) {
                     listItem.Status += " - Reservable"; // + ordinance.SealedToSpouse.reservable;
                 } else {
@@ -955,7 +1005,7 @@ namespace FindMyFamilies.BusinessObject {
                 listItem.Status += "</b></p>";
             } else {
                 if (ordinance.Baptism.status.Equals("Not Needed")) {
-                    listItem.Status  +=  "<p>No Spouse</p>";
+                    listItem.Status += "<p>No Spouse</p>";
                 }
             }
             return listItem;
@@ -1137,7 +1187,7 @@ namespace FindMyFamilies.BusinessObject {
 
                 if (startingPointInputDO.NonMormon || startingPointInputDO.NeedOrdinances) {
                     OrdinanceDO ordinance = personDAO.GetOrdinances(personDO, ref session);
-                    if ((ordinance != null) && !personDO.Living) {
+                    if (!session.Error && (ordinance != null) && !personDO.Living) {
                         if ((ordinance.Baptism.reservable) || (ordinance.Confirmation.reservable) || (ordinance.Initiatory.reservable) || (ordinance.Endowment.reservable)) {
                             startingPointListItemDO.Reasons += "IncompleteOrdinances[" + GetOrdinanceInfo(ordinance) + "]~";
                             startingPointListItemDO.Count++;
@@ -1206,7 +1256,7 @@ namespace FindMyFamilies.BusinessObject {
                     }
                 }
 
-                if (startingPointInputDO.Duplicate) {
+                if (!session.Error && startingPointInputDO.Duplicate) {
                     PossibleDuplicateDO possibleDuplicate = personDAO.GetPossibleDuplicates(personDO, ref session);
                     if ((possibleDuplicate != null) && possibleDuplicate.Results > 0) {
                         foreach (var entry in possibleDuplicate.Entries) {
@@ -1218,7 +1268,7 @@ namespace FindMyFamilies.BusinessObject {
                     }
                 }
 
-                if (startingPointInputDO.Hint) {
+                if (!session.Error && startingPointInputDO.Hint) {
                     HintDO hint = personDAO.GetHints(personDO, ref session);
                     if ((hint != null) && hint.Results > 0) {
                         foreach (var entry in hint.Entries) {
@@ -1244,14 +1294,18 @@ namespace FindMyFamilies.BusinessObject {
             researchDO.PersonName = startingPointInputDO.FullName;
 
             var ancestors = getPersons(ref researchDO, ref session);
-
-            StartingPointListItemDO startingPointListItemDO;
-            if ((ancestors != null) && (ancestors.Count > 0)) {
-                foreach (var ancestor in ancestors) {
-                    if (!startingPoints.ContainsKey(ancestor.Value.Id)) {
-                        startingPointListItemDO = GetStartingPoints(ancestor.Value, startingPointInputDO, ref session);
-                        if ((startingPointListItemDO.Reasons != null) && (startingPointListItemDO.Reasons.Length > 0)) {
-                            startingPointListItems.Add(startingPointListItemDO);
+            if (!session.Error) {
+                StartingPointListItemDO startingPointListItemDO;
+                if ((ancestors != null) && (ancestors.Count > 0)) {
+                    foreach (var ancestor in ancestors) {
+                        if (!startingPoints.ContainsKey(ancestor.Value.Id)) {
+                            startingPointListItemDO = GetStartingPoints(ancestor.Value, startingPointInputDO, ref session);
+                            if (!session.Error && (startingPointListItemDO.Reasons != null) && (startingPointListItemDO.Reasons.Length > 0)) {
+                                startingPointListItems.Add(startingPointListItemDO);
+                            }
+                        }
+                        if (session.Error) {
+                            break;
                         }
                     }
                 }
@@ -1301,15 +1355,20 @@ namespace FindMyFamilies.BusinessObject {
 
             var ancestors = getPersons(ref researchDO, ref session);
 
-            PossibleDuplicateDO possibleDuplicate = null;
-            if ((ancestors != null) && (ancestors.Count > 0)) {
-                foreach (var ancestor in ancestors) {
-                    if (!possibleDuplicates.ContainsKey(ancestor.Value.Id)) {
-                        possibleDuplicate = personDAO.GetPossibleDuplicates(ancestor.Value, ref session);
-                        if ((possibleDuplicate != null) && (possibleDuplicate.Results > 0)) {
-                            if ((possibleDuplicateInputDO.IncludePossibleDuplicates && possibleDuplicate.Duplicates) || (possibleDuplicateInputDO.IncludePossibleMatches && possibleDuplicate.Matches)) {
-                                possibleDuplicates.Add(ancestor.Value.Id, possibleDuplicate);
-                                possibleDuplicateListItems.Add(GetPossibleDuplicateListItem(possibleDuplicate, ancestor.Value));
+            if (!session.Error) {
+                PossibleDuplicateDO possibleDuplicate = null;
+                if ((ancestors != null) && (ancestors.Count > 0)) {
+                    foreach (var ancestor in ancestors) {
+                        if (!possibleDuplicates.ContainsKey(ancestor.Value.Id)) {
+                            possibleDuplicate = personDAO.GetPossibleDuplicates(ancestor.Value, ref session);
+                            if (session.Error) {
+                                break;
+                            }
+                            if ((possibleDuplicate != null) && (possibleDuplicate.Results > 0)) {
+                                if ((possibleDuplicateInputDO.IncludePossibleDuplicates && possibleDuplicate.Duplicates) || (possibleDuplicateInputDO.IncludePossibleMatches && possibleDuplicate.Matches)) {
+                                    possibleDuplicates.Add(ancestor.Value.Id, possibleDuplicate);
+                                    possibleDuplicateListItems.Add(GetPossibleDuplicateListItem(possibleDuplicate, ancestor.Value));
+                                }
                             }
                         }
                     }
@@ -1480,12 +1539,12 @@ namespace FindMyFamilies.BusinessObject {
                 var ancestryDao = new AncestryDAO();
                 var person = getParents(researchDO.PersonId, ref persons, ref session);
 
-                if ((researchDO.Generation > 1) && (person != null) && ((person.Father != null) && !person.Father.IsEmpty)) {
+                if (!session.Error && (researchDO.Generation > 1) && (person != null) && ((person.Father != null) && !person.Father.IsEmpty)) {
                     var ancestryFather = ancestryDao.GetPersonAncestry(person.Father.Id, researchDO.Generation.ToString(), ref session);
                     //                    foreach (Person person1 in ancestryFather.Persons) {
                     //                        logger.Info(person1.Display.Name);
                     //                    }
-                    if ((ancestryFather != null) && (ancestryFather.Persons != null) && (ancestryFather.Persons.Count > 0)) {
+                    if (!session.Error && (ancestryFather != null) && (ancestryFather.Persons != null) && (ancestryFather.Persons.Count > 0)) {
                         for (var i = ancestryFather.Persons.Count - 1; i > -1; i--) {
                             if (ancestryFather.Persons[i].Id.Equals("KW71-FN3")) {
                                 var test = "";
@@ -1508,7 +1567,7 @@ namespace FindMyFamilies.BusinessObject {
                     //                    foreach (Person person1 in ancestryMother.Persons) {
                     //                        logger.Info(person1.Display.Name);
                     //                    }
-                    if ((ancestryMother != null) && (ancestryMother.Persons != null) && (ancestryMother.Persons.Count > 0)) {
+                    if (!session.Error && (ancestryMother != null) && (ancestryMother.Persons != null) && (ancestryMother.Persons.Count > 0)) {
                         for (var i = ancestryMother.Persons.Count - 1; i > -1; i--) {
                             //                            if (ancestryMother.Persons[i].Id.Equals("KW71-FN3")) {
                             //                                string test = "";
@@ -1647,7 +1706,7 @@ namespace FindMyFamilies.BusinessObject {
             var personDo = persons[id];
 
             var parentRelationship = personDAO.GetParents(id, ref session);
-            if (parentRelationship != null) {
+            if (!session.Error && parentRelationship != null) {
                 if (parentRelationship.Persons != null) {
                     foreach (var personGx in parentRelationship.Persons) {
                         if (!id.Equals(personGx.Id)) {
@@ -1715,7 +1774,7 @@ namespace FindMyFamilies.BusinessObject {
 
             if (persons[id] != null) {
                 var spouseRelationship = personDAO.GetSpouses(id, ref session);
-                if (spouseRelationship != null) {
+                if (!session.Error && spouseRelationship != null) {
                     if (spouseRelationship.Persons != null) {
                         foreach (var personGx in spouseRelationship.Persons) {
                             if (!id.Equals(personGx.Id)) {
@@ -1780,7 +1839,7 @@ namespace FindMyFamilies.BusinessObject {
                 }
 
                 var childrenRelationship = personDAO.GetChildren(id, ref session);
-                if (childrenRelationship != null) {
+                if (!session.Error && childrenRelationship != null) {
                     if (childrenRelationship.Persons != null) {
                         foreach (var personGx in childrenRelationship.Persons) {
                             AddPerson(personGx, persons, 0);
@@ -1842,7 +1901,7 @@ namespace FindMyFamilies.BusinessObject {
                 }
 
                 var parentRelationship = personDAO.GetParents(id, ref session);
-                if (parentRelationship != null) {
+                if (!session.Error && parentRelationship != null) {
                     if (parentRelationship.Persons != null) {
                         foreach (var personGx in parentRelationship.Persons) {
                             if (!id.Equals(personGx.Id)) {

@@ -2,6 +2,7 @@ define(function (require) {
     var $ = require('jquery');
     var system = require('system');
     var constants = require('constants');
+    var msgBox = require('msgBox');
     var findPersonHelper = require('findPersonHelper');
     var researchHelper = require('researchHelper');
 
@@ -31,7 +32,7 @@ define(function (require) {
         });
 
         possibleDuplicatesReport.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
-            system.initSpinner(possibleDuplicatesReport.callerSpinner, true);
+            system.spinnerArea = possibleDuplicates.spinner;
             person.save();
             if (possibleDuplicatesReport.callback) {
                 if (typeof (possibleDuplicatesReport.callback) === "function") {
@@ -102,6 +103,7 @@ define(function (require) {
                 url: constants.POSSIBLE_DUPLICATES_REPORT_DATA_URL,
                 success: function (data) {
                     if (data && data.errorMessage) {
+                        system.initSpinner(possibleDuplicatesReport.callerSpinner, true);
                         msgBox.error(data.errorMessage);
                     } else {
                         possibleDuplicates.previous = data;

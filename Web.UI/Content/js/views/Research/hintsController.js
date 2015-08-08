@@ -348,7 +348,9 @@ define(function(require) {
 
         hints.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
             if (hints.callerSpinner) {
-                system.initSpinner(hints.callerSpinner, true);
+                system.spinnerArea = hints.callerSpinner;
+            } else {
+                system.spinnerArea = constants.DEFAULT_SPINNER_AREA;
             }
             hints.save();
         });

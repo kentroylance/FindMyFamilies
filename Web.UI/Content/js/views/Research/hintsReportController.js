@@ -31,7 +31,7 @@ define(function (require) {
         });
 
         hintsReport.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
-            system.initSpinner(hints.spinner, true);
+            system.spinnerArea = hints.spinner;
             person.save();
             if (hintsReport.callback) {
                 if (typeof (hintsReport.callback) === "function") {

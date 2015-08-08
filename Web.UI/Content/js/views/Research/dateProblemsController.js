@@ -353,7 +353,9 @@ define(function(require) {
 
         dateProblems.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
             if (dateProblems.callerSpinner) {
-                system.initSpinner(dateProblems.callerSpinner, true);
+                system.spinnerArea = dateProblems.callerSpinner;
+            } else {
+                system.spinnerArea = constants.DEFAULT_SPINNER_AREA;
             }
             dateProblems.save();
         });

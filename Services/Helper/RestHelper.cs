@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Security.Authentication;
+using System.Reflection;
 using FindMyFamilies.Data;
+using FindMyFamilies.Exceptions;
 using FindMyFamilies.Util;
 using Gx.Atom;
 using Gx.Links;
@@ -11,16 +12,13 @@ using Tavis.UriTemplates;
 
 namespace FindMyFamilies.Helper {
     /// <summary>
-    ///     Purpose: Helper class for Rest functionality
+    ///   Purpose: Helper class for Rest functionality
     /// </summary>
     public class RestHelper {
-        private static Logger logger = new Logger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
+        private static readonly Logger logger = new Logger(MethodBase.GetCurrentMethod().DeclaringType);
         private static RestHelper instance;
         private static readonly object syncLock = new object();
         private readonly Dictionary<string, RestClient> clients = new Dictionary<string, RestClient>();
-        private DateTime expiration;
-        private Dictionary<string, Link> links;
         private RestClient sourceClient;
         private string sourcePath;
 
@@ -28,10 +26,8 @@ namespace FindMyFamilies.Helper {
             Initialize(Constants.FAMILY_SEARCH_SYSTEM, Constants.DISCOVERY_PATH);
         }
 
-        public static RestHelper Instance
-        {
-            get
-            {
+        public static RestHelper Instance {
+            get {
                 // Support multithreaded applications through
                 // 'Double checked locking' pattern which (once
                 // the instance exists) avoids locking each
@@ -47,52 +43,40 @@ namespace FindMyFamilies.Helper {
         }
 
         /// <summary>
-        ///     The links that describe the API.
+        ///   The links that describe the API.
         /// </summary>
         /// <value>
-        ///     The links.
+        ///   The links.
         /// </value>
-        public Dictionary<string, Link> Links
-        {
-            get
-            {
-                return links;
-            }
+        public Dictionary<string, Link> Links {
+            get;
+            private set;
         }
 
         /// <summary>
-        ///     Gets or sets the expiration of this descriptor.
+        ///   Gets or sets the expiration of this descriptor.
         /// </summary>
         /// <value>
-        ///     The expiration.
+        ///   The expiration.
         /// </value>
-        public DateTime Expiration
-        {
-            get
-            {
-                return expiration;
-            }
-            set
-            {
-                expiration = value;
-            }
+        public DateTime Expiration {
+            get;
+            set;
         }
 
         /// <summary>
-        ///     Whether this descriptor is expired.
+        ///   Whether this descriptor is expired.
         /// </summary>
         /// <value>
-        ///     <c>true</c> if expired; otherwise, <c>false</c>.
+        ///   <c>true</c> if expired; otherwise, <c>false</c>.
         /// </value>
-        public bool Expired
-        {
-            get
-            {
-                return DateTime.Now > expiration;
+        public bool Expired {
+            get {
+                return DateTime.Now > Expiration;
             }
         }
 
-        public void Initialize(String host, string discoveryPath) {
+        public void Initialize(string host, string discoveryPath) {
             Initialize(new RestClient(host), discoveryPath);
         }
 
@@ -101,30 +85,31 @@ namespace FindMyFamilies.Helper {
             request.Resource = discoveryPath;
             request.AddHeader("Accept", Constants.MEDIA_TYPE_GEDCOM);
 
-            DateTime now = DateTime.Now;
+            var now = DateTime.Now;
 
             try {
-                IRestResponse<Feed> response = client.Execute<Feed>(request);
+                var response = client.Execute<Feed>(request);
                 if (!InvalidResponse(response)) {
-                    Feed feed = response.Data;
-                    DateTime expiration = DateTime.MaxValue;
-                    foreach (Parameter header in response.Headers) {
+                    var feed = response.Data;
+                    var expiration = DateTime.MaxValue;
+                    foreach (var header in response.Headers) {
                         if ("cache-control".Equals(header.Name.ToLowerInvariant())) {
-                            CacheControl cacheControl = CacheControl.Parse(header.Value.ToString());
+                            var cacheControl = CacheControl.Parse(header.Value.ToString());
                             expiration = now.AddSeconds(cacheControl.MaxAge);
                         }
                     }
 
-                    this.expiration = expiration;
-                    links = BuildLinkLookup(feed != null ? feed.Links : null);
+                    Expiration = expiration;
+                    Links = BuildLinkLookup(feed != null ? feed.Links : null);
 
                     sourceClient = client;
                     sourcePath = discoveryPath;
                     clients.Add(client.BaseUrl, client);
                 }
             } catch (Exception e) {
-                logger.Error("Failed to create request for [" + discoveryPath + "]. Error: " + e.Message, e);
-                throw e;
+                string message = "Failed to intialize/create request for [" + discoveryPath + "]. Error: " + e.ToString();
+                logger.Error(message, e);
+                throw new RestException(message, e);
             }
         }
 
@@ -142,10 +127,10 @@ namespace FindMyFamilies.Helper {
 
             try {
                 if ((rel.ToLower().IndexOf("template") > -1) || (rel.IndexOf("oauth.net") > -1)) {
-                    if (links.TryGetValue(rel, out link)) {
+                    if (Links.TryGetValue(rel, out link)) {
                         targetIri = link.Href;
                     } else {
-                        string errorMessage = "Failed to get link for [" + rel + "].  Uri string may be invalid";
+                        var errorMessage = "Failed to get link for [" + rel + "].  Uri string may be invalid";
                         logger.Error(errorMessage);
                         session.ErrorMessage = errorMessage;
                     }
@@ -158,11 +143,11 @@ namespace FindMyFamilies.Helper {
                 if (!Strings.IsEmpty(targetIri)) {
                     Uri uri;
                     if (TryUriResolution(targetIri, out uri)) {
-                        string uriValue = uri.ToString();
+                        var uriValue = uri.ToString();
                         //                        logger.Info("uri.ToString() = " + uri.ToString());
                         //                        logger.Info("uriValue = " + uriValue);
                         if (uri.IsAbsoluteUri) {
-                            int splitHostIndex = uriValue.IndexOf(uri.Host) + uri.Host.Length;
+                            var splitHostIndex = uriValue.IndexOf(uri.Host) + uri.Host.Length;
                             restClient = GetClient(uriValue.Substring(0, splitHostIndex));
                             requestPath = uriValue.Length > splitHostIndex + 1 ? uriValue.Substring(splitHostIndex + 1) : "/";
                         } else {
@@ -183,10 +168,9 @@ namespace FindMyFamilies.Helper {
                     }
                 }
             } catch (Exception e) {
-                string errorMessage = "Failed to create request for [" + rel + "]. requestPath = [" + requestPath + "]  Error: " + e.Message;
-                logger.Error(errorMessage, e);
-                session.Error = true;
-                session.ErrorMessage = errorMessage;
+                string message = "Failed to create request for [" + rel + "]. requestPath = [" + requestPath + "]  Error: "  + e.ToString();
+                logger.Error(message, e);
+                throw new RestException(message, e);
             }
 
             return request;
@@ -195,8 +179,6 @@ namespace FindMyFamilies.Helper {
         private RestClient GetClient(string baseUri) {
             RestClient client;
             if (!clients.TryGetValue(baseUri, out client)) {
-                logger.Error("rest client baseuri = " + baseUri);
-
                 client = new RestClient(baseUri);
                 clients.Add(baseUri, client);
             }
@@ -204,18 +186,18 @@ namespace FindMyFamilies.Helper {
         }
 
         /// <summary>
-        ///     Builds the link lookup table.
+        ///   Builds the link lookup table.
         /// </summary>
         /// <returns>
-        ///     The link lookup.
+        ///   The link lookup.
         /// </returns>
         /// <param name='links'>
-        ///     The links to initialize.
+        ///   The links to initialize.
         /// </param>
         private Dictionary<string, Link> BuildLinkLookup(List<Link> links) {
             var lookup = new Dictionary<string, Link>();
             if (links != null) {
-                foreach (Link link in links) {
+                foreach (var link in links) {
                     if (link != null && link.Rel != null) {
                         lookup.Add(link.Rel, link);
                     }
@@ -225,16 +207,16 @@ namespace FindMyFamilies.Helper {
         }
 
         /// <summary>
-        ///     Tries to resolve a relative or absolute URI.
+        ///   Tries to resolve a relative or absolute URI.
         /// </summary>
         /// <returns>
-        ///     <c>true</c>, if URI resolution was successful, <c>false</c> otherwise.
+        ///   <c>true</c>, if URI resolution was successful, <c>false</c> otherwise.
         /// </returns>
         /// <param name='relativeOrAbsoluteUri'>
-        ///     Relative or absolute URI.
+        ///   Relative or absolute URI.
         /// </param>
         /// <param name='result'>
-        ///     Result.
+        ///   Result.
         /// </param>
         private bool TryUriResolution(string relativeOrAbsoluteUri, out Uri result) {
             //logger.Info("relativeOrAbsoluteUri = " + relativeOrAbsoluteUri);
@@ -250,7 +232,7 @@ namespace FindMyFamilies.Helper {
         }
 
         private string GetBaseUrl(string relativeOrAbsoluteUri) {
-            string baseUrl = sourceClient.BaseUrl;
+            var baseUrl = sourceClient.BaseUrl;
             if (relativeOrAbsoluteUri.IndexOf("reservation") > -1) {
                 if (baseUrl.IndexOf("beta") < 0) {
                     baseUrl = "https://api.familysearch.org";
@@ -261,10 +243,10 @@ namespace FindMyFamilies.Helper {
         }
 
         /// <summary>
-        ///     Refresh this descriptor using the specified client.
+        ///   Refresh this descriptor using the specified client.
         /// </summary>
         /// <param name='client'>
-        ///     The client.
+        ///   The client.
         /// </param>
         public bool Refresh() {
             try {
@@ -276,12 +258,12 @@ namespace FindMyFamilies.Helper {
         }
 
         public static bool InvalidResponse(IRestResponse response) {
-            SessionDO session = new SessionDO();
+            var session = new SessionDO();
             return InvalidResponse(response, ref session);
         }
 
         public static bool InvalidResponse(IRestResponse response, ref SessionDO session) {
-            bool invalidResponse = false;
+            var invalidResponse = false;
             session.Message = null;
             session.ResponseMessage = null;
             session.MessageType = null;
@@ -290,7 +272,7 @@ namespace FindMyFamilies.Helper {
             session.ResponseStatus = response.StatusCode.ToString();
             if ((response.ResponseStatus != ResponseStatus.Completed) || (response.ErrorException != null) || response.StatusCode < HttpStatusCode.OK || response.StatusCode >= HttpStatusCode.MultipleChoices || response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                 if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
-                    session.ResponseMessage = "Unauthorized to call FamilySearch Rest Service";
+                    session.ResponseMessage = "Unauthorized call to FamilySearch Rest Service";
                     session.MessageType = Constants.MESSAGE_TYPE_ERROR;
                     invalidResponse = true;
                 } else if (!string.IsNullOrEmpty(response.ErrorMessage)) {
@@ -300,7 +282,7 @@ namespace FindMyFamilies.Helper {
                 } else {
                     foreach (var header in response.Headers) {
                         if (header.Name.Equals("Warning")) {
-                            session.ResponseMessage = header.Value.ToString() + "; ";
+                            session.ResponseMessage = header.Value + "; ";
                             session.MessageType = Constants.MESSAGE_TYPE_WARNING;
                             invalidResponse = true;
                             break;
@@ -309,10 +291,10 @@ namespace FindMyFamilies.Helper {
                 }
 
                 if (!invalidResponse && response.ResponseUri != null) {
-                    string uri = response.ResponseUri.ToString();
+                    var uri = response.ResponseUri.ToString();
                     if (uri != null) {
                         if ((uri.IndexOf('{') > -1) && (response.StatusCode == HttpStatusCode.NotFound) && (uri.IndexOf("access_token") < 0)) {
-                            string parameter = uri.Substring(uri.IndexOf('{'), (uri.IndexOf('}') - uri.IndexOf('{') + 1));
+                            var parameter = uri.Substring(uri.IndexOf('{'), (uri.IndexOf('}') - uri.IndexOf('{') + 1));
                             session.ResponseMessage = response.StatusDescription + ": Missing data in parameter: " + parameter + " for Uri: " + response.ResponseUri;
                             session.MessageType = Constants.MESSAGE_TYPE_ERROR;
                             invalidResponse = true;

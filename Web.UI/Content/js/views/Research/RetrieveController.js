@@ -261,7 +261,9 @@ define(function(require) {
 
         retrieve.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
             if (retrieve.callerSpinner) {
-                system.initSpinner(retrieve.callerSpinner, true);
+                system.spinnerArea = retrieve.callerSpinner;
+            } else {
+                system.spinnerArea = constants.DEFAULT_SPINNER_AREA;
             }
             person.save();
             if (retrieve.callback) {

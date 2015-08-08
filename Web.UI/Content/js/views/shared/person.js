@@ -141,11 +141,11 @@
                 _findPersonOptions.push('amerancest');
             }
 
-            _reportId = startingPoint.reportId;
+       //     _reportId = startingPoint.reportId;
             if (!_reportId) {
                 _reportId = constants.REPORT_ID;
             }
-            _addChildren = startingPoint.addChildren;
+      //      _addChildren = startingPoint.addChildren;
             if (_generation) {
                 if (_researchType === constants.ANCESTORS) {
                     _generationAncestors = _generation;

@@ -150,12 +150,24 @@ define(function(require) {
 //    startSessionAlive();
     //    
 
-    var lastCalled = system.getCookie(constants.LAST_CALLED);
-
-    if (lastCalled && lastCalled === constants.STARTING_POINT) {
+    function loadLastCalled() {
+        var lastCalled = system.getCookie(constants.LAST_CALLED);
         system.deleteCookie(constants.LAST_CALLED);
-        $('#startingPoint').click();
+
+        if (lastCalled) {
+            switch (lastCalled) {
+               case constants.STARTING_POINT:
+                    $('#startingPoint').click();
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
     }
+
+    loadLastCalled();
 
     var researchController = {
     };

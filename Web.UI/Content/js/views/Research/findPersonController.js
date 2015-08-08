@@ -71,7 +71,9 @@ define(function(require) {
 
         findPerson.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
             if (findPerson.callerSpinner) {
-                system.initSpinner(findPerson.callerSpinner, true);
+                system.spinnerArea = findPerson.callerSpinner;
+            } else {
+                system.spinnerArea = constants.DEFAULT_SPINNER_AREA;
             }
             person.save();
             if (findPerson.callback) {

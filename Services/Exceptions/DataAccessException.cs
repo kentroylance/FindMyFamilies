@@ -7,6 +7,7 @@ namespace FindMyFamilies.Exceptions {
 	/// Summary description for DataAccessException.
 	/// </summary>
 	public class DataAccessException : BaseException {
+
 		public DataAccessException() {
 		}
 
@@ -25,8 +26,28 @@ namespace FindMyFamilies.Exceptions {
 		public DataAccessException(SerializationInfo info, StreamingContext context) : base(info, context) {
 		}
 
+		/// <summary>
+		/// Allow inner exception to be created to create exception chaining
+		/// </summary>
+		/// <param name="message"></param>
+		/// <param name="innerException"></param>
+		public DataAccessException(string message, Exception exception, object logCategory, SessionDO session) : base(message, exception) {
+		    this.Session = session;
+		}
+
+
 		public override void GetObjectData(SerializationInfo info, StreamingContext context) {
 			base.GetObjectData(info, context);
+		}
+
+	    private SessionDO m_Session;
+        public SessionDO Session {
+			get {
+				return m_Session;
+			}
+			set {
+				m_Session = value;
+			}
 		}
 	}
 }

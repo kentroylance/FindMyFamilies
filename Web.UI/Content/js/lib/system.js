@@ -13,6 +13,17 @@
     var _target;
     var _initialized;
     var _lastCalled;
+    var _spinnerArea;
+
+    function getSpinnerArea() {
+        if (_target) {
+            _spinnerArea = _target.id;
+        } else if (!_spinnerArea) {
+            _spinnerArea = constants.DEFAULT_SPINNER_AREA;
+        }
+
+        return _spinnerArea;
+    }
 
     function stopSpinner(force) {
         requireOnce(['vendor/jquery.spin'], function () {
@@ -20,12 +31,14 @@
             _count--;
             if (force || _count === 0) {
                 if (!_target) {
-                    _target = document.getElementById(constants.DEFAULT_SPINNER_AREA);
+                    _target = document.getElementById(getSpinnerArea());
                 }
                 $('#' + _target.id).spin(false);
+                _target = null;
                 _count = 0;
             } else if (_count < 0) {
                 _count = 0;
+                _target = null;
             }
         });
     }
@@ -35,7 +48,7 @@
         }, function () {
             if (force || _count === 0) {
                 if (!_target) {
-                    _target = document.getElementById(constants.DEFAULT_SPINNER_AREA);
+                    _target = document.getElementById(getSpinnerArea());
                 }
                 $('#' + _target.id).spin();
                 _count = 0;
@@ -61,17 +74,6 @@
                 startSpinner(true);
             }
         });
-    }
-
-    function spinnerArea() {
-        var spinnerArea;
-        if (_target) {
-            spinnerArea = _target.id;
-        } else {
-            spinnerArea = constants.DEFAULT_SPINNER_AREA;
-        }
-
-        return spinnerArea;
     }
 
     function setCookie(name, value, days) {
@@ -264,17 +266,14 @@
     _userId = getCookie(constants.USER_ID);
     _userName = getCookie(constants.USER_NAME);
 
-    function openForm(form, image, spinnerTarget, firstField) {
+    function openForm(form, image, spinnerArea, firstField) {
         form.parent().children(".ui-dialog-titlebar").prepend('<span style="float:left; margin-top: 1px; margin-right: .3em;" class="fa ' + image + '"></span>');
         form.dialog({ minHeight: 0 });
         form.dialog({ open: function() { $(this).parent().css("padding", "0px") } });
         form.dialog("open");
         form.dialog("option", "position", "center");
-        if (spinnerTarget) {
-            initSpinner(spinnerTarget, true);
-        } else {
-            stopSpinner(true);
-        }
+        stopSpinner(true);
+        _spinnerArea = spinnerArea;
         if (firstField) {
             firstField.focus();
         }
@@ -398,6 +397,13 @@
         set userName(value) {
             _userName = value;
         },
+        getSpinnerArea: function () {
+            return getSpinnerArea();
+        },
+        set spinnerArea(value) {
+            _spinnerArea = value;
+            _target = null;
+        },
         get domainName() {
             return _domainName;
         },
@@ -409,9 +415,6 @@
         },
         isAuthenticated: function() {
             return isAuthenticated();
-        },
-        spinnerArea: function () {
-            return spinnerArea();
         },
         keepSessionAlive: function () {
             keepSessionAlive();

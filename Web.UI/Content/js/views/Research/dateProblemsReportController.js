@@ -2,6 +2,7 @@ define(function (require) {
     var $ = require('jquery');
     var system = require('system');
     var constants = require('constants');
+    var msgBox = require('msgBox');
     var findPersonHelper = require('findPersonHelper');
     var researchHelper = require('researchHelper');
 
@@ -31,7 +32,7 @@ define(function (require) {
         });
 
         dateProblemsReport.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
-            system.initSpinner(dateProblemsReport.callerSpinner, true);
+            system.spinnerArea = dateProblems.spinner;
             person.save();
             if (dateProblemsReport.callback) {
                 if (typeof (dateProblemsReport.callback) === "function") {
@@ -102,6 +103,7 @@ define(function (require) {
                 url: constants.DATE_PROBLEMS_REPORT_DATA_URL,
                 success: function (data) {
                     if (data && data.errorMessage) {
+                        system.initSpinner(dateProblemsReport.callerSpinner, true);
                         msgBox.error(data.errorMessage);
                     } else {
                         dateProblems.previous = data;

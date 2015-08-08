@@ -388,7 +388,9 @@ define(function(require) {
 
         findClues.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function(e) {
             if (findClues.callerSpinner) {
-                system.initSpinner(findClues.callerSpinner, true);
+                system.spinnerArea = findClues.callerSpinner;
+            } else {
+                system.spinnerArea = constants.DEFAULT_SPINNER_AREA;
             }
             findClues.save();
         });

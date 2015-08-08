@@ -277,6 +277,7 @@
     <Compile Include="Exceptions\ApplicationException.cs" />
     <Compile Include="Exceptions\BaseException.cs" />
     <Compile Include="Exceptions\ConfigurationException.cs" />
+    <Compile Include="Exceptions\RestException.cs" />
     <Compile Include="Exceptions\DataAccessException.cs" />
     <Compile Include="Exceptions\ReflectionException.cs" />
     <Compile Include="Exceptions\RequestException.cs" />

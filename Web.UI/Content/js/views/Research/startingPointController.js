@@ -381,7 +381,9 @@ define(function(require) {
 
         startingPoint.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function(e) {
             if (startingPoint.callerSpinner) {
-                system.initSpinner(startingPoint.callerSpinner, true);
+                system.spinnerArea = startingPoint.callerSpinner;
+            } else {
+                system.spinnerArea = constants.DEFAULT_SPINNER_AREA;
             }
             startingPoint.save();
         });

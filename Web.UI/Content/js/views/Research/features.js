@@ -12,6 +12,8 @@
     var _bug = true;
     var _featureRequest = false;
     var _other = false;
+    var _tryItNowButton = "Try It Now1";
+    var _featureName = "";
 
     var _email;
     var _message;
@@ -55,6 +57,12 @@
         set other(value) {
             _other = value;
         },
+        get tryItNowButton() {
+            return _tryItNowButton;
+        },
+        set tryItNowButton(value) {
+            _tryItNowButton = value;
+        },
         get bug() {
             return _bug;
         },
@@ -66,6 +74,12 @@
         },
         set featureRequest(value) {
             _featureRequest = value;
+        },
+        get featureName() {
+            return _featureName;
+        },
+        set featureName(value) {
+            _featureName = value;
         },
         save: function() {
             save();

@@ -1,16 +1,13 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Net;
 using System.Reflection;
-using System.Reflection.Emit;
-using System.Runtime.InteropServices;
-using System.Runtime.Remoting.Messaging;
+using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading;
 using FindMyFamilies.Data;
+using FindMyFamilies.Exceptions;
 using FindMyFamilies.Helper;
 using FindMyFamilies.Util;
 using Gx;
@@ -26,7 +23,7 @@ using Person = Gx.Conclusion.Person;
 
 namespace FindMyFamilies.DataAccess {
     /// <summary>
-    ///     Purpose: Data Access Class for accessing Person Information from familysearch.org
+    ///   Purpose: Data Access Class for accessing Person Information from familysearch.org
     /// </summary>
     public class PersonDAO {
         private static readonly bool[] _specialCharacters;
@@ -69,13 +66,29 @@ namespace FindMyFamilies.DataAccess {
             inputs.Add(Constants.TEMPLATE_ID_GENERATIONS, generations);
 
             RestClient restClient = null;
-            RestRequest request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_DESCENDANCY_WITH_SPOUSE_MARRIAGE_DETAILS, inputs, ref session, ref restClient);
+            RestRequest request = null;
+            IRestResponse<Gedcomx> response = null;
+
+            try {
+                request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_DESCENDANCY_WITH_SPOUSE_MARRIAGE_DETAILS, inputs, ref session, ref restClient);
+            } catch (Exception e) {
+                var message = "Failed to create REST request while retrieving person descendancy with spouse from FamilySearch.";
+                LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                throw new DataAccessException(message, e, session);
+            }
 
             if (request != null) {
                 request.Method = Method.GET;
                 request.AddHeader("Accept", Constants.MEDIA_TYPE_GEDCOM);
                 request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
-                IRestResponse<Gedcomx> response = restClient.Execute<Gedcomx>(request);
+
+                try {
+                    response = restClient.Execute<Gedcomx>(request);
+                } catch (Exception e) {
+                    string message = "Failed to execute REST request while retrieving person descendancy with spouse from FamilySearch.";
+                    LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                    throw new DataAccessException(message, e, session);
+                }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
                     if (session.Error || (!session.Error & (response.Data == null))) {
@@ -91,7 +104,8 @@ namespace FindMyFamilies.DataAccess {
                         } else if (response.Data.Persons != null && response.Data.Persons.Count < 1) {
                             session.ResponseData = "Person descendancy with spouse is empty";
                         }
-                        LogRestError(inputs, request, response, session, new StackTrace(true).GetFrames());
+                        LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                        throw new DataAccessException(session.ErrorMessage, null, session);
                     }
                 } else {
                     gedcomx = response.Data;
@@ -100,7 +114,7 @@ namespace FindMyFamilies.DataAccess {
                 session.ResponseMessage = "The API descriptor doesn't have a link to the GEDCOM X person resource.";
                 session.ErrorMessage = "Received error retrieving person descendancy with spouse from FamilySearch";
                 session.ResponseData = "Null";
-                LogRestError(inputs, request, null, session, new StackTrace(true).GetFrames());
+                LogRestError(session.ErrorMessage, inputs, request, null, session, new StackTrace(true).GetFrames(), null);
             }
 
             return gedcomx;
@@ -121,13 +135,29 @@ namespace FindMyFamilies.DataAccess {
             inputs.Add(Constants.TEMPLATE_ID_GENERATIONS, generations);
 
             RestClient restClient = null;
-            RestRequest request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_ANCESTRY_WITH_SPOUSE_MARRIAGE_DETAILS, inputs, ref session, ref restClient);
+            RestRequest request = null;
+            IRestResponse<Gedcomx> response = null;
+
+            try {
+                request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_ANCESTRY_WITH_SPOUSE_MARRIAGE_DETAILS, inputs, ref session, ref restClient);
+            } catch (Exception e) {
+                var message = "Failed to create REST request while retrieving person ancestry with spouse from FamilySearch.";
+                LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                throw new DataAccessException(message, e, session);
+            }
 
             if (request != null) {
                 request.Method = Method.GET;
                 request.AddHeader("Accept", Constants.MEDIA_TYPE_GEDCOM);
                 request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
-                IRestResponse<Gedcomx> response = restClient.Execute<Gedcomx>(request);
+
+                try {
+                    response = restClient.Execute<Gedcomx>(request);
+                } catch (Exception e) {
+                    string message = "Failed to execute REST request while retrieving person ancestry with spouse from FamilySearch.";
+                    LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                    throw new DataAccessException(message, e, session);
+                }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
                     if (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null))) {
@@ -143,7 +173,8 @@ namespace FindMyFamilies.DataAccess {
                         } else if (response.Data.Persons != null && response.Data.Persons.Count < 1) {
                             session.ResponseData = "Person ancestry with spouse is empty";
                         }
-                        LogRestError(inputs, request, response, session, new StackTrace(true).GetFrames());
+                        LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                        throw new DataAccessException(session.ErrorMessage, null, session);
                     }
                 } else {
                     gedcomx = response.Data;
@@ -152,7 +183,8 @@ namespace FindMyFamilies.DataAccess {
                 session.ResponseMessage = "The API descriptor doesn't have a link to the template: " + Constants.TEMPLATE_PERSON_ANCESTRY_WITH_SPOUSE_MARRIAGE_DETAILS;
                 session.ErrorMessage = "Received error retrieving person ancestry with spouse from FamilySearch";
                 session.ResponseData = "Null";
-                LogRestError(inputs, request, null, session, new StackTrace(true).GetFrames());
+                LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                throw new DataAccessException(session.ErrorMessage, null, session);
             }
 
             return gedcomx;
@@ -161,7 +193,7 @@ namespace FindMyFamilies.DataAccess {
         //        GET /platform/tree/descendancy?person=PM12-345&spouse=PW12-345&personDetails&marriageDetails
         //        Accept: application/x-fs-v1+xml
         //        Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
-        public Gedcomx GetDescendancy(String personId, String spouseId, ref SessionDO session) {
+        public Gedcomx GetDescendancy(string personId, string spouseId, ref SessionDO session) {
             Gedcomx gedcomx = null;
             if (RestHelper.Instance.Expired) {
                 RestHelper.Instance.Refresh();
@@ -170,13 +202,29 @@ namespace FindMyFamilies.DataAccess {
             var inputs = new Dictionary<string, string>();
             inputs.Add(Constants.TEMPLATE_ID_PERSON, personId);
             RestClient restClient = null;
-            RestRequest request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_DESCENDANTS, inputs, ref session, ref restClient);
+            RestRequest request = null;
+            IRestResponse<Gedcomx> response = null;
+
+            try {
+                request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_DESCENDANTS, inputs, ref session, ref restClient);
+            } catch (Exception e) {
+                var message = "Failed to create REST request while retrieving descendants from FamilySearch.";
+                LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                throw new DataAccessException(message, e, session);
+            }
 
             if (request != null) {
                 request.Method = Method.GET;
                 request.AddHeader("Accept", Constants.MEDIA_TYPE_GEDCOM);
                 request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
-                IRestResponse<Gedcomx> response = restClient.Execute<Gedcomx>(request);
+
+                try {
+                    response = restClient.Execute<Gedcomx>(request);
+                } catch (Exception e) {
+                    string message = "Failed to execute REST request while retrieving descendants from FamilySearch";
+                    LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                    throw new DataAccessException(message, e, session);
+                }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
                     if (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null))) {
@@ -192,7 +240,8 @@ namespace FindMyFamilies.DataAccess {
                         } else if (response.Data.Persons != null && response.Data.Persons.Count < 1) {
                             session.ResponseData = "Descendants is empty";
                         }
-                        LogRestError(inputs, request, response, session, new StackTrace(true).GetFrames());
+                        LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                        throw new DataAccessException(session.ErrorMessage, null, session);
                     }
                 } else {
                     gedcomx = response.Data;
@@ -201,7 +250,8 @@ namespace FindMyFamilies.DataAccess {
                 session.ResponseMessage = "The API descriptor doesn't have a link to the template: " + Constants.TEMPLATE_PERSON_DESCENDANTS;
                 session.ErrorMessage = "Received error retrieving descendants from FamilySearch";
                 session.ResponseData = "Null";
-                LogRestError(inputs, request, null, session, new StackTrace(true).GetFrames());
+                LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                throw new DataAccessException(session.ErrorMessage, null, session);
             }
             return gedcomx;
         }
@@ -221,13 +271,29 @@ namespace FindMyFamilies.DataAccess {
                 inputs.Add(Constants.TEMPLATE_ID_ACCESS_TOKEN, session.AccessToken);
 
                 RestClient restClient = null;
-                RestRequest request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_TEMPLE, inputs, ref session, ref restClient);
+                RestRequest request = null;
+                IRestResponse<Reservation> response = null;
+
+                try {
+                    request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_TEMPLE, inputs, ref session, ref restClient);
+                } catch (Exception e) {
+                    var message = "Failed to create REST request while retrieving ordinance info from FamilySearch.";
+                    LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                    throw new DataAccessException(message, e, session);
+                }
 
                 if (request != null) {
                     request.Method = Method.GET;
                     request.AddHeader("Accept", "application/json");
                     //                request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
-                    IRestResponse<Reservation> response = restClient.Execute<Reservation>(request);
+
+                    try {
+                        response = restClient.Execute<Reservation>(request);
+                    } catch (Exception e) {
+                        var message = "Failed to execute REST request while retrieving ordinance info from FamilySearch.";
+                        LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                        throw new DataAccessException(message, e, session);
+                    }
 
                     if (RestHelper.InvalidResponse(response, ref session)) {
                         if (session.Error || (!session.Error && (response.Data == null || response.Data.persons == null))) {
@@ -243,7 +309,8 @@ namespace FindMyFamilies.DataAccess {
                             } else if (response.Data.persons.person != null && Convert.ToInt16(response.Data.persons.person.Count) < 1) {
                                 session.ResponseData = "Ordinance info is empty";
                             }
-                            LogRestError(inputs, request, response, session, new StackTrace(true).GetFrames());
+                            LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                            throw new DataAccessException(session.ErrorMessage, null, session);
                         }
                     } else {
                         reservation = response.Data;
@@ -252,7 +319,8 @@ namespace FindMyFamilies.DataAccess {
                     session.ResponseMessage = "The API descriptor doesn't have a link to the template: " + Constants.TEMPLATE_PERSON_TEMPLE;
                     session.ErrorMessage = "Received error retrieving ordinance info from FamilySearch";
                     session.ResponseData = "Null";
-                    LogRestError(inputs, request, null, session, new StackTrace(true).GetFrames());
+                    LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                    throw new DataAccessException(session.ErrorMessage, null, session);
                 }
             }
 
@@ -278,13 +346,29 @@ namespace FindMyFamilies.DataAccess {
             var inputs = new Dictionary<string, string>();
             inputs.Add(Constants.TEMPLATE_ID_PERSON, personDO.Id);
             RestClient restClient = null;
-            RestRequest request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_DUPLICATES, inputs, ref session, ref restClient);
+            RestRequest request = null;
+            IRestResponse<PossibleDuplicate> response = null;
+
+            try {
+                request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_DUPLICATES, inputs, ref session, ref restClient);
+            } catch (Exception e) {
+                var message = "Failed to create REST request while retrieving possible duplicate info from FamilySearch";
+                LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                throw new DataAccessException(message, e, session);
+            }
 
             if (request != null) {
                 request.Method = Method.GET;
                 request.AddHeader("Accept", "application/json");
                 request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
-                IRestResponse<PossibleDuplicate> response = restClient.Execute<PossibleDuplicate>(request);
+
+                try {
+                    response = restClient.Execute<PossibleDuplicate>(request);
+                } catch (Exception e) {
+                    string message = "Failed to execute REST request while retrieving possible duplicate info from FamilySearch";
+                    LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                    throw new DataAccessException(message, e, session);
+                }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
                     if (session.Error || (!session.Error & (response.Data == null))) {
@@ -300,7 +384,8 @@ namespace FindMyFamilies.DataAccess {
                         } else if (response.Data.entries != null && Convert.ToInt16(response.Data.results) < 1) {
                             session.ResponseData = "Possible duplicates info is empty";
                         }
-                        LogRestError(inputs, request, response, session, new StackTrace(true).GetFrames());
+                        LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                        throw new DataAccessException(session.ErrorMessage, null, session);
                     }
                 } else {
                     possibleDuplicate = response.Data;
@@ -309,7 +394,8 @@ namespace FindMyFamilies.DataAccess {
                 session.ResponseMessage = "The API descriptor doesn't have a link to the template: " + Constants.TEMPLATE_PERSON_DUPLICATES;
                 session.ErrorMessage = "Received error retrieving possible duplicate info from FamilySearch";
                 session.ResponseData = "Null";
-                LogRestError(inputs, request, null, session, new StackTrace(true).GetFrames());
+                LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                throw new DataAccessException(session.ErrorMessage, null, session);
             }
 
             PossibleDuplicateDO possibleDuplicateDO = null;
@@ -334,7 +420,17 @@ namespace FindMyFamilies.DataAccess {
             var inputs = new Dictionary<string, string>();
             //            inputs.Add(Constants.TEMPLATE_ID_QUERY, "fatherSurname:Heaton~+spouseSurname:Cox~+surname:Heaton~+givenName:Israel~+birthPlace:~+deathDate:~+deathPlace:~+spouseGivenName:~+motherGivenName:~+motherSurname:~+gender:Male~+birthDate:~+fatherGivenName:~&count=10");
             RestClient restClient = null;
-            RestRequest request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_SEARCH, inputs, ref session, ref restClient);
+            RestRequest request = null;
+            IRestResponse<Search> response = null;
+
+            try {
+                request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_SEARCH, inputs, ref session, ref restClient);
+            } catch (Exception e) {
+                var message = "Failed to create REST request while finding persons from FamilySearch.";
+                LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                throw new DataAccessException(message, e, session);
+            }
+
             //            request.Resource =  request.Resource + "q=givenName:John surname:Smith gender:male birthDate:\"30 June 1900\"";
             request.Resource = request.Resource + "q=";
             bool given = false;
@@ -365,11 +461,17 @@ namespace FindMyFamilies.DataAccess {
             //            request.Resource += "birthDate:1920" + "\u2011" + "1923"; // + "~";
             //            request.Resource += "deathDate:2004";
 
-
             request.Method = Method.GET;
             request.AddHeader("Accept", "application/json");
             request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
-            IRestResponse<Search> response = restClient.Execute<Search>(request);
+
+            try {
+                response = restClient.Execute<Search>(request);
+            } catch (Exception e) {
+                string message = "Failed to execute REST request while finding persons from FamilySearch";
+                LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                throw new DataAccessException(message, e, session);
+            }
 
             if (RestHelper.InvalidResponse(response, ref session)) {
                 if (session.Error || (!session.Error & (response.Data == null))) {
@@ -385,23 +487,24 @@ namespace FindMyFamilies.DataAccess {
                     } else if (response.Data.entries != null && response.Data.entries.Count < 1) {
                         session.ResponseData = "Find person data is empty";
                     }
-                    LogRestError(inputs, request, response, session, new StackTrace(true).GetFrames());
+                    LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                    throw new DataAccessException(session.ErrorMessage, null, session);
                 }
             } else {
                 search = response.Data;
             }
 
             var persons = new Dictionary<string, PersonDO>();
-            List<FindListItemDO> findPersons = new List<FindListItemDO>();
+            var findPersons = new List<FindListItemDO>();
             if (search != null) {
                 if ((search.entries != null) && (search.entries.Count > 0)) {
                     foreach (var entry in search.entries) {
                         persons = new Dictionary<string, PersonDO>();
-                        FindListItemDO findListItemDO = new FindListItemDO();
+                        var findListItemDO = new FindListItemDO();
                         findListItemDO.id = entry.id;
                         if ((entry.content != null) && (entry.content.gedcomx != null)) {
                             if ((entry.content.gedcomx.persons != null) && (entry.content.gedcomx.persons.Count > 0)) {
-                                foreach (Model.Pd.Person person in entry.content.gedcomx.persons) {
+                                foreach (var person in entry.content.gedcomx.persons) {
                                     var personEntryDO = GetPersonFromSearch(person);
                                     if (personEntryDO != null) {
                                         AddPerson(personEntryDO, persons);
@@ -409,13 +512,13 @@ namespace FindMyFamilies.DataAccess {
                                 }
                             }
                             if ((entry.content.gedcomx.relationships != null) && (entry.content.gedcomx.relationships.Count > 0)) {
-                                foreach (Model.Pd.Relationship relationship in entry.content.gedcomx.relationships) {
+                                foreach (var relationship in entry.content.gedcomx.relationships) {
                                     updateRelationships(findListItemDO.id, relationship, ref persons);
                                 }
                             }
                         }
                         if (persons.ContainsKey(findListItemDO.id)) {
-                            PersonDO findPersonDO = persons[findListItemDO.id];
+                            var findPersonDO = persons[findListItemDO.id];
                             PopulateFindListItem(findPersonDO, ref findListItemDO);
                         }
                         //                        findListItemDO.Score = entry.score;
@@ -435,7 +538,7 @@ namespace FindMyFamilies.DataAccess {
             findListItemDO.firstName = findPersonDO.Firstname;
             findListItemDO.middleName = findPersonDO.Middlename;
             findListItemDO.lastName = findPersonDO.Lastname;
-            DateTime? birthDate = Dates.GetDateTime(findPersonDO.BirthDateString);
+            var birthDate = Dates.GetDateTime(findPersonDO.BirthDateString);
             if ((birthDate != null) && (birthDate.Value.Year != 1)) {
                 findListItemDO.birthYear = birthDate.Value.Year.ToString();
             } else {
@@ -443,7 +546,7 @@ namespace FindMyFamilies.DataAccess {
             }
             findListItemDO.birthYear = (findListItemDO.birthYear == null) ? "" : findListItemDO.birthYear;
             findListItemDO.gender = (findPersonDO.IsMale) ? "Male" : "Female";
-            DateTime? deathDate = Dates.GetDateTime(findPersonDO.DeathDateString);
+            var deathDate = Dates.GetDateTime(findPersonDO.DeathDateString);
             if ((deathDate != null) && (deathDate.Value.Year != 1)) {
                 findListItemDO.deathYear = deathDate.Value.Year.ToString();
             } else {
@@ -472,7 +575,7 @@ namespace FindMyFamilies.DataAccess {
             }
         }
 
-        public void updateRelationships(String personID, Model.Pd.Relationship relationoship, ref Dictionary<string, PersonDO> persons) {
+        public void updateRelationships(string personID, Model.Pd.Relationship relationoship, ref Dictionary<string, PersonDO> persons) {
             if (relationoship.type.Equals("http://gedcomx.org/Couple")) {
                 if (persons.ContainsKey(relationoship.person1.resourceId) && persons.ContainsKey(relationoship.person2.resourceId)) {
                     persons[personID].Spouse = persons[relationoship.person2.resourceId];
@@ -507,7 +610,7 @@ namespace FindMyFamilies.DataAccess {
                     personDO.BirthPlace = person.display.birthPlace;
 
                     personDO.Fullname = person.display.name;
-                    string[] names = person.display.name.Split(new[] {' '});
+                    var names = person.display.name.Split(' ');
                     if (names.Length == 2) {
                         personDO.Firstname = names[0];
                         personDO.Lastname = names[1];
@@ -517,8 +620,8 @@ namespace FindMyFamilies.DataAccess {
                         personDO.Lastname = names[2];
                     } else if (names.Length > 3) {
                         personDO.Firstname = names[0];
-                        string middle = "";
-                        for (int i = 1; i < names.Length - 1; i++) {
+                        var middle = "";
+                        for (var i = 1; i < names.Length - 1; i++) {
                             middle = middle + " " + names[i];
                         }
                         personDO.Middlename = names[1];
@@ -547,13 +650,29 @@ namespace FindMyFamilies.DataAccess {
             inputs.Add(Constants.TEMPLATE_ID_PERSON, personDO.Id);
             inputs.Add(Constants.TEMPLATE_ID_COLLECTION, "https://familysearch.org/platform/collections/records");
             RestClient restClient = null;
-            RestRequest request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_HINTS, inputs, ref session, ref restClient);
+            RestRequest request = null;
+            IRestResponse<Hint> response = null;
 
-			if (request != null) {
+            try {
+                request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_HINTS, inputs, ref session, ref restClient);
+            } catch (Exception e) {
+                var message = "Failed to create REST request while retrieving hints from FamilySearch.";
+                LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                throw new DataAccessException(message, e, session);
+            }
+
+            if (request != null) {
                 request.Method = Method.GET;
                 request.AddHeader("Accept", "application/json");
                 request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
-                IRestResponse<Hint> response = restClient.Execute<Hint>(request);
+
+                try {
+                    response = restClient.Execute<Hint>(request);
+                } catch (Exception e) {
+                    string message = "Failed to execute REST request while retrieving hints from FamilySearch.";
+                    LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                    throw new DataAccessException(message, e, session);
+                }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
                     if (session.Error || (!session.Error & (response.Data == null))) {
@@ -569,7 +688,8 @@ namespace FindMyFamilies.DataAccess {
                         } else if (response.Data.results != null && response.Data.entries.Count < 1) {
                             session.ResponseData = "Hints is empty";
                         }
-                        LogRestError(inputs, request, response, session, new StackTrace(true).GetFrames());
+                        LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                        throw new DataAccessException(session.ErrorMessage, null, session);
                     }
                 } else {
                     hint = response.Data;
@@ -578,7 +698,8 @@ namespace FindMyFamilies.DataAccess {
                 session.ResponseMessage = "The API descriptor doesn't have a link to the template: " + Constants.TEMPLATE_HINTS;
                 session.ErrorMessage = "Received error retrieving hints from FamilySearch";
                 session.ResponseData = "Null";
-                LogRestError(inputs, request, null, session, new StackTrace(true).GetFrames());
+                LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                throw new DataAccessException(session.ErrorMessage, null, session);
             }
 
             HintDO hintDO = null;
@@ -600,7 +721,7 @@ namespace FindMyFamilies.DataAccess {
                 hintDO.Results = hint.results;
                 if ((hint.results > 0) && (hint.entries != null)) {
                     foreach (var entry in hint.entries) {
-                        HintEntryDO hintEntry = new HintEntryDO();
+                        var hintEntry = new HintEntryDO();
                         hintEntry.Fullname = entry.title;
                         hintEntry.Score = entry.score;
                         hintDO.Score = entry.score;
@@ -612,7 +733,7 @@ namespace FindMyFamilies.DataAccess {
                         hintEntry.Id = entry.id;
                         if (entry.content.gedcomx.persons != null) {
                             foreach (var person2 in entry.content.gedcomx.persons) {
-                                PersonDO person = new PersonDO();
+                                var person = new PersonDO();
                                 person.Id = person2.id;
                                 person.Fullname = person2.display.name;
                                 hintEntry.Persons.Add(person2.id, person);
@@ -635,7 +756,7 @@ namespace FindMyFamilies.DataAccess {
                 possibleDuplicateDO.Results = possibleDuplicate.results;
                 if ((possibleDuplicate.results > 0) && (possibleDuplicate.entries != null)) {
                     foreach (var entry in possibleDuplicate.entries) {
-                        PossibleDuplicateEntryDO possibleDuplicateEntry = new PossibleDuplicateEntryDO();
+                        var possibleDuplicateEntry = new PossibleDuplicateEntryDO();
                         possibleDuplicateEntry.Fullname = entry.title;
                         possibleDuplicateEntry.Score = entry.score;
                         possibleDuplicateDO.Score = entry.score;
@@ -647,7 +768,7 @@ namespace FindMyFamilies.DataAccess {
                         possibleDuplicateEntry.Id = entry.id;
                         if (entry.content.gedcomx.persons != null) {
                             foreach (var person2 in entry.content.gedcomx.persons) {
-                                PersonDO person = new PersonDO();
+                                var person = new PersonDO();
                                 person.Id = person2.id;
                                 person.Fullname = person2.display.name;
                                 possibleDuplicateEntry.Persons.Add(person2.id, person);
@@ -676,16 +797,31 @@ namespace FindMyFamilies.DataAccess {
             inputs.Add(Constants.TEMPLATE_ID_ACCESS_TOKEN, session.AccessToken);
 
             RestClient restClient = null;
-            RestRequest request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_CURRENT, inputs, ref session, ref restClient);
+            RestRequest request = null;
+            IRestResponse<Gedcomx> response = null;
+
+            try {
+                request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_CURRENT, inputs, ref session, ref restClient);
+            } catch (Exception e) {
+                var message = "Failed to create REST request while retrieving retrieving current person from FamilySearch.";
+                LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                throw new DataAccessException(message, e, session);
+            }
 
             if (request != null) {
                 request.Method = Method.GET;
                 request.AddHeader("Accept", Constants.MEDIA_TYPE_GEDCOM);
-//                request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
-                IRestResponse<Gedcomx> response = restClient.Execute<Gedcomx>(request);
+                //                request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
+                try {
+                    response = restClient.Execute<Gedcomx>(request);
+                } catch (Exception e) {
+                    string message = "Failed to execute REST request while retrieving current person from FamilySearch.";
+                    LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                    throw new DataAccessException(message, e, session);
+                }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
-					if (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null))) {
+                    if (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null))) {
                         if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                             session.ErrorMessage = "Unauthorized to retrieve current person from FamilySearch";
                         } else {
@@ -698,7 +834,8 @@ namespace FindMyFamilies.DataAccess {
                         } else if (response.Data.Persons != null && response.Data.Persons.Count < 1) {
                             session.ResponseData = "Current person is empty";
                         }
-                        LogRestError(inputs, request, response, session, new StackTrace(true).GetFrames());
+                        LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                        throw new DataAccessException(session.ErrorMessage, null, session);
                     }
                 } else {
                     gedcomx = response.Data;
@@ -707,7 +844,8 @@ namespace FindMyFamilies.DataAccess {
                 session.ResponseMessage = "The API descriptor doesn't have a link to the template: " + Constants.TEMPLATE_PERSON_CURRENT;
                 session.ErrorMessage = "Received error retrieving current person from FamilySearch";
                 session.ResponseData = "Null";
-                LogRestError(inputs, request, null, session, new StackTrace(true).GetFrames());
+                LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                throw new DataAccessException(session.ErrorMessage, null, session);
             }
 
             return gedcomx;
@@ -723,7 +861,7 @@ namespace FindMyFamilies.DataAccess {
         //Accept: application/x-gedcomx-v1+xml
         //Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
         public bool IsChurchMember(ref SessionDO session) {
-            bool isChurchMember = true;
+            var isChurchMember = true;
             logger.Enter("PersonDAO.IsChurchMember");
 
             if (RestHelper.Instance.Expired) {
@@ -734,39 +872,54 @@ namespace FindMyFamilies.DataAccess {
             //            inputs.Add(Constants.TEMPLATE_ID_ACCESS_TOKEN, session.AccessToken);
 
             RestClient restClient = null;
-            RestRequest request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_ACCESS_TO_ORDINANCES, inputs, ref session, ref restClient);
+            RestRequest request = null;
+            IRestResponse<Gedcomx> response = null;
 
+            try {
+                request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_ACCESS_TO_ORDINANCES, inputs, ref session, ref restClient);
+            } catch (Exception e) {
+                var message = "Failed to create REST request while trying to determine if church member.";
+                LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                throw new DataAccessException(message, e, session);
+            }
 
             if (request != null) {
                 request.Method = Method.GET;
                 request.AddHeader("Accept", Constants.MEDIA_TYPE_GEDCOM);
                 request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
-                IRestResponse<Gedcomx> response = restClient.Execute<Gedcomx>(request);
+                try {
+                    response = restClient.Execute<Gedcomx>(request);
+                } catch (Exception e) {
+                    string message = "Failed to execute REST request while trying to determine if church member.";
+                    LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                    throw new DataAccessException(message, e, session);
+                }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
                     if (session.Error || (!session.Error & (response.Data == null))) {
                         if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                             session.ErrorMessage = "Unauthorized to determine if church member from FamilySearch";
                         } else {
-                            session.ErrorMessage = "Received error to determine if church member from FamilySearch";
+                            session.ErrorMessage = "Received error while trying to determine if church member.";
                         }
                         if (response.Data == null) {
                             session.ResponseData = "Data is Null";
-                        } 
-                        LogRestError(inputs, request, response, session, new StackTrace(true).GetFrames());
+                        }
+                        LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                        throw new DataAccessException(session.ErrorMessage, null, session);
                     }
                 } else {
-                if (response.StatusCode == HttpStatusCode.Forbidden) {
-                    isChurchMember = false;
-                }
+                    if (response.StatusCode == HttpStatusCode.Forbidden) {
+                        isChurchMember = false;
+                    }
                 }
             } else {
                 session.ResponseMessage = "The API descriptor doesn't have a link to the template: " + Constants.TEMPLATE_ACCESS_TO_ORDINANCES;
                 session.ErrorMessage = "Received error to determine if church member from FamilySearch";
                 session.ResponseData = "Null";
-                LogRestError(inputs, request, null, session, new StackTrace(true).GetFrames());
+                LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                throw new DataAccessException(session.ErrorMessage, null, session);
             }
-
 
             return isChurchMember;
         }
@@ -784,24 +937,40 @@ namespace FindMyFamilies.DataAccess {
             inputs.Add(Constants.TEMPLATE_ID_ACCESS_TOKEN, session.AccessToken);
 
             RestClient restClient = null;
-            RestRequest request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_INVALIDATE_TOKEN, inputs, ref session, ref restClient);
+            RestRequest request = null;
+            IRestResponse<Gedcomx> response = null;
+
+            try {
+                request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_INVALIDATE_TOKEN, inputs, ref session, ref restClient);
+            } catch (Exception e) {
+                var message = "Failed to create REST request while trying to log out from FamilySearch.";
+                LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                throw new DataAccessException(message, e, session);
+            }
 
             if (request != null) {
                 request.Method = Method.DELETE;
                 request.AddHeader("Accept", "");
-                IRestResponse<Gedcomx> response = restClient.Execute<Gedcomx>(request);
+                try {
+                    response = restClient.Execute<Gedcomx>(request);
+                } catch (Exception e) {
+                    string message = "Failed to execute REST request while trying to log out from FamilySearch.";
+                    LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                    throw new DataAccessException(message, e, session);
+                }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
                     if (session.Error || (!session.Error & (response.Data == null))) {
                         if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                             session.ErrorMessage = "Unauthorized to logout from FamilySearch";
                         } else {
-                            session.ErrorMessage = "Received error logging out from FamilySearch";
+                            session.ErrorMessage = "Received error while trying to log out from FamilySearch.";
                         }
                         if (response.Data == null) {
                             session.ResponseData = "Data is Null";
                         }
-                        LogRestError(inputs, request, response, session, new StackTrace(true).GetFrames());
+                        LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                        throw new DataAccessException(session.ErrorMessage, null, session);
                     }
                 } else {
                     gedcomx = response.Data;
@@ -810,7 +979,8 @@ namespace FindMyFamilies.DataAccess {
                 session.ResponseMessage = "The API descriptor doesn't have a link to the template: " + Constants.TEMPLATE_INVALIDATE_TOKEN;
                 session.ErrorMessage = "Received error logging out from FamilySearch";
                 session.ResponseData = "Null";
-                LogRestError(inputs, request, null, session, new StackTrace(true).GetFrames());
+                LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                throw new DataAccessException(session.ErrorMessage, null, session);
             }
 
             return gedcomx;
@@ -819,7 +989,7 @@ namespace FindMyFamilies.DataAccess {
         /// platform/tree/ancestry?person=PS11-234&personDetails
         //Accept: application/x-gedcomx-v1+xml
         //Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
-        public Gedcomx GetPersonWithDetails(String personId, ref SessionDO session) {
+        public Gedcomx GetPersonWithDetails(string personId, ref SessionDO session) {
             Gedcomx gedcomx = null;
             if (RestHelper.Instance.Expired) {
                 RestHelper.Instance.Refresh();
@@ -830,13 +1000,28 @@ namespace FindMyFamilies.DataAccess {
             inputs.Add(Constants.TEMPLATE_ID_ACCESS_TOKEN, session.AccessToken);
 
             RestClient restClient = null;
-            RestRequest request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_WITH_DETAILS, inputs, ref session, ref restClient);
+            RestRequest request = null;
+            IRestResponse<Gedcomx> response = null;
+
+            try {
+                request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_WITH_DETAILS, inputs, ref session, ref restClient);
+            } catch (Exception e) {
+                var message = "Failed to create REST request while retrieving person with details from FamilySearch";
+                LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                throw new DataAccessException(message, e, session);
+            }
 
             if (request != null) {
                 request.Method = Method.GET;
                 request.AddHeader("Accept", Constants.MEDIA_TYPE_GEDCOM);
                 request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
-                IRestResponse<Gedcomx> response = restClient.Execute<Gedcomx>(request);
+                try {
+                    response = restClient.Execute<Gedcomx>(request);
+                } catch (Exception e) {
+                    string message = "Failed to execute REST request while retrieving person with details from FamilySearch";
+                    LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                    throw new DataAccessException(message, e, session);
+                }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
                     if (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null))) {
@@ -852,7 +1037,8 @@ namespace FindMyFamilies.DataAccess {
                         } else if (response.Data.Persons != null && response.Data.Persons.Count < 1) {
                             session.ResponseData = "Current person is empty";
                         }
-                        LogRestError(inputs, request, response, session, new StackTrace(true).GetFrames());
+                        LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                        throw new DataAccessException(session.ErrorMessage, null, session);
                     }
                 } else {
                     gedcomx = response.Data;
@@ -861,7 +1047,8 @@ namespace FindMyFamilies.DataAccess {
                 session.ResponseMessage = "The API descriptor doesn't have a link to the template: " + Constants.TEMPLATE_PERSON_WITH_DETAILS;
                 session.ErrorMessage = "Received error retrieving person with details from FamilySearch";
                 session.ResponseData = "Null";
-                LogRestError(inputs, request, null, session, new StackTrace(true).GetFrames());
+                LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                throw new DataAccessException(session.ErrorMessage, null, session);
             }
 
             return gedcomx;
@@ -870,7 +1057,7 @@ namespace FindMyFamilies.DataAccess {
         ////platform/tree/persons-with-relationships?person=PW8J-MZ0
         //Accept: application/x-gedcomx-v1+xml
         //Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
-        public Gedcomx GetPersonWithRelationships(String personId, ref SessionDO session) {
+        public Gedcomx GetPersonWithRelationships(string personId, ref SessionDO session) {
             Gedcomx gedcomx = null;
 
             if (RestHelper.Instance.Expired) {
@@ -882,14 +1069,28 @@ namespace FindMyFamilies.DataAccess {
             inputs.Add(Constants.TEMPLATE_ID_ACCESS_TOKEN, session.AccessToken);
 
             RestClient restClient = null;
-            RestRequest request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_WITH_RELATIONSHIPS, inputs, ref session, ref restClient);
+            RestRequest request = null;
+            IRestResponse<Gedcomx> response = null;
 
+            try {
+                request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_WITH_RELATIONSHIPS, inputs, ref session, ref restClient);
+            } catch (Exception e) {
+                var message = "Failed to create REST request while retrieving person with relationships from FamilySearch";
+                LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                throw new DataAccessException(message, e, session);
+            }
 
             if (request != null) {
                 request.Method = Method.GET;
                 request.AddHeader("Accept", Constants.MEDIA_TYPE_XML);
                 request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
-                IRestResponse<Gedcomx> response = restClient.Execute<Gedcomx>(request);
+                try {
+                    response = restClient.Execute<Gedcomx>(request);
+                } catch (Exception e) {
+                    string message = "Failed to execute REST request while retrieving person with relationships from FamilySearch";
+                    LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                    throw new DataAccessException(message, e, session);
+                }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
                     if (session.Error || (!session.Error & (response.Data == null))) {
@@ -905,7 +1106,8 @@ namespace FindMyFamilies.DataAccess {
                         } else if (response.Data.Persons != null && response.Data.Persons.Count < 1) {
                             session.ResponseData = "Current person is empty";
                         }
-                        LogRestError(inputs, request, response, session, new StackTrace(true).GetFrames());
+                        LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                        throw new DataAccessException(session.ErrorMessage, null, session);
                     }
                 } else {
                     gedcomx = response.Data;
@@ -914,7 +1116,8 @@ namespace FindMyFamilies.DataAccess {
                 session.ResponseMessage = "The API descriptor doesn't have a link to the template: " + Constants.TEMPLATE_PERSON_WITH_RELATIONSHIPS;
                 session.ErrorMessage = "Received error retrieving person with relationships from FamilySearch";
                 session.ResponseData = "Null";
-                LogRestError(inputs, request, null, session, new StackTrace(true).GetFrames());
+                LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                throw new DataAccessException(session.ErrorMessage, null, session);
             }
 
             return gedcomx;
@@ -963,8 +1166,8 @@ namespace FindMyFamilies.DataAccess {
             return str;
         }
 
-        private void SetDeathDate(ref PersonDO personDO, Person person) {
-            string deathDate = RemoveSpecialCharacters(person.Display.DeathDate);
+        private void SetDeathDate(ref PersonDO personDO, Gx.Conclusion.Person person) {
+            var deathDate = RemoveSpecialCharacters(person.Display.DeathDate);
             if (!string.IsNullOrEmpty(deathDate)) {
                 if (deathDate.Length == 4) {
                     int valueParsed;
@@ -1098,8 +1301,8 @@ namespace FindMyFamilies.DataAccess {
             logger.Info(personDO.BirthYear.ToString());
         }
 
-        private void SetMarriageDate(ref PersonDO personDO, Person person) {
-            string marriageDate = RemoveSpecialCharacters(person.Display.MarriageDate);
+        private void SetMarriageDate(ref PersonDO personDO, Gx.Conclusion.Person person) {
+            var marriageDate = RemoveSpecialCharacters(person.Display.MarriageDate);
             if (!string.IsNullOrEmpty(marriageDate)) {
                 personDO.MarriageDate = Dates.GetDateTime(marriageDate);
                 logger.Info(personDO.MarriageYear.ToString());
@@ -1107,7 +1310,7 @@ namespace FindMyFamilies.DataAccess {
                     logger.Info(personDO.MarriageYear.ToString());
                     if (personDO.MarriageYear < 2) {
                         personDO.MarriageDateString = marriageDate;
-                        string marriageYearFact = GetFactPart("MarriageYear", person);
+                        var marriageYearFact = GetFactPart("MarriageYear", person);
                         marriageYearFact = RemoveSpecialCharacters(marriageYearFact);
                         if (!string.IsNullOrEmpty(marriageYearFact)) {
                             if (marriageYearFact.Length == 4) {
@@ -1156,7 +1359,7 @@ namespace FindMyFamilies.DataAccess {
             return ordinanceDO;
         }
 
-        public PersonDO GetPerson(Person person) {
+        public PersonDO GetPerson(Gx.Conclusion.Person person) {
             //            if (person.Id.Equals("KW71-756")) {
             //                string test = "";
             //
@@ -1214,18 +1417,18 @@ namespace FindMyFamilies.DataAccess {
                     //                        personDO.Living = false;
                     //                    }
 
-                    string birthDate = person.Display.BirthDate;
-                    string deathDate = person.Display.DeathDate;
-                    string lifeSpan = person.Display.Lifespan.ToLower();
+                    var birthDate = person.Display.BirthDate;
+                    var deathDate = person.Display.DeathDate;
+                    var lifeSpan = person.Display.Lifespan.ToLower();
                     if (!string.IsNullOrEmpty(lifeSpan)) {
                         int valueParsed;
-                        bool dash = false;
+                        var dash = false;
                         if (lifeSpan.IndexOf("living") > -1) {
                             personDO.BirthDateString = person.Display.BirthDate;
                         } else {
                             dash = (lifeSpan.IndexOf("-") == 4);
 
-                            if (dash && Int32.TryParse(lifeSpan.Substring(0, 4), NumberStyles.Any, CultureInfo.CurrentCulture, out valueParsed)) {
+                            if (dash && int.TryParse(lifeSpan.Substring(0, 4), NumberStyles.Any, CultureInfo.CurrentCulture, out valueParsed)) {
                                 personDO.BirthYear = valueParsed;
                             } else {
                                 personDO.BirthDateString = person.Display.BirthDate;
@@ -1236,7 +1439,7 @@ namespace FindMyFamilies.DataAccess {
                             if (lifeSpan.IndexOf("deceased") > -1) {
                                 personDO.DeathDateString = person.Display.DeathDate;
                             } else if (!person.Living && dash && (lifeSpan.Length == 9) && (lifeSpan.IndexOf("deceased") < 0) && (lifeSpan.IndexOf("living") < 0)) {
-                                if (Int32.TryParse(lifeSpan.Substring(5, 4), NumberStyles.Any, CultureInfo.CurrentCulture, out valueParsed)) {
+                                if (int.TryParse(lifeSpan.Substring(5, 4), NumberStyles.Any, CultureInfo.CurrentCulture, out valueParsed)) {
                                     personDO.DeathYear = valueParsed;
                                 }
                             }
@@ -1276,8 +1479,8 @@ namespace FindMyFamilies.DataAccess {
                         personDO.Lastname = names[2];
                     } else if (names.Length > 3) {
                         personDO.Firstname = names[0];
-                        string middle = "";
-                        for (int i = 1; i < names.Length - 1; i++) {
+                        var middle = "";
+                        for (var i = 1; i < names.Length - 1; i++) {
                             middle = middle + " " + names[i];
                         }
                         personDO.Middlename = names[1];
@@ -1319,7 +1522,7 @@ namespace FindMyFamilies.DataAccess {
 
         public DateTime? GetMarriageDate(Fact fact) {
             DateTime? marriageDate = null;
-            string marriageDatePart = GetFactPart("MarriageDate", fact);
+            var marriageDatePart = GetFactPart("MarriageDate", fact);
             if (!Strings.IsEmpty(marriageDatePart) && (marriageDatePart.Length > 4)) {
                 marriageDate = Dates.GetDateTime(marriageDatePart);
             }
@@ -1363,7 +1566,7 @@ namespace FindMyFamilies.DataAccess {
         //        }
 
         private string GetFactPart(string keyPart, Fact fact) {
-            string factPart = "";
+            var factPart = "";
             if (fact.Type.Equals("http://gedcomx.org/Birth") && (keyPart.Equals("BirthDate") || keyPart.Equals("BirthYear") || keyPart.Equals("BirthPlace"))) {
                 if ((fact.Date != null) && !Strings.IsEmpty(fact.Date.Original)) {
                     if (fact.Date.Original.Length > 4) {
@@ -1421,9 +1624,9 @@ namespace FindMyFamilies.DataAccess {
             return factPart;
         }
 
-        private string GetFactPart(string keyPart, Person person) {
-            string factPart = "";
-            foreach (Fact fact in person.Facts) {
+        private string GetFactPart(string keyPart, Gx.Conclusion.Person person) {
+            var factPart = "";
+            foreach (var fact in person.Facts) {
                 if (fact.Type.Equals("http://gedcomx.org/Birth") && (keyPart.Equals("BirthDate") || keyPart.Equals("BirthYear") || keyPart.Equals("BirthPlace"))) {
                     if ((fact.Date != null) && !Strings.IsEmpty(fact.Date.Original)) {
                         if (fact.Date.Original.Length > 4) {
@@ -1496,7 +1699,7 @@ namespace FindMyFamilies.DataAccess {
         //GET /platform/tree/persons/PPPJ-MYZ
         //Accept: application/x-gedcomx-v1+xml
         //Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
-        public Gedcomx GetPerson(String personId, ref SessionDO session) {
+        public Gedcomx GetPerson(string personId, ref SessionDO session) {
             Gedcomx gedcomx = null;
             if (!string.IsNullOrEmpty(personId)) {
                 if (RestHelper.Instance.Expired) {
@@ -1507,13 +1710,28 @@ namespace FindMyFamilies.DataAccess {
                 inputs.Add(Constants.TEMPLATE_ID_PERSON, personId.Trim());
 
                 RestClient restClient = null;
-                RestRequest request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON, inputs, ref session, ref restClient);
+                RestRequest request = null;
+                IRestResponse<Gedcomx> response = null;
+
+                try {
+                    request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON, inputs, ref session, ref restClient);
+                } catch (Exception e) {
+                    var message = "Failed to create REST request while retrieving person from FamilySearch.";
+                    LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                    throw new DataAccessException(message, e, session);
+                }
 
                 if (request != null) {
                     request.Method = Method.GET;
                     request.AddHeader("Accept", Constants.MEDIA_TYPE_XML);
                     request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
-                    IRestResponse<Gedcomx> response = restClient.Execute<Gedcomx>(request);
+                    try {
+                        response = restClient.Execute<Gedcomx>(request);
+                    } catch (Exception e) {
+                        string message = "Failed to execute REST request while retrieving person from FamilySearch";
+                        LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                        throw new DataAccessException(message, e, session);
+                    }
 
                     if (RestHelper.InvalidResponse(response, ref session)) {
                         if (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null))) {
@@ -1529,7 +1747,8 @@ namespace FindMyFamilies.DataAccess {
                             } else if (response.Data.Persons != null && response.Data.Persons.Count < 1) {
                                 session.ResponseData = "Current person is empty";
                             }
-                            LogRestError(inputs, request, response, session, new StackTrace(true).GetFrames());
+                            LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                            throw new DataAccessException(session.ErrorMessage, null, session);
                         }
                     } else {
                         gedcomx = response.Data;
@@ -1538,7 +1757,8 @@ namespace FindMyFamilies.DataAccess {
                     session.ResponseMessage = "The API descriptor doesn't have a link to the template: " + Constants.TEMPLATE_PERSON;
                     session.ErrorMessage = "Received error retrieving person from FamilySearch";
                     session.ResponseData = "Null";
-                    LogRestError(inputs, request, null, session, new StackTrace(true).GetFrames());
+                    LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                    throw new DataAccessException(session.ErrorMessage, null, session);
                 }
             }
             return gedcomx;
@@ -1548,7 +1768,7 @@ namespace FindMyFamilies.DataAccess {
         //Accept: application/x-gedcomx-v1+xml
         //Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
         // https://familysearch.org/developers/docs/api/tree/Spouses_of_a_Person_resource
-        public SpouseRelationship GetSpouses(String personId, ref SessionDO session) {
+        public SpouseRelationship GetSpouses(string personId, ref SessionDO session) {
             SpouseRelationship spouseRelationship = null;
             if (!string.IsNullOrEmpty(personId)) {
                 if (RestHelper.Instance.Expired) {
@@ -1559,13 +1779,28 @@ namespace FindMyFamilies.DataAccess {
                 inputs.Add(Constants.TEMPLATE_ID_PERSON, personId);
 
                 RestClient restClient = null;
-                RestRequest request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_SPOUSES, inputs, ref session, ref restClient);
+                RestRequest request = null;
+                IRestResponse<SpouseRelationship> response = null;
+
+                try {
+                    request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_SPOUSES, inputs, ref session, ref restClient);
+                } catch (Exception e) {
+                    var message = "Failed to create REST request while retrieving spouses relationships from FamilySearch.";
+                    LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                    throw new DataAccessException(message, e, session);
+                }
 
                 if (request != null) {
                     request.Method = Method.GET;
                     request.AddHeader("Accept", Constants.MEDIA_TYPE_XML);
                     request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
-                    IRestResponse<SpouseRelationship> response = restClient.Execute<SpouseRelationship>(request);
+                    try {
+                        response = restClient.Execute<SpouseRelationship>(request);
+                    } catch (Exception e) {
+                        string message = "Failed to execute REST request while retrieving spouses relationships from FamilySearch";
+                        LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                        throw new DataAccessException(message, e, session);
+                    }
 
                     if (RestHelper.InvalidResponse(response, ref session)) {
                         if (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null))) {
@@ -1581,7 +1816,8 @@ namespace FindMyFamilies.DataAccess {
                             } else if (response.Data.Persons != null && response.Data.Persons.Count < 1) {
                                 session.ResponseData = "Spouse Relationship is empty";
                             }
-                            LogRestError(inputs, request, response, session, new StackTrace(true).GetFrames());
+                            LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                            throw new DataAccessException(session.ErrorMessage, null, session);
                         }
                     } else {
                         spouseRelationship = response.Data;
@@ -1590,7 +1826,8 @@ namespace FindMyFamilies.DataAccess {
                     session.ResponseMessage = "The API descriptor doesn't have a link to the template: " + Constants.TEMPLATE_PERSON_SPOUSES;
                     session.ErrorMessage = "Received error retrieving spouses relationships from FamilySearch";
                     session.ResponseData = "Null";
-                    LogRestError(inputs, request, null, session, new StackTrace(true).GetFrames());
+                    LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                    throw new DataAccessException(session.ErrorMessage, null, session);
                 }
             }
             return spouseRelationship;
@@ -1600,7 +1837,7 @@ namespace FindMyFamilies.DataAccess {
         //        Accept: application/x-fs-v1+xml
         //        Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
         // https://familysearch.org/developers/docs/api/tree/Parents_of_a_person_resource
-        public SpouseRelationship GetParents(String personId, ref SessionDO session) {
+        public SpouseRelationship GetParents(string personId, ref SessionDO session) {
             SpouseRelationship parentRelationship = null;
 
             if (!string.IsNullOrEmpty(personId)) {
@@ -1612,13 +1849,28 @@ namespace FindMyFamilies.DataAccess {
                 inputs.Add(Constants.TEMPLATE_ID_PERSON, personId);
 
                 RestClient restClient = null;
-                RestRequest request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_PARENTS, inputs, ref session, ref restClient);
+                RestRequest request = null;
+                IRestResponse<SpouseRelationship> response = null;
+
+                try {
+                    request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_PARENTS, inputs, ref session, ref restClient);
+                } catch (Exception e) {
+                    var message = "Failed to create REST request while retrieving parent relationships from FamilySearch.";
+                    LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                    throw new DataAccessException(message, e, session);
+                }
 
                 if (request != null) {
                     request.Method = Method.GET;
                     request.AddHeader("Accept", Constants.MEDIA_TYPE_XML);
                     request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
-                    IRestResponse<SpouseRelationship> response = restClient.Execute<SpouseRelationship>(request);
+                    try {
+                        response = restClient.Execute<SpouseRelationship>(request);
+                    } catch (Exception e) {
+                        string message = "Failed to execute REST request while retrieving parent relationships from FamilySearch";
+                        LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                        throw new DataAccessException(message, e, session);
+                    }
 
                     if (RestHelper.InvalidResponse(response, ref session)) {
                         if (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null))) {
@@ -1634,7 +1886,8 @@ namespace FindMyFamilies.DataAccess {
                             } else if (response.Data.Persons != null && response.Data.Persons.Count < 1) {
                                 session.ResponseData = "Parent Relationship is empty";
                             }
-                            LogRestError(inputs, request, response, session, new StackTrace(true).GetFrames());
+                            LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                            throw new DataAccessException(session.ErrorMessage, null, session);
                         }
                     } else {
                         parentRelationship = response.Data;
@@ -1643,7 +1896,8 @@ namespace FindMyFamilies.DataAccess {
                     session.ResponseMessage = "The API descriptor doesn't have a link to the template: " + Constants.TEMPLATE_PERSON_PARENTS;
                     session.ErrorMessage = "Received error retrieving parent relationships from FamilySearch";
                     session.ResponseData = "Null";
-                    LogRestError(inputs, request, null, session, new StackTrace(true).GetFrames());
+                    LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                    throw new DataAccessException(session.ErrorMessage, null, session);
                 }
             }
             return parentRelationship;
@@ -1653,7 +1907,7 @@ namespace FindMyFamilies.DataAccess {
         //Accept: application/x-gedcomx-v1+xml
         //Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
         // https://familysearch.org/developers/docs/api/tree/Parents_of_a_person_resource
-        public SpouseRelationship GetChildren(String personId, ref SessionDO session) {
+        public SpouseRelationship GetChildren(string personId, ref SessionDO session) {
             SpouseRelationship childrenRelationship = null;
             if (!string.IsNullOrEmpty(personId)) {
                 if (RestHelper.Instance.Expired) {
@@ -1664,13 +1918,28 @@ namespace FindMyFamilies.DataAccess {
                 inputs.Add(Constants.TEMPLATE_ID_PERSON, personId);
 
                 RestClient restClient = null;
-                RestRequest request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_CHILDREN, inputs, ref session, ref restClient);
+                RestRequest request = null;
+                IRestResponse<SpouseRelationship> response = null;
+
+                try {
+                    request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_CHILDREN, inputs, ref session, ref restClient);
+                } catch (Exception e) {
+                    var message = "Failed to create REST request while retrieving children relationships from FamilySearch.";
+                    LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                    throw new DataAccessException(message, e, session);
+                }
 
                 if (request != null) {
                     request.Method = Method.GET;
                     request.AddHeader("Accept", Constants.MEDIA_TYPE_XML);
                     request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
-                    IRestResponse<SpouseRelationship> response = restClient.Execute<SpouseRelationship>(request);
+                    try {
+                        response = restClient.Execute<SpouseRelationship>(request);
+                    } catch (Exception e) {
+                        string message = "Failed to execute REST request while retrieving child relationships from FamilySearch";
+                        LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                        throw new DataAccessException(message, e, session);
+                    }
 
                     if (RestHelper.InvalidResponse(response, ref session)) {
                         if (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null))) {
@@ -1686,7 +1955,8 @@ namespace FindMyFamilies.DataAccess {
                             } else if (response.Data.Persons != null && response.Data.Persons.Count < 1) {
                                 session.ResponseData = "Child Relationship is empty";
                             }
-                            LogRestError(inputs, request, response, session, new StackTrace(true).GetFrames());
+                            LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                            throw new DataAccessException(session.ErrorMessage, null, session);
                         }
                     } else {
                         childrenRelationship = response.Data;
@@ -1695,9 +1965,9 @@ namespace FindMyFamilies.DataAccess {
                     session.ResponseMessage = "The API descriptor doesn't have a link to the template: " + Constants.TEMPLATE_PERSON_CHILDREN;
                     session.ErrorMessage = "Received error retrieving children relationships from FamilySearch";
                     session.ResponseData = "Null";
-                    LogRestError(inputs, request, null, session, new StackTrace(true).GetFrames());
+                    LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                    throw new DataAccessException(session.ErrorMessage, null, session);
                 }
-
             }
             return childrenRelationship;
         }
@@ -1705,7 +1975,7 @@ namespace FindMyFamilies.DataAccess {
         //        GET /platform/tree/persons/PPP0-MP1/fs-child-relationships
         //        Accept: application/x-fs-v1+xml
         //        Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
-        public ChildAndParentsRelationship GetChildParentRelationships(String personId, ref SessionDO session) {
+        public ChildAndParentsRelationship GetChildParentRelationships(string personId, ref SessionDO session) {
             ChildAndParentsRelationship childAndParentsRelationship = null;
             if (!string.IsNullOrEmpty(personId)) {
                 if (RestHelper.Instance.Expired) {
@@ -1715,13 +1985,28 @@ namespace FindMyFamilies.DataAccess {
                 var inputs = new Dictionary<string, string>();
                 inputs.Add(Constants.TEMPLATE_ID_PERSON, personId);
                 RestClient restClient = null;
-                RestRequest request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_CHILD_PARENT_RELATIONSHIPS, inputs, ref session, ref restClient);
+                RestRequest request = null;
+                IRestResponse<ChildAndParentsRelationship> response = null;
+
+                try {
+                    request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_CHILD_PARENT_RELATIONSHIPS, inputs, ref session, ref restClient);
+                } catch (Exception e) {
+                    var message = "Failed to create REST request while retrieving children relationships from FamilySearch.";
+                    LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                    throw new DataAccessException(message, e, session);
+                }
 
                 if (request != null) {
                     request.Method = Method.GET;
                     request.AddHeader("Accept", Constants.MEDIA_TYPE_XML);
                     request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
-                    IRestResponse<ChildAndParentsRelationship> response = restClient.Execute<ChildAndParentsRelationship>(request);
+                    try {
+                        response = restClient.Execute<ChildAndParentsRelationship>(request);
+                    } catch (Exception e) {
+                        string message = "Failed to execute REST request while retrieving child relationships from FamilySearch";
+                        LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                        throw new DataAccessException(message, e, session);
+                    }
 
                     if (RestHelper.InvalidResponse(response, ref session)) {
                         if (session.Error || (!session.Error & (response.Data == null))) {
@@ -1735,7 +2020,8 @@ namespace FindMyFamilies.DataAccess {
                             } else if (response.Data.Mother == null) {
                                 session.ResponseData = "Child Parent Relationship is null";
                             }
-                            LogRestError(inputs, request, response, session, new StackTrace(true).GetFrames());
+                            LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                            throw new DataAccessException(session.ErrorMessage, null, session);
                         }
                     } else {
                         childAndParentsRelationship = response.Data;
@@ -1744,9 +2030,9 @@ namespace FindMyFamilies.DataAccess {
                     session.ResponseMessage = "The API descriptor doesn't have a link to the template: " + Constants.TEMPLATE_CHILD_PARENT_RELATIONSHIPS;
                     session.ErrorMessage = "Received error retrieving children relationships from FamilySearch";
                     session.ResponseData = "Null";
-                    LogRestError(inputs, request, null, session, new StackTrace(true).GetFrames());
+                    LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                    throw new DataAccessException(session.ErrorMessage, null, session);
                 }
-
             }
             return childAndParentsRelationship;
         }
@@ -1754,7 +2040,7 @@ namespace FindMyFamilies.DataAccess {
         //        GET /platform/tree/ancestry?person=PM12-345&spouse=PW12-345
         //        Accept: application/x-fs-v1+xml
         //        Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
-        public GedcomxPerson GetAncestors(String personId, String generations, ref SessionDO session) {
+        public GedcomxPerson GetAncestors(string personId, string generations, ref SessionDO session) {
             GedcomxPerson gedcomx = null;
             if (!string.IsNullOrEmpty(personId)) {
                 if (RestHelper.Instance.Expired) {
@@ -1766,13 +2052,28 @@ namespace FindMyFamilies.DataAccess {
                 inputs.Add(Constants.TEMPLATE_ID_GENERATIONS, generations);
 
                 RestClient restClient = null;
-                RestRequest request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_ANCESTRY, inputs, ref session, ref restClient);
+                RestRequest request = null;
+                IRestResponse<GedcomxPerson> response = null;
+
+                try {
+                    request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_ANCESTRY, inputs, ref session, ref restClient);
+                } catch (Exception e) {
+                    var message = "Failed to create REST request while retrieving ancestors from FamilySearch.";
+                    LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                    throw new DataAccessException(message, e, session);
+                }
 
                 if (request != null) {
                     request.Method = Method.GET;
                     request.AddHeader("Accept", Constants.MEDIA_TYPE_XML);
                     request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
-                    IRestResponse<GedcomxPerson> response = restClient.Execute<GedcomxPerson>(request);
+                    try {
+                        response = restClient.Execute<GedcomxPerson>(request);
+                    } catch (Exception e) {
+                        string message = "Failed to execute REST request while retrieving ancestors from FamilySearch";
+                        LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                        throw new DataAccessException(message, e, session);
+                    }
 
                     if (RestHelper.InvalidResponse(response, ref session)) {
                         if (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null))) {
@@ -1788,7 +2089,8 @@ namespace FindMyFamilies.DataAccess {
                             } else if (response.Data.Persons != null && response.Data.Persons.Count < 1) {
                                 session.ResponseData = "Ancestors is empty";
                             }
-                            LogRestError(inputs, request, response, session, new StackTrace(true).GetFrames());
+                            LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                            throw new DataAccessException(session.ErrorMessage, null, session);
                         }
                     } else {
                         gedcomx = response.Data;
@@ -1797,9 +2099,9 @@ namespace FindMyFamilies.DataAccess {
                     session.ResponseMessage = "The API descriptor doesn't have a link to the template: " + Constants.TEMPLATE_PERSON_ANCESTRY;
                     session.ErrorMessage = "Received error retrieving ancestors from FamilySearch";
                     session.ResponseData = "Null";
-                    LogRestError(inputs, request, null, session, new StackTrace(true).GetFrames());
+                    LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                    throw new DataAccessException(session.ErrorMessage, null, session);
                 }
-
             }
 
             return gedcomx;
@@ -1808,7 +2110,7 @@ namespace FindMyFamilies.DataAccess {
         //        GET /platform/tree/ancestry?person=PM12-345&spouse=PW12-345
         //        Accept: application/x-fs-v1+xml
         //        Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
-        public GedcomxPerson GetDescendants(String personId, String generations, ref SessionDO session) {
+        public GedcomxPerson GetDescendants(string personId, string generations, ref SessionDO session) {
             GedcomxPerson gedcomx = null;
             if (!string.IsNullOrEmpty(personId)) {
                 if (RestHelper.Instance.Expired) {
@@ -1823,13 +2125,28 @@ namespace FindMyFamilies.DataAccess {
                 inputs.Add(Constants.TEMPLATE_ID_GENERATIONS, generations);
 
                 RestClient restClient = null;
-                RestRequest request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_DESCENDANTS, inputs, ref session, ref restClient);
+                RestRequest request = null;
+                IRestResponse<GedcomxPerson> response = null;
+
+                try {
+                    request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_DESCENDANTS, inputs, ref session, ref restClient);
+                } catch (Exception e) {
+                    var message = "Failed to create REST request while retrieving descendants from FamilySearch.";
+                    LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                    throw new DataAccessException(message, e, session);
+                }
 
                 if (request != null) {
                     request.Method = Method.GET;
                     request.AddHeader("Accept", Constants.MEDIA_TYPE_XML);
                     request.AddHeader("Authorization", string.Format("Bearer {0}", session.AccessToken));
-                    IRestResponse<GedcomxPerson> response = restClient.Execute<GedcomxPerson>(request);
+                    try {
+                        response = restClient.Execute<GedcomxPerson>(request);
+                    } catch (Exception e) {
+                        string message = "Failed to execute REST request while retrieving ordinance info from FamilySearch.";
+                        LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
+                        throw new DataAccessException(message, e, session);
+                    }
 
                     if (RestHelper.InvalidResponse(response, ref session)) {
                         if (session.Error || (!session.Error & (response.Data == null)) || response.Data.Persons == null) {
@@ -1845,7 +2162,8 @@ namespace FindMyFamilies.DataAccess {
                             } else if (response.Data.Persons != null && response.Data.Persons.Count < 1) {
                                 session.ResponseData = "Persons is empty";
                             }
-                            LogRestError(inputs, request, response, session, new StackTrace(true).GetFrames());
+                            LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                            throw new DataAccessException(session.ErrorMessage, null, session);
                         }
                     } else {
                         gedcomx = response.Data;
@@ -1854,15 +2172,17 @@ namespace FindMyFamilies.DataAccess {
                     session.ResponseMessage = "The API descriptor doesn't have a link to the GEDCOM X person resource.";
                     session.ErrorMessage = "Received error retrieving descendants from FamilySearch";
                     session.ResponseData = "Null";
-                    LogRestError(inputs, request, null, session, new StackTrace(true).GetFrames());
+                    LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
+                    throw new DataAccessException(session.ErrorMessage, null, session);
                 }
             }
 
             return gedcomx;
         }
 
-        public void LogRestError(Dictionary<string, string> inputs, RestRequest request, IRestResponse response, SessionDO session, StackFrame[] stackFrames, [System.Runtime.CompilerServices.CallerMemberName] string memberName = "", [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "", [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0) {
-            StringBuilder sb = new StringBuilder(256);
+        public void LogRestError(string message, Dictionary<string, string> inputs, RestRequest request, IRestResponse response, SessionDO session, StackFrame[] stackFrames, Exception e, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0) {
+            var sb = new StringBuilder(256);
+            sb.AppendLine("Message:  " + message + ((e != null) ? e.ToString() : ""));
             sb.AppendLine("Error Message:  " + session.ErrorMessage);
             sb.AppendLine("Response Message:  " + session.ResponseMessage);
             if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
@@ -1870,8 +2190,8 @@ namespace FindMyFamilies.DataAccess {
             } else if (session.ResponseMessage.IndexOf("unexpected token") > -1) {
                 sb.AppendLine("Possible Solution:  The template uri is probably invalid, please make sure the uri is correct");
             } else if (session.ResponseMessage.IndexOf("FamilySearch Best Practice") > -1) {
-                int index = session.ResponseMessage.IndexOf("FamilySearch Best Practice");
-                string test = "Possible Solution: " + session.ResponseMessage.Substring(index, session.ResponseMessage.Length - index);
+                var index = session.ResponseMessage.IndexOf("FamilySearch Best Practice");
+                var test = "Possible Solution: " + session.ResponseMessage.Substring(index, session.ResponseMessage.Length - index);
                 sb.AppendLine("Possible Solution: " + session.ResponseMessage.Substring(index, session.ResponseMessage.Length - index));
             }
             sb.AppendLine("Message Type:  " + session.MessageType);
@@ -1911,8 +2231,8 @@ namespace FindMyFamilies.DataAccess {
             }
             sb.AppendLine("Stack Trace:");
 
-            for (int i = 0; i < stackFrames.Length; i++) {
-                StackFrame frame = stackFrames[i];
+            for (var i = 0; i < stackFrames.Length; i++) {
+                var frame = stackFrames[i];
                 var filename = frame.GetFileName();
                 if (!string.IsNullOrEmpty(filename) && (filename.IndexOf("FindMyFamilies") > 0)) {
                     sb.AppendLine(string.Format(frame.GetFileName() + " " + frame.GetMethod() + " " + frame.GetFileLineNumber())); //"{0}:{1}", method.ReflectedType != null ? method.ReflectedType.Name : string.Empty, method.Name));

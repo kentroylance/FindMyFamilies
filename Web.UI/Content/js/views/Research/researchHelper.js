@@ -32,7 +32,7 @@ define(function(require) {
     var spinnerArea;
 
     function loadSpinner() {
-        spinnerArea = system.spinnerArea();
+        spinnerArea = system.getSpinnerArea();
         system.startSpinner();
     }
 

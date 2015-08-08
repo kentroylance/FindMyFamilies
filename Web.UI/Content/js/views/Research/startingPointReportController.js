@@ -2,6 +2,7 @@ define(function (require) {
     var $ = require('jquery');
     var system = require('system');
     var constants = require('constants');
+    var msgBox = require('msgBox');
     var findPersonHelper = require('findPersonHelper');
     var researchHelper = require('researchHelper');
 
@@ -31,7 +32,7 @@ define(function (require) {
         });
 
         startingPointReport.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
-            system.initSpinner(startingPointReport.callerSpinner, true);
+            system.spinnerArea = startingPoint.spinner;
             person.save();
             if (startingPointReport.callback) {
                 if (typeof (startingPointReport.callback) === "function") {
@@ -102,6 +103,7 @@ define(function (require) {
                 url: constants.STARTING_POINT_REPORT_DATA_URL,
                 success: function (data) {
                     if (data && data.errorMessage) {
+                        system.initSpinner(startingPointReport.callerSpinner, true);
                         msgBox.error(data.errorMessage);
                     } else {
                         startingPoint.previous = data;

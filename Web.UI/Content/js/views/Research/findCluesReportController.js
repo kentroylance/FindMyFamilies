@@ -2,6 +2,7 @@ define(function (require) {
     var $ = require('jquery');
     var system = require('system');
     var constants = require('constants');
+    var msgBox = require('msgBox');
     var findPersonHelper = require('findPersonHelper');
     var researchHelper = require('researchHelper');
 
@@ -31,7 +32,7 @@ define(function (require) {
         });
 
         findCluesReport.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
-            system.initSpinner(findCluesReport.callerSpinner, true);
+            system.spinnerArea = findClues.spinner;
             person.save();
             if (findCluesReport.callback) {
                 if (typeof (findCluesReport.callback) === "function") {
@@ -102,6 +103,7 @@ define(function (require) {
                 url: constants.FIND_CLUES_REPORT_DATA_URL,
                 success: function (data) {
                     if (data && data.errorMessage) {
+                        system.initSpinner(findCluesReport.callerSpinner, true);
                         msgBox.error(data.errorMessage);
                     } else {
                         findClues.previous = data;

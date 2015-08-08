@@ -37,7 +37,7 @@ namespace FindMyFamilies.Exceptions {
 		/// <param name="innerException"></param>
 		public BaseException(string message, Exception exception) : base(message, exception) {
 			//log.Error(message, innerException);
-			logger.Error(message, exception);
+			//logger.Error(message, exception);
 
 			//          if (innerException == null) {
 			//              Logger.Error(message, null, innerException, null);
@@ -54,10 +54,10 @@ namespace FindMyFamilies.Exceptions {
 		/// <param name="innerException"></param>
 		public BaseException(string message, Exception exception, object logCategory) : base(message, exception) {
 			if (exception == null) {
-    			logger.Error(message, exception);
+ //   			logger.Error(message, exception);
 //				Logger.Error(message, logCategory, this, null);
 			} else {
-       			logger.Error(message, exception);
+   //    			logger.Error(message, exception);
 //				Logger.Error(message, logCategory, exception, null);
 			}
 			this.IsLogged = true;
@@ -70,10 +70,10 @@ namespace FindMyFamilies.Exceptions {
 		/// <param name="innerException"></param>
 		public BaseException(string message, Exception exception, object logCategory, DataTransferObject dataTransferObject) : base(message, exception) {
 			if (exception == null) {
-       			logger.Error(message, exception);
+ //      			logger.Error(message, exception);
 //                Logger.Error(message, logCategory, this, dataTransferObject);
 			} else {
-    			logger.Error(message, exception);
+ //   			logger.Error(message, exception);
 //				Logger.Error(message, logCategory, exception, dataTransferObject);
 			}
 			this.IsLogged = true;
