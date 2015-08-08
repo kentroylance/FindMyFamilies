@@ -351,13 +351,13 @@ define(function(require) {
                         var $dialogContainer = $("#featuresForm");
                         var $detachedChildren = $dialogContainer.children().detach();
                         $("<div id=\"featuresForm\"></div>").dialog({
-                            width: 775,
+                            width: 900,
                             title: "Features",
                             open: function () {
                                 $detachedChildren.appendTo($dialogContainer);
                             }
                         });
-                        $("#FeaturesForm").empty().append(data);
+                        $("#featuresForm").empty().append(data);
                         if (id) {
                             person.id = id;
                             person.name = name;
