@@ -12,7 +12,7 @@
     var _featureName;
 
     function loadSpinner() {
-        _spinnerArea = system.getSpinnerArea();
+        _spinnerArea = system.spinnerArea;
         system.startSpinner();
     }
 
