@@ -2,9 +2,7 @@ define(function(require) {
 
     var $ = require('jquery');
     var system = require('system');
-    var msgBox = require('msgBox');
     var constants = require('constants');
-    var researchHelper = require("researchHelper");
 
     var lazyRequire = require("lazyRequire");
     var requireOnce = lazyRequire.once();
@@ -13,8 +11,6 @@ define(function(require) {
     // models
     var person = require('person');
     var features = require('features');
-
-    var retrieve = require('retrieve');
 
     function updateForm() {
         if (features.bug) {
@@ -136,7 +132,7 @@ define(function(require) {
         }
     };
 
-    researchHelper.featuresController = featuresController;
+    features.featuresController = featuresController;
     open();
 
     return featuresController;

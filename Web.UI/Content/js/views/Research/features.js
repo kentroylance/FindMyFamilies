@@ -4,6 +4,8 @@
     var system = require('system');
     var constants = require('constants');
 
+    var _featuresController;
+
     var _formName = "featuresForm";
     var _formTitleImage = "fa fmf-features24";
     var _form = $("#featuresForm");
@@ -89,7 +91,14 @@
         },
         reset: function() {
             reset();
+        },
+        get featuresController() {
+            return _featuresController;
+        },
+        set featuresController(value) {
+            _featuresController = value;
         }
+
     };
 
     return features;

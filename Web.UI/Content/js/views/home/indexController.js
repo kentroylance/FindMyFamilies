@@ -1,4 +1,4 @@
-﻿define(function (require) {
+﻿define(function(require) {
     var $ = require('jquery');
     var system = require('system');
     var constants = require('constants');
@@ -6,7 +6,8 @@
     var lazyRequire = require("lazyRequire");
     var requireOnce = lazyRequire.once();
 
-    var _featuresController;
+    var features;
+
     var _spinnerArea;
     var _tryItNowButton;
     var _featureName;
@@ -17,61 +18,58 @@
     }
 
     function loadFeature() {
-        if (system.isAuthenticated()) {
-            loadSpinner();
-            requireOnce(["features", "jqueryUiOptions"], function (Features) {
-                Features.callerSpinner = _spinnerArea;
-                Features.tryItNowButton = _tryItNowButton;
-                Features.featureName = _featureName;
-            }, function () {
+        loadSpinner();
+        requireOnce(["features", "jqueryUiOptions"], function (Features) {
+                features = Features;
+            }, function() {
+                features.callerSpinner = _spinnerArea;
+                features.tryItNowButton = _tryItNowButton;
+                features.featureName = _featureName;
                 $.ajax({
                     url: constants.FEATURES_URL,
-                    success: function (data) {
+                    success: function(data) {
                         var $dialogContainer = $("#featuresForm");
                         var $detachedChildren = $dialogContainer.children().detach();
                         $("<div id=\"featuresForm\"></div>").dialog({
                             width: 900,
                             title: "Features",
-                            open: function () {
+                            open: function() {
                                 $detachedChildren.appendTo($dialogContainer);
                             }
                         });
                         $("#featuresForm").empty().append(data);
-                        if (_featuresController) {
-                            _featuresController.open();
+                        if (features.featuresController) {
+                            features.featuresController.open();
                         }
                     }
                 });
             }
-            );
-        } else {
-            system.relogin();
-        }
+        );
 
     }
 
-    $("#feature1").unbind("click").bind("click", function (e) {     //  starting point
+    $("#feature1").unbind("click").bind("click", function(e) { //  starting point
         _tryItNowButton = "Try Starting Point";
         _featureName = constants.STARTING_POINT;
         loadFeature();
         return false;
     });
 
-    $("#feature2").unbind("click").bind("click", function (e) {     //  starting point
+    $("#feature2").unbind("click").bind("click", function(e) { //  starting point
         _tryItNowButton = "Try Find Persoon";
         _featureName = constants.FIND_PERSON;
         loadFeature();
         return false;
     });
 
-    $("#feature3").unbind("click").bind("click", function (e) {     //  starting point
+    $("#feature3").unbind("click").bind("click", function(e) { //  starting point
         _tryItNowButton = "Try Hints";
         _featureName = constants.HINTS;
         loadFeature();
         return false;
     });
 
-    $("#feature4").unbind("click").bind("click", function (e) {     //  starting point
+    $("#feature4").unbind("click").bind("click", function(e) { //  starting point
         _tryItNowButton = "Try Incomplete Ordinances";
         _featureName = constants.INCOMPLETE_ORDINANCES;
         loadFeature();
@@ -84,7 +82,7 @@
         'greensock',
         'transitions',
         'layerslider'
-    ], function () {
+    ], function() {
         $('#layerslider').layerSlider({
             imgPreload: false,
             lazyLoad: true,
@@ -105,19 +103,11 @@
     });
 
     var indexController = {
-        get featuresController() {
-            return _featuresController;
-        },
-        set featuresController(value) {
-            _featuresController = value;
-        }
     };
 
     system.deleteCookie(constants.LAST_CALLED);
 
     return indexController;
-
-
 
 
 });
