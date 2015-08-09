@@ -37,7 +37,7 @@ define(function(require) {
     function savePrevious() {
         if (_previous) {
 	    if (window.localStorage) {
-                localStorage.setItem("dateProblemsPrevious", JSON.stringify(_previous));
+                localStorage.setItem(constants.DATE_PROBLEMS_PREVIOUS, JSON.stringify(_previous));
             }
         }
     }

@@ -242,6 +242,7 @@ define(function(require) {
                     hints.previous = JSON.parse(localStorage.getItem(constants.HINTS_PREVIOUS));
                 }
             }
+            hintsReport.displayType = "previous";
             if (hints.previous) {
                 $.ajax({
                     url: constants.HINTS_REPORT_HTML_URL,
@@ -256,7 +257,6 @@ define(function(require) {
                                 $(this).css("maxHeight", 700);
                             }
                         });
-                        hints.displayType = "previous";
                         $("#hintsReportForm").empty().append(data);
                         if (researchHelper && researchHelper.hintsReportController) {
                             researchHelper.hintsReportController.open();
@@ -274,6 +274,8 @@ define(function(require) {
                     msgBox.message("You must first select a person from Family Search");
                 }
 
+                hintsReport.displayType = "start";
+                hints.save();
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
                         requireOnce(["css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
@@ -291,8 +293,6 @@ define(function(require) {
                                                 $detachedChildren.appendTo($dialogContainer);
                                             }
                                         });
-                                        hintsReport.displayType = "start";
-                                        hints.save();
                                         $("#hintsReportForm").empty().append(data);
                                         if (researchHelper && researchHelper.hintsReportController) {
                                             researchHelper.hintsReportController.open();

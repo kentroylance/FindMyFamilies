@@ -51,7 +51,7 @@
     function savePrevious() {
         if (_previous) {
 	    if (window.localStorage) {
-                localStorage.setItem("findCluesPrevious", JSON.stringify(_previous));
+                localStorage.setItem(constants.FIND_CLUES_PREVIOUS, JSON.stringify(_previous));
             }
         }
     }

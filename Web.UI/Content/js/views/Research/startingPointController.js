@@ -254,6 +254,7 @@ define(function(require) {
                     startingPoint.previous = JSON.parse(localStorage.getItem(constants.STARTING_POINT_PREVIOUS));
                 }
             }
+            startingPointReport.displayType = "previous";
             if (startingPoint.previous) {
                 $.ajax({
                     url: constants.STARTING_POINT_REPORT_HTML_URL,
@@ -268,7 +269,6 @@ define(function(require) {
                                 $(this).css("maxHeight", 700);
                             }
                         });
-                        startingPoint.displayType = "previous";
                         $("#startingPointReportForm").empty().append(data);
                         if (researchHelper && researchHelper.startingPointReportController) {
                             researchHelper.startingPointReportController.open();
@@ -285,11 +285,13 @@ define(function(require) {
                 if (!person.id) {
                     msgBox.message("You must first select a person from Family Search");
                 }
+                startingPointReport.displayType = "start";
 
+                startingPoint.save();
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
                         requireOnce(["css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
-                            }, function() {
+                        }, function () {
                                 $.ajax({
                                     url: constants.STARTING_POINT_REPORT_HTML_URL,
                                     success: function(data) {
@@ -303,8 +305,6 @@ define(function(require) {
                                                 $detachedChildren.appendTo($dialogContainer);
                                             }
                                         });
-                                        startingPointReport.displayType = "start";
-                                        startingPoint.save();
                                         $("#startingPointReportForm").empty().append(data);
                                         if (researchHelper && researchHelper.startingPointReportController) {
                                             researchHelper.startingPointReportController.open();

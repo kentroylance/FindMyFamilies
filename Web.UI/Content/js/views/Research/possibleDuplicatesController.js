@@ -243,6 +243,7 @@ define(function(require) {
                 }
             }
             if (possibleDuplicates.previous) {
+                possibleDuplicatesReport.displayType = "previous";
                 $.ajax({
                     url: constants.POSSIBLE_DUPLICATES_REPORT_HTML_URL,
                     success: function (data) {
@@ -256,7 +257,6 @@ define(function(require) {
                                 $(this).css("maxHeight", 700);
                             }
                         });
-                        possibleDuplicates.displayType = "previous";
                         $("#possibleDuplicatesReportForm").empty().append(data);
                         if (researchHelper && researchHelper.possibleDuplicatesReportController) {
                             researchHelper.possibleDuplicatesReportController.open();
@@ -273,6 +273,8 @@ define(function(require) {
                 if (!person.id) {
                     msgBox.message("You must first select a person from Family Search");
                 }
+                possibleDuplicatesReport.displayType = "start";
+                possibleDuplicates.save();
 
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
@@ -291,8 +293,6 @@ define(function(require) {
                                                 $detachedChildren.appendTo($dialogContainer);
                                             }
                                         });
-                                        possibleDuplicatesReport.displayType = "start";
-                                        possibleDuplicates.save();
                                         $("#possibleDuplicatesReportForm").empty().append(data);
                                 if (researchHelper && researchHelper.possibleDuplicatesReportController) {
                                     researchHelper.possibleDuplicatesReportController.open();

@@ -237,6 +237,7 @@ define(function(require) {
                     incompleteOrdinances.previous = JSON.parse(localStorage.getItem(constants.INCOMPLETE_ORDINANCES_PREVIOUS));
                 }
             }
+            incompleteOrdinancesReport.displayType = "previous";
             if (incompleteOrdinances.previous) {
                 $.ajax({
                     url: constants.INCOMPLETE_ORDINANCES_REPORT_HTML_URL,
@@ -251,7 +252,6 @@ define(function(require) {
                                 $(this).css("maxHeight", 700);
                             }
                         });
-                        incompleteOrdinances.displayType = "previous";
                         $("#incompleteOrdinancesReportForm").empty().append(data);
                         if (researchHelper && researchHelper.incompleteOrdinancesReportController) {
                             researchHelper.incompleteOrdinancesReportController.open();
@@ -268,6 +268,8 @@ define(function(require) {
                 if (!person.id) {
                     msgBox.message("You must first select a person from Family Search");
                 }
+                incompleteOrdinancesReport.displayType = "start";
+                incompleteOrdinances.save();
 
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
@@ -286,8 +288,6 @@ define(function(require) {
                                                 $detachedChildren.appendTo($dialogContainer);
                                             }
                                         });
-                                        incompleteOrdinancesReport.displayType = "start";
-                                        incompleteOrdinances.save();
                                         $("#incompleteOrdinancesReportForm").empty().append(data);
                                         if (researchHelper && researchHelper.incompleteOrdinancesReportController) {
                                             researchHelper.incompleteOrdinancesReportController.open();

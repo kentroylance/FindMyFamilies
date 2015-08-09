@@ -33,7 +33,7 @@
     function savePrevious() {
         if (_previous) {
 	    if (window.localStorage) {
-                localStorage.setItem("possibleDuplicatesPrevious", JSON.stringify(_previous));
+                localStorage.setItem(constants.POSSIBLE_DUPLICATES_PREVIOUS, JSON.stringify(_previous));
             }
         }
     }

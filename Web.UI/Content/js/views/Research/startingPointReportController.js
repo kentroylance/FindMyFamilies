@@ -97,7 +97,7 @@ define(function (require) {
         startingPointReport.form = $("#startingPointReportForm");
         loadEvents();
 
-        if (startingPoint.displayType === "start") {
+        if (startingPointReport.displayType === "start") {
             $.ajax({
                 data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "nonMormon": startingPoint.nonMormon, "born18101850": startingPoint.born18101850, "livedInUSA": startingPoint.livedInUSA, "needOrdinances": startingPoint.ordinances, "hint": startingPoint.hints, "duplicate": startingPoint.duplicates, "reportId": person.reportId },
                 url: constants.STARTING_POINT_REPORT_DATA_URL,

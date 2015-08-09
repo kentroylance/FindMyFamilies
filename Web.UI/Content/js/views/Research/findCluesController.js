@@ -261,6 +261,7 @@ define(function(require) {
                     findClues.previous = JSON.parse(localStorage.getItem(constants.FIND_CLUES_PREVIOUS));
                 }
             }
+            findCluesReport.displayType = "previous";
             if (findClues.previous) {
                 $.ajax({
                     url: constants.FIND_CLUES_REPORT_HTML_URL,
@@ -275,7 +276,6 @@ define(function(require) {
                                 $(this).css("maxHeight", 700);
                             }
                         });
-                        findClues.displayType = "previous";
                         $("#findCluesReportForm").empty().append(data);
                         if (researchHelper && researchHelper.findCluesReportController) {
                             researchHelper.findCluesReportController.open();
@@ -292,6 +292,8 @@ define(function(require) {
                 if (!person.id) {
                     msgBox.message("You must first select a person from Family Search");
                 }
+                findCluesReport.displayType = "start";
+                findClues.save();
 
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
@@ -310,8 +312,6 @@ define(function(require) {
                                                 $detachedChildren.appendTo($dialogContainer);
                                             }
                                         });
-                                        findCluesReport.displayType = "start";
-                                        findClues.save();
                                         $("#findCluesReportForm").empty().append(data);
                                         if (researchHelper && researchHelper.findCluesReportController) {
                                             researchHelper.findCluesReportController.open();

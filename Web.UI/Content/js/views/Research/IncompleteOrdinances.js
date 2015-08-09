@@ -29,7 +29,7 @@
     function savePrevious() {
         if (_previous) {
 	    if (window.localStorage) {
-	        localStorage.setItem("incompleteOrdinancesPrevious", JSON.stringify(_previous));
+	        localStorage.setItem(constants.INCOMPLETE_ORDINANCES_PREVIOUS, JSON.stringify(_previous));
             }
         }
     }

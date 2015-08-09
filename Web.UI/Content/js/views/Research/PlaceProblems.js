@@ -29,7 +29,7 @@ define(function(require) {
     function savePrevious() {
         if (_previous) {
 	    if (window.localStorage) {
-	        localStorage.setItem("placeProblemsPrevious", JSON.stringify(_previous));
+	        localStorage.setItem(constants.PLACE_PROBLEMS_PREVIOUS, JSON.stringify(_previous));
             }
         }
     }

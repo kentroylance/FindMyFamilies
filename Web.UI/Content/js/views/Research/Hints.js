@@ -32,7 +32,7 @@
     function savePrevious() {
         if (_previous) {
 	    if (window.localStorage) {
-                localStorage.setItem("hintsPrevious", JSON.stringify(_previous));
+                localStorage.setItem(constants.HINTS_PREVIOUS, JSON.stringify(_previous));
             }
         }
     }
