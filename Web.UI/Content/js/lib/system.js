@@ -16,10 +16,13 @@
     var _spinnerArea;
 
     function getSpinnerArea() {
-        if (_target) {
-            _spinnerArea = _target.id;
+        if (_spinnerArea) {
+            if (!_target || (_target && _target.id !== _spinnerArea)) {
+                _target = document.getElementById(_spinnerArea);
+            }
         } else if (!_spinnerArea) {
             _spinnerArea = constants.DEFAULT_SPINNER_AREA;
+            _target = document.getElementById(_spinnerArea);
         }
 
         return _spinnerArea;
@@ -30,9 +33,7 @@
         }, function () {
             _count--;
             if (force || _count === 0) {
-                if (!_target) {
-                    _target = document.getElementById(getSpinnerArea());
-                }
+                getSpinnerArea();
                 $('#' + _target.id).spin(false);
                 _target = null;
                 _count = 0;
@@ -47,9 +48,7 @@
         requireOnce(['vendor/jquery.spin'], function () {
         }, function () {
             if (force || _count === 0) {
-                if (!_target) {
-                    _target = document.getElementById(getSpinnerArea());
-                }
+                getSpinnerArea();
                 $('#' + _target.id).spin();
                 _count = 0;
             }
@@ -394,12 +393,11 @@
         set userName(value) {
             _userName = value;
         },
-        getSpinnerArea: function () {
+        get spinnerArea() {
             return getSpinnerArea();
         },
         set spinnerArea(value) {
             _spinnerArea = value;
-            _target = null;
         },
         get domainName() {
             return _domainName;
@@ -419,7 +417,7 @@
         familySearchSystem: function () {
             return getFamilySearchSystem();
         },
-        debugging: function() {
+        debugging: function () {
             isDebugging();
         },
         openForm: function(form, image, spinnerTarget) {

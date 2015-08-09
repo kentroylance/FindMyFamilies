@@ -40,17 +40,18 @@
 
     function savePrevious() {
         if (_previous) {
-	    if (window.localStorage) {
-                localStorage.setItem("startingPointsPrevious", JSON.stringify(_previous));
+            if (window.localStorage) {
+                localStorage.setItem(constants.STARTING_POINT_PREVIOUS, JSON.stringify(_previous));
             }
         }
     }
+
     if (window.localStorage) {
         var startingPointDO = JSON.parse(localStorage.getItem(constants.STARTING_POINT));
         if (!startingPointDO) {
             startingPointDO = new StartingPointDO();
-	}
-    	if (!startingPointDO.researchType) {
+        }
+        if (!startingPointDO.researchType) {
             startingPointDO.livedInUSA = true;
             startingPointDO.born18101850 = true;
         }
@@ -137,14 +138,14 @@
         },
         set displayType(value) {
             _displayType = value;
-        },        
+        },
         save: function() {
             save();
         },
-        savePrevious: function () {
+        savePrevious: function() {
             savePrevious();
         },
-        clear: function () {
+        clear: function() {
             clear();
         },
         reset: function() {

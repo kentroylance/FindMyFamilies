@@ -243,8 +243,6 @@ define(function(require) {
                 }
             }
             if (possibleDuplicates.previous) {
-                system.initSpinner(possibleDuplicates.spinner);
-                possibleDuplicates.callerSpinner = possibleDuplicates.spinner;
                 $.ajax({
                     url: constants.POSSIBLE_DUPLICATES_REPORT_HTML_URL,
                     success: function (data) {
@@ -280,8 +278,6 @@ define(function(require) {
                     if (result) {
                         requireOnce(["css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
                             }, function() {
-                                system.initSpinner(possibleDuplicates.spinner);
-                                possibleDuplicates.callerSpinner = possibleDuplicates.spinner;
                                 $.ajax({
                                     url: constants.POSSIBLE_DUPLICATES_REPORT_HTML_URL,
                                     success: function(data) {

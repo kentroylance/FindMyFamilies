@@ -238,8 +238,6 @@ define(function(require) {
                 }
             }
             if (incompleteOrdinances.previous) {
-                system.initSpinner(incompleteOrdinances.spinner);
-                incompleteOrdinances.callerSpinner = incompleteOrdinances.spinner;
                 $.ajax({
                     url: constants.INCOMPLETE_ORDINANCES_REPORT_HTML_URL,
                     success: function(data) {
@@ -275,8 +273,6 @@ define(function(require) {
                     if (result) {
                         requireOnce(["css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
                             }, function() {
-                                system.initSpinner(incompleteOrdinances.spinner);
-                                incompleteOrdinances.callerSpinner = incompleteOrdinances.spinner;
                                 $.ajax({
                                     url: constants.INCOMPLETE_ORDINANCES_REPORT_HTML_URL,
                                     success: function(data) {

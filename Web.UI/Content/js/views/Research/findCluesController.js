@@ -262,8 +262,6 @@ define(function(require) {
                 }
             }
             if (findClues.previous) {
-                system.initSpinner(findClues.spinner);
-                findClues.callerSpinner = findClues.spinner;
                 $.ajax({
                     url: constants.FIND_CLUES_REPORT_HTML_URL,
                     success: function(data) {
@@ -299,8 +297,6 @@ define(function(require) {
                     if (result) {
                         requireOnce(["css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
                             }, function() {
-                                system.initSpinner(findClues.spinner);
-                                findClues.callerSpinner = findClues.spinner;
                                 $.ajax({
                                     url: constants.FIND_CLUES_REPORT_HTML_URL,
                                     success: function(data) {

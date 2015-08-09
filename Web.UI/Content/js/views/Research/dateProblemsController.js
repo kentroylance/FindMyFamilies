@@ -249,8 +249,6 @@ define(function(require) {
                 }
             }
             if (dateProblems.previous) {
-                system.initSpinner(dateProblems.spinner);
-                dateProblems.callerSpinner = dateProblems.spinner;
                 $.ajax({
                     url: constants.DATE_PROBLEMS_REPORT_HTML_URL,
                     success: function(data) {
@@ -286,8 +284,6 @@ define(function(require) {
                     if (result) {
                         requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
                             }, function() {
-                                system.initSpinner(dateProblems.spinner);
-                                dateProblems.callerSpinner = dateProblems.spinner;
                                 $.ajax({
                                     url: constants.DATE_PROBLEMS_REPORT_HTML_URL,
                                     success: function(data) {

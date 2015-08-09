@@ -255,8 +255,6 @@ define(function(require) {
                 }
             }
             if (startingPoint.previous) {
-                system.initSpinner(startingPoint.spinner);
-                startingPoint.callerSpinner = startingPoint.spinner;
                 $.ajax({
                     url: constants.STARTING_POINT_REPORT_HTML_URL,
                     success: function(data) {
@@ -292,8 +290,6 @@ define(function(require) {
                     if (result) {
                         requireOnce(["css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
                             }, function() {
-                                system.initSpinner(startingPoint.spinner);
-                                startingPoint.callerSpinner = startingPoint.spinner;
                                 $.ajax({
                                     url: constants.STARTING_POINT_REPORT_HTML_URL,
                                     success: function(data) {

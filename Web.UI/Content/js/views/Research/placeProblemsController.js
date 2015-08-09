@@ -238,8 +238,6 @@ define(function(require) {
                 }
             }
             if (placeProblems.previous) {
-                system.initSpinner(placeProblems.spinner);
-                placeProblems.callerSpinner = placeProblems.spinner;
                 $.ajax({
                     url: constants.PLACE_PROBLEMS_REPORT_HTML_URL,
                     success: function(data) {
@@ -275,8 +273,6 @@ define(function(require) {
                     if (result) {
                         requireOnce(["css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
                             }, function() {
-                                system.initSpinner(placeProblems.spinner);
-                                placeProblems.callerSpinner = placeProblems.spinner;
                                 $.ajax({
                                     url: constants.PLACE_PROBLEMS_REPORT_HTML_URL,
                                     success: function(data) {

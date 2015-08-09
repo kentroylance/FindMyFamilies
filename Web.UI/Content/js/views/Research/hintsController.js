@@ -243,8 +243,6 @@ define(function(require) {
                 }
             }
             if (hints.previous) {
-                system.initSpinner('hints.spinner');
-                hints.callerSpinner = hints.spinner;
                 $.ajax({
                     url: constants.HINTS_REPORT_HTML_URL,
                     success: function(data) {
@@ -280,8 +278,6 @@ define(function(require) {
                     if (result) {
                         requireOnce(["css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
                             }, function() {
-                                system.initSpinner(hints.spinner);
-                                hints.callerSpinner = hints.spinner;
                                 $.ajax({
                                     url: constants.HINTS_REPORT_HTML_URL,
                                     success: function(data) {
