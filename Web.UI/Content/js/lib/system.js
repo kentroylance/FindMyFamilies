@@ -124,17 +124,14 @@
     }
 
 
-    function KeepSessionAlive() {
+    function keepSessionAlive() {
 
         $.get(constants.KEEP_SESSION_ALIVE_URL, function(data) {
         });
 
-        setTimeout(KeepSessionAlive, 1140000);
+        setTimeout(keepSessionAlive, 1140000);
     }
-
-    // Run function for a first time
- //   KeepSessionAlive();
-
+    
     window.onerror = function(errorText, url, lineNumber) {
         var report = {
             errorText: errorText,

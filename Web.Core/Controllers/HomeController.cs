@@ -43,6 +43,7 @@ namespace FindMyFamilies.Web.Controllers {
                 try {
                     session = GetSession();
                     result.list = Service.GetStartingPoints(startingPoint, ref session);
+                    ResetTokenHourExpire();
                     result.errorMessage = session.ErrorMessage;
                 } catch (Exception) {
                     result.errorMessage = "Error retrieving starting point report data";
@@ -70,6 +71,7 @@ namespace FindMyFamilies.Web.Controllers {
                 try {
                     session = GetSession();
                     result.list = Service.GetDates(dateInputDO, ref session);
+                    ResetTokenHourExpire();
                     result.errorMessage = session.ErrorMessage;
                 } catch (Exception) {
                     result.errorMessage = "Error retrieving date problems report data";
@@ -97,6 +99,7 @@ namespace FindMyFamilies.Web.Controllers {
                 try {
                     session = GetSession();
                     result.list = Service.GetPlaces(placeInputDO, ref session);
+                    ResetTokenHourExpire();
                     result.errorMessage = session.ErrorMessage;
                 } catch (Exception) {
                     result.errorMessage = "Error retrieving place problems report data";
@@ -124,6 +127,7 @@ namespace FindMyFamilies.Web.Controllers {
                 try {
                     session = GetSession();
                     result.list = Service.GetAnalyzeData(findCluesInputDO, ref session);
+                    ResetTokenHourExpire();
                     result.errorMessage = session.ErrorMessage;
                 } catch (Exception) {
                     result.errorMessage = "Error retrieving find clues report data";
@@ -151,6 +155,7 @@ namespace FindMyFamilies.Web.Controllers {
                 try {
                     session = GetSession();
                     result.list = Service.GetOrdinances(incompleteOrdinanceDO, ref session);
+                    ResetTokenHourExpire();
                     result.errorMessage = session.ErrorMessage;
                 } catch (Exception) {
                     result.errorMessage = "Error retrieving incomplete ordinance report data";
@@ -166,8 +171,7 @@ namespace FindMyFamilies.Web.Controllers {
         }
 
         [System.Web.Mvc.HttpGet]
-        public ActionResult Features()
-        {
+        public ActionResult Features() {
             return PartialView("~/Views/Research/Features.cshtml");
         }
 
@@ -189,6 +193,7 @@ namespace FindMyFamilies.Web.Controllers {
                 try {
                     session = GetSession();
                     result.list = Service.GetHints(hintInputDO, ref session);
+                    ResetTokenHourExpire();
                     result.errorMessage = session.ErrorMessage;
                 } catch (Exception) {
                     result.errorMessage = "Error retrieving hint report data";
@@ -216,6 +221,7 @@ namespace FindMyFamilies.Web.Controllers {
                 try {
                     session = GetSession();
                     result.list = Service.GetPossibleDuplicates(possibleDuplicatesInputDO, ref session);
+                    ResetTokenHourExpire();
                     result.errorMessage = session.ErrorMessage;
                 } catch (Exception) {
                     result.errorMessage = "Error retrieving possible duplicates report data";
@@ -254,29 +260,11 @@ namespace FindMyFamilies.Web.Controllers {
 
         [System.Web.Mvc.HttpGet]
         public ActionResult KeepSessionAlive() {
-            Logger.Error("KeepSessionAlive IsAuthenticated " + DisplayName + " " + DateTime.Now + " TokenHourExpire:" + TokenHourExpire + "  Token24HourExpire:" + Token24HourExpire);
+//            Logger.Error("KeepSessionAlive IsAuthenticated " + DisplayName + " " + DateTime.Now + " TokenHourExpire:" + TokenHourExpire + "  Token24HourExpire:" + Token24HourExpire);
             //if ((DateTime.Now.AddMinutes(16) > TokenHourExpire) || (DateTime.Now.AddMinutes(16) > Token24HourExpire)) {
             session = GetSession();
-            if (session == null) {
-                session = new SessionDO();
-                session.DisplayName = DisplayName;
-                session.Username = PersonId;
-                session.AccessToken = Token;
-                session.Token24HourExpire = Token24HourExpire;
-                session.TokenHourExpire = TokenHourExpire;
-                Logger.Error("KeepSessionAlive: " + DisplayName + " session = null");
-            }
             Service.GetCurrentPerson(ref session);
             ResetTokenHourExpire();
-            //}
-            //            DateTime? tokenHourDataTime = TokenHourExpire;
-            //            DateTime? token24HourDataTime = Token24HourExpire;
-            //            bool expired = TokenExpired;
-            //            if (session != null) {
-            //                Service.GetCurrentPerson(ref session);
-            //                session.ResetExpiration();
-            //                Logger.Error("KeepSessionAlive: " + DateTime.Now);
-            //            }
             return null;
         }
 
@@ -300,6 +288,7 @@ namespace FindMyFamilies.Web.Controllers {
                 research.SearchCriteria = 0;
                 session.Action = Constants.ACTION_RETRIEVE;
                 Service.GetPersonAncestryValidations(ref research, ref session);
+                ResetTokenHourExpire();
                 retrieve.errorMessage = session.ErrorMessage;
                 if (!session.Error) {
                     retrieve.ReportId = research.ReportId;
@@ -321,26 +310,25 @@ namespace FindMyFamilies.Web.Controllers {
 
             var researchDO = new ResearchDO();
             session = GetSession();
-            Logger.Debug("Entered Research" + session.AccessToken + " " + session.TokenHourExpire + " " + session.Token24HourExpire);
+            //           Logger.Debug("Entered Research" + session.AccessToken + " " + session.TokenHourExpire + " " + session.Token24HourExpire);
             //  getCurrentPerson(ref session);
-//            if (session.Authenticated) {
-//                getCurrentPerson(ref session);
-//                Logger.Debug("authenticated = " + session.Authenticated + "; token = " + session.AccessToken); //; isChurchMember = " + Service.IsChurchMember(ref session));
-//            }
-            if (!session.Authenticated) {
-                 Token = null;
-                 TokenHourExpire = null;
-                 Token24HourExpire = null;
+            //            if (session.Authenticated) {
+            //                getCurrentPerson(ref session);
+            //                Logger.Debug("authenticated = " + session.Authenticated + "; token = " + session.AccessToken); //; isChurchMember = " + Service.IsChurchMember(ref session));
+            //            }
+            bool isAuthenticated = session.Authenticated;
+            if (!isAuthenticated) {
+                ClearLoginInfo();
             }
 
             try {
                 if (!isLocal) {
-                    Logger.Debug("Entered Research" + session.AccessToken + " " + session.TokenHourExpire + " " + session.Token24HourExpire);
-                    if (!session.Authenticated) {
+                    //                   Logger.Debug("Entered Research" + session.AccessToken + " " + session.TokenHourExpire + " " + session.Token24HourExpire);
+                    if (!isAuthenticated) {
                         var code = Request.QueryString["code"];
-                        Logger.Debug("!IsAuthenticated Code = " + code);
+                        //                     Logger.Debug("!IsAuthenticated Code = " + code);
                         if (string.IsNullOrEmpty(code)) {
-                            Logger.Debug("Response.Redirect(GetRedirectUrl()) = " + GetRedirectUrl());
+                            //                        Logger.Debug("Response.Redirect(GetRedirectUrl()) = " + GetRedirectUrl());
                             try {
                                 Response.Redirect(GetRedirectUrl(), true);
                                 Response.End();
@@ -351,7 +339,7 @@ namespace FindMyFamilies.Web.Controllers {
                         return OAuthCallback(code);
                     }
                 } else {
-                    if (!session.Authenticated) {
+                    if (!isAuthenticated) {
                         if (isFamilySearchOnline) {
                             session = null;
                             if (Constants.FAMILY_SEARCH_SYSTEM.Equals(Constants.FAMILY_SEARCH_SYSTEM_BETA)) {
@@ -361,17 +349,8 @@ namespace FindMyFamilies.Web.Controllers {
                             } else {
                                 session = Service.Authenticate(Constants.USERNAME_PROD, Constants.PASSWORD_PROD, Constants.DEVELOPER_ID_PROD);
                             }
-                            if (session.Authenticated) {
-                                Token = session.AccessToken;
-                                getCurrentPerson(ref session);
-                                if (session.Error) {
-                                    Logger.Debug("session.error = " + session.Error);
-                                    Logger.Debug("authenticated = " + session.Authenticated + "; token = " + session.AccessToken);
-                                }
-                                researchDO.PersonId = PersonId;
-                            } else {
-                                ClearLoginInfo();
-                            }
+                            UpdateToken(session);
+                            getCurrentPerson(ref session);
                         }
                     }
                 }
@@ -380,17 +359,23 @@ namespace FindMyFamilies.Web.Controllers {
                     Logger.Debug("session == null");
                     session = new SessionDO();
                 } else {
-                    if (session.Authenticated && session.CurrentPerson == null) {
-                        Logger.Debug("session.CurrentPerson == null");
-                        getCurrentPerson(ref session);
-                        researchDO.PersonId = null; //session.CurrentPerson.Id;
+                    if (!session.Error && session.Authenticated && !string.IsNullOrEmpty(session.AccessToken)) {
+                        if (session.CurrentPerson == null) {
+                            session.CurrentPerson = new PersonDO();
+                            session.CurrentPerson.Id = PersonId;
+                            session.CurrentPerson.Fullname = DisplayName;
+                            researchDO.PersonId = PersonId;
+                        } else {
+                            session.CurrentPerson.Id = PersonId;
+                            session.CurrentPerson.Fullname = DisplayName;
+                            researchDO.PersonId = PersonId;
+                        }
                     } else if (session.CurrentPerson != null) {
-                        researchDO.PersonId = PersonId;
-                        Logger.Debug("person id = " + PersonId + " name: " + DisplayName);
+                        researchDO.PersonId = null; //session.CurrentPerson.Id;
                     }
                 }
             } catch (Exception e) {
-                Logger.Error("Error executing Research: " + e.Message, e);
+                Logger.Error("Error executing Research: " + e.ToString(), e);
                 return Redirect("Home/Research");
             }
 
@@ -474,8 +459,10 @@ namespace FindMyFamilies.Web.Controllers {
                         session = new SessionDO(tokenData.Access_Token, tokenData.Error + " " + tokenData.Error_Description);
                         getCurrentPerson(ref session);
                         if (session.Error) {
-                            Logger.Error("session.error = " + session.Error);
-                            Logger.Error("authenticated = " + session.Authenticated + "; token = " + session.AccessToken);
+                            Logger.Debug("session.error = " + session.Error);
+                            Logger.Debug("authenticated = " + session.Authenticated + "; token = " + session.AccessToken);
+                        } else {
+                            UpdateToken(session);
                         }
                     }
                 }
@@ -509,6 +496,7 @@ namespace FindMyFamilies.Web.Controllers {
                 personInfo.IncludePlace = retrieveFamilySearchDO.IncludePlace;
                 personInfo.YearRange = retrieveFamilySearchDO.YearRange;
                 personInfo.Person = Service.GetPersonInformation(researchDO, ref session);
+                ResetTokenHourExpire();
                 personInfo.errorMessage = session.ErrorMessage;
             } catch (Exception) {
                 personInfo.errorMessage = "Error with displaying person urls";
@@ -547,6 +535,7 @@ namespace FindMyFamilies.Web.Controllers {
                 var personDO = new PersonDO();
                 if (!string.IsNullOrEmpty(personId)) {
                     personDO = Service.GetPerson(personId, ref session);
+                    ResetTokenHourExpire();
                 } else {
                     personDO.Id = personId;
                     personDO.Firstname = firstName;
@@ -561,6 +550,7 @@ namespace FindMyFamilies.Web.Controllers {
                 }
 
                 result.list = Service.FindPersons(personDO, ref session);
+                ResetTokenHourExpire();
                 result.errorMessage = session.ErrorMessage;
             } catch (Exception) {
                 result.errorMessage = "Error with finding persons";
@@ -587,7 +577,7 @@ namespace FindMyFamilies.Web.Controllers {
             return View(viewModel);
         }
 
-                [System.Web.Http.HttpGet]
+        [System.Web.Http.HttpGet]
         public ActionResult GetEntries(string currentLogFolder, string searchTerm, int page, bool reload) {
             if (string.IsNullOrEmpty(currentLogFolder)) {
                 return Json(new {}, JsonRequestBehavior.AllowGet);
@@ -650,6 +640,5 @@ namespace FindMyFamilies.Web.Controllers {
         public void Delete(string id) {
             myLogReader.ClearLogEntriesInGroup(id);
         }
-
     }
 }

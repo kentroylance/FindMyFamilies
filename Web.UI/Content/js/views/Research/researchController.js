@@ -159,6 +159,15 @@ define(function(require) {
                case constants.STARTING_POINT:
                     $('#startingPoint').click();
                     break;
+               case constants.FIND_PERSON:
+                    $('#findPerson').click();
+                    break;
+               case constants.HINTS:
+                    $('#hints').click();
+                    break;
+               case constants.INCOMPLETE_ORDINANCES:
+                    $('#incompleteOrdinances').click();
+                    break;
                 default:
                     break;
             }
@@ -167,7 +176,14 @@ define(function(require) {
 
     }
 
-    loadLastCalled();
+    function delayLoading() {
+        system.keepSessionAlive();
+    }
+
+    $(document).ready(function () {
+        loadLastCalled();
+        setTimeout(delayLoading, 2000);
+    });
 
     var researchController = {
     };
