@@ -263,7 +263,7 @@ define(function(require) {
                 break;
             case 'amerancest':
                 //http://www.americanancestors.org/search/database-search?firstname=Frederick%20Charles&lastname=Vevers&fromyear=1847&toyear=1876&location=Rawcliffe%2C%20Yorkshire%2C%20England&
-                    menuOptions += "<li><a href=\"" + constants.AMERICAN_ANCESTORS + "firstname=" + row.firstName + getMiddleName(row.middleName, constants.AMERICAN_ANCESTORS) + "&lastname=" + getLastName(row.lastName) + getBirthYear(row.birthYear, constants.AMERICAN_ANCESTORS) + getDeathYear(row.deathYear, constants.AMERICAN_ANCESTORS) + getPlace(row.birthPlace, constants.AMERICAN_ANCESTORS) + "&\" target=\" _tab\" ><span class=\"fa fmf-ancestry16\"></span> American Ancestors</a></li>";
+                    menuOptions += "<li><a href=\"" + constants.AMERICAN_ANCESTORS + "firstname=" + row.firstName + getMiddleName(row.middleName, constants.AMERICAN_ANCESTORS) + "&lastname=" + getLastName(row.lastName) + getBirthYear(row.birthYear, constants.AMERICAN_ANCESTORS) + getDeathYear(row.deathYear, constants.AMERICAN_ANCESTORS) + getPlace(row.birthPlace, constants.AMERICAN_ANCESTORS) + "&\" target=\" _tab\" ><span class=\"fa fmf-american16\"></span> American Ancestors</a></li>";
                 break;
             case 'puz-descend':
                 menuOptions += "<li><a href=\"https://puzzilla.org/descendants?id=" + row.id + "&changeToId=" + row.id + "&depth=6&ancestorsView=false\" target=\" _tab\" ><span class=\"fa fmf-puzilla16\"></span> Puzilla - Descendants</a></li>";
