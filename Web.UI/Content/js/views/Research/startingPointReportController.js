@@ -47,6 +47,48 @@ define(function (require) {
                 if ($(this).children().length <= 1) {
                     $(this).append(findPersonHelper.getMenuOptions(row));
                 }
+            },
+            'mouseout .personAction1': function (e, value, row, index) {
+                $('#personInfoDiv').hide();
+            },
+            'mouseover .personAction1': function (e, value, row, index) {
+
+                $('#content').empty();
+
+                var html = "<label><span style=\"color: " + _startingPointPerson.getPersonColor(row.gender) + "\">" + row.fullName + "</span></label><br>";
+                html += "<b>ID:</b>  " + row.id + "<br>";
+                html += '<b>Birth Date:</b>  ' + ((row.birthYear) ? (row.birthYear) : "") + '<br>';
+                html += '<b>Birth Place:</b>  ' + ((row.birthPlace) ? (row.birthPlace) : "") + '<br>';
+                html += '<b>Death Date:</b>  ' + ((row.deathYear) ? (row.deathYear) : "") + '<br>';
+                html += '<b>Death Place:</b>  ' + ((row.deathPlace) ? (row.deathPlace) : "") + '<br>';
+                html += "<b>Spouse:</b>";
+                if (row.spouseName) {
+                    html += "  <span style=\"color: " + _startingPointPerson.getPersonColor(row.spouseGender) + "\">" + row.spouseName + "</span><br>";
+                } else {
+                    html += "<br>";
+                }
+                html += "<b>Mother:</b>";
+                if (row.motherName) {
+                    html += "  <span style=\"color: " + _startingPointPerson.getPersonColor("Female") + "\">" + row.motherName + "</span><br>";
+                } else {
+                    html += "<br>";
+                }
+                html += "<b>Father:</b>";
+                if (row.fatherName) {
+                    html += "  <span style=\"color: " + _startingPointPerson.getPersonColor("Male") + "\">" + row.fatherName + "</span><br>";
+                } else {
+                    html += "<br>";
+                }
+
+                $('#content').append(html);
+                $('#personInfoDiv').show();
+                $("#personInfoDiv").position({
+                    my: "center+8%",
+                    at: "center",
+                    of: $(window)
+                });
+
+
             }
         };
 
@@ -141,7 +183,7 @@ var _startingPointSystem = require('system');
 function nameFormatter(value, row, index) {
     var result = "";
     if (row.id) {
-        result = "<div class=\"btn-group \"><button type=\"button\" class=\"btn btn-default dropdown-btn\"><span style=\"color: " + _startingPointPerson.getPersonColor(row.gender) + "\">" + _startingPointPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
+        result = "<div class=\"btn-group \"><button type=\"button\" class=\"btn btn-default dropdown-btn personAction1\"><span style=\"color: " + _startingPointPerson.getPersonColor(row.gender) + "\">" + _startingPointPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
     }
     return result;
 }
