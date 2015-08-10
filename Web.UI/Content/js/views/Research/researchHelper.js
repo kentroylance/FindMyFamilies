@@ -5,6 +5,7 @@ define(function(require) {
     var constants = require('constants');
     var person = require('person');
     var personUrlOptions;
+    var features;
     var msgBox;
     var lazyRequire = require("lazyRequire");
     var requireOnce = lazyRequire.once();
@@ -305,7 +306,6 @@ define(function(require) {
     }
 
     function feedback(id, name) {
-        if (system.isAuthenticated()) {
             loadSpinner();
             requireOnce(["feedback", "jqueryUiOptions"], function (Feedback) {
                 Feedback.callerSpinner = spinnerArea;
@@ -334,44 +334,37 @@ define(function(require) {
                 });
             }
             );
-        } else {
-            system.relogin();
-        }
     }
 
-    function features(id, name) {
-        if (system.isAuthenticated()) {
-            loadSpinner();
-            requireOnce(["features", "jqueryUiOptions"], function (Features) {
-                Features.callerSpinner = spinnerArea;
-            }, function () {
-                $.ajax({
-                    url: constants.FEATURES_URL,
-                    success: function (data) {
-                        var $dialogContainer = $("#featuresForm");
-                        var $detachedChildren = $dialogContainer.children().detach();
-                        $("<div id=\"featuresForm\"></div>").dialog({
-                            width: 900,
-                            title: "Features",
-                            open: function () {
-                                $detachedChildren.appendTo($dialogContainer);
-                            }
-                        });
-                        $("#featuresForm").empty().append(data);
-                        if (id) {
-                            person.id = id;
-                            person.name = name;
+
+    function features(tryItNowButton, featureName) {
+        loadSpinner();
+        requireOnce(["features", "jqueryUiOptions"], function (Features) {
+            features = Features;
+        }, function () {
+            features.callerSpinner = spinnerArea;
+            features.tryItNowButton = tryItNowButton;
+            features.featureName = featureName;
+            $.ajax({
+                url: constants.FEATURES_URL,
+                success: function (data) {
+                    var $dialogContainer = $("#featuresForm");
+                    var $detachedChildren = $dialogContainer.children().detach();
+                    $("<div id=\"featuresForm\"></div>").dialog({
+                        width: 900,
+                        title: "Features",
+                        open: function () {
+                            $detachedChildren.appendTo($dialogContainer);
                         }
-                        if (_featuresController) {
-                            _featuresController.open();
-                        }
+                    });
+                    $("#featuresForm").empty().append(data);
+                    if (_featuresController) {
+                        _featuresController.open();
                     }
-                });
-            }
-            );
-        } else {
-            system.relogin();
+                }
+            });
         }
+        );
     }
 
     function dateProblems(id, name) {

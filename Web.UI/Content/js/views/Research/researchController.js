@@ -64,14 +64,6 @@ define(function(require) {
     });
 
 
-    $("#feedback").unbind("click").bind("click", function (e) {
-        requireOnce(['researchHelper'], function (ResearchHelper) {
-            researchHelper = ResearchHelper;
-        }, function () {
-            researchHelper.feedback();
-        });
-        return false;
-    });
     
     $("#features").unbind("click").bind("click", function (e) {
         requireOnce(['researchHelper'], function (ResearchHelper) {
@@ -139,6 +131,16 @@ define(function(require) {
         });
         return false;
     });
+
+    $("#feedback").unbind("click").bind("click", function (e) {
+        requireOnce(['researchHelper'], function (ResearchHelper) {
+            researchHelper = ResearchHelper;
+        }, function () {
+            researchHelper.feedback();
+        });
+        return false;
+    });
+
 
 //    function startSessionAlive() {
 //        create delay 10 second

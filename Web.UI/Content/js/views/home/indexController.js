@@ -6,73 +6,42 @@
     var lazyRequire = require("lazyRequire");
     var requireOnce = lazyRequire.once();
 
-    var features;
+    var researchHelper;
 
-    var _spinnerArea;
-    var _tryItNowButton;
-    var _featureName;
-
-    function loadSpinner() {
-        _spinnerArea = system.spinnerArea;
-        system.startSpinner();
+    function loadFeature(tryItNowButton, featureName) {
+        requireOnce(['researchHelper'], function (ResearchHelper) {
+            researchHelper = ResearchHelper;
+        }, function () {
+            researchHelper.features(tryItNowButton, featureName);
+        });
     }
-
-    function loadFeature() {
-        loadSpinner();
-        requireOnce(["features", "jqueryUiOptions"], function (Features) {
-                features = Features;
-            }, function() {
-                features.callerSpinner = _spinnerArea;
-                features.tryItNowButton = _tryItNowButton;
-                features.featureName = _featureName;
-                $.ajax({
-                    url: constants.FEATURES_URL,
-                    success: function(data) {
-                        var $dialogContainer = $("#featuresForm");
-                        var $detachedChildren = $dialogContainer.children().detach();
-                        $("<div id=\"featuresForm\"></div>").dialog({
-                            width: 900,
-                            title: "Features",
-                            open: function() {
-                                $detachedChildren.appendTo($dialogContainer);
-                            }
-                        });
-                        $("#featuresForm").empty().append(data);
-                        if (features.featuresController) {
-                            features.featuresController.open();
-                        }
-                    }
-                });
-            }
-        );
-
-    }
-
+    
     $("#feature1").unbind("click").bind("click", function(e) { //  starting point
-        _tryItNowButton = "Try Starting Point";
-        _featureName = constants.STARTING_POINT;
-        loadFeature();
+        loadFeature("Try Starting Point", constants.STARTING_POINT);
         return false;
     });
 
     $("#feature2").unbind("click").bind("click", function(e) { //  starting point
-        _tryItNowButton = "Try Find Person";
-        _featureName = constants.FIND_PERSON;
-        loadFeature();
+        loadFeature("Try Find Persoon", constants.FIND_PERSON);
         return false;
     });
 
     $("#feature3").unbind("click").bind("click", function(e) { //  starting point
-        _tryItNowButton = "Try Hints";
-        _featureName = constants.HINTS;
-        loadFeature();
+        loadFeature("Try Hints", constants.HINTS);
         return false;
     });
 
     $("#feature4").unbind("click").bind("click", function(e) { //  starting point
-        _tryItNowButton = "Try Incomplete Ordinances";
-        _featureName = constants.INCOMPLETE_ORDINANCES;
-        loadFeature();
+        loadFeature("Try Incomplete Ordinances", constants.INCOMPLETE_ORDINANCES);
+        return false;
+    });
+
+    $("#feedback").unbind("click").bind("click", function (e) {
+        requireOnce(['researchHelper'], function (ResearchHelper) {
+            researchHelper = ResearchHelper;
+        }, function () {
+            researchHelper.feedback();
+        });
         return false;
     });
 
