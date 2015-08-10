@@ -30,7 +30,7 @@ define(function(require) {
         updateForm();
         system.openForm(features.form, features.formTitleImage, features.spinner);
         
-        $('#featuresSubmitButton').text(features.tryItNowButton);
+        $('#featuresSubmitButton').find('span').text(features.tryItNowButton);
     }
 
     function clear() {

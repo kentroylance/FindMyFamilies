@@ -56,7 +56,7 @@
     });
 
     $("#feature2").unbind("click").bind("click", function(e) { //  starting point
-        _tryItNowButton = "Try Find Persoon";
+        _tryItNowButton = "Try Find Person";
         _featureName = constants.FIND_PERSON;
         loadFeature();
         return false;

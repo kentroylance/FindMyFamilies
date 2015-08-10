@@ -11,43 +11,43 @@ Icon classes can be used entirely standalone. They are named after their origina
 */
 .fmf-Computer2 {
   background-image: url(index.png);
-  background-position: -1172px -500px;
+  background-position: -480px 0px;
   width: 595px;
   height: 357px;
 }
-.fmf-bg2 {
+.fmf-close24 {
   background-image: url(index.png);
-  background-position: 0px 0px;
-  width: 1172px;
-  height: 500px;
-}
-.fmf-bg5 {
-  background-image: url(index.png);
-  background-position: 0px -500px;
-  width: 1170px;
-  height: 500px;
+  background-position: -984px -357px;
+  width: 24px;
+  height: 24px;
 }
 .fmf-findmyfamilies_new1 {
   background-image: url(index.png);
-  background-position: 0px -1000px;
+  background-position: 0px 0px;
   width: 480px;
   height: 553px;
 }
 .fmf-findmyfamiliesbottom {
   background-image: url(index.png);
-  background-position: -1767px -500px;
+  background-position: -480px -357px;
   width: 252px;
   height: 39px;
 }
 .fmf-findmyfamiliestop {
   background-image: url(index.png);
-  background-position: -2019px -500px;
+  background-position: -732px -357px;
   width: 252px;
   height: 39px;
 }
-.fmf-img1 {
+.fmf-help24 {
   background-image: url(index.png);
-  background-position: -1172px 0px;
-  width: 1170px;
-  height: 500px;
+  background-position: -1008px -357px;
+  width: 24px;
+  height: 24px;
+}
+.fmf-submit24 {
+  background-image: url(index.png);
+  background-position: -1032px -357px;
+  width: 24px;
+  height: 24px;
 }
