@@ -89,7 +89,7 @@
 
     var FIND_A_GRAVE = "http://www.findagrave.com/cgi-bin/fg.cgi?page=gsr";
     var GOOGLE = "https://www.google.com/#q=";
-    var ANCESTRY = "http://search.ancestry.com/cgi-bin/sse.dll?gl=allgs&gss=sfs28_ms_r_f-2_s&new=1&rank=1";
+    var ANCESTRY = "http://search.ancestry.com/cgi-bin/sse.dll?gss=angs-g&new=1&rank=1";
     var BILLION_GRAVES = "http://billiongraves.com/pages/search/#";
     var MY_HERITAGE = "http://www.myheritage.com/research?formId=master&formMode=&action=query&exactSearch=0&useTranslation=0&catId=1";
     var FIND_MY_PAST = "http://search.findmypast.com/search/united-states-records?";
