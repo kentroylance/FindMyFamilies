@@ -206,8 +206,11 @@ define(function(require) {
                             },
                             regexp: {
                                 regexp: /^[a-zA-Z0-9]{4}-[a-zA-Z0-9]{3}$/,
-                                message: 'ID must be in this format: ####-###'
+                                message: 'ID must be in this format: ####-###',
                             }
+                        },
+                        onSuccess: function (e, data) {
+                            data.fv.enableFieldValidators('gender', false).revalidateField('gender');
                         }
                     },
                     firstName: {
@@ -314,6 +317,7 @@ define(function(require) {
                 fv.enableFieldValidators('personId', true).revalidateField('personId');
             } else {
                 fv.enableFieldValidators('personId', false).revalidateField('personId');
+                fv.enableFieldValidators('gender', true).revalidateField('gender');
             }
         }
     }
