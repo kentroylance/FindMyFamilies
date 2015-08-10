@@ -43,9 +43,7 @@ define(function (require) {
 
         window.nameEvents = {
             'click .personAction': function(e, value, row, index) {
-                if ($(this).children().length <= 1) {
                     $(this).append(findPersonHelper.getMenuOptions(row));
-                }
             },
             'mouseout .personAction1': function (e, value, row, index) {
                 $('#personInfoDiv').hide();
