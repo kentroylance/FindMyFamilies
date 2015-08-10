@@ -22,7 +22,7 @@
     });
 
     $("#feature2").unbind("click").bind("click", function(e) { //  starting point
-        loadFeature("Try Find Persoon", constants.FIND_PERSON);
+        loadFeature("Try Find Person", constants.FIND_PERSON);
         return false;
     });
 
