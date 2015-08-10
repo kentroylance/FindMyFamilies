@@ -15,9 +15,27 @@ Icon classes can be used entirely standalone. They are named after their origina
   width: 595px;
   height: 357px;
 }
-.fmf-close24 {
+.fmf-clean24 {
   background-image: url(index.png);
   background-position: -984px -357px;
+  width: 24px;
+  height: 24px;
+}
+.fmf-close24 {
+  background-image: url(index.png);
+  background-position: -1008px -357px;
+  width: 24px;
+  height: 24px;
+}
+.fmf-features24 {
+  background-image: url(index.png);
+  background-position: -1032px -357px;
+  width: 24px;
+  height: 24px;
+}
+.fmf-feedback24 {
+  background-image: url(index.png);
+  background-position: -480px -396px;
   width: 24px;
   height: 24px;
 }
@@ -41,13 +59,13 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .fmf-help24 {
   background-image: url(index.png);
-  background-position: -1008px -357px;
+  background-position: -504px -396px;
   width: 24px;
   height: 24px;
 }
 .fmf-submit24 {
   background-image: url(index.png);
-  background-position: -1032px -357px;
+  background-position: -528px -396px;
   width: 24px;
   height: 24px;
 }

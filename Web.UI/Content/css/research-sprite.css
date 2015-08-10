@@ -11,7 +11,7 @@ Icon classes can be used entirely standalone. They are named after their origina
 */
 .fmf-about16 {
   background-image: url(research.png);
-  background-position: -296px -270px;
+  background-position: -16px -294px;
   width: 16px;
   height: 16px;
 }
@@ -23,19 +23,19 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .fmf-ancestry16 {
   background-image: url(research.png);
-  background-position: -280px -270px;
+  background-position: 0px -294px;
   width: 16px;
   height: 16px;
 }
 .fmf-billiongraves16 {
   background-image: url(research.png);
-  background-position: -264px -270px;
+  background-position: -288px -270px;
   width: 16px;
   height: 16px;
 }
 .fmf-calendar16 {
   background-image: url(research.png);
-  background-position: -248px -270px;
+  background-position: -272px -270px;
   width: 16px;
   height: 16px;
 }
@@ -59,7 +59,7 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .fmf-clue16 {
   background-image: url(research.png);
-  background-position: -232px -270px;
+  background-position: -256px -270px;
   width: 16px;
   height: 16px;
 }
@@ -77,13 +77,13 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .fmf-compass16 {
   background-image: url(research.png);
-  background-position: -216px -270px;
+  background-position: -240px -270px;
   width: 16px;
   height: 16px;
 }
 .fmf-compass24 {
   background-image: url(research.png);
-  background-position: 0px -270px;
+  background-position: -24px -270px;
   width: 24px;
   height: 24px;
 }
@@ -107,7 +107,7 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .fmf-duplicate16 {
   background-image: url(research.png);
-  background-position: -184px -270px;
+  background-position: -208px -270px;
   width: 16px;
   height: 16px;
 }
@@ -125,7 +125,7 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .fmf-earth-icon16 {
   background-image: url(research.png);
-  background-position: -168px -270px;
+  background-position: -192px -270px;
   width: 16px;
   height: 16px;
 }
@@ -164,6 +164,12 @@ Icon classes can be used entirely standalone. They are named after their origina
   background-position: -256px -254px;
   width: 16px;
   height: 16px;
+}
+.fmf-feedback24 {
+  background-image: url(research.png);
+  background-position: -288px -206px;
+  width: 24px;
+  height: 24px;
 }
 .fmf-find64 {
   background-image: url(research.png);
@@ -215,7 +221,7 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .fmf-help24 {
   background-image: url(research.png);
-  background-position: -48px -270px;
+  background-position: -72px -270px;
   width: 24px;
   height: 24px;
 }
@@ -227,7 +233,7 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .fmf-hint24 {
   background-image: url(research.png);
-  background-position: -96px -270px;
+  background-position: -120px -270px;
   width: 24px;
   height: 24px;
 }
@@ -251,19 +257,19 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .fmf-ok24 {
   background-image: url(research.png);
-  background-position: -144px -270px;
+  background-position: -168px -270px;
   width: 24px;
   height: 24px;
 }
 .fmf-options24 {
   background-image: url(research.png);
-  background-position: -72px -270px;
+  background-position: -96px -270px;
   width: 24px;
   height: 24px;
 }
 .fmf-place24 {
   background-image: url(research.png);
-  background-position: -24px -270px;
+  background-position: -48px -270px;
   width: 24px;
   height: 24px;
 }
@@ -275,7 +281,7 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .fmf-previous24 {
   background-image: url(research.png);
-  background-position: -288px -230px;
+  background-position: 0px -270px;
   width: 24px;
   height: 24px;
 }
@@ -287,19 +293,19 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .fmf-question24 {
   background-image: url(research.png);
-  background-position: -264px -230px;
+  background-position: -288px -230px;
   width: 24px;
   height: 24px;
 }
 .fmf-report24 {
   background-image: url(research.png);
-  background-position: -216px -230px;
+  background-position: -240px -230px;
   width: 24px;
   height: 24px;
 }
 .fmf-reset24 {
   background-image: url(research.png);
-  background-position: -192px -230px;
+  background-position: -216px -230px;
   width: 24px;
   height: 24px;
 }
@@ -335,13 +341,13 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .fmf-search16 {
   background-image: url(research.png);
-  background-position: -200px -270px;
+  background-position: -224px -270px;
   width: 16px;
   height: 16px;
 }
 .fmf-search24 {
   background-image: url(research.png);
-  background-position: -240px -230px;
+  background-position: -264px -230px;
   width: 24px;
   height: 24px;
 }
@@ -353,13 +359,13 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .fmf-submit24 {
   background-image: url(research.png);
-  background-position: -120px -270px;
+  background-position: -144px -270px;
   width: 24px;
   height: 24px;
 }
 .fmf-temple24 {
   background-image: url(research.png);
-  background-position: -288px -206px;
+  background-position: -192px -230px;
   width: 24px;
   height: 24px;
 }
