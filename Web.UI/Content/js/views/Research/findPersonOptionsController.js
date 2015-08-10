@@ -26,6 +26,16 @@ define(function(require) {
         $("#findPersonOptionCloseButton").unbind('click').bind('click', function (e) {
             findPersonOptions.form.dialog(constants.CLOSE);
         });
+
+        findPersonOptions.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function (e) {
+            if (findPersonOptions.callerSpinner) {
+                system.spinnerArea = findPersonOptions.callerSpinner;
+            } else {
+                system.spinnerArea = constants.DEFAULT_SPINNER_AREA;
+            }
+        });
+
+
     }
 
     function loadOptions() {
