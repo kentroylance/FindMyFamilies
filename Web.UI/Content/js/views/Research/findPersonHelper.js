@@ -6,6 +6,7 @@ define(function(require) {
     var string = require('string');
     var person = require('person');
     var researchHelper = require('researchHelper');
+    var findPersonOptions = require('findPersonOptions');
 
     var _findPersonOptionsController;
     var _findUrls = {};
@@ -299,13 +300,13 @@ define(function(require) {
 
     function findOptions(e, module) {
         e.preventDefault();
-        system.initSpinner(module.spinner);
-        module.callerSpinner = module.spinner;
+        system.startSpinner();
+        findPersonOptions.callerSpinner = system.spinnerArea;
         $.ajax({
             url: constants.FIND_PERSON_OPTIONS_URL,
             success: function (data) {
                 var $dialogContainer = $("#findPersonOptionsForm");
-                var $detachedChildren = $dialogContainer.children().detach();
+                var $detachedChildren = $dialogContainer.children().detach();  
                 $("<div id=\"findPersonOptionsForm\"></div>").dialog({
                     width: 260,
                     title: "Find Options",
