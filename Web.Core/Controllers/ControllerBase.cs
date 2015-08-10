@@ -123,6 +123,7 @@ namespace FindMyFamilies.Web.Controllers {
             if (session == null) {
                 session = new SessionDO();
 
+                session.ServerPath = HttpRuntime.AppDomainAppPath;
                 session.DisplayName = GetCookie("DisplayName");
                 session.Username = GetCookie("PersonId");
                 session.AccessToken = GetCookie("Token");

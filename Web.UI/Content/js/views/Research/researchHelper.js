@@ -5,7 +5,7 @@ define(function(require) {
     var constants = require('constants');
     var person = require('person');
     var personUrlOptions;
-    var features;
+    var featuresModel;
     var msgBox;
     var lazyRequire = require("lazyRequire");
     var requireOnce = lazyRequire.once();
@@ -305,7 +305,7 @@ define(function(require) {
         }
     }
 
-    function feedback(id, name) {
+    function feedback() {
             loadSpinner();
             requireOnce(["feedback", "jqueryUiOptions"], function (Feedback) {
                 Feedback.callerSpinner = spinnerArea;
@@ -323,10 +323,6 @@ define(function(require) {
                             }
                         });
                         $("#feedbackForm").empty().append(data);
-                        if (id) {
-                            person.id = id;
-                            person.name = name;
-                        }
                         if (_feedbackController) {
                             _feedbackController.open();
                         }
@@ -340,11 +336,11 @@ define(function(require) {
     function features(tryItNowButton, featureName) {
         loadSpinner();
         requireOnce(["features", "jqueryUiOptions"], function (Features) {
-            features = Features;
+            featuresModel = Features;
         }, function () {
-            features.callerSpinner = spinnerArea;
-            features.tryItNowButton = tryItNowButton;
-            features.featureName = featureName;
+            featuresModel.callerSpinner = spinnerArea;
+            featuresModel.tryItNowButton = tryItNowButton;
+            featuresModel.featureName = featureName;
             $.ajax({
                 url: constants.FEATURES_URL,
                 success: function (data) {
@@ -525,11 +521,11 @@ define(function(require) {
         hints: function(id, name) {
             return hints(id, name);
         },
-        feedback: function (id, name) {
-            return feedback(id, name);
+        feedback: function () {
+            return feedback();
         },
-        features: function (id, name) {
-            return features(id, name);
+        features: function (tryItNowButton, featureName) {
+            return features(tryItNowButton, featureName);
         },
         dateProblems: function(id, name) {
             return dateProblems(id, name);

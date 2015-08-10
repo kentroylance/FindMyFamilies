@@ -63,6 +63,7 @@
     var HINTS_REPORT_HTML_URL = '/Home/HintsReportHtml';
     var HINTS_REPORT_DATA_URL = '/Home/HintsReportData';
     var FEEDBACK_URL = '/Home/Feedback';
+    var SEND_FEEDBACK_URL = '/Home/SendFeedback';
     var FEATURES_URL = '/Home/Features';
     var POSSIBLE_DUPLICATES_URL = '/Home/PossibleDuplicates';
     var POSSIBLE_DUPLICATES_REPORT_HTML_URL = '/Home/PossibleDuplicatesReportHtml';
@@ -397,12 +398,17 @@
         get RESEARCH_URL() {
             return RESEARCH_URL;
         },
+        get SEND_FEEDBACK_URL() {
+            return SEND_FEEDBACK_URL;
+        },
         get LAST_CALLED() {
             return LAST_CALLED;
         },
         get FIND_CLUES_REPORT() {
             return FIND_CLUES_REPORT;
         }
+
+        
     }
     return constants;
 });

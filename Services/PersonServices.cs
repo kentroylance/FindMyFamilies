@@ -44,6 +44,10 @@ namespace FindMyFamilies.Services {
             return personBO.GetPersonDescendancyWithSpouse(personId, spouseId, generations, ref session);
         }
 
+        public void SendFeedback(FeedbackDO feedbackDO, ref SessionDO session) {
+            personBO.SendFeedback(feedbackDO, ref session);
+        }
+
         public Gedcomx GetCurrentPerson(ref SessionDO session) {
             return personBO.GetCurrentPerson(ref session);
         }

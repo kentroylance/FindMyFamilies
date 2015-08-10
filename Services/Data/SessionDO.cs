@@ -64,6 +64,11 @@ namespace FindMyFamilies.Data {
             set;
         }
 
+        public string ServerPath {
+            get;
+            set;
+        }
+
         public string ClientId {
             get;
             set;

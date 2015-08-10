@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web.Compilation;
+using System.Xml;
 using FindMyFamilies.Data;
 using FindMyFamilies.DataAccess;
 using FindMyFamilies.Helper;
@@ -410,7 +411,7 @@ namespace FindMyFamilies.BusinessObject {
 
         public Dictionary<string, PersonDO> GetDescendants(ref ResearchDO researchDO, ref SessionDO session, bool populate) {
             logger.Info("Entered GetDescendants");
- 
+
             if (session.Error) {
                 return new Dictionary<string, PersonDO>();
             }
@@ -728,7 +729,6 @@ namespace FindMyFamilies.BusinessObject {
             if (session.Error) {
                 return placeListItems;
             }
-
 
             ResearchDO researchDO = new ResearchDO();
             researchDO.PersonId = placesInputDO.PersonId;
@@ -1528,6 +1528,59 @@ namespace FindMyFamilies.BusinessObject {
                 using (var file = File.Create(personFile)) {
                     Serializer.Serialize(file, personDO);
                 }
+            }
+        }
+
+        public void SendFeedback(FeedbackDO feedbackDO, ref SessionDO session) {
+            try {
+                XmlDocument writer = new XmlDocument();
+                XmlNode declaration = writer.CreateNode(XmlNodeType.XmlDeclaration, null, null);
+                writer.AppendChild(declaration);
+
+                XmlElement feedback = writer.CreateElement("Feedback");
+                writer.AppendChild(feedback);
+
+                //Creating the <Asp.net> element
+                XmlElement message = writer.CreateElement("Message");
+                feedback.AppendChild(feedback);
+
+                XmlAttribute id = writer.CreateAttribute("Id");
+                id.Value = feedbackDO.PersonId;
+                message.Attributes.Append(id);
+
+                XmlAttribute name = writer.CreateAttribute("Name");
+                name.Value = feedbackDO.PersonId;
+                message.Attributes.Append(name);
+
+                XmlAttribute bug = writer.CreateAttribute("Bug");
+                bug.Value = feedbackDO.Bug;
+                message.Attributes.Append(bug);
+
+                XmlAttribute featureRequest = writer.CreateAttribute("FeatureRequest");
+                featureRequest.Value = feedbackDO.FeatureRequest;
+                message.Attributes.Append(featureRequest);
+
+                XmlAttribute other = writer.CreateAttribute("Other");
+                other.Value = feedbackDO.Other;
+                message.Attributes.Append(other);
+
+                XmlAttribute email = writer.CreateAttribute("Email");
+                email.Value = feedbackDO.Email;
+                message.Attributes.Append(email);
+
+                XmlAttribute text = writer.CreateAttribute("Text");
+                text.Value = feedbackDO.Message;
+                message.Attributes.Append(text);
+
+                DateTime timeNow = DateTime.Now;
+                var easternTimeNow = TimeZoneInfo.ConvertTime(timeNow, TimeZoneInfo.Local, TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time"));
+                var timeString = easternTimeNow.ToLongTimeString();
+
+                writer.Save(Path.Combine(session.ServerPath, "Feedback/Feedback" + timeString.ToString() + ".xml"));
+            } catch (Exception e) {
+                string message = "Error creating feedback";
+                logger.Error(message + ". Error: " + e.ToString(), e);
+                throw;
             }
         }
 

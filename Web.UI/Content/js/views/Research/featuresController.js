@@ -6,6 +6,7 @@ define(function(require) {
 
     var lazyRequire = require("lazyRequire");
     var requireOnce = lazyRequire.once();
+    var researchHelper = require("researchHelper");
 
 
     // models
@@ -132,7 +133,7 @@ define(function(require) {
         }
     };
 
-    features.featuresController = featuresController;
+    researchHelper.featuresController = featuresController;
     open();
 
     return featuresController;
