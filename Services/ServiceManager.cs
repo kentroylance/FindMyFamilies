@@ -82,6 +82,10 @@ namespace FindMyFamilies.Services {
             return PersonServices.Instance.GetHints(hintInputDO, ref session);
         }
 
+        public void SendFeedback(FeedbackDO feedbackDO, ref SessionDO session) {
+            PersonServices.Instance.SendFeedback(feedbackDO, ref session);
+        }
+
         public List<OrdinanceListItemDO> GetOrdinances(IncompleteOrdinanceDO incompleteOrdinanceDo, ref SessionDO session) {
             return PersonServices.Instance.GetOrdinances(incompleteOrdinanceDo, ref session);
         }

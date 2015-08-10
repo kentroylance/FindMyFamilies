@@ -1483,6 +1483,7 @@
     <Folder Include="Content\Template\js\forms\" />
     <Folder Include="Content\Template\js\pages\" />
     <Folder Include="ErrorLogs\" />
+    <Folder Include="Feedback\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

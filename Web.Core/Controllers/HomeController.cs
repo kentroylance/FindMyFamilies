@@ -301,6 +301,19 @@ namespace FindMyFamilies.Web.Controllers {
             return Json(retrieve, JsonRequestBehavior.AllowGet);
         }
 
+        [System.Web.Mvc.HttpGet]
+        public JsonResult SendFeedback(FeedbackDO feedbackDO) {
+            var message = "Successfully sent feedback";
+            try {
+                session = GetSession();
+                Service.SendFeedback(feedbackDO, ref session);
+            } catch (Exception) {
+                message = "Error sending feedback";
+            }
+            return Json(message, JsonRequestBehavior.AllowGet);
+        }
+
+
         public ActionResult Index() {
             return View("~/Views/Home/Index.cshtml");
         }

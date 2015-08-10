@@ -193,6 +193,9 @@
     <Compile Include="Data\PossibleDuplicateListItemDO.cs" />
     <Compile Include="Data\RetrieveDO.cs" />
     <Compile Include="Data\ResultDO.cs" />
+    <Compile Include="Data\FeedbackDO.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Data\StartingPointDO.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
