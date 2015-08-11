@@ -307,7 +307,7 @@ define(function(require) {
 
     function feedback() {
             loadSpinner();
-            requireOnce(["feedback", "jqueryUiOptions"], function (Feedback) {
+            requireOnce(["formValidation", "feedback", "jqueryUiOptions",  "bootstrapValidation", "css!/Content/css/vendor/formValidation.min.css"], function (Feedback) {
                 Feedback.callerSpinner = spinnerArea;
             }, function () {
                 $.ajax({

@@ -53,8 +53,15 @@ define(function(require) {
             feedback.form.dialog(constants.CLOSE);
         });
 
-        $("#feedbackResetButton").unbind('click').bind('click', function(e) {
-            reset();
+        $("#feedbackClearButton").unbind('click').bind('click', function(e) {
+            $("#feedbackName").val("");
+            $("#feedbackMessage").val("");
+            $("#feedbackEmail").val("");
+            // Revalidate the fields
+            feedback.form
+                .formValidation('revalidateField', 'feedbackName')
+                .formValidation('revalidateField', 'feedbackMessage')
+                .formValidation('revalidateField', 'feedbackEmail');
         });
 
         $("#feedbackSendButton").unbind('click').bind('click', function(e) {
@@ -131,6 +138,40 @@ define(function(require) {
                 system.spinnerArea = constants.DEFAULT_SPINNER_AREA;
             }
             feedback.save();
+        });
+
+        feedback.form.formValidation({
+            framework: 'bootstrap',
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                email: {
+                    validators: {
+                        emailAddress: {
+                            message: 'The value is not a valid email address'
+                        }
+                    }
+                },
+                name: {
+                    validators: {
+                        regexp: {
+                            regexp: /^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/,
+                            message: 'Not a valid name'
+                       }
+                    }
+                },
+                message: {
+                    validators: {
+                            regexp: {
+                                regexp: /^[A-Za-z\s\.\d,!?"]{1,}$/,
+                                message: 'Special characters are not allowed'
+                            }
+                    }
+               }
+            }
         });
     }
 
