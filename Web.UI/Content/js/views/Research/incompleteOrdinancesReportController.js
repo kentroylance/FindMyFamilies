@@ -81,9 +81,9 @@ define(function(require) {
                 $('#content').append(html);
                 $('#personInfoDiv').show();
                 $("#personInfoDiv").position({
-                    my: "center+8%",
+                    my: "center+33 center-45",
                     at: "center",
-                    of: $(window)
+                    of: $("#incompleteOrdinancesReportForm")
                 });
 
 
