@@ -853,7 +853,7 @@ h1 i, h2 i, h3 i, h4 i, h5 i, h6 i {
  .personInfo {
         background: rgba(240, 240, 240, .99);
         width: 400px;
-        height: 260px;
+        height: auto;
         padding: 7px;
         float: none;
         margin-left: auto;
