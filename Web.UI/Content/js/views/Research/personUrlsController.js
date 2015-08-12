@@ -47,9 +47,7 @@ define(function(require) {
         $(".personUrlsAction").unbind('click').bind('click', function(e) {
             var dropdown = $(this);
             var dropdownRow = new row(dropdown.data('id'), dropdown.data('firstname'), dropdown.data('middlename'), dropdown.data('lastname'), dropdown.data('fullname'), dropdown.data('gender'), dropdown.data('birthyear'), dropdown.data('deathyear'), dropdown.data('birthplace'));
-            if (dropdown.children().length <= 1) {
-                dropdown.append(findPersonHelper.getMenuOptions(dropdownRow));
-            }
+            dropdown.append(findPersonHelper.getMenuOptions(dropdownRow));
         });
 
 
@@ -73,23 +71,6 @@ define(function(require) {
     function updateForm() {
     }
 
-    function open() {
-        if (system.target) {
-            personUrls.callerSpinner = system.target.id;
-        }
-
-        personUrls.form = $("#personUrlsForm");
-        loadEvents();
-        updateForm();
-        system.openForm(personUrls.form, personUrls.formTitleImage, personUrls.spinner);
-    }
-
-    var personUrlsController = {
-        open: function() {
-            open();
-        }
-    };
-
     function mouseOverTrigger() {
         $('#personInfoDiv').empty();
         var mouseOver = $(this);
@@ -106,26 +87,42 @@ define(function(require) {
         $('#personUrlsFather').val(row.data('fathername'));
     }
 
-
     function mouseOutTrigger() {
         //            var object = $(this);
     }
 
+    function open() {
+        if (system.target) {
+            personUrls.callerSpinner = system.target.id;
+        }
+
+        personUrls.form = $("#personUrlsForm");
+        loadEvents();
+        updateForm();
+        system.openForm(personUrls.form, personUrls.formTitleImage, personUrls.spinner);
+        $(document).ready(function () {
+            var hoverIntentConfig = {
+                sensitivity: 1,
+                interval: 100,
+                timeout: 300,
+                over: mouseOverTrigger,
+                out: mouseOutTrigger
+            }
+
+            $(".personAction1").hoverIntent(hoverIntentConfig);
+        });
+
+    }
+
+    var personUrlsController = {
+        open: function() {
+            open();
+        }
+    };
 
     researchHelper.personUrlsController = personUrlsController;
     open();
 
-    $(document).ready(function () {
-        var hoverIntentConfig = {
-            sensitivity: 1,
-            interval: 100,
-            timeout: 300,
-            over: mouseOverTrigger,
-            out: mouseOutTrigger
-        }
-
-        $(".personAction1").hoverIntent(hoverIntentConfig);
-    });
 
     return personUrlsController;
 });

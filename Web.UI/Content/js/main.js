@@ -166,7 +166,7 @@
                 exports: '_layoutController'
             },
             indexController: {
-                deps: ['jquery', 'system'],
+                deps: ['jquery', 'system', 'features', 'feedback'],
                 exports: 'indexController'
             },
             fancybox: {
@@ -226,7 +226,7 @@
                 exports: 'hintsController'
             },
             feedbackController: {
-                deps: ['jquery', 'feedback', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
+                deps: ['jquery', 'formValidation', 'bootstrapValidation', 'feedback', 'researchHelper', 'system', 'constants'],
                 exports: 'feedbackController'
             },
             featuresController: {
@@ -278,7 +278,7 @@
                 exports: 'findPersonHelper'
             },
             researchHelper: {
-                deps: ['jquery', 'system', 'findPerson', 'retrieve', 'constants', 'person', 'string'],
+                deps: ['jquery', 'system', 'findPerson', 'retrieve', 'features', 'feedback', 'constants', 'person', 'string'],
                 exports: 'researchHelper'
             },
             lazyload: ["jquery"],

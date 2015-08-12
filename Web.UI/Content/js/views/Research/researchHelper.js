@@ -4,9 +4,9 @@ define(function(require) {
     var system = require('system');
     var constants = require('constants');
     var person = require('person');
+    var featuresModel = require('features');
+    var feedbackModel = require('feedback');
     var personUrlOptions;
-    var featuresModel;
-    var feedbackModel;
     var msgBox;
     var lazyRequire = require("lazyRequire");
     var requireOnce = lazyRequire.once();
@@ -308,8 +308,7 @@ define(function(require) {
 
     function feedback() {
             loadSpinner();
-            requireOnce(["formValidation", "feedback", "jqueryUiOptions", "bootstrapValidation", "css!/Content/css/vendor/formValidation.min.css"], function (Feedback) {
-                feedbackModel = Feedback;
+            requireOnce(["formValidation", "jqueryUiOptions", "bootstrapValidation", "css!/Content/css/vendor/formValidation.min.css"], function () {
                 }, function () {
                 feedbackModel.callerSpinner = spinnerArea;
                 $.ajax({
@@ -337,8 +336,7 @@ define(function(require) {
 
     function features(tryItNowButton, featureName) {
         loadSpinner();
-        requireOnce(["features", "jqueryUiOptions"], function (Features) {
-            featuresModel = Features;
+        requireOnce(["jqueryUiOptions"], function () {
         }, function () {
             featuresModel.callerSpinner = spinnerArea;
             featuresModel.tryItNowButton = tryItNowButton;
@@ -526,14 +524,17 @@ define(function(require) {
         hints: function(id, name) {
             return hints(id, name);
         },
-        feeback: function () {
-            return feeback();
-        },
         get feedbackModel() {
             return feedbackModel;
         },
         set feedbackModel(value) {
             feedbackModel = value;
+        },
+        get featuresModel() {
+            return featuresModel;
+        },
+        set featuresModel(value) {
+            featuresModel = value;
         },
         features: function (tryItNowButton, featureName) {
             return features(tryItNowButton, featureName);

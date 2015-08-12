@@ -158,6 +158,8 @@ define(function(require) {
                 }
             });
         } else {
+            system.spinnerArea = incompleteOrdinances.spinner;
+            system.stopSpinner(true);
             $("#incompleteOrdinancesReportTable").bootstrapTable("append", incompleteOrdinances.previous);
             system.openForm(incompleteOrdinancesReport.form, incompleteOrdinancesReport.formTitleImage, incompleteOrdinancesReport.spinner);
         }

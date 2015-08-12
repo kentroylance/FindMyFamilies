@@ -158,6 +158,8 @@ define(function (require) {
                 }
             });
         } else {
+            system.spinnerArea = hints.spinner;
+            system.stopSpinner(true);
             $("#hintsReportTable").bootstrapTable("append", hints.previous);
             system.openForm(hintsReport.form, hintsReport.formTitleImage, hintsReport.spinner);
         }
