@@ -85,6 +85,7 @@ define(function(require) {
     }
 
     function loadReports(refreshReport) {
+        retrieve.addSelect = false;
         retrieve.loadReports($("#findCluesReportId"), refreshReport);
         updateResearchData();
     }
@@ -365,7 +366,11 @@ define(function(require) {
     var findCluesController = {
         open: function() {
             open();
+        },
+        loadReports: function(refreshReport) {
+            loadReports(refreshReport);
         }
+        
     };
 
     researchHelper.findCluesController = findCluesController;

@@ -360,6 +360,9 @@ define(function(require) {
     var dateProblemsController = {
         open: function() {
             open();
+        },
+        loadReports: function(refreshReport) {
+            loadReports(refreshReport);
         }
     };
 

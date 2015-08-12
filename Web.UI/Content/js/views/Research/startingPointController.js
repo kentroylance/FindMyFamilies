@@ -388,7 +388,11 @@ define(function(require) {
     var startingPointController = {
         open: function() {
             open();
+        },
+        loadReports: function(refreshReport) {
+            loadReports(refreshReport);
         }
+        
     };
 
     researchHelper.startingPointController = startingPointController;

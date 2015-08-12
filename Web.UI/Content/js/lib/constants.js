@@ -2,9 +2,11 @@
     var USER = "user";
     var USER_ID = "PersonId";
     var USER_NAME = "DisplayName";
+    var USER_EMAIL = "Email";
 
     var DOMAIN_NAME = "findmyfamilies.com"; // we replace this by our production domain.
     var PERSON = "person";
+    var RETRIEVE = "Retrieve";
     var FIND_PERSON = "findPerson";
     var STARTING_POINT_PREVIOUS = "startingPointPrevious";
     var HINTS_PREVIOUS = "hintsPrevious";
@@ -125,11 +127,17 @@
         get USER_NAME() {
             return USER_NAME;
         },
+        get USER_EMAIL() {
+            return USER_EMAIL;
+        },
         get DOMAIN_NAME() {
             return DOMAIN_NAME;
         },
         get PERSON() {
             return PERSON;
+        },
+        get RETRIEVE() {
+            return RETRIEVE;
         },
         get FIND_PERSON() {
             return FIND_PERSON;

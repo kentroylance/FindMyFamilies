@@ -1,4 +1,5 @@
 using System.Collections;
+using System.EnterpriseServices.Internal;
 
 namespace FindMyFamilies.Data {
 
@@ -10,5 +11,7 @@ namespace FindMyFamilies.Data {
         public string id { get; set; }
         public string text { get; set; }
         public string errorMessage { get; set; }
+        public bool error { get; set; }
+        public string message { get; set; }
 	}
 }

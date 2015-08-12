@@ -6,6 +6,7 @@ define(function(require) {
     var person = require('person');
     var personUrlOptions;
     var featuresModel;
+    var feedback;
     var msgBox;
     var lazyRequire = require("lazyRequire");
     var requireOnce = lazyRequire.once();
@@ -307,9 +308,10 @@ define(function(require) {
 
     function feedback() {
             loadSpinner();
-            requireOnce(["formValidation", "feedback", "jqueryUiOptions",  "bootstrapValidation", "css!/Content/css/vendor/formValidation.min.css"], function (Feedback) {
-                Feedback.callerSpinner = spinnerArea;
-            }, function () {
+            requireOnce(["formValidation", "feedback", "jqueryUiOptions", "bootstrapValidation", "css!/Content/css/vendor/formValidation.min.css"], function (Feedback) {
+                    feedback = Feedback;
+                }, function () {
+                feedback.callerSpinner = spinnerArea;
                 $.ajax({
                     url: constants.FEEDBACK_URL,
                     success: function (data) {

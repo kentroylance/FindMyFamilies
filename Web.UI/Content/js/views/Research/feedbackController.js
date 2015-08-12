@@ -20,6 +20,9 @@ define(function(require) {
         if (system.userName) {
             $("#feedbackName").val(system.userName);
         }
+        if (system.userEmail) {
+            $("#feedbackEmail").val(system.userEmail);
+        }
         if (feedback.bug) {
             $("#feedbackBug").prop('checked', feedback.bug);
         }
@@ -74,6 +77,9 @@ define(function(require) {
             var featureRequest = $("#feedbackFeatureRequest").prop("checked");
             var message = $("#feedbackMessage").val();
             var email = $("#feedbackEmail").val();
+            if (email) {
+                system.setCookie(constants.USER_EMAIL, email, 365);
+            }
 
             $.ajax({
                 url: constants.SEND_FEEDBACK_URL,
@@ -86,8 +92,13 @@ define(function(require) {
                     "message": message,
                     "email": email
                 },
-                success: function(data) {
-                    msgBox.message(data);
+                success: function (data) {
+                    if (data.errorMessage) {
+                        msgBox.message(data.errorMessage);
+                    } else {
+                        msgBox.message(data.message);
+                        feedback.form.dialog(constants.CLOSE);
+                    }
                 }
             });
             return false;

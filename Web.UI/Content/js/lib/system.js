@@ -10,6 +10,7 @@
     var _count = 0;
     var _userId;
     var _userName;
+    var _userEmail;
     var _target;
     var _initialized;
     var _lastCalled;
@@ -261,6 +262,7 @@
 
     _userId = getCookie(constants.USER_ID);
     _userName = getCookie(constants.USER_NAME);
+    _userEmail = getCookie(constants.USER_EMAIL);
 
     function openForm(form, image, spinnerArea, firstField) {
         form.parent().children(".ui-dialog-titlebar").prepend('<span style="float:left; margin-top: 1px; margin-right: .3em;" class="fa ' + image + '"></span>');
@@ -392,6 +394,12 @@
         },
         set userName(value) {
             _userName = value;
+        },
+        get userEmail() {
+            return _userEmail;
+        },
+        set userEmail(value) {
+            _userEmail = value;
         },
         get spinnerArea() {
             return getSpinnerArea();

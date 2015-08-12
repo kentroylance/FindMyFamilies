@@ -1542,7 +1542,7 @@ namespace FindMyFamilies.BusinessObject {
 
                 //Creating the <Asp.net> element
                 XmlElement message = writer.CreateElement("Message");
-                feedback.AppendChild(feedback);
+                feedback.AppendChild(message);
 
                 XmlAttribute id = writer.CreateAttribute("Id");
                 id.Value = feedbackDO.PersonId;
@@ -1574,9 +1574,9 @@ namespace FindMyFamilies.BusinessObject {
 
                 DateTime timeNow = DateTime.Now;
                 var easternTimeNow = TimeZoneInfo.ConvertTime(timeNow, TimeZoneInfo.Local, TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time"));
-                var timeString = easternTimeNow.ToLongTimeString();
+                var timeString = easternTimeNow.ToFileTimeUtc();
 
-                writer.Save(Path.Combine(session.ServerPath, "Feedback/Feedback" + timeString.ToString() + ".xml"));
+                writer.Save(Path.Combine(session.ServerPath, "Feedback/Feedback" + easternTimeNow.ToFileTimeUtc() + ".xml"));
             } catch (Exception e) {
                 string message = "Error creating feedback";
                 logger.Error(message + ". Error: " + e.ToString(), e);

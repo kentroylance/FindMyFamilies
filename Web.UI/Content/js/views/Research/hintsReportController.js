@@ -2,12 +2,14 @@ define(function (require) {
     var $ = require('jquery');
     var system = require('system');
     var constants = require('constants');
+    var msgBox = require('msgBox');
     var findPersonHelper = require('findPersonHelper');
     var researchHelper = require('researchHelper');
 
     // models
     var person = require('person');
     var hints = require('hints');
+    var hintsController = require('hintsController');
     var hintsReport = require('hintsReport');
 
     function loadEvents() {
@@ -146,9 +148,12 @@ define(function (require) {
                         system.stopSpinner(force);
                         msgBox.error(data.errorMessage);
                     } else {
-                        hints.previous = data;
-                        $("#hintsReportTable").bootstrapTable("append", data);
+                        hints.previous = data.list;
+                        $("#hintsReportTable").bootstrapTable("append", data.list);
                         system.openForm(hintsReport.form, hintsReport.formTitleImage, hintsReport.spinner);
+                        if (person.reportId === constants.REPORT_ID) {
+                            hintsController.loadReports(true);
+                        }
                     }
                 }
             });
@@ -182,22 +187,13 @@ function nameFormatter(value, row, index) {
     if (row.id) {
         result = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default dropdown-btn\"><span style=\"color: " + _hintsPerson.getPersonColor(row.gender) + "\">" + _hintsPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
     }
-    return [result].join('');
-//    if (value != null) {
-//        var idNumber = value.substring(0, value.indexOf("~"));
-//        var fullname = value.substring(value.indexOf("~") + 1, value.size);
-//        var idNumberUrl = "<p><a style=\"color: rgb(0,0,255)\" href=\"" + getFamilySearchSystem() + "/tree/#view=ancestor&person=" + idNumber + "\" target=\"_tab\">" + idNumber + "</a></p>";
-//        var fullnameUrl = "<p><a href= \"#\" onClick=\" displayPerson('" + idNumber + "'); \" style= \" color: rgb(0, 153, 0)\" value= \"" + idNumber + "\" data-toggle=\" tooltip\" data-placement= \"top \" title=\" Select to display more info about this person\" >" + fullname + "</a></p>";
-//        result = fullnameUrl + idNumberUrl;
-//    }
     return result;
 }
 
 function linkFormatter(value) {
     var result = "";
     if (value) {
-        result = _hintsSystem.familySearchSystem() + "/tree/#view=hints&person=" + value;
-        result = "<a style=\"color: rgb(50,205,50)\" href=\"" + result + "\" target=\"_tab\">Duplicate</a>&nbsp;";
+        result = value;
     }
     return result;
 }

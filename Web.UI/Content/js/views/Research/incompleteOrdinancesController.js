@@ -334,7 +334,11 @@ define(function(require) {
     var incompleteOrdinancesController = {
         open: function() {
             open();
+        },
+        loadReports: function(refreshReport) {
+            loadReports(refreshReport);
         }
+        
     };
 
     researchHelper.incompleteOrdinancesController = incompleteOrdinancesController;

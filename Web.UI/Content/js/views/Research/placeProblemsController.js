@@ -334,6 +334,9 @@ define(function(require) {
     var placeProblemsController = {
         open: function() {
             open();
+        },
+        loadReports: function(refreshReport) {
+            loadReports(refreshReport);
         }
     };
 
