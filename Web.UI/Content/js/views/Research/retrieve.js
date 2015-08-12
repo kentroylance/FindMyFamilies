@@ -64,6 +64,26 @@
         return found;
     }
 
+    function loadReportData() {
+        $.ajax({
+            'async': false,
+            url: constants.GET_REPORT_LIST_URL,
+            success: function(data) {
+                if (data && data.errorMessage) {
+                    msgBox.error(data.errorMessage);
+                } else {
+                    if (data && data.list) {
+                        _reports = data.list;
+                        save();
+                    }
+
+                }
+
+            }
+        });
+        return false;
+    }
+
     function loadReports(reportId, refreshReport) {
         var optionhtml;
         if (!_reports) {
@@ -144,7 +164,8 @@
         _addSelect = true;
     }
 
-    load();
+    //load();
+    loadReportData();
 
     var retrieve = {
         formName: _formName,
@@ -189,8 +210,8 @@
         save: function () {
             save();
         },
-        findReport: function () {
-            return findReport();
+        loadReportData: function () {
+            loadReportData();
         },
         get callerSpinner() {
             return _callerSpinner;

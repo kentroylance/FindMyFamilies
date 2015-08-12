@@ -550,15 +550,20 @@ namespace FindMyFamilies.BusinessObject {
 
             var analyzeListItems = new List<AnalyzeListItemDO>();
 
-            if (session.Error) {
-                return analyzeListItems;
-            }
+
+            ResearchDO researchDO = new ResearchDO();
+            researchDO.PersonId = findCluesInputDo.PersonId;
+            researchDO.ResearchType = Constants.RESEARCH_TYPE_ANCESTORS;
+            researchDO.ReportId = findCluesInputDo.ReportId;
+            researchDO.PersonName = findCluesInputDo.PersonName;
 
             try {
                 var persons = new Dictionary<string, PersonDO>();
                 if (findCluesInputDo.ReportId > 0) {
-                    persons = GetPersonsFromReport(findCluesInputDo.ReportId);
-                    if (persons.Count > 0) {
+                    persons = getPersons(ref researchDO, ref session);
+
+//                    persons = GetPersonsFromReport(findCluesInputDo.ReportId);
+                    if (persons != null && persons.Count > 0) {
                         var id = 1;
                         foreach (var personDO in persons) {
                             validate(ref id, personDO.Value.Id, persons, findCluesInputDo, ref analyzeListItems);
@@ -1572,11 +1577,8 @@ namespace FindMyFamilies.BusinessObject {
                 text.Value = feedbackDO.Message;
                 message.Attributes.Append(text);
 
-                DateTime timeNow = DateTime.Now;
-                var easternTimeNow = TimeZoneInfo.ConvertTime(timeNow, TimeZoneInfo.Local, TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time"));
-                var timeString = easternTimeNow.ToFileTimeUtc();
-
-                writer.Save(Path.Combine(session.ServerPath, "Feedback/Feedback" + easternTimeNow.ToFileTimeUtc() + ".xml"));
+                DateTime timeNow = Dates.TodaysDateTime();
+                writer.Save(Path.Combine(session.ServerPath, "Feedback/Feedback" + "_" + DateTime.Now.ToString("yyyyMMddHHmm") + ".xml"));
             } catch (Exception e) {
                 string message = "Error creating feedback";
                 logger.Error(message + ". Error: " + e.ToString(), e);

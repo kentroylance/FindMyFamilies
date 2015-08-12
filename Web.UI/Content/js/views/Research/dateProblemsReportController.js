@@ -144,7 +144,7 @@ define(function (require) {
                 success: function (data) {
                     if (data && data.errorMessage) {
                         system.spinnerArea = dateProblems.spinner;
-                        system.stopSpinner(force);
+                        system.stopSpinner(true);
                         msgBox.error(data.errorMessage);
                     } else {
                         dateProblems.previous = data.list;

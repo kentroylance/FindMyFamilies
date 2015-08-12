@@ -144,7 +144,7 @@ define(function (require) {
                 success: function (data) {
                     if (data && data.errorMessage) {
                         system.spinnerArea = findClues.spinner;
-                        system.stopSpinner(force);
+                        system.stopSpinner(true);
                         msgBox.error(data.errorMessage);
                     } else {
                         findClues.previous = data;

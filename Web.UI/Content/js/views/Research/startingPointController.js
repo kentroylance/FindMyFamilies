@@ -220,6 +220,7 @@ define(function(require) {
                     person.loadPersons($("#startingPointPersonId"));
                 }
                 findPersonModel.reset();
+                system.spinnerArea = startingPoint.spinnerArea;
             });
             return false;
         });
@@ -233,6 +234,7 @@ define(function(require) {
                     loadReports(true);
                 }
                 retrieve.reset();
+                system.spinnerArea = startingPoint.spinnerArea;
             });
             return false;
         });
@@ -278,6 +280,7 @@ define(function(require) {
             } else {
                 msgBox.message("Sorry, there is nothing previous to display.");
             }
+            system.spinnerArea = startingPoint.spinnerArea;
         });
 
         $("#startingPointSubmitButton").unbind('click').bind('click', function(e) {
