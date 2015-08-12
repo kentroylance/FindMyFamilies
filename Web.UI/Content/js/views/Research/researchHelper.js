@@ -347,7 +347,7 @@ define(function(require) {
                     var $dialogContainer = $("#featuresForm");
                     var $detachedChildren = $dialogContainer.children().detach();
                     $("<div id=\"featuresForm\"></div>").dialog({
-                        width: 900,
+                        width: 930,
                         title: "Features",
                         open: function () {
                             $detachedChildren.appendTo($dialogContainer);
