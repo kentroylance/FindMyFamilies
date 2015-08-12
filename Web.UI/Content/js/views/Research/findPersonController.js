@@ -123,9 +123,9 @@ define(function(require) {
                 $('#content').append(html);
                 $('#personInfoDiv').show();
                 $("#personInfoDiv").position({
-                    my: "center",
+                    my: "center center+70",
                     at: "center",
-                    of: $(window)
+                    of: $("#findPersonForm")
                 });
 
 
