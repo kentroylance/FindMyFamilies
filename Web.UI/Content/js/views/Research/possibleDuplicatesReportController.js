@@ -147,9 +147,12 @@ define(function (require) {
                         system.stopSpinner(true);
                         msgBox.error(data.errorMessage);
                     } else {
-                        possibleDuplicates.previous = data;
-                        $("#possibleDuplicatesReportTable").bootstrapTable("append", data);
+                        possibleDuplicates.previous = data.list;
+                        $("#possibleDuplicatesReportTable").bootstrapTable("append", data.list);
                         system.openForm(possibleDuplicatesReport.form, possibleDuplicatesReport.formTitleImage, possibleDuplicatesReport.spinner);
+                        if (person.reportId === constants.REPORT_ID) {
+                            possibleDuplicatesController.loadReports(true);
+                        }
                     }
                 }
             });
