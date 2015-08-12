@@ -147,9 +147,12 @@ define(function (require) {
                         system.stopSpinner(true);
                         msgBox.error(data.errorMessage);
                     } else {
-                        findClues.previous = data;
-                        $("#findCluesReportTable").bootstrapTable("append", data);
+                        findClues.previous = data.list;
+                        $("#findCluesReportTable").bootstrapTable("append", data.list);
                         system.openForm(findCluesReport.form, findCluesReport.formTitleImage, findCluesReport.spinner);
+                        if (person.reportId === constants.REPORT_ID) {
+                            findCluesController.loadReports(true);
+                        }
                     }
                 }
             });

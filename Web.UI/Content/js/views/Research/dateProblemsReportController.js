@@ -148,11 +148,10 @@ define(function (require) {
                         msgBox.error(data.errorMessage);
                     } else {
                         dateProblems.previous = data.list;
-                        if (!data.list || data.list < 1) {
-                            $('.no-records-found').show();
-                        } else {
-                            $("#dateProblemsReportTable").bootstrapTable("append", data.list);
-                            system.openForm(dateProblemsReport.form, dateProblemsReport.formTitleImage, dateProblemsReport.spinner);
+                        $("#dateProblemsReportTable").bootstrapTable("append", data.list);
+                        system.openForm(dateProblemsReport.form, dateProblemsReport.formTitleImage, dateProblemsReport.spinner);
+                        if (person.reportId === constants.REPORT_ID) {
+                            dateProblemsController.loadReports(true);
                         }
                     }
                 }

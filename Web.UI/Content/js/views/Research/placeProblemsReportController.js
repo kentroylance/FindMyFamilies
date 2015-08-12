@@ -147,9 +147,12 @@ define(function (require) {
                         system.stopSpinner(true);
                         msgBox.error(data.errorMessage);
                     } else {
-                        placeProblems.previous = data;
-                        $("#placeProblemsReportTable").bootstrapTable("append", data);
+                        placeProblems.previous = data.list;
+                        $("#placeProblemsReportTable").bootstrapTable("append", data.list);
                         system.openForm(placeProblemsReport.form, placeProblemsReport.formTitleImage, placeProblemsReport.spinner);
+                        if (person.reportId === constants.REPORT_ID) {
+                            placeProblemsController.loadReports(true);
+                        }
                     }
                 }
             });
