@@ -6,7 +6,7 @@ define(function(require) {
     var person = require('person');
     var personUrlOptions;
     var featuresModel;
-    var feedback;
+    var feedbackModel;
     var msgBox;
     var lazyRequire = require("lazyRequire");
     var requireOnce = lazyRequire.once();
@@ -309,9 +309,9 @@ define(function(require) {
     function feedback() {
             loadSpinner();
             requireOnce(["formValidation", "feedback", "jqueryUiOptions", "bootstrapValidation", "css!/Content/css/vendor/formValidation.min.css"], function (Feedback) {
-                    feedback = Feedback;
+                feedbackModel = Feedback;
                 }, function () {
-                feedback.callerSpinner = spinnerArea;
+                feedbackModel.callerSpinner = spinnerArea;
                 $.ajax({
                     url: constants.FEEDBACK_URL,
                     success: function (data) {
@@ -514,7 +514,10 @@ define(function(require) {
         startingPoint: function(id, name) {
             return startingPoint(id, name);
         },
-        findClues: function(id, name) {
+        feedback: function () {
+            return feedback();
+        },
+        findClues: function (id, name) {
             return findClues(id, name);
         },
         possibleDuplicates: function(id, name) {
@@ -523,8 +526,14 @@ define(function(require) {
         hints: function(id, name) {
             return hints(id, name);
         },
-        feedback: function () {
-            return feedback();
+        feeback: function () {
+            return feeback();
+        },
+        get feedbackModel() {
+            return feedbackModel;
+        },
+        set feedbackModel(value) {
+            feedbackModel = value;
         },
         features: function (tryItNowButton, featureName) {
             return features(tryItNowButton, featureName);

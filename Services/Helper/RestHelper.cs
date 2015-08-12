@@ -288,9 +288,13 @@ namespace FindMyFamilies.Helper {
                         if (header.Name.Equals("Warning")) {
                             session.ResponseMessage = header.Value + "; ";
                             session.MessageType = Constants.MESSAGE_TYPE_WARNING;
-                            invalidResponse = true;
                             break;
                         }
+                    }
+                    if (!invalidResponse) {
+                        session.ResponseMessage = response.ErrorMessage;
+                        session.MessageType = Constants.MESSAGE_TYPE_ERROR;
+                        invalidResponse = true;
                     }
                 }
 

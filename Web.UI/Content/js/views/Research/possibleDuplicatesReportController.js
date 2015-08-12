@@ -144,7 +144,7 @@ define(function (require) {
                 success: function (data) {
                     if (data && data.errorMessage) {
                         system.spinnerArea = possibleDuplicates.spinner;
-                        system.stopSpinner(force);
+                        system.stopSpinner(true);
                         msgBox.error(data.errorMessage);
                     } else {
                         possibleDuplicates.previous = data;

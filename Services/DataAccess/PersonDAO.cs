@@ -101,7 +101,7 @@ namespace FindMyFamilies.DataAccess {
                             session.ResponseData = "Data is Null";
                         } else if (response.Data.Persons == null) {
                             session.ResponseData = "Person descendancy with spouse is null";
-                        } else if (response.Data.Persons != null && response.Data.Persons.Count < 1) {
+                        } else if (response.Data != null && response.Data.Persons != null && response.Data.Persons.Count < 1) {
                             session.ResponseData = "Person descendancy with spouse is empty";
                         }
                         LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
@@ -168,9 +168,9 @@ namespace FindMyFamilies.DataAccess {
                         }
                         if (response.Data == null) {
                             session.ResponseData = "Data is Null";
-                        } else if (response.Data.Persons == null) {
+                        } else if (response.Data != null && response.Data.Persons == null) {
                             session.ResponseData = "Person ancestry with spouse is null";
-                        } else if (response.Data.Persons != null && response.Data.Persons.Count < 1) {
+                        } else if (response.Data != null && response.Data.Persons != null && response.Data.Persons.Count < 1) {
                             session.ResponseData = "Person ancestry with spouse is empty";
                         }
                         LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
@@ -235,9 +235,9 @@ namespace FindMyFamilies.DataAccess {
                         }
                         if (response.Data == null) {
                             session.ResponseData = "Data is Null";
-                        } else if (response.Data.Persons == null) {
+                        } else if (response.Data != null && response.Data.Persons == null) {
                             session.ResponseData = "Descendants is null";
-                        } else if (response.Data.Persons != null && response.Data.Persons.Count < 1) {
+                        } else if (response.Data != null && response.Data.Persons != null && response.Data.Persons.Count < 1) {
                             session.ResponseData = "Descendants is empty";
                         }
                         LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
@@ -304,9 +304,9 @@ namespace FindMyFamilies.DataAccess {
                             }
                             if (response.Data == null) {
                                 session.ResponseData = "Data is Null";
-                            } else if (response.Data.persons.person == null) {
+                            } else if (response.Data != null && response.Data.persons == null) {
                                 session.ResponseData = "Ordinance info is null";
-                            } else if (response.Data.persons.person != null && Convert.ToInt16(response.Data.persons.person.Count) < 1) {
+                            } else if (response.Data != null && response.Data.persons != null && response.Data.persons.count < 1) {
                                 session.ResponseData = "Ordinance info is empty";
                             }
                             LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);
@@ -648,7 +648,7 @@ namespace FindMyFamilies.DataAccess {
 
             var inputs = new Dictionary<string, string>();
             inputs.Add(Constants.TEMPLATE_ID_PERSON, personDO.Id);
-            inputs.Add(Constants.TEMPLATE_ID_COLLECTION, "https://beta.familysearch.org/platform/collections/records");
+            inputs.Add(Constants.TEMPLATE_ID_COLLECTION, "https://familysearch.org/platform/collections/records");
             RestClient restClient = null;
             RestRequest request = null;
             IRestResponse<Hint> response = null;
@@ -682,10 +682,10 @@ namespace FindMyFamilies.DataAccess {
                             session.ErrorMessage = "Received error retrieving hints from FamilySearch";
                         }
                         if (response.Data == null) {
-                            session.ResponseData = "Data is Null";
-                        } else if (response.Data.results == null) {
-                            session.ResponseData = "Hints is null";
-                        } else if (response.Data.results != null && response.Data.entries.Count < 1) {
+                            session.ResponseData = "Data is null";
+                        } else if ((response.Data.results == null) || (response.Data.entries == null)) {
+                            session.ResponseData = "Hints entries are null";
+                        } else if (response.Data.results != null && ((response.Data.entries != null) && response.Data.entries.Count < 1)) {
                             session.ResponseData = "Hints is empty";
                         }
                         LogRestError(session.ErrorMessage, inputs, request, response, session, new StackTrace(true).GetFrames(), null);

@@ -145,7 +145,7 @@ define(function(require) {
                 success: function(data) {
                     if (data && data.errorMessage) {
                         system.spinnerArea = incompleteOrdinances.spinner;
-                        system.stopSpinner(force);
+                        system.stopSpinner(true);
                         msgBox.error(data.errorMessage);
                     } else {
                         incompleteOrdinances.previous = data.list;
