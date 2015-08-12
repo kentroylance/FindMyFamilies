@@ -157,6 +157,8 @@ define(function (require) {
                 }
             });
         } else {
+            system.spinnerArea = placeProblems.spinner;
+            system.stopSpinner(true);
             $("#placeProblemsReportTable").bootstrapTable("append", placeProblems.previous);
             system.openForm(placeProblemsReport.form, placeProblemsReport.formTitleImage, placeProblemsReport.spinner);
         }

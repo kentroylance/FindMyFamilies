@@ -158,6 +158,8 @@ define(function (require) {
                 }
             });
         } else {
+            system.spinnerArea = startingPoint.spinner;
+            system.stopSpinner(true);
             $("#startingPointReportTable").bootstrapTable("append", startingPoint.previous);
             system.openForm(startingPointReport.form, startingPointReport.formTitleImage, startingPointReport.spinner);
         }

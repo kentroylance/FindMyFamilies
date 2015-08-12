@@ -16,8 +16,14 @@
             //top level dependencies, "include" will find
             //nested dependencies.
             include: ['jquery',
-                      'bootstrap'
-
+                      'bootstrap',
+                      '_layoutController',
+                      'features',
+                      'feedback',
+                      'system',
+                      'person',
+                      'constants',
+                      'lazyRequire'
             ]
         },
 

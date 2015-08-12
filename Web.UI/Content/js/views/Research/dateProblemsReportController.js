@@ -157,6 +157,8 @@ define(function (require) {
                 }
             });
         } else {
+            system.spinnerArea = dateProblems.spinner;
+            system.stopSpinner(true);
             $("#dateProblemsReportTable").bootstrapTable("append", dateProblems.previous);
             system.openForm(dateProblemsReport.form, dateProblemsReport.formTitleImage, dateProblemsReport.spinner);
         }

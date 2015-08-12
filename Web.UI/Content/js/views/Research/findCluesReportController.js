@@ -157,6 +157,8 @@ define(function (require) {
                 }
             });
         } else {
+            system.spinnerArea = findClues.spinner;
+            system.stopSpinner(true);
             $("#findCluesReportTable").bootstrapTable("append", findClues.previous);
             system.openForm(findCluesReport.form, findCluesReport.formTitleImage, findCluesReport.spinner);
         }
