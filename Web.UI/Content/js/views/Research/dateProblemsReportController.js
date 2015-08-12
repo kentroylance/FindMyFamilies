@@ -147,9 +147,13 @@ define(function (require) {
                         system.stopSpinner(force);
                         msgBox.error(data.errorMessage);
                     } else {
-                        dateProblems.previous = data;
-                        $("#dateProblemsReportTable").bootstrapTable("append", data);
-                        system.openForm(dateProblemsReport.form, dateProblemsReport.formTitleImage, dateProblemsReport.spinner);
+                        dateProblems.previous = data.list;
+                        if (!data.list || data.list < 1) {
+                            $('.no-records-found').show();
+                        } else {
+                            $("#dateProblemsReportTable").bootstrapTable("append", data.list);
+                            system.openForm(dateProblemsReport.form, dateProblemsReport.formTitleImage, dateProblemsReport.spinner);
+                        }
                     }
                 }
             });

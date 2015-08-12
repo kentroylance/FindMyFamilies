@@ -275,6 +275,10 @@ namespace FindMyFamilies.Helper {
                     session.ResponseMessage = "Unauthorized call to FamilySearch Rest Service";
                     session.MessageType = Constants.MESSAGE_TYPE_ERROR;
                     invalidResponse = true;
+                } else if (response.StatusCode.Equals(HttpStatusCode.BadRequest)) {
+                    session.ResponseMessage = "Bad request made to FamilySearch Rest Service";
+                    session.MessageType = Constants.MESSAGE_TYPE_ERROR;
+                    invalidResponse = true;
                 } else if (!string.IsNullOrEmpty(response.ErrorMessage)) {
                     session.ResponseMessage = response.ErrorMessage;
                     session.MessageType = Constants.MESSAGE_TYPE_ERROR;

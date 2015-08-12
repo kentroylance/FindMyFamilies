@@ -355,6 +355,9 @@ define(function(require) {
     var hintsController = {
         open: function() {
             open();
+        },
+        loadReports: function(refreshReport) {
+            loadReports(refreshReport);
         }
     };
 

@@ -10,6 +10,7 @@
     var _spinner = "retrieveSpinner";
     var _callerSpinner;
     var _callback;
+    var _addSelect = true;
     
     var _title;
     var _retrievedRecords = 0;
@@ -17,8 +18,25 @@
     var _selected = false;
 
 
+    function RetrieveDO(reports) {
+        this.reports = reports;
+    }
+
     function save() {
-        person.save();
+        if (window.localStorage) {
+            var retrieve = new RetrieveDO(_reports);
+            localStorage.setItem(constants.RETRIEVE, JSON.stringify(retrieve));
+        }
+    }
+
+    function load() {
+        if (window.localStorage) {
+            var retrieve = JSON.parse(localStorage.getItem(constants.RETRIEVE));
+            if (!retrieve) {
+                retrieve = new RetrieveDO();
+            }
+            _reports = retrieve.reports;
+        }
     }
 
     function reset() {
@@ -56,9 +74,10 @@
                     if (data && data.errorMessage) {
                         msgBox.error(data.errorMessage);
                     } else {
-                        if (data) {
+                        if (data && data.list) {
                             _reports = data.list;
                             var found = false;
+                            save();
                             $.each(_reports, function (i) {
                                 if (_reports[i].ValueMember === person.reportId) {
                                     found = true;
@@ -76,8 +95,10 @@
         } else {
             if (refreshReport) {
                 reportId.empty();
-                optionhtml = '<option value="' + constants.REPORT_ID + '">' + constants.SELECT + '</option>';
-                reportId.append(optionhtml);
+                if (_addSelect) {
+                    optionhtml = '<option value="' + constants.REPORT_ID + '">' + constants.SELECT + '</option>';
+                    reportId.append(optionhtml);
+                }
                 $.ajax({
                     'async': false,
                     url: constants.GET_REPORT_LIST_URL,
@@ -103,8 +124,10 @@
             } else if (_reports) {
                 var data = _reports;
                 reportId.empty();
-                optionhtml = '<option value="' + constants.REPORT_ID + '">Select</option>';
-                reportId.append(optionhtml);
+                if (_addSelect) {
+                    optionhtml = '<option value="' + constants.REPORT_ID + '">Select</option>';
+                    reportId.append(optionhtml);
+                }
                 var found = false;
                 $.each(data, function (i) {
                     if (data[i].ValueMember === person.reportId) {
@@ -118,7 +141,10 @@
                 }
             }
         }
+        _addSelect = true;
     }
+
+    load();
 
     var retrieve = {
         formName: _formName,
@@ -135,6 +161,12 @@
         },
         set reports(value) {
             _reports = value;
+        },
+        get addSelect() {
+            return _addSelect;
+        },
+        set addSelect(value) {
+            _addSelect = value;
         },
         get retrievedRecords() {
             return _retrievedRecords;

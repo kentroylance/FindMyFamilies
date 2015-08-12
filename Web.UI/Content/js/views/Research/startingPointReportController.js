@@ -9,6 +9,7 @@ define(function (require) {
     // models
     var person = require('person');
     var startingPoint = require('startingPoint');
+    var startingPointController = require('startingPointController');
     var startingPointReport = require('startingPointReport');
 
     function loadEvents() {
@@ -150,6 +151,9 @@ define(function (require) {
                         startingPoint.previous = data.list;
                         $("#startingPointReportTable").bootstrapTable("append", data.list);
                         system.openForm(startingPointReport.form, startingPointReport.formTitleImage, startingPointReport.spinner);
+                        if (person.reportId === constants.REPORT_ID) {
+                            startingPointController.loadReports(true);
+                        }
                     }
                 }
             });

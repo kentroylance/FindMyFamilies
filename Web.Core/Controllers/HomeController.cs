@@ -303,14 +303,15 @@ namespace FindMyFamilies.Web.Controllers {
 
         [System.Web.Mvc.HttpGet]
         public JsonResult SendFeedback(FeedbackDO feedbackDO) {
-            var message = "Successfully sent feedback";
+            var result = new ResultDO();
+            result.message = "We really appreciate your feedback.";
             try {
                 session = GetSession();
                 Service.SendFeedback(feedbackDO, ref session);
             } catch (Exception) {
-                message = "Error sending feedback";
+                result.errorMessage = "Error sending feedback";
             }
-            return Json(message, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
 

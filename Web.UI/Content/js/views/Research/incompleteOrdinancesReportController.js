@@ -9,6 +9,7 @@ define(function(require) {
     // models
     var person = require('person');
     var incompleteOrdinances = require('incompleteOrdinances');
+    var incompleteOrdinancesController = require('incompleteOrdinancesController');
     var incompleteOrdinancesReport = require('incompleteOrdinancesReport');
 
     function loadEvents() {
@@ -147,9 +148,12 @@ define(function(require) {
                         system.stopSpinner(force);
                         msgBox.error(data.errorMessage);
                     } else {
-                        incompleteOrdinances.previous = data;
-                        $("#incompleteOrdinancesReportTable").bootstrapTable("append", data);
+                        incompleteOrdinances.previous = data.list;
+                        $("#incompleteOrdinancesReportTable").bootstrapTable("append", data.list);
                         system.openForm(incompleteOrdinancesReport.form, incompleteOrdinancesReport.formTitleImage, incompleteOrdinancesReport.spinner);
+                        if (person.reportId === constants.REPORT_ID) {
+                            incompleteOrdinancesController.loadReports(true);
+                        }
                     }
                 }
             });
@@ -187,7 +191,11 @@ function nameFormatter(value, row, index) {
 }
 
 function statusFormatter(value) {
-    return value;
+    var result = "";
+    if (value) {
+        result = value;
+    }
+    return result;
 }
 
 //# sourceURL=incompleteOrdinancesReportController.js
