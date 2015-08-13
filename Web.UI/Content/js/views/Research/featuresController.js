@@ -32,6 +32,7 @@ define(function(require) {
         system.openForm(features.form, features.formTitleImage, features.spinner);
         
         $('#featuresSubmitButton').find('span').text(features.tryItNowButton);
+        $('#myFrame').attr('src', features.dialogVideos);
     }
 
     function clear() {

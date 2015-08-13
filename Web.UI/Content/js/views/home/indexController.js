@@ -8,31 +8,31 @@
 
     var researchHelper;
 
-    function loadFeature(tryItNowButton, featureName) {
+    function loadFeature(tryItNowButton, featureName, dialogVideos) {
         requireOnce(['researchHelper'], function (ResearchHelper) {
             researchHelper = ResearchHelper;
         }, function () {
-            researchHelper.features(tryItNowButton, featureName);
+            researchHelper.features(tryItNowButton, featureName, dialogVideos);
         });
     }
     
     $("#feature1").unbind("click").bind("click", function(e) { //  starting point
-        loadFeature("Try Starting Point", constants.STARTING_POINT);
+        loadFeature("Try Starting Point", constants.STARTING_POINT, "https://player.vimeo.com/video/96324885?title=0&amp;byline=0&amp;portrait=0");
         return false;
     });
 
     $("#feature2").unbind("click").bind("click", function(e) { //  starting point
-        loadFeature("Try Find Person", constants.FIND_PERSON);
+        loadFeature("Try Find Person", constants.FIND_PERSON, "https://player.vimeo.com/video/136109637?title=0&amp;byline=0&amp;portrait=0");
         return false;
     });
 
     $("#feature3").unbind("click").bind("click", function(e) { //  starting point
-        loadFeature("Try Hints", constants.HINTS);
+        loadFeature("Try Hints", constants.HINTS, "https://player.vimeo.com/video/136152023?title=0&amp;byline=0&amp;portrait=0");
         return false;
     });
 
     $("#feature4").unbind("click").bind("click", function(e) { //  starting point
-        loadFeature("Try Incomplete Ordinances", constants.INCOMPLETE_ORDINANCES);
+        loadFeature("Try Incomplete Ordinances", constants.INCOMPLETE_ORDINANCES, "https://player.vimeo.com/video/136109637?title=0&amp;byline=0&amp;portrait=0");
         return false;
     });
 

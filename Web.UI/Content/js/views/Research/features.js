@@ -16,6 +16,7 @@
     var _other = false;
     var _tryItNowButton = "Try It Now1";
     var _featureName = "";
+    var _dialogVideos = "Videos";
 
     var _email;
     var _message;
@@ -64,6 +65,12 @@
         },
         set tryItNowButton(value) {
             _tryItNowButton = value;
+        },
+        get dialogVideos() {
+            return _dialogVideos;
+        },
+        set dialogVideos(value) {
+            _dialogVideos = value;
         },
         get bug() {
             return _bug;

@@ -334,13 +334,14 @@ define(function(require) {
     }
 
 
-    function features(tryItNowButton, featureName) {
+    function features(tryItNowButton, featureName, dialogVideos) {
         loadSpinner();
         requireOnce(["jqueryUiOptions"], function () {
         }, function () {
             featuresModel.callerSpinner = spinnerArea;
             featuresModel.tryItNowButton = tryItNowButton;
             featuresModel.featureName = featureName;
+            featuresModel.dialogVideos = dialogVideos;
             $.ajax({
                 url: constants.FEATURES_URL,
                 success: function (data) {
@@ -536,8 +537,8 @@ define(function(require) {
         set featuresModel(value) {
             featuresModel = value;
         },
-        features: function (tryItNowButton, featureName) {
-            return features(tryItNowButton, featureName);
+        features: function (tryItNowButton, featureName, dialogVideos) {
+            return features(tryItNowButton, featureName, dialogVideos);
         },
         dateProblems: function(id, name) {
             return dateProblems(id, name);
