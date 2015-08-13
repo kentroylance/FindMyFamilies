@@ -9,6 +9,7 @@ define(function (require) {
     // models
     var person = require('person');
     var dateProblems = require('dateProblems');
+    var dateProblemsController = require('dateProblemsController');
     var dateProblemsReport = require('dateProblemsReport');
 
     function loadEvents() {
@@ -47,7 +48,7 @@ define(function (require) {
                     $(this).append(findPersonHelper.getMenuOptions(row));
             },
             'mouseout .personAction1': function (e, value, row, index) {
-                $('#personInfoDiv').hide();
+                $('#dateProblemsPersonInfoDiv').hide();
             },
             'mouseover .personAction1': function (e, value, row, index) {
 
@@ -79,8 +80,8 @@ define(function (require) {
                 }
 
                 $('#content').append(html);
-                $('#personInfoDiv').show();
-                $("#personInfoDiv").position({
+                $('#dateProblemsPersonInfoDiv').show();
+                $("#dateProblemsPersonInfoDiv").position({
                     my: "center+33 center-45",
                     at: "center",
                     of: $("#dateProblemsReportForm")

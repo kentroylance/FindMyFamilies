@@ -9,6 +9,7 @@ define(function (require) {
     // models
     var person = require('person');
     var possibleDuplicates = require('possibleDuplicates');
+    var possibleDuplicatesController = require('possibleDuplicatesController');
     var possibleDuplicatesReport = require('possibleDuplicatesReport');
 
     function loadEvents() {
@@ -47,7 +48,7 @@ define(function (require) {
                     $(this).append(findPersonHelper.getMenuOptions(row));
             },
             'mouseout .personAction1': function (e, value, row, index) {
-                $('#personInfoDiv').hide();
+                $('#possibleDuplicatesPersonInfoDiv').hide();
             },
             'mouseover .personAction1': function (e, value, row, index) {
 
@@ -79,8 +80,8 @@ define(function (require) {
                 }
 
                 $('#content').append(html);
-                $('#personInfoDiv').show();
-                $("#personInfoDiv").position({
+                $('#possibleDuplicatesPersonInfoDiv').show();
+                $("#possibleDuplicatesPersonInfoDiv").position({
                     my: "center+33 center-45",
                     at: "center",
                     of: $("#possibleDuplicatesReportForm")

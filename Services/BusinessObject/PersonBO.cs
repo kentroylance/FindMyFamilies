@@ -545,37 +545,31 @@ namespace FindMyFamilies.BusinessObject {
         //            return persons;
         //        }
 
-        public List<AnalyzeListItemDO> GetAnalyzeData(FindCluesInputDO findCluesInputDo, ref SessionDO session) {
-            AnalyzeListItemDO analyzeListItemDO = new AnalyzeListItemDO();
-
-            var analyzeListItems = new List<AnalyzeListItemDO>();
-
+        public List<FindClueListItemDO> FindClues(FindCluesInputDO findCluesInputDO, ref SessionDO session) {
+            var findClueListItems = new List<FindClueListItemDO>();
 
             ResearchDO researchDO = new ResearchDO();
-            researchDO.PersonId = findCluesInputDo.PersonId;
-            researchDO.ResearchType = Constants.RESEARCH_TYPE_ANCESTORS;
-            researchDO.ReportId = findCluesInputDo.ReportId;
-            researchDO.PersonName = findCluesInputDo.PersonName;
+            researchDO.PersonId = findCluesInputDO.Id;
+            researchDO.ResearchType = findCluesInputDO.ResearchType;
+            researchDO.Generation = findCluesInputDO.Generation;
+            researchDO.ReportId = findCluesInputDO.ReportId;
+            researchDO.PersonName = findCluesInputDO.FullName;
 
             try {
-                var persons = new Dictionary<string, PersonDO>();
-                if (findCluesInputDo.ReportId > 0) {
-                    persons = getPersons(ref researchDO, ref session);
-
-//                    persons = GetPersonsFromReport(findCluesInputDo.ReportId);
+                var persons = getPersons(ref researchDO, ref session);
+                if (!session.Error) {
                     if (persons != null && persons.Count > 0) {
                         var id = 1;
                         foreach (var personDO in persons) {
-                            validate(ref id, personDO.Value.Id, persons, findCluesInputDo, ref analyzeListItems);
+                            validate(ref id, personDO.Value.Id, persons, findCluesInputDO, ref findClueListItems);
                             id++;
                         }
                     }
                 }
-            } catch (Exception e) {
-                logger.Error("GetAnalyzeData " + e.Message, e);
+            } catch (Exception) {
                 throw;
             }
-            return analyzeListItems;
+            return findClueListItems;
         }
 
         public void GetPersonAncestryValidations(ref ResearchDO researchDO, ref SessionDO session) {
@@ -2126,13 +2120,13 @@ namespace FindMyFamilies.BusinessObject {
             return meetsCriteria;
         }
 
-        public void validate(ref int id, string personId, Dictionary<string, PersonDO> persons, FindCluesInputDO findCluesInputDo, ref List<AnalyzeListItemDO> analyzeListItems) {
-            AnalyzeListItemDO analyzeListItemDO = new AnalyzeListItemDO();
-            FindListItemDO findListItemDO = (FindListItemDO) analyzeListItemDO;
+        public void validate(ref int id, string personId, Dictionary<string, PersonDO> persons, FindCluesInputDO findCluesInputDo, ref List<FindClueListItemDO> analyzeListItems) {
+            FindClueListItemDO findClueListItemDo = new FindClueListItemDO();
+            FindListItemDO findListItemDO = (FindListItemDO) findClueListItemDo;
 
             var person = persons[personId];
             personDAO.PopulateFindListItem(person, ref findListItemDO);
-            //            analyzeListItemDO.Name = person.Id + "~" + person.Fullname;
+            //            FindClueListItemDO.Name = person.Id + "~" + person.Fullname;
             if (person.Id.Equals("KWCN-2VW")) {
                 string test = "";
             }
@@ -2140,119 +2134,119 @@ namespace FindMyFamilies.BusinessObject {
             try {
                 if (!person.Living) {
                     if (MeetsCriteria(findCluesInputDo, person, 2) && (person.DeathYear == 0) && (person.BirthYear > 1849) && (person.BirthYear < 1941)) {
-                        //                    analyzeListItemDO.Id = id;
-                        //                    analyzeListItemDO.PersonId = person.Id;
-                        //                    analyzeListItemDO.CriteriaId = 2;
-                        //                    analyzeListItemDO.AscendancyNumber = person.AscendancyNumber;
-                        //                    analyzeListItemDO.DirectLine = person.DirectLine;
-                        //                    analyzeListItemDO.Male = person.IsMale;
-                        //                    analyzeListItemDO.FullName = person.Fullname;
-                        analyzeListItemDO.clue = "Person's death date is \"Deceased\" and was born between 1850 and 1940";
-                        analyzeListItemDO.helpers = criteriaId;
-                        analyzeListItems.Add(analyzeListItemDO);
+                        //                    FindClueListItemDO.Id = id;
+                        //                    FindClueListItemDO.PersonId = person.Id;
+                        //                    FindClueListItemDO.CriteriaId = 2;
+                        //                    FindClueListItemDO.AscendancyNumber = person.AscendancyNumber;
+                        //                    FindClueListItemDO.DirectLine = person.DirectLine;
+                        //                    FindClueListItemDO.Male = person.IsMale;
+                        //                    FindClueListItemDO.FullName = person.Fullname;
+                        findClueListItemDo.clue = "Person's death date is \"Deceased\" and was born between 1850 and 1940";
+                        findClueListItemDo.helpers = criteriaId;
+                        analyzeListItems.Add(findClueListItemDo);
                     }
                     if ((MeetsCriteria(findCluesInputDo, person, 2) && ((person.BirthYear > 1849) && (person.BirthYear < 1941)) && (person.IsFemale) && (person.DeathYear < 1) && (!person.HasSpouse))) {
-                        //                    analyzeListItemDO.Id = id;
-                        //                    analyzeListItemDO.PersonId = person.Id;
-                        //                    analyzeListItemDO.CriteriaId = 2;
-                        //                    analyzeListItemDO.FullName = person.Fullname;
-                        //                    analyzeListItemDO.AscendancyNumber = person.AscendancyNumber;
-                        //                    analyzeListItemDO.DirectLine = person.DirectLine;
-                        //                    analyzeListItemDO.Male = person.IsMale;
-                        analyzeListItemDO.clue = "Female child with no spouse and no death date, lived between (between 1850 and 1940)";
-                        analyzeListItemDO.helpers = criteriaId;
-                        analyzeListItems.Add(analyzeListItemDO);
+                        //                    FindClueListItemDO.Id = id;
+                        //                    FindClueListItemDO.PersonId = person.Id;
+                        //                    FindClueListItemDO.CriteriaId = 2;
+                        //                    FindClueListItemDO.FullName = person.Fullname;
+                        //                    FindClueListItemDO.AscendancyNumber = person.AscendancyNumber;
+                        //                    FindClueListItemDO.DirectLine = person.DirectLine;
+                        //                    FindClueListItemDO.Male = person.IsMale;
+                        findClueListItemDo.clue = "Female child with no spouse and no death date, lived between (between 1850 and 1940)";
+                        findClueListItemDo.helpers = criteriaId;
+                        analyzeListItems.Add(findClueListItemDo);
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 4) && ((person.HasSpouse) && (!person.HasChildrenLink))) {
-                        //                    analyzeListItemDO.Id = id;
-                        //                    analyzeListItemDO.CriteriaId = 4;
-                        //                    analyzeListItemDO.PersonId = person.Id;
-                        //                    analyzeListItemDO.FullName = person.Fullname;
-                        //                    analyzeListItemDO.AscendancyNumber = person.AscendancyNumber;
-                        //                    analyzeListItemDO.DirectLine = person.DirectLine;
-                        //                    analyzeListItemDO.Male = person.IsMale;
+                        //                    FindClueListItemDO.Id = id;
+                        //                    FindClueListItemDO.CriteriaId = 4;
+                        //                    FindClueListItemDO.PersonId = person.Id;
+                        //                    FindClueListItemDO.FullName = person.Fullname;
+                        //                    FindClueListItemDO.AscendancyNumber = person.AscendancyNumber;
+                        //                    FindClueListItemDO.DirectLine = person.DirectLine;
+                        //                    FindClueListItemDO.Male = person.IsMale;
                         criteriaId = 4;
-                        analyzeListItemDO.clue = "Person has a spouse" + (person.YearsLived > 0 ? ", lived " + person.YearsLived + " years" : "") + ", and no children.";
-                        analyzeListItemDO.helpers = criteriaId;
-                        analyzeListItems.Add(analyzeListItemDO);
+                        findClueListItemDo.clue = "Person has a spouse" + (person.YearsLived > 0 ? ", lived " + person.YearsLived + " years" : "") + ", and no children.";
+                        findClueListItemDo.helpers = criteriaId;
+                        analyzeListItems.Add(findClueListItemDo);
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 5) && ((person.HasSpouse) && (person.NumberOfChildren == 1) && ((person.YearsLived > 0) && person.YearsLived > findCluesInputDo.AgeLimit))) {
-                        //                    analyzeListItemDO.Id = id;
-                        //                    analyzeListItemDO.PersonId = person.Id;
-                        //                    analyzeListItemDO.CriteriaId = 5;
-                        //                    analyzeListItemDO.FullName = person.Fullname;
-                        //                    analyzeListItemDO.AscendancyNumber = person.AscendancyNumber;
-                        //                    analyzeListItemDO.DirectLine = person.DirectLine;
-                        //                    analyzeListItemDO.Male = person.IsMale;
+                        //                    FindClueListItemDO.Id = id;
+                        //                    FindClueListItemDO.PersonId = person.Id;
+                        //                    FindClueListItemDO.CriteriaId = 5;
+                        //                    FindClueListItemDO.FullName = person.Fullname;
+                        //                    FindClueListItemDO.AscendancyNumber = person.AscendancyNumber;
+                        //                    FindClueListItemDO.DirectLine = person.DirectLine;
+                        //                    FindClueListItemDO.Male = person.IsMale;
                         criteriaId = 5;
-                        analyzeListItemDO.clue = "Person has a spouse" + (person.YearsLived > 0 ? ", lived " + person.YearsLived + " years" : "") + (((person.YearsLived > 0) && person.YearsLived > findCluesInputDo.AgeLimit) ? ", lived longer than " + findCluesInputDo.AgeLimit + " years" : "") + ", and only one child.";
-                        analyzeListItemDO.helpers = criteriaId;
-                        analyzeListItems.Add(analyzeListItemDO);
+                        findClueListItemDo.clue = "Person has a spouse" + (person.YearsLived > 0 ? ", lived " + person.YearsLived + " years" : "") + (((person.YearsLived > 0) && person.YearsLived > findCluesInputDo.AgeLimit) ? ", lived longer than " + findCluesInputDo.AgeLimit + " years" : "") + ", and only one child.";
+                        findClueListItemDo.helpers = criteriaId;
+                        analyzeListItems.Add(findClueListItemDo);
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 6) && ((!person.HasSpouse) && (!person.HasChildrenLink) && ((person.YearsLived > 0) && person.YearsLived > findCluesInputDo.AgeLimit))) {
-                        //                    analyzeListItemDO.Id = id;
-                        //                    analyzeListItemDO.PersonId = person.Id;
-                        //                    analyzeListItemDO.FullName = person.Fullname;
-                        //                    analyzeListItemDO.CriteriaId = 6;
-                        //                    analyzeListItemDO.AscendancyNumber = person.AscendancyNumber;
-                        //                    analyzeListItemDO.DirectLine = person.DirectLine;
-                        //                    analyzeListItemDO.Male = person.IsMale;
+                        //                    FindClueListItemDO.Id = id;
+                        //                    FindClueListItemDO.PersonId = person.Id;
+                        //                    FindClueListItemDO.FullName = person.Fullname;
+                        //                    FindClueListItemDO.CriteriaId = 6;
+                        //                    FindClueListItemDO.AscendancyNumber = person.AscendancyNumber;
+                        //                    FindClueListItemDO.DirectLine = person.DirectLine;
+                        //                    FindClueListItemDO.Male = person.IsMale;
                         criteriaId = 6;
-                        analyzeListItemDO.clue = "Person has no spouse " + (person.YearsLived > 0 ? ", lived " + person.YearsLived + " years" : "") + (((person.YearsLived > 0) && person.YearsLived > findCluesInputDo.AgeLimit) ? ", lived longer than " + findCluesInputDo.AgeLimit + " years" : "") + ", and no children.";
-                        analyzeListItemDO.helpers = criteriaId;
-                        analyzeListItems.Add(analyzeListItemDO);
+                        findClueListItemDo.clue = "Person has no spouse " + (person.YearsLived > 0 ? ", lived " + person.YearsLived + " years" : "") + (((person.YearsLived > 0) && person.YearsLived > findCluesInputDo.AgeLimit) ? ", lived longer than " + findCluesInputDo.AgeLimit + " years" : "") + ", and no children.";
+                        findClueListItemDo.helpers = criteriaId;
+                        analyzeListItems.Add(findClueListItemDo);
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 7) && ((!person.HasSpouse) && (person.NumberOfChildren == 1))) {
-                        //                    analyzeListItemDO.Id = id;
-                        //                    analyzeListItemDO.PersonId = person.Id;
-                        //                    analyzeListItemDO.FullName = person.Fullname;
-                        //                    analyzeListItemDO.CriteriaId = 7;
-                        //                    analyzeListItemDO.AscendancyNumber = person.AscendancyNumber;
-                        //                    analyzeListItemDO.DirectLine = person.DirectLine;
-                        //                    analyzeListItemDO.Male = person.IsMale;
+                        //                    FindClueListItemDO.Id = id;
+                        //                    FindClueListItemDO.PersonId = person.Id;
+                        //                    FindClueListItemDO.FullName = person.Fullname;
+                        //                    FindClueListItemDO.CriteriaId = 7;
+                        //                    FindClueListItemDO.AscendancyNumber = person.AscendancyNumber;
+                        //                    FindClueListItemDO.DirectLine = person.DirectLine;
+                        //                    FindClueListItemDO.Male = person.IsMale;
                         criteriaId = 7;
-                        analyzeListItemDO.clue = "Person has no spouse " + (person.YearsLived > 0 ? "lived " + person.YearsLived + " years " : "") + ", and only one child.";
-                        analyzeListItemDO.helpers = criteriaId;
-                        analyzeListItems.Add(analyzeListItemDO);
+                        findClueListItemDo.clue = "Person has no spouse " + (person.YearsLived > 0 ? "lived " + person.YearsLived + " years " : "") + ", and only one child.";
+                        findClueListItemDo.helpers = criteriaId;
+                        analyzeListItems.Add(findClueListItemDo);
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 10) && (person.BirthYear > 1000) && (!person.Mother.IsEmpty && ((person.Mother.DeathYear > 1000) && (person.BirthYear > person.Mother.DeathYear)))) {
-                        //                    analyzeListItemDO.Id = id;
-                        //                    analyzeListItemDO.PersonId = person.Id;
-                        //                    analyzeListItemDO.FullName = person.Fullname;
-                        //                    analyzeListItemDO.CriteriaId = 10;
-                        //                    analyzeListItemDO.AscendancyNumber = person.AscendancyNumber;
-                        //                    analyzeListItemDO.DirectLine = person.DirectLine;
-                        //                    analyzeListItemDO.Male = person.IsMale;
+                        //                    FindClueListItemDO.Id = id;
+                        //                    FindClueListItemDO.PersonId = person.Id;
+                        //                    FindClueListItemDO.FullName = person.Fullname;
+                        //                    FindClueListItemDO.CriteriaId = 10;
+                        //                    FindClueListItemDO.AscendancyNumber = person.AscendancyNumber;
+                        //                    FindClueListItemDO.DirectLine = person.DirectLine;
+                        //                    FindClueListItemDO.Male = person.IsMale;
                         criteriaId = 10;
-                        analyzeListItemDO.clue = "Person's birth year " + person.BirthYear + " is after mother's death year " + person.Mother.DeathYear + ".";
-                        analyzeListItemDO.helpers = criteriaId;
-                        analyzeListItems.Add(analyzeListItemDO);
+                        findClueListItemDo.clue = "Person's birth year " + person.BirthYear + " is after mother's death year " + person.Mother.DeathYear + ".";
+                        findClueListItemDo.helpers = criteriaId;
+                        analyzeListItems.Add(findClueListItemDo);
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 11) && ((person.DeathYear > 1000) && (person.MarriageYear > 1000) && (person.DeathYear < person.MarriageYear))) {
-                        //                    analyzeListItemDO.Id = id;
-                        //                    analyzeListItemDO.PersonId = person.Id;
-                        //                    analyzeListItemDO.FullName = person.Fullname;
-                        //                    analyzeListItemDO.CriteriaId = 11;
-                        //                    analyzeListItemDO.AscendancyNumber = person.AscendancyNumber;
-                        //                    analyzeListItemDO.DirectLine = person.DirectLine;
-                        //                    analyzeListItemDO.Male = person.IsMale;
+                        //                    FindClueListItemDO.Id = id;
+                        //                    FindClueListItemDO.PersonId = person.Id;
+                        //                    FindClueListItemDO.FullName = person.Fullname;
+                        //                    FindClueListItemDO.CriteriaId = 11;
+                        //                    FindClueListItemDO.AscendancyNumber = person.AscendancyNumber;
+                        //                    FindClueListItemDO.DirectLine = person.DirectLine;
+                        //                    FindClueListItemDO.Male = person.IsMale;
                         criteriaId = 11;
-                        analyzeListItemDO.clue = "Person's death year " + person.DeathYear + " is earlier than the marriage year " + person.MarriageYear + ".";
-                        analyzeListItemDO.helpers = criteriaId;
-                        analyzeListItems.Add(analyzeListItemDO);
+                        findClueListItemDo.clue = "Person's death year " + person.DeathYear + " is earlier than the marriage year " + person.MarriageYear + ".";
+                        findClueListItemDo.helpers = criteriaId;
+                        analyzeListItems.Add(findClueListItemDo);
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 12) && (person.IsFemale && ((person.NumberOfChildren > 0) && (person.LastChild.BirthYear > 1000) && (person.YearsLived > 39) && ((person.LastChild.BirthYear + 35) < (person.BirthYear + 40))))) {
-                        //                    analyzeListItemDO.Id = id;
-                        //                    analyzeListItemDO.PersonId = person.Id;
-                        //                    analyzeListItemDO.FullName = person.Fullname;
-                        //                    analyzeListItemDO.CriteriaId = 12;
-                        //                    analyzeListItemDO.AscendancyNumber = person.AscendancyNumber;
-                        //                    analyzeListItemDO.DirectLine = person.DirectLine;
-                        //                    analyzeListItemDO.Male = person.IsMale;
+                        //                    FindClueListItemDO.Id = id;
+                        //                    FindClueListItemDO.PersonId = person.Id;
+                        //                    FindClueListItemDO.FullName = person.Fullname;
+                        //                    FindClueListItemDO.CriteriaId = 12;
+                        //                    FindClueListItemDO.AscendancyNumber = person.AscendancyNumber;
+                        //                    FindClueListItemDO.DirectLine = person.DirectLine;
+                        //                    FindClueListItemDO.Male = person.IsMale;
                         criteriaId = 12;
-                        analyzeListItemDO.clue = "Last child was born 4 or more years before turning 40.";
-                        analyzeListItemDO.helpers = criteriaId;
-                        analyzeListItems.Add(analyzeListItemDO);
+                        findClueListItemDo.clue = "Last child was born 4 or more years before turning 40.";
+                        findClueListItemDo.helpers = criteriaId;
+                        analyzeListItems.Add(findClueListItemDo);
                     }
 
                     //        private int _LastChild4YearsMother40;
@@ -2278,17 +2272,17 @@ namespace FindMyFamilies.BusinessObject {
                                         var problem = gap + " year gap between " + child.Fullname + " and " + nextChild.Fullname;
                                         var problem1 = gap + " year gap between " + nextChild.Fullname + " and " + child.Fullname;
                                         if (MeetsCriteria(findCluesInputDo, person, 3) && (!isDuplicateValidation(problem, analyzeListItems) && !isDuplicateValidation(problem1, analyzeListItems))) {
-                                            //                                        analyzeListItemDO.Id = id;
-                                            //                                        analyzeListItemDO.PersonId = person.Id;
-                                            //                                        analyzeListItemDO.CriteriaId = 3;
-                                            //                                        analyzeListItemDO.FullName = person.Fullname;
-                                            //                                        analyzeListItemDO.AscendancyNumber = person.AscendancyNumber;
-                                            //                                        analyzeListItemDO.DirectLine = person.DirectLine;
-                                            //                                        analyzeListItemDO.Male = person.IsMale;
+                                            //                                        FindClueListItemDO.Id = id;
+                                            //                                        FindClueListItemDO.PersonId = person.Id;
+                                            //                                        FindClueListItemDO.CriteriaId = 3;
+                                            //                                        FindClueListItemDO.FullName = person.Fullname;
+                                            //                                        FindClueListItemDO.AscendancyNumber = person.AscendancyNumber;
+                                            //                                        FindClueListItemDO.DirectLine = person.DirectLine;
+                                            //                                        FindClueListItemDO.Male = person.IsMale;
                                             criteriaId = 3;
-                                            analyzeListItemDO.clue = problem + "";
-                                            analyzeListItemDO.helpers = criteriaId;
-                                            analyzeListItems.Add(analyzeListItemDO);
+                                            findClueListItemDo.clue = problem + "";
+                                            findClueListItemDo.helpers = criteriaId;
+                                            analyzeListItems.Add(findClueListItemDo);
                                             id++;
                                             validatedGap = true;
                                         }
@@ -2312,16 +2306,16 @@ namespace FindMyFamilies.BusinessObject {
                         //                                if (!isDuplicateValidation(problem, analyzeListItems) &&
                         //                                    !isDuplicateValidation(problem1, analyzeListItems)) {
                         //                                    validation = new ValidationDO();
-                        //                                    analyzeListItemDO.Id = person.Id;
-                        //                                    analyzeListItemDO.FullName = person.Fullname;
-                        //                                    analyzeListItemDO.AscendancyNumber = person.AscendancyNumber;
-                        //                                    analyzeListItemDO.DirectLine = person.DirectLine;
-                        //                                    analyzeListItemDO.Male = person.IsMale;
-                        //                                    analyzeListItemDO.Problem = problem;
-                        //                                    analyzeListItemDO.FamilySearchDetailsLink = person.PersonUrl;
-                        //                                    analyzeListItems.Add(analyzeListItemDO);
+                        //                                    FindClueListItemDO.Id = person.Id;
+                        //                                    FindClueListItemDO.FullName = person.Fullname;
+                        //                                    FindClueListItemDO.AscendancyNumber = person.AscendancyNumber;
+                        //                                    FindClueListItemDO.DirectLine = person.DirectLine;
+                        //                                    FindClueListItemDO.Male = person.IsMale;
+                        //                                    FindClueListItemDO.Problem = problem;
+                        //                                    FindClueListItemDO.FamilySearchDetailsLink = person.PersonUrl;
+                        //                                    analyzeListItems.Add(FindClueListItemDO);
                         //                                    ResearchDO.Summary.SiblingsBornSameYear++;
-                        //                                    logger.Error(analyzeListItemDO.Id + " - " + analyzeListItemDO.Problem);
+                        //                                    logger.Error(FindClueListItemDO.Id + " - " + FindClueListItemDO.Problem);
                         //                                }
                         //                                break;
                         //                            }
@@ -2340,16 +2334,16 @@ namespace FindMyFamilies.BusinessObject {
                         //                                if (!isDuplicateValidation(problem, analyzeListItems) &&
                         //                                    !isDuplicateValidation(problem1, analyzeListItems)) {
                         //                                    validation = new ValidationDO();
-                        //                                    analyzeListItemDO.Id = person.Id;
-                        //                                    analyzeListItemDO.FullName = person.Fullname;
-                        //                                    analyzeListItemDO.AscendancyNumber = person.AscendancyNumber;
-                        //                                    analyzeListItemDO.DirectLine = person.DirectLine;
-                        //                                    analyzeListItemDO.Male = person.IsMale;
-                        //                                    analyzeListItemDO.Problem = problem;
-                        //                                    analyzeListItemDO.FamilySearchDetailsLink = person.PersonUrl;
-                        //                                    analyzeListItems.Add(analyzeListItemDO);
+                        //                                    FindClueListItemDO.Id = person.Id;
+                        //                                    FindClueListItemDO.FullName = person.Fullname;
+                        //                                    FindClueListItemDO.AscendancyNumber = person.AscendancyNumber;
+                        //                                    FindClueListItemDO.DirectLine = person.DirectLine;
+                        //                                    FindClueListItemDO.Male = person.IsMale;
+                        //                                    FindClueListItemDO.Problem = problem;
+                        //                                    FindClueListItemDO.FamilySearchDetailsLink = person.PersonUrl;
+                        //                                    analyzeListItems.Add(FindClueListItemDO);
                         //                                    ResearchDO.Summary.SiblingsWithSameName++;
-                        //                                    logger.Error(analyzeListItemDO.Id + " - " + analyzeListItemDO.Problem);
+                        //                                    logger.Error(FindClueListItemDO.Id + " - " + FindClueListItemDO.Problem);
                         //                                }
                         //                                break;
                         //                            }
@@ -2363,34 +2357,34 @@ namespace FindMyFamilies.BusinessObject {
                         //                                             child.Value.Father.Fullname + ", Mother: " + child.Value.Mother.Fullname + ")";
                         //                            if (MeetsCriteria(FindCluesInputDO, 10) && (!isDuplicateValidation(problem, analyzeListItems))) {
                         //                                validation = new ValidationDO();
-                        //                                analyzeListItemDO.Id = id;
-                        //                                analyzeListItemDO.PersonId = person.Id;
-                        //                                analyzeListItemDO.FullName = person.Fullname;
-                        //                                analyzeListItemDO.CriteriaId = 10;
-                        //                                analyzeListItemDO.AscendancyNumber = person.AscendancyNumber;
-                        //                                analyzeListItemDO.DirectLine = person.DirectLine;
-                        //                                analyzeListItemDO.Male = person.IsMale;
-                        //                                analyzeListItemDO.Problem = problem;
-                        //                                analyzeListItems.Add(analyzeListItemDO);
+                        //                                FindClueListItemDO.Id = id;
+                        //                                FindClueListItemDO.PersonId = person.Id;
+                        //                                FindClueListItemDO.FullName = person.Fullname;
+                        //                                FindClueListItemDO.CriteriaId = 10;
+                        //                                FindClueListItemDO.AscendancyNumber = person.AscendancyNumber;
+                        //                                FindClueListItemDO.DirectLine = person.DirectLine;
+                        //                                FindClueListItemDO.Male = person.IsMale;
+                        //                                FindClueListItemDO.Problem = problem;
+                        //                                analyzeListItems.Add(FindClueListItemDO);
                         //                                ResearchDO.Summary.LastNameDifferentThanParents++;
-                        //                                logger.Error(analyzeListItemDO.Id + " - " + analyzeListItemDO.Problem);
+                        //                                logger.Error(FindClueListItemDO.Id + " - " + FindClueListItemDO.Problem);
                         //                            }
                         //                        }
                         //                        if ((child.Value.BirthYear > 0) && (child.Value.Mother != null) && (child.Value.BirthYear > child.Value.Mother.DeathYear)) {
                         //                            string problem = "Birth year " + child.Value.BirthYear + " is later than Mother's death year." + child.Value.Mother.DeathYear;
                         //                            if (MeetsCriteria(FindCluesInputDO, person, 11) && (!isDuplicateValidation(problem, analyzeListItems))) {
                         //                                validation = new ValidationDO();
-                        //                                analyzeListItemDO.Id = id;
-                        //                                analyzeListItemDO.PersonId = person.Id;
-                        //                                analyzeListItemDO.FullName = person.Fullname;
-                        //                                analyzeListItemDO.CriteriaId = 11;
-                        //                                analyzeListItemDO.AscendancyNumber = person.AscendancyNumber;
-                        //                                analyzeListItemDO.DirectLine = person.DirectLine;
-                        //                                analyzeListItemDO.Male = person.IsMale;
-                        //                                analyzeListItemDO.Problem = problem;
-                        //                                analyzeListItems.Add(analyzeListItemDO);
+                        //                                FindClueListItemDO.Id = id;
+                        //                                FindClueListItemDO.PersonId = person.Id;
+                        //                                FindClueListItemDO.FullName = person.Fullname;
+                        //                                FindClueListItemDO.CriteriaId = 11;
+                        //                                FindClueListItemDO.AscendancyNumber = person.AscendancyNumber;
+                        //                                FindClueListItemDO.DirectLine = person.DirectLine;
+                        //                                FindClueListItemDO.Male = person.IsMale;
+                        //                                FindClueListItemDO.Problem = problem;
+                        //                                analyzeListItems.Add(FindClueListItemDO);
                         //                                ResearchDO.Summary.LastNameDifferentThanParents++;
-                        //                                logger.Error(analyzeListItemDO.Id + " - " + analyzeListItemDO.Problem);
+                        //                                logger.Error(FindClueListItemDO.Id + " - " + FindClueListItemDO.Problem);
                         //                            }
                         //                        }
                         //}
@@ -2417,7 +2411,7 @@ namespace FindMyFamilies.BusinessObject {
             //            }
         }
 
-        private bool isDuplicateValidation(string clue, List<AnalyzeListItemDO> analyzeListItems) {
+        private bool isDuplicateValidation(string clue, List<FindClueListItemDO> analyzeListItems) {
             var isDuplicate = false;
 
             foreach (var analyzeListItemDO in analyzeListItems) {

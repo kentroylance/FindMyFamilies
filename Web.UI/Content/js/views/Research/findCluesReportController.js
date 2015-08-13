@@ -9,6 +9,7 @@ define(function (require) {
     // models
     var person = require('person');
     var findClues = require('findClues');
+    var findCluesController = require('findCluesController');
     var findCluesReport = require('findCluesReport');
 
     function loadEvents() {
@@ -47,7 +48,7 @@ define(function (require) {
                     $(this).append(findPersonHelper.getMenuOptions(row));
             },
             'mouseout .personAction1': function (e, value, row, index) {
-                $('#personInfoDiv').hide();
+                $('#findCluesPersonInfoDiv').hide();
             },
             'mouseover .personAction1': function (e, value, row, index) {
 
@@ -79,8 +80,8 @@ define(function (require) {
                 }
 
                 $('#content').append(html);
-                $('#personInfoDiv').show();
-                $("#personInfoDiv").position({
+                $('#findCluesPersonInfoDiv').show();
+                $("#findCluesPersonInfoDiv").position({
                     my: "center+33 center-45",
                     at: "center",
                     of: $("#findCluesReportForm")
@@ -139,7 +140,7 @@ define(function (require) {
 
         if (findClues.displayType === "start") {
             $.ajax({
-                data: { "PersonId": person.id, "PersonName": person.name, "ReportId": person.reportId, "SearchCriteria": findClues.searchCriteria, "GapInChildren": findClues.gapInChildren, "AgeLimit": findClues.ageLimit },
+                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "SearchCriteria": findClues.searchCriteria, "GapInChildren": findClues.gapInChildren, "AgeLimit": findClues.ageLimit, "ReportId": person.reportId },
                 url: constants.FIND_CLUES_REPORT_DATA_URL,
                 success: function (data) {
                     if (data && data.errorMessage) {

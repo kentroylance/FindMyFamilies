@@ -1,14 +1,28 @@
+using FindMyFamilies.Util;
+
 namespace FindMyFamilies.Data {
     public class FindCluesInputDO {
         public FindCluesInputDO() {
+            Generation = 2;
+            ResearchType = Constants.RESEARCH_TYPE_ANCESTORS;
         }
 
-        public string PersonId {
+        public string Id {
             get;
             set;
         }
 
-        public string PersonName {
+        public string FullName {
+            get;
+            set;
+        }
+
+        public string ResearchType {
+            get;
+            set;
+        }
+
+        public int Generation {
             get;
             set;
         }

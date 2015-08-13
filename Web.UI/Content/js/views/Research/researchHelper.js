@@ -60,6 +60,7 @@ define(function(require) {
                             if (id) {
                                 person.id = id;
                                 person.name = name;
+                                person.reportId = constants.REPORT_ID;
                             }
                             if (_startingPointController) {
                                 _startingPointController.open();
@@ -95,6 +96,7 @@ define(function(require) {
                             if (id) {
                                 person.id = id;
                                 person.name = name;
+                                person.reportId = constants.REPORT_ID;
                             }
                             if (_findCluesController) {
                                 _findCluesController.open();
@@ -135,6 +137,7 @@ define(function(require) {
                         if (id) {
                             person.id = id;
                             person.name = name;
+                            person.reportId = constants.REPORT_ID;
                         }
                         if (_retrieveController) {
                             _retrieveController.open();
@@ -258,6 +261,7 @@ define(function(require) {
                             if (id) {
                                 person.id = id;
                                 person.name = name;
+                                person.reportId = constants.REPORT_ID;
                             }
                             if (_possibleDuplicatesController) {
                                 _possibleDuplicatesController.open();
@@ -293,6 +297,7 @@ define(function(require) {
                             if (id) {
                                 person.id = id;
                                 person.name = name;
+                                person.reportId = constants.REPORT_ID;
                             }
                             if (_hintsController) {
                                 _hintsController.open();
@@ -386,6 +391,7 @@ define(function(require) {
                             if (id) {
                                 person.id = id;
                                 person.name = name;
+                                person.reportId = constants.REPORT_ID;
                             }
                             if (_dateProblemsController) {
                                 _dateProblemsController.open();
@@ -421,6 +427,7 @@ define(function(require) {
                             if (id) {
                                 person.id = id;
                                 person.name = name;
+                                person.reportId = constants.REPORT_ID;
                             }
                             if (_incompleteOrdinancesController) {
                                 _incompleteOrdinancesController.open();
@@ -456,6 +463,7 @@ define(function(require) {
                             if (id) {
                                 person.id = id;
                                 person.name = name;
+                                person.reportId = constants.REPORT_ID;
                             }
                             if (_placeProblemsController) {
                                 _placeProblemsController.open();

@@ -45,10 +45,10 @@ define(function (require) {
 
         window.nameEvents = {
             'click .personAction': function(e, value, row, index) {
-                    $(this).append(findPersonHelper.getMenuOptions(row));
+                $(this).append(findPersonHelper.getMenuOptions(row));
             },
             'mouseout .personAction1': function (e, value, row, index) {
-                $('#personInfoDiv').hide();
+                $('#hintsPersonInfoDiv').hide();
             },
             'mouseover .personAction1': function (e, value, row, index) {
 
@@ -80,8 +80,8 @@ define(function (require) {
                 }
 
                 $('#content').append(html);
-                $('#personInfoDiv').show();
-                $("#personInfoDiv").position({
+                $('#hintsPersonInfoDiv').show();
+                $("#hintsPersonInfoDiv").position({
                     my: "center+33 center-45",
                     at: "center",
                     of: $("#hintsReportForm")

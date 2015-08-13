@@ -128,8 +128,8 @@ namespace FindMyFamilies.Services {
             return personBO.GetHints(hintInputDO, ref session);
         }
 
-        public List<AnalyzeListItemDO> GetAnalyzeData(FindCluesInputDO findCluesInputDo, ref SessionDO session) {
-            return personBO.GetAnalyzeData(findCluesInputDo, ref session);
+        public List<FindClueListItemDO> GetAnalyzeData(FindCluesInputDO findCluesInputDo, ref SessionDO session) {
+            return personBO.FindClues(findCluesInputDo, ref session);
         }
 
         public List<StartingPointListItemDO> GetStartingPoints(StartingPointInputDO startingPointInputDO, ref SessionDO session) {

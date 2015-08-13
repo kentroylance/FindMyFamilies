@@ -90,7 +90,7 @@ namespace FindMyFamilies.Services {
             return PersonServices.Instance.GetOrdinances(incompleteOrdinanceDo, ref session);
         }
 
-        public List<AnalyzeListItemDO> GetAnalyzeData(FindCluesInputDO findCluesInputDo, ref SessionDO session) {
+        public List<FindClueListItemDO> FindClues(FindCluesInputDO findCluesInputDo, ref SessionDO session) {
             return PersonServices.Instance.GetAnalyzeData(findCluesInputDo, ref session);
         }
 

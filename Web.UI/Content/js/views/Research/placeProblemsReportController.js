@@ -9,6 +9,7 @@ define(function (require) {
     // models
     var person = require('person');
     var placeProblems = require('placeProblems');
+    var placeProblemsController = require('placeProblemsController');
     var placeProblemsReport = require('placeProblemsReport');
 
     function loadEvents() {
@@ -47,7 +48,7 @@ define(function (require) {
                     $(this).append(findPersonHelper.getMenuOptions(row));
             },
             'mouseout .personAction1': function (e, value, row, index) {
-                $('#personInfoDiv').hide();
+                $('#placeProblemsPersonInfoDiv').hide();
             },
             'mouseover .personAction1': function (e, value, row, index) {
 
@@ -79,8 +80,8 @@ define(function (require) {
                 }
 
                 $('#content').append(html);
-                $('#personInfoDiv').show();
-                $("#personInfoDiv").position({
+                $('#placeProblemsPersonInfoDiv').show();
+                $("#placeProblemsPersonInfoDiv").position({
                     my: "center+33 center-45",
                     at: "center",
                     of: $("#placeProblemsReportForm")

@@ -18,7 +18,7 @@ define(function(require) {
 
     function updateForm() {
         if (person.id) {
-            $("#findCluesPersonId").val(person.name);
+            $("#findCluesPersonId").val(person.id);
         }
         if (person.researchType) {
             $("#findCluesResearchType").val(person.researchType);
@@ -37,6 +37,9 @@ define(function(require) {
         }
         if (person.reportId) {
             $("#findCluesReportId").val(person.reportId);
+        }
+        if (person.addChildren) {
+            $('#addChildren').prop('checked', person.addChildren);
         }
     }
 
@@ -68,6 +71,28 @@ define(function(require) {
 
     }
 
+    function addDecendantGenerationOptions() {
+        var options = [];
+        options[0] = "1";
+        options[1] = "2";
+        options[2] = "3";
+        addGenerationOptions(options);
+        $("#startingPointGeneration").val(person.generation);
+    }
+
+    function addAncestorGenerationOptions() {
+        var options = [];
+        options[0] = "2";
+        options[1] = "3";
+        options[2] = "4";
+        options[3] = "5";
+        options[4] = "6";
+        options[5] = "7";
+        options[6] = "8";
+        addGenerationOptions(options);
+        $("#startingPointGeneration").val(person.generation);
+    }
+
     function updateResearchData() {
         $("#findCluesReportId").val(person.reportId);
         var reportText = $("#findCluesReportId option:selected").text();
@@ -80,12 +105,18 @@ define(function(require) {
             person.name = reportText.substring(nameIndex + 11, dateIndex);
             person.researchType = reportText.substring(researchTypeIndex + 17, generationoIndex);
             person.generation = reportText.substring(generationoIndex + 16, generationoIndex + 17);
+            person.loadPersons($("#startingPointPersonId"));
+            //                person.reportId = $("#startingPointReportId option:selected").val();
+        }
+        if (person.researchType === constants.DESCENDANTS) {
+            addDecendantGenerationOptions();
+        } else {
+            addAncestorGenerationOptions();
         }
         updateForm();
     }
 
     function loadReports(refreshReport) {
-        retrieve.addSelect = false;
         retrieve.loadReports($("#findCluesReportId"), refreshReport);
         updateResearchData();
     }
@@ -104,6 +135,7 @@ define(function(require) {
         loadEvents();
         loadSearchCriteria(); 
         loadReports();
+        person.loadPersons($("#findCluesPersonId"));
         retrieve.findReport();
         updateForm();
         system.openForm(findClues.form, findClues.formTitleImage, findClues.spinner);
@@ -198,6 +230,7 @@ define(function(require) {
                     person.loadPersons($("#findCluesPersonId"));
                 }
                 findPersonModel.reset();
+                system.spinnerArea = findClues.spinnerArea;
             });
             return false;
         });
@@ -211,6 +244,7 @@ define(function(require) {
                     loadReports(true);
                 }
                 retrieve.reset();
+                system.spinnerArea = findClues.spinnerArea;
             });
             return false;
         });
@@ -256,6 +290,7 @@ define(function(require) {
             } else {
                 msgBox.message("Sorry, there is nothing previous to display.");
             }
+            system.spinnerArea = findClues.spinnerArea;
         });
 
         $("#findCluesSubmitButton").unbind('click').bind('click', function(e) {

@@ -182,7 +182,7 @@
     <Compile Include="Data\FindCluesInputDO.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Data\AnalyzeListItemDO.cs" />
+    <Compile Include="Data\FindClueListItemDO.cs" />
     <Compile Include="Data\HintInputDO.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>

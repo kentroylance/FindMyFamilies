@@ -72,7 +72,7 @@ define(function(require) {
     }
 
     function mouseOverTrigger() {
-        //$('#personInfoDiv').empty();
+        $('#personUrlsDiv').empty();
         var mouseOver = $(this);
         var id = mouseOver.data('id');
         var row = $('#' + id);

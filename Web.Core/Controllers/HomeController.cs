@@ -126,7 +126,7 @@ namespace FindMyFamilies.Web.Controllers {
             if (findCluesInputDO != null) {
                 try {
                     session = GetSession();
-                    result.list = Service.GetAnalyzeData(findCluesInputDO, ref session);
+                    result.list = Service.FindClues(findCluesInputDO, ref session);
                     ResetTokenHourExpire();
                     result.errorMessage = session.ErrorMessage;
                 } catch (Exception) {
