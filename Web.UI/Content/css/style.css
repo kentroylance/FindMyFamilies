@@ -872,3 +872,7 @@ h1 i, h2 i, h3 i, h4 i, h5 i, h6 i {
 #findPersonForm .selectContainer .form-control-feedback {
      right: 25px;
 }
+
+.findClue-table-clues {
+    width: 542.5px !important;
+}
