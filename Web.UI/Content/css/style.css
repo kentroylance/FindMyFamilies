@@ -876,3 +876,8 @@ h1 i, h2 i, h3 i, h4 i, h5 i, h6 i {
 .findClue-table-clues {
     width: 542.5px !important;
 }
+
+.options-dropdown {
+    width: 10%;
+    padding-left: 2px;
+}

@@ -5,88 +5,111 @@
 
 
 <div class="panel-body">
-<form class="form-horizontal " role="form">
-<div class="search-url-container-right">
-    <div class="form-group research-left-right-top">
-        <div class="col-sm-2">
-            <b>Person:</b>
-        </div>
-        <div class="col-sm-10">
-            @Html.Raw(AncestryHelper.PersonDropDown(Model.Person, Model))
-        </div>
+    <form class="form-horizontal " role="form">
+        <div class="form-group">
+            <div class="row">
+                <label for="personUrlOptionsYearRange" class="col-sm-2 control-label">Year Range:</label>
+                <div class="col-sm-2 options-dropdown">
+                    <select class="form-control select2Digit" id="personUrlOptionsYearRange">
+                        <option>0</option>
+                        <option>1</option>
+                        <option selected>2</option>
+                        <option>5</option>
+                        <option>10</option>
+                    </select>
+                </div>
 
-        <div class="col-sm-2">
-            <b>Father:</b>
+                <div class="col-sm-7">
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="personUrlOptionsMaidenName" name="optradio">Maiden Name</label>&nbsp;&nbsp;
+                        <label><input type="checkbox" id="personUrlOptionsMiddleName" name="optradio">Middle Name</label>&nbsp;&nbsp;
+                        <label><input type="checkbox" id="personUrlOptionsMiddleName" name="optradio">Place</label>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-10">
-            @if (!Model.Person.Father.IsEmpty) {
-                @Html.Raw(AncestryHelper.PersonDropDown(Model.Person.Father, Model))
+           
+        <div class="search-url-container-right">
+            <div class="form-group research-left-right-top">
+                <div class="col-sm-2">
+                    <b>Person:</b>
+                </div>
+                <div class="col-sm-10">
+                    @Html.Raw(AncestryHelper.PersonDropDown(Model.Person, Model))
+                </div>
+
+                <div class="col-sm-2">
+                    <b>Father:</b>
+                </div>
+                <div class="col-sm-10">
+                    @if (!Model.Person.Father.IsEmpty) {
+                        @Html.Raw(AncestryHelper.PersonDropDown(Model.Person.Father, Model))
                         @*                    @Html.Raw(Model.Person.Father.Fullname + ",  " + Model.Person.Father.LifeSpan + ",  " + AncestryHelper.GetYearsLived(Model.Person.Father) + " - ")*@
                         @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.PersonUrl(Model.Person.Father, Model) + "\" target=\"_blank\">Person</a>,&nbsp;")*@
                         @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.TreeUrl(Model.Person.Father, Model) + "\" target=\"_blank\">Tree</a>,&nbsp;")*@
                         @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.FanChartUrl(Model.Person.Father, Model) + "\" target=\"_blank\">Fan</a>,&nbsp;")*@
                         @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.DescendancyUrl(Model.Person.Father, Model) + "\" target=\"_blank\">Descendancy</a>,&nbsp;")*@
                         @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.familySearchUrl(Model.Person.Father, Model) + "\" target=\"_blank\">Search</a>")*@
-            } else {
-                @Html.Raw("&nbsp;")
-            }
-        </div>
+                    } else {
+                        @Html.Raw("&nbsp;")
+                    }
+                </div>
 
-        <div class="col-sm-2">
-            <b>Mother:</b>
-        </div>
-        <div class="col-sm-10">
-            @if (!Model.Person.Mother.IsEmpty) {
-                @Html.Raw(AncestryHelper.PersonDropDown(Model.Person.Mother, Model))
+                <div class="col-sm-2">
+                    <b>Mother:</b>
+                </div>
+                <div class="col-sm-10">
+                    @if (!Model.Person.Mother.IsEmpty) {
+                        @Html.Raw(AncestryHelper.PersonDropDown(Model.Person.Mother, Model))
                         @*                    @Html.Raw(Model.Person.Mother.Fullname + ",  " + Model.Person.Mother.LifeSpan + ",  " + AncestryHelper.GetYearsLived(Model.Person.Mother) + " - ")*@
                         @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.PersonUrl(Model.Person.Mother, Model) + "\" target=\"_blank\">Person</a>,&nbsp;")*@
                         @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.TreeUrl(Model.Person.Mother, Model) + "\" target=\"_blank\">Tree</a>,&nbsp;")*@
                         @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.FanChartUrl(Model.Person.Mother, Model) + "\" target=\"_blank\">Fan</a>,&nbsp;")*@
                         @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.DescendancyUrl(Model.Person.Mother, Model) + "\" target=\"_blank\">Descendancy</a>,&nbsp;")*@
                         @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.familySearchUrl(Model.Person.Mother, Model) + "\" target=\"_blank\">Search</a>")*@
-            } else {
-                @Html.Raw("&nbsp;")
-            }
-        </div>
+                    } else {
+                        @Html.Raw("&nbsp;")
+                    }
+                </div>
 
-        <div class="col-sm-2">
-            <b>Spouse:</b>
-        </div>
-        <div class="col-sm-10">
-            @if (Model.Person.Spouses.Count > 0) {
-                @Html.Raw(AncestryHelper.PersonDropDown(Model.Person.SortedSpouses[0], Model))
+                <div class="col-sm-2">
+                    <b>Spouse:</b>
+                </div>
+                <div class="col-sm-10">
+                    @if (Model.Person.Spouses.Count > 0) {
+                        @Html.Raw(AncestryHelper.PersonDropDown(Model.Person.SortedSpouses[0], Model))
                         @*                    @Html.Raw(Model.Person.SortedSpouses[0].Fullname + ",  " + Model.Person.SortedSpouses[0].LifeSpan + ",  " + AncestryHelper.GetYearsLived(Model.Person.SortedSpouses[0]) + " - ")*@
                         @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.PersonUrl(Model.Person.SortedSpouses[0], Model) + "\" target=\"_blank\">Person</a>,&nbsp;")*@
                         @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.TreeUrl(Model.Person.SortedSpouses[0], Model) + "\" target=\"_blank\">Tree</a>,&nbsp;")*@
                         @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.FanChartUrl(Model.Person.SortedSpouses[0], Model) + "\" target=\"_blank\">Fan</a>,&nbsp;")*@
                         @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.DescendancyUrl(Model.Person.SortedSpouses[0], Model) + "\" target=\"_blank\">Descendancy</a>,&nbsp;")*@
                         @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.familySearchUrl(Model.Person.SortedSpouses[0], Model) + "\" target=\"_blank\">Search</a>")*@
-            } else {
-                @Html.Raw("&nbsp;")
-            }
-        </div>
+                    } else {
+                        @Html.Raw("&nbsp;")
+                    }
+                </div>
 
-        <div class="col-sm-2">
-            <b>Children:</b>
-        </div>
+                <div class="col-sm-2">
+                    <b>Children:</b>
+                </div>
 
-        <div class="col-sm-10">
-            @if ((Model.Person.Spouses.Count > 0) && Model.Person.SortedSpouses[0].Children.Count > 0) {
-                @Html.Raw(AncestryHelper.PersonDropDown(Model.Person.SortedSpouses[0].SortedChildren[0], Model))
-            } else {
-                @Html.Raw("&nbsp;")
-            }
-        </div>
+                <div class="col-sm-10">
+                    @if ((Model.Person.Spouses.Count > 0) && Model.Person.SortedSpouses[0].Children.Count > 0) {
+                        @Html.Raw(AncestryHelper.PersonDropDown(Model.Person.SortedSpouses[0].SortedChildren[0], Model))
+                    } else {
+                        @Html.Raw("&nbsp;")
+                    }
+                </div>
 
-        @if ((Model.Person.Spouses.Count > 0) && Model.Person.SortedSpouses[0].Children.Count > 1) {
-            for (int i = 1; i < Model.Person.SortedSpouses[0].Children.Count; i++) {
-                @Html.Raw("<div class=\"col-sm-2\">")
-                ;
-                @Html.Raw("&nbsp;")
-                @Html.Raw("</div>")
-                ;
-                @Html.Raw("<div class=\"col-sm-10\">")
-                @Html.Raw(AncestryHelper.PersonDropDown(Model.Person.SortedSpouses[0].SortedChildren[i], Model))
+                @if ((Model.Person.Spouses.Count > 0) && Model.Person.SortedSpouses[0].Children.Count > 1) {
+                    for (int i = 1; i < Model.Person.SortedSpouses[0].Children.Count; i++) {
+                        @Html.Raw("<div class=\"col-sm-2\">")
+                        ;
+                        @Html.Raw("&nbsp;")
+                        @Html.Raw("</div>")
+                        ;
+                        @Html.Raw("<div class=\"col-sm-10\">")
+                        @Html.Raw(AncestryHelper.PersonDropDown(Model.Person.SortedSpouses[0].SortedChildren[i], Model))
 
                         @*                    @Html.Raw(Model.Person.SortedSpouses[0].SortedChildren[i].Fullname + ",  " + Model.Person.SortedSpouses[0].SortedChildren[i].LifeSpan + ",  " + AncestryHelper.GetYearsLived(Model.Person.SortedSpouses[0].SortedChildren[i]) + " - ")*@
                         @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.PersonUrl(Model.Person.SortedSpouses[0].SortedChildren[i], Model) + "\" target=\"_blank\">Person</a>,&nbsp;")*@
@@ -94,19 +117,19 @@
                         @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.FanChartUrl(Model.Person.SortedSpouses[0].SortedChildren[i], Model) + "\" target=\"_blank\">Fan</a>,&nbsp;")*@
                         @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.DescendancyUrl(Model.Person.SortedSpouses[0].SortedChildren[i], Model) + "\" target=\"_blank\">Descendancy</a>,&nbsp;")*@
                         @*                    @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.familySearchUrl(Model.Person.SortedSpouses[0].SortedChildren[i], Model) + "\" target=\"_blank\">Search</a>")*@
-                @Html.Raw("</div>")
-            }
-        }
+                        @Html.Raw("</div>")
+                    }
+                }
 
 
-        @if (Model.Person.Spouses.Count > 1) {
-            foreach (var spouse in Model.Person.SortedSpouses) {
-                if (!Model.Person.SortedSpouses[0].Id.Equals(spouse.Id)) {
-                    @Html.Raw("<div class=\"col-sm-2\">")
-                    @Html.Raw("<b>Spouse:</b>")
-                    @Html.Raw("</div>")
-                    @Html.Raw("<div class=\"col-sm-10\">")
-                    @Html.Raw(AncestryHelper.PersonDropDown(spouse, Model))
+                @if (Model.Person.Spouses.Count > 1) {
+                    foreach (var spouse in Model.Person.SortedSpouses) {
+                        if (!Model.Person.SortedSpouses[0].Id.Equals(spouse.Id)) {
+                            @Html.Raw("<div class=\"col-sm-2\">")
+                            @Html.Raw("<b>Spouse:</b>")
+                            @Html.Raw("</div>")
+                            @Html.Raw("<div class=\"col-sm-10\">")
+                            @Html.Raw(AncestryHelper.PersonDropDown(spouse, Model))
 
                             @*                        @Html.Raw(spouse.Fullname + ",  " + spouse.LifeSpan + ",  " + AncestryHelper.GetYearsLived(spouse) + " - ")*@
                             @*                        @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.PersonUrl(spouse, Model) + "\" target=\"_blank\">Person</a>,&nbsp;")*@
@@ -114,127 +137,127 @@
                             @*                        @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.FanChartUrl(spouse, Model) + "\" target=\"_blank\">Fan</a>,&nbsp;")*@
                             @*                        @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.DescendancyUrl(spouse, Model) + "\" target=\"_blank\">Descendancy</a>,&nbsp;")*@
                             @*                        @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.familySearchUrl(spouse, Model) + "\" target=\"_blank\">Search</a>")*@
-                    @Html.Raw("</div>")
+                            @Html.Raw("</div>")
 
-                    @Html.Raw("<div class=\"col-sm-2\">")
-                    @Html.Raw("<b>Children:</b>")
-                    @Html.Raw("</div>")
+                            @Html.Raw("<div class=\"col-sm-2\">")
+                            @Html.Raw("<b>Children:</b>")
+                            @Html.Raw("</div>")
 
-                    @Html.Raw("<div class=\"col-sm-10\">")
-                    if (spouse.Children.Count > 0) {
-                        @Html.Raw(AncestryHelper.PersonDropDown(spouse.SortedChildren[0], Model))
+                            @Html.Raw("<div class=\"col-sm-10\">")
+                            if (spouse.Children.Count > 0) {
+                                @Html.Raw(AncestryHelper.PersonDropDown(spouse.SortedChildren[0], Model))
                                 @*                            @Html.Raw(spouse.SortedChildren[0].Fullname + ",  " + spouse.SortedChildren[0].LifeSpan + ",  " + AncestryHelper.GetYearsLived(spouse.SortedChildren[0]) + " - ")*@
                                 @*                            @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.PersonUrl(spouse.SortedChildren[0], Model) + "\" target=\"_blank\">Person</a>,&nbsp;")*@
                                 @*                            @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.TreeUrl(spouse.SortedChildren[0], Model) + "\" target=\"_blank\">Tree</a>,&nbsp;")*@
                                 @*                            @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.FanChartUrl(spouse.SortedChildren[0], Model) + "\" target=\"_blank\">Fan</a>,&nbsp;")*@
                                 @*                            @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.DescendancyUrl(spouse.SortedChildren[0], Model) + "\" target=\"_blank\">Descendancy</a>,&nbsp;")*@
                                 @*                            @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.familySearchUrl(spouse.SortedChildren[0], Model) + "\" target=\"_blank\">Search</a>")*@
-                    } else {
-                        @Html.Raw("&nbsp;")
-                    }
-                    @Html.Raw("</div>")
-
-                    if (spouse.Children.Count > 1) {
-                        for (int i = 1; i < spouse.Children.Count; i++) {
-                            @Html.Raw("<div class=\"col-sm-2\">")
-                            @Html.Raw("&nbsp;")
+                            } else {
+                                @Html.Raw("&nbsp;")
+                            }
                             @Html.Raw("</div>")
-                            @Html.Raw("<div class=\"col-sm-10\">")
-                            @Html.Raw(AncestryHelper.PersonDropDown(spouse.SortedChildren[i], Model))
+
+                            if (spouse.Children.Count > 1) {
+                                for (int i = 1; i < spouse.Children.Count; i++) {
+                                    @Html.Raw("<div class=\"col-sm-2\">")
+                                    @Html.Raw("&nbsp;")
+                                    @Html.Raw("</div>")
+                                    @Html.Raw("<div class=\"col-sm-10\">")
+                                    @Html.Raw(AncestryHelper.PersonDropDown(spouse.SortedChildren[i], Model))
                                     @*                                @Html.Raw(spouse.SortedChildren[i].Fullname + ",  " + spouse.SortedChildren[i].LifeSpan + ",  " + AncestryHelper.GetYearsLived(spouse.SortedChildren[i]) + " - ")*@
                                     @*                                @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.PersonUrl(spouse.SortedChildren[i], Model) + "\" target=\"_blank\">Person</a>,&nbsp;")*@
                                     @*                                @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.TreeUrl(spouse.SortedChildren[i], Model) + "\" target=\"_blank\">Tree</a>,&nbsp;")*@
                                     @*                                @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.FanChartUrl(spouse.SortedChildren[i], Model) + "\" target=\"_blank\">Fan</a>,&nbsp;")*@
                                     @*                                @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.DescendancyUrl(spouse.SortedChildren[i], Model) + "\" target=\"_blank\">Descendancy</a>,&nbsp;")*@
                                     @*                                @Html.Raw("<a style=\"color: rgb(50,205,50)\" href=\"" + AncestryHelper.familySearchUrl(spouse.SortedChildren[i], Model) + "\" target=\"_blank\">Search</a>")*@
-                            @Html.Raw("</div>")
+                                    @Html.Raw("</div>")
+                                }
+                            }
                         }
                     }
                 }
-            }
-        }
 
-        @if (!Model.Person.Living && !(Model.Person.BirthYear <= (DateTime.Now.Year - 110))) {
-            @Html.Raw("<div class=\"col-sm-2\">")
-            ;
-            @Html.Raw("&nbsp;")
-            @Html.Raw("</div>")
-            ;
-            @Html.Raw("<div class=\"col-sm-10\">")
-            @Html.Raw("&nbsp;")
-            @Html.Raw("</div>")
-            @Html.Raw("<div class=\"col-sm-2\">")
-            ;
-            @Html.Raw("&nbsp;")
-            @Html.Raw("</div>")
-            ;
-            @Html.Raw("<div class=\"col-sm-10\">")
-            @Html.Raw("110-Year Rule - Born within the last 110 years. See <a class=\"fancyboxvideo fitVideo\" style=\"color: rgb(0,0,255)\" data-width=\"1014\" data-height=\"650\" data-fancybox-type=\"iframe\" href=\"http://broadcast.lds.org/elearning/FHD/Local_Support/Consultant/Temple_Policy-Name_Submissions/player.html\">Video (Slide 6)</a> or <a class=\"fancyboxvideo fitVideo\" style=\"color: rgb(0,0,255)\" data-width=\"1014\" data-height=\"650\" data-fancybox-type=\"iframe\" href=\"https://www.lds.org/manual/members-guide-to-temple-and-family-history-work/chapter-7-providing-temple-ordinances?lang=eng\">Manual</a>")
-            @Html.Raw("</div>")
-        }
-    </div>
-</div>
+                @if (!Model.Person.Living && !(Model.Person.BirthYear <= (DateTime.Now.Year - 110))) {
+                    @Html.Raw("<div class=\"col-sm-2\">")
+                    ;
+                    @Html.Raw("&nbsp;")
+                    @Html.Raw("</div>")
+                    ;
+                    @Html.Raw("<div class=\"col-sm-10\">")
+                    @Html.Raw("&nbsp;")
+                    @Html.Raw("</div>")
+                    @Html.Raw("<div class=\"col-sm-2\">")
+                    ;
+                    @Html.Raw("&nbsp;")
+                    @Html.Raw("</div>")
+                    ;
+                    @Html.Raw("<div class=\"col-sm-10\">")
+                    @Html.Raw("110-Year Rule - Born within the last 110 years. See <a class=\"fancyboxvideo fitVideo\" style=\"color: rgb(0,0,255)\" data-width=\"1014\" data-height=\"650\" data-fancybox-type=\"iframe\" href=\"http://broadcast.lds.org/elearning/FHD/Local_Support/Consultant/Temple_Policy-Name_Submissions/player.html\">Video (Slide 6)</a> or <a class=\"fancyboxvideo fitVideo\" style=\"color: rgb(0,0,255)\" data-width=\"1014\" data-height=\"650\" data-fancybox-type=\"iframe\" href=\"https://www.lds.org/manual/members-guide-to-temple-and-family-history-work/chapter-7-providing-temple-ordinances?lang=eng\">Manual</a>")
+                    @Html.Raw("</div>")
+                }
+            </div>
+        </div>
 
-    <div class="search-url-container-left">
-        <div class="panel-body">
-            <div class="form-group research-left-right-top">
-                <div class="col-sm-3 research-col-left">
-                    <b>ID:</b>
-                </div>
-                <div class="col-sm-8 research-left-container">
-                    <input type="text" class="form-control" id="personUrlsId" value="@Model.Person.Id" style="background-color: #FFFFFF;" readonly="readonly">
-                </div>
-                <div class="col-sm-3 research-col-left">
-                    <b>Name:</b>
-                </div>
-                <div class="col-sm-8  research-left-container">
-                    <input type="text" class="form-control" id="personUrlsFullName" value="@Model.Person.Fullname" style="background-color: #FFFFFF;" readonly="readonly">
-                </div>
-                <div class="col-sm-3 research-col-left">
-                    <b>Birth Date:</b>
-                </div>
-                <div class="col-sm-8  research-left-container">
-                    <input type="text" class="form-control" id="personUrlsBirthDate" value="@Model.Person.BirthDateString" style="background-color: #FFFFFF;" readonly="readonly">
-                </div>
-                <div class="col-sm-3 research-col-left">
-                    <b>Birth Place:</b>
-                </div>
-                <div class="col-sm-8  research-left-container">
-                    <input type="text" class="form-control" id="personUrlsBirthPlace" value="@Model.Person.BirthPlace" style="background-color: #ffffff;" readonly="readonly">
-                </div>
-                <div class="col-sm-3 research-col-left">
-                    <b>Death Date:</b>
-                </div>
-                <div class="col-sm-8  research-left-container">
-                    <input type="text" class="form-control" id="personUrlsDeathDate" value="@Model.Person.DeathDateString" style="background-color: #FFFFFF;" readonly="readonly">
-                </div>
-                <div class="col-sm-3 research-col-left">
-                    <b>Death Place:</b>
-                </div>
-                <div class="col-sm-8  research-left-container">
-                    <input type="text" class="form-control" id="personUrlsDeathPlace" value="@Model.Person.DeathPlace" style="background-color: #ffffff;" readonly="readonly">
-                </div>
-                <div class="col-sm-3 research-col-left">
-                    <b>Spouse:</b>
-                </div>
-                <div class="col-sm-8 research-left-container">
-                    <input type="text" class="form-control" id="personUrlsSpouse" value="@Model.Person.Spouse.Fullname" style="background-color: #FFFFFF;" readonly="readonly">
-                </div>
-                <div class="col-sm-3 research-col-left">
-                    <b>Mother:</b>
-                </div>
-                <div class="col-sm-8 research-left-container">
-                    <input type="text" class="form-control" id="personUrlsMother" value="@Model.Person.Mother.Fullname" style="background-color: #ffffff;" readonly="readonly">
-                </div>
-                <div class="col-sm-3 research-col-left">
-                    <b>Father:</b>
-                </div>
-                <div class="col-sm-8 research-left-container">
-                    <input type="text" class="form-control" id="personUrlsFather" value="@Model.Person.Father.Fullname" style="background-color: #FFFFFF;" readonly="readonly">
+        <div class="search-url-container-left">
+            <div class="panel-body">
+                <div class="form-group research-left-right-top">
+                    <div class="col-sm-3 research-col-left">
+                        <b>ID:</b>
+                    </div>
+                    <div class="col-sm-8 research-left-container">
+                        <input type="text" class="form-control" id="personUrlsId" value="@Model.Person.Id" style="background-color: #FFFFFF;" readonly="readonly">
+                    </div>
+                    <div class="col-sm-3 research-col-left">
+                        <b>Name:</b>
+                    </div>
+                    <div class="col-sm-8  research-left-container">
+                        <input type="text" class="form-control" id="personUrlsFullName" value="@Model.Person.Fullname" style="background-color: #FFFFFF;" readonly="readonly">
+                    </div>
+                    <div class="col-sm-3 research-col-left">
+                        <b>Birth Date:</b>
+                    </div>
+                    <div class="col-sm-8  research-left-container">
+                        <input type="text" class="form-control" id="personUrlsBirthDate" value="@Model.Person.BirthDateString" style="background-color: #FFFFFF;" readonly="readonly">
+                    </div>
+                    <div class="col-sm-3 research-col-left">
+                        <b>Birth Place:</b>
+                    </div>
+                    <div class="col-sm-8  research-left-container">
+                        <input type="text" class="form-control" id="personUrlsBirthPlace" value="@Model.Person.BirthPlace" style="background-color: #ffffff;" readonly="readonly">
+                    </div>
+                    <div class="col-sm-3 research-col-left">
+                        <b>Death Date:</b>
+                    </div>
+                    <div class="col-sm-8  research-left-container">
+                        <input type="text" class="form-control" id="personUrlsDeathDate" value="@Model.Person.DeathDateString" style="background-color: #FFFFFF;" readonly="readonly">
+                    </div>
+                    <div class="col-sm-3 research-col-left">
+                        <b>Death Place:</b>
+                    </div>
+                    <div class="col-sm-8  research-left-container">
+                        <input type="text" class="form-control" id="personUrlsDeathPlace" value="@Model.Person.DeathPlace" style="background-color: #ffffff;" readonly="readonly">
+                    </div>
+                    <div class="col-sm-3 research-col-left">
+                        <b>Spouse:</b>
+                    </div>
+                    <div class="col-sm-8 research-left-container">
+                        <input type="text" class="form-control" id="personUrlsSpouse" value="@Model.Person.Spouse.Fullname" style="background-color: #FFFFFF;" readonly="readonly">
+                    </div>
+                    <div class="col-sm-3 research-col-left">
+                        <b>Mother:</b>
+                    </div>
+                    <div class="col-sm-8 research-left-container">
+                        <input type="text" class="form-control" id="personUrlsMother" value="@Model.Person.Mother.Fullname" style="background-color: #ffffff;" readonly="readonly">
+                    </div>
+                    <div class="col-sm-3 research-col-left">
+                        <b>Father:</b>
+                    </div>
+                    <div class="col-sm-8 research-left-container">
+                        <input type="text" class="form-control" id="personUrlsFather" value="@Model.Person.Father.Fullname" style="background-color: #FFFFFF;" readonly="readonly">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
         <div class="col-lg-12">
             <hr />
             <div class="text-center">
