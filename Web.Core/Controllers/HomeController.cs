@@ -54,6 +54,28 @@ namespace FindMyFamilies.Web.Controllers {
         }
 
         [System.Web.Mvc.HttpGet]
+        public JsonResult GetPersonInfo(string id) {
+            var personInfo = new FindListItemDO();
+
+            if (id != null) {
+                try {
+                    session = GetSession();
+                    var researchDO = new ResearchDO();
+                    researchDO.CurrentPersonId = id;
+                    researchDO.PersonId = id;
+                    personInfo = Service.GetPersonWithSpouseParents(researchDO, ref session);
+                    ResetTokenHourExpire();
+                    personInfo.errorMessage = session.ErrorMessage;
+                } catch (Exception) {
+                    personInfo.errorMessage = "Error retrieving starting point report data";
+                }
+            }
+
+            return Json(personInfo, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [System.Web.Mvc.HttpGet]
         public ActionResult DateProblems() {
             return PartialView("~/Views/Research/DateProblems.cshtml");
         }
@@ -263,8 +285,15 @@ namespace FindMyFamilies.Web.Controllers {
 //            Logger.Error("KeepSessionAlive IsAuthenticated " + DisplayName + " " + DateTime.Now + " TokenHourExpire:" + TokenHourExpire + "  Token24HourExpire:" + Token24HourExpire);
             //if ((DateTime.Now.AddMinutes(16) > TokenHourExpire) || (DateTime.Now.AddMinutes(16) > Token24HourExpire)) {
             session = GetSession();
-            Service.GetCurrentPerson(ref session);
-            ResetTokenHourExpire();
+            try {
+                Service.GetCurrentPerson(ref session);
+                ResetTokenHourExpire();
+            } catch (Exception e) {
+                if (session.StatusCode.Equals(HttpStatusCode.Unauthorized.ToString())) {
+                    ClearLoginInfo();
+                }
+                throw;
+            }
             return null;
         }
 

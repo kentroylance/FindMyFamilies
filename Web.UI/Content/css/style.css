@@ -865,6 +865,21 @@ h1 i, h2 i, h3 i, h4 i, h5 i, h6 i {
         position: absolute;
 }
 
+ .startingPointPersonInfo {
+        background: rgba(240, 240, 240, .99);
+        width: 350px;
+        height: auto;
+        padding: 7px;
+        float: none;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 4px 7px 5px 2px rgba(200, 200, 200, 0.1);
+        border: 1px solid rgb(168, 168, 168);
+        border-radius: 10px;
+        display: none;
+        position: absolute;
+}
+
 #findPersonForm .form-control-feedback {
      right: 15px;
 }

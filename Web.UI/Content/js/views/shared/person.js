@@ -1,4 +1,4 @@
-﻿define(function (require) {
+﻿define(function(require) {
 
     var $ = require('jquery');
     var system = require('system');
@@ -6,6 +6,20 @@
 
     var _id;
     var _name;
+    var _firstName;
+    var _middleName
+    var _lastName;
+    var _fullName;
+    var _gender;
+    var _birthYear;
+    var _deathYear;
+    var _birthPlace;
+    var _deathPlace;
+    var _motherName;
+    var _fatherName;
+    var _spouseName;
+    var _spouseGender;
+
     var _researchType;
     var _generation;
     var _includeMaidenName = false;
@@ -20,9 +34,22 @@
     var _generationAncestors = constants.GENERATION;
     var _generationDescendants = "1";
 
-    function PersonDO(id, name, researchType, generation, includeMaidenName, includeMiddleName, includePlace, yearRange, history, findPersonOptions, reportId, addChildren) {
+    function PersonDO(id, name, firstName, middleName, lastName, fullName, gender, birthYear, deathYear, birthPlace, deathPlace, motherName, fatherName, spouseName, spouseGender, researchType, generation, includeMaidenName, includeMiddleName, includePlace, yearRange, history, findPersonOptions, reportId, addChildren) {
         this.id = id;
         this.name = name;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.fullName = fullName;
+        this.gender = gender;
+        this.birthYear = birthYear;
+        this.deathYear = deathYear;
+        this.birthPlace = birthPlace;
+        this.deathPlace = deathPlace;
+        this.motherName = motherName;
+        this.fatherName = fatherName;
+        this.spouseName = spouseName;
+        this.spouseGender = spouseGender;
         this.researchType = researchType;
         this.generation = generation;
         this.includeMaidenName = includeMaidenName;
@@ -35,10 +62,26 @@
         this.addChildren = addChildren;
     }
 
+    function getPersonImage(gender) {
+        if (gender === constants.MALE) {
+            return "<i class=\"fa fa-user color-dark-blue\"></i>&nbsp;";
+        } else {
+            return "<i class=\"fa fa-user color-red\"></i>&nbsp;";
+        }
+    }
+
+    function getPersonColor(gender) {
+        if (gender === constants.MALE) {
+            return "rgb(0,0,255)";
+        } else {
+            return "rgb(255,0,0)";
+        }
+    }
+
     function shiftPersons() {
         var temp = {}
         temp[_id] = _name;
-        $.each(_history, function (id, name) {
+        $.each(_history, function(id, name) {
             temp[id] = name;
         });
         _history = temp;
@@ -46,7 +89,7 @@
 
     function save() {
         if (window.localStorage) {
-            var person = new PersonDO(_id, _name, _researchType, _generation, _includeMaidenName, _includeMiddleName, _includePlace, _yearRange, _history, _findPersonOptions, _reportId, _addChildren);
+            var person = new PersonDO(_id, _name, _firstName, _middleName, _lastName, _fullName, _gender, _birthYear, _deathYear, _birthPlace, _deathPlace, _motherName, _fatherName, _spouseName, _spouseGender, _researchType, _generation, _includeMaidenName, _includeMiddleName, _includePlace, _yearRange, _history, _findPersonOptions, _reportId, _addChildren);
             localStorage.setItem(constants.PERSON, JSON.stringify(person));
         }
     }
@@ -66,13 +109,13 @@
         isInList(_id, _name);
         id.empty();
         if (Object.keys(_history).length <= constants.HISTORY_MAX) {
-            $.each(_history, function (i, value) {
+            $.each(_history, function(i, value) {
                 var optionhtml = '<option value="' + i + '" selected>' + value + '</option>';
                 id.append(optionhtml);
             });
         } else {
             var iterator = 0;
-            $.each(_history, function (i, value) {
+            $.each(_history, function(i, value) {
                 iterator++;
                 if (iterator == constants.HISTORY_MAX + 1) {
                     delete _history[i];
@@ -80,12 +123,128 @@
                 }
             });
 
-            $.each(_history, function (i, value) {
+            $.each(_history, function(i, value) {
                 var optionhtml = '<option value="' + i + '" selected>' + value + '</option>';
                 id.append(optionhtml);
             });
         }
         id.val(_id);
+    }
+
+    function getPersonInfoHoverHtml(id, personIdType) {
+        var html = "";
+        if (id === personIdType) {
+            html = "<label><span style=\"color: " + getPersonColor(_gender) + "\">" + _name + "</span></label><br>";
+            html += "<b>ID:</b>  " + _id + "<br>";
+            html += '<b>Birth Date:</b>  ' + ((_birthYear) ? (_birthYear) : "") + '<br>';
+            html += '<b>Birth Place:</b>  ' + ((_birthPlace) ? (_birthPlace) : "") + '<br>';
+            html += '<b>Death Date:</b>  ' + ((_deathYear) ? (_deathYear) : "") + '<br>';
+            html += '<b>Death Place:</b>  ' + ((_deathPlace) ? (_deathPlace) : "") + '<br>';
+            html += "<b>Spouse:</b>";
+            if (_spouseName) {
+                html += "  <span style=\"color: " + getPersonColor(_spouseGender) + "\">" + _spouseName + "</span><br>";
+            } else {
+                html += "<br>";
+            }
+            html += "<b>Mother:</b>";
+            if (_motherName) {
+                html += "  <span style=\"color: " + getPersonColor("Female") + "\">" + _motherName + "</span><br>";
+            } else {
+                html += "<br>";
+            }
+            html += "<b>Father:</b>";
+            if (_fatherName) {
+                html += "  <span style=\"color: " + getPersonColor("Male") + "\">" + _fatherName + "</span><br>";
+            } else {
+                html += "<br>";
+            }
+            $('#startingPointContent').empty();
+            $('#startingPointContent').append(html);
+            $('#startingPointPersonInfoDiv').show();
+            $("#startingPointPersonInfoDiv").position({
+                my: "center+200 center",
+                at: "center",
+                of: $("#startingPointForm")
+            });
+        } else {
+//            html = "<label><span style=\"color: " + getPersonColor(_gender) + "\">" + _name + "</span></label><br>";
+//            html += "<b>ID:</b>  " + _id + "<br>";
+//            html += '<b>Date:</b>  ' + ((_birthYear) ? (_birthYear) : "") + '<br>';
+//            html += '<b>Research Type:</b>  ' + ((_birthPlace) ? (_birthPlace) : "") + '<br>';
+//            html += '<b>Generations:</b>  ' + ((_deathYear) ? (_deathYear) : "") + '<br>';
+//            html += '<b>Records:</b>  ' + ((_deathPlace) ? (_deathPlace) : "") + '<br>';
+//            $('#startingPointContent').empty();
+//            $('#startingPointContent').append(html);
+//            $('#startingPointPersonInfoDiv').show();
+//            $("#startingPointPersonInfoDiv").position({
+//                my: "center+200 center",
+//                at: "center",
+//                of: $("#startingPointForm")
+//            });
+        }
+        return html;
+    }
+
+
+    function getPersonInfoHover(id, personIdType) {
+        if (_id && (!_firstName || (_firstName && _name.indexOf(_fullName) < 0))) {
+            $.ajax({
+                data: { "id": _id },
+                url: constants.GET_PERSON_INFO,
+                success: function(data) {
+                    if (data) {
+                        _firstName = data.firstName;
+                        _middleName = data.middleName;
+                        _lastName = data.lastName;
+                        _fullName = data.fullName;
+                        _gender = data.gender;
+                        _birthYear = data.birthYear;
+                        _deathYear = data.deathYear;
+                        _birthPlace = data.birthPlace;
+                        _deathPlace = data.deathPlace;
+                        _motherName = data.motherName;
+                        _fatherName = data.fatherName;
+                        _spouseName = data.spouseName;
+                        _spouseGender = data.spouseGender;
+                        save();
+                        getPersonInfoHoverHtml(id, personIdType);
+                    }
+                }
+            });
+        } else {
+            getPersonInfoHoverHtml(id, personIdType);
+        }
+    }
+
+    function getPersonInfo() {
+        if (_id && (!_firstName || (_firstName && _name.indexOf(_fullName) < 0))) {
+            $.ajax({
+                data: { "id": _id },
+                url: constants.GET_PERSON_INFO,
+                success: function(data) {
+                    if (data) {
+                        _firstName = data.firstName;
+                        _middleName = data.middleName;
+                        _lastName = data.lastName;
+                        _fullName = data.fullName;
+                        _gender = data.gender;
+                        _birthYear = data.birthYear;
+                        _deathYear = data.deathYear;
+                        _birthPlace = data.birthPlace;
+                        _deathPlace = data.deathPlace;
+                        _motherName = data.motherName;
+                        _fatherName = data.fatherName;
+                        _spouseName = data.spouseName;
+                        _spouseGender = data.spouseGender;
+                        save();
+                    }
+                },
+                'beforeSend': function() {
+                },
+                'complete': function() {
+                }
+            });
+        }
     }
 
     function resetReportId(reportId) {
@@ -119,6 +278,19 @@
 
             _id = person.id;
             _name = person.name;
+            _firstName = person.firstName;
+            _middleName = person.middleName;
+            _lastName = person.lastName;
+            _fullName = person.fullName;
+            _gender = person.gender;
+            _birthYear = person.birthYear;
+            _deathYear = person.deathYear;
+            _birthPlace = person.birthPlace;
+            _deathPlace = person.deathPlace;
+            _motherName = person.motherName;
+            _fatherName = person.fatherName;
+            _spouseName = person.spouseName;
+            _spouseGender = person.spouseGender;
             _researchType = person.researchType;
             _includeMaidenName = person.includeMaidenName;
             _includeMiddleName = person.includeMiddleName;
@@ -141,11 +313,11 @@
                 _findPersonOptions.push('amerancest');
             }
 
-       //     _reportId = startingPoint.reportId;
+            //     _reportId = startingPoint.reportId;
             if (!_reportId) {
                 _reportId = constants.REPORT_ID;
             }
-      //      _addChildren = startingPoint.addChildren;
+            //      _addChildren = startingPoint.addChildren;
             if (_generation) {
                 if (_researchType === constants.ANCESTORS) {
                     _generationAncestors = _generation;
@@ -193,23 +365,6 @@
         _addChildren = false;
     }
 
-    function getPersonImage(gender) {
-        if (gender === constants.MALE) {
-            return "<i class=\"fa fa-user color-dark-blue\"></i>&nbsp;";
-        } else {
-            return "<i class=\"fa fa-user color-red\"></i>&nbsp;";
-        }
-    }
-
-    function getPersonColor(gender) {
-        if (gender === constants.MALE) {
-            return "rgb(0,0,255)";
-        } else {
-            return "rgb(255,0,0)";
-        }
-    }
-
-
     load();
 
     var person = {
@@ -224,6 +379,84 @@
         },
         set name(value) {
             _name = value;
+        },
+        get firstName() {
+            return _firstName;
+        },
+        set firstName(value) {
+            _firstName = value;
+        },
+        get middleName() {
+            return _middleName;
+        },
+        set middleName(value) {
+            _middleName = value;
+        },
+        get lastName() {
+            return _lastName;
+        },
+        set lastName(value) {
+            _lastName = value;
+        },
+        get fullName() {
+            return _fullName;
+        },
+        set fullName(value) {
+            _fullName = value;
+        },
+        get gender() {
+            return _gender;
+        },
+        set gender(value) {
+            _gender = value;
+        },
+        get birthYear() {
+            return _birthYear;
+        },
+        set birthYear(value) {
+            _birthYear = value;
+        },
+        get deathYear() {
+            return _deathYear;
+        },
+        set deathYear(value) {
+            _deathYear = value;
+        },
+        get birthPlace() {
+            return _birthPlace;
+        },
+        set birthPlace(value) {
+            _birthPlace = value;
+        },
+        get deathPlace() {
+            return _deathPlace;
+        },
+        set deathPlace(value) {
+            _deathPlace = value;
+        },
+        get motherName() {
+            return _motherName;
+        },
+        set motherName(value) {
+            _motherName = value;
+        },
+        get fatherName() {
+            return _fatherName;
+        },
+        set fatherName(value) {
+            _fatherName = value;
+        },
+        get spouseName() {
+            return _spouseName;
+        },
+        set spouseName(value) {
+            _spouseName = value;
+        },
+        get spouseGender() {
+            return _spouseGender;
+        },
+        set spouseGender(value) {
+            _spouseGender = value;
         },
         get researchType() {
             return _researchType;
@@ -273,28 +506,34 @@
         set personHisory(value) {
             _history = value;
         },
-        shiftPersons: function () {
+        shiftPersons: function() {
             shiftPersons();
         },
-        save: function () {
+        save: function() {
             save();
         },
-        loadPersons: function (id) {
+        getPersonInfo: function() {
+            getPersonInfo();
+        },
+        loadPersons: function(id) {
             loadPersons(id);
         },
-        updateFromFindPerson: function (id, name) {
+        updateFromFindPerson: function(id, name) {
             updateFromFindPerson(id, name);
         },
-        isInList: function (id, name) {
+        isInList: function(id, name) {
             isInList(id, name);
         },
-        getPersonImage: function (gender) {
+        getPersonImage: function(gender) {
             return getPersonImage(gender);
         },
-        getPersonColor: function (gender) {
+        getPersonColor: function(gender) {
             return getPersonColor(gender);
         },
-        clear: function () {
+        getPersonInfoHover: function(id, personIdType) {
+            return getPersonInfoHover(id, personIdType);
+        },
+        clear: function() {
             clear();
         },
         get callerSpinner() {
@@ -327,16 +566,13 @@
         set reportId(value) {
             _reportId = value;
         },
-        reset: function () {
+        reset: function() {
             reset();
         },
-        resetReportId: function (reportId) {
+        resetReportId: function(reportId) {
             resetReportId(reportId);
         }
     };
 
     return person;
-
-
 });
-

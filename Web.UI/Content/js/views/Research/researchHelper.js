@@ -6,10 +6,15 @@ define(function(require) {
     var person = require('person');
     var featuresModel = require('features');
     var feedbackModel = require('feedback');
-    var personUrlOptions;
-    var msgBox;
+    var retrieveModel = require('retrieve');
+    var personUrlOptionsModel = require('personUrlOptions');
+    var msgBox = require('msgBox');
     var lazyRequire = require("lazyRequire");
     var requireOnce = lazyRequire.once();
+    require("findPerson");
+    require("retrieve");
+    require("fancybox");
+    require("fancyboxMedia");
 
     var _startingPointController;
     var _findPersonController;
@@ -77,7 +82,7 @@ define(function(require) {
     function findClues(id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["findClues", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function(FindClues) {
+            requireOnce(["findClues"], function(FindClues) {
                     FindClues.callerSpinner = spinnerArea;
                 }, function() {
                     $.ajax({
@@ -114,8 +119,8 @@ define(function(require) {
         if (system.isAuthenticated()) {
             loadSpinner();
 
-            requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function () {
-            }, function () {
+            requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
+            }, function() {
                 var retrieve = require('retrieve');
                 retrieve.callback = callback;
                 retrieve.callerSpinner = spinnerArea;
@@ -153,7 +158,7 @@ define(function(require) {
     function findPerson(callback) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["formValidation", "jqueryUiOptions", "bootstrapValidation", "css!/Content/css/lib/research/bootstrap-table.min.css", "css!/Content/css/vendor/formValidation.min.css"], function () {
+            requireOnce(["formValidation", "jqueryUiOptions", "bootstrapValidation", "css!/Content/css/lib/research/bootstrap-table.min.css", "css!/Content/css/vendor/formValidation.min.css"], function() {
                 }, function() {
                     var findPerson = require('findPerson');
                     findPerson.callback = callback;
@@ -187,55 +192,51 @@ define(function(require) {
 
     function displayPersonUrls() {
         loadSpinner();
-        requireOnce(['personUrlOptions'], function(PersonUrlOptions) {
-            personUrlOptions = PersonUrlOptions;
-            personUrlOptions.callerSpinner = spinnerArea;
-        }, function() {
-            if (personUrlOptions.id && system.isAuthenticated()) {
-                $.ajax({
-                    url: constants.DISPLAY_PERSON_URLS_URL,
-                    data: {
-                        "personId": personUrlOptions.id,
-                        "includeMaidenName": person.includeMaidenName,
-                        "includeMiddleName": person.includeMiddleName,
-                        "includePlace": person.includePlace,
-                        "yearRange": person.yearRange
-                    },
-                    success: function (data) {
-                        if (data && data.errorMessage) {
-                            msgBox.error(data.errorMessage);
-                        } else {
-                            var $dialogContainer = $("#personUrlsForm");
-                            var $detachedChildren = $dialogContainer.children().detach();
-                            $("<div id=\"personUrlsForm\"></div>").dialog({
-                                width: 850,
-                                title: "Research Family",
-                                resizable: false,
-                                minHeight: 0,
-                                maxHeight: $(window).height(),
-                                create: function () {
-                                    $(this).css("maxHeight", 700);
-                                },
-                                open: function () {
-                                    $detachedChildren.appendTo($dialogContainer);
-                                    $(this).dialog("option", "maxHeight", $(window).height());
-                                },
-                                close: function (event, ui) {
-                                    event.preventDefault();
-                                    $(this).dialog("destroy").remove();
-                                }
-                            });
-                            $("#personUrlsForm").empty().append(data);
-                            if (_personUrlsController) {
-                                _personUrlsController.open();
+        personUrlOptions.callerSpinner = spinnerArea;
+        if (personUrlOptions.id && system.isAuthenticated()) {
+            $.ajax({
+                url: constants.DISPLAY_PERSON_URLS_URL,
+                data: {
+                    "personId": personUrlOptions.id,
+                    "includeMaidenName": person.includeMaidenName,
+                    "includeMiddleName": person.includeMiddleName,
+                    "includePlace": person.includePlace,
+                    "yearRange": person.yearRange
+                },
+                success: function(data) {
+                    if (data && data.errorMessage) {
+                        msgBox.error(data.errorMessage);
+                    } else {
+                        var $dialogContainer = $("#personUrlsForm");
+                        var $detachedChildren = $dialogContainer.children().detach();
+                        $("<div id=\"personUrlsForm\"></div>").dialog({
+                            width: 850,
+                            title: "Research Family",
+                            resizable: false,
+                            minHeight: 0,
+                            maxHeight: $(window).height(),
+                            create: function() {
+                                $(this).css("maxHeight", 700);
+                            },
+                            open: function() {
+                                $detachedChildren.appendTo($dialogContainer);
+                                $(this).dialog("option", "maxHeight", $(window).height());
+                            },
+                            close: function(event, ui) {
+                                event.preventDefault();
+                                $(this).dialog("destroy").remove();
                             }
+                        });
+                        $("#personUrlsForm").empty().append(data);
+                        if (_personUrlsController) {
+                            _personUrlsController.open();
                         }
                     }
-                });
-            } else {
-                system.relogin();
-            }
-        });
+                }
+            });
+        } else {
+            system.relogin();
+        }
         return false;
     }
 
@@ -278,7 +279,7 @@ define(function(require) {
     function hints(id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["hints", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function (Hints) {
+            requireOnce(["hints", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function(Hints) {
                     Hints.callerSpinner = spinnerArea;
                 }, function() {
                     $.ajax({
@@ -312,19 +313,19 @@ define(function(require) {
     }
 
     function feedback() {
-            loadSpinner();
-            requireOnce(["formValidation", "jqueryUiOptions", "bootstrapValidation", "css!/Content/css/vendor/formValidation.min.css"], function () {
-                }, function () {
+        loadSpinner();
+        requireOnce(["formValidation", "jqueryUiOptions", "bootstrapValidation", "css!/Content/css/vendor/formValidation.min.css"], function() {
+            }, function() {
                 feedbackModel.callerSpinner = spinnerArea;
                 $.ajax({
                     url: constants.FEEDBACK_URL,
-                    success: function (data) {
+                    success: function(data) {
                         var $dialogContainer = $("#feedbackForm");
                         var $detachedChildren = $dialogContainer.children().detach();
                         $("<div id=\"feedbackForm\"></div>").dialog({
                             width: 775,
                             title: "Feedback",
-                            open: function () {
+                            open: function() {
                                 $detachedChildren.appendTo($dialogContainer);
                             }
                         });
@@ -335,46 +336,46 @@ define(function(require) {
                     }
                 });
             }
-            );
+        );
     }
 
 
     function features(tryItNowButton, featureName, dialogVideos) {
         loadSpinner();
-        requireOnce(["jqueryUiOptions"], function () {
-        }, function () {
-            featuresModel.callerSpinner = spinnerArea;
-            featuresModel.tryItNowButton = tryItNowButton;
-            featuresModel.featureName = featureName;
-            featuresModel.dialogVideos = dialogVideos;
-            $.ajax({
-                url: constants.FEATURES_URL,
-                success: function (data) {
-                    var $dialogContainer = $("#featuresForm");
-                    var $detachedChildren = $dialogContainer.children().detach();
-                    $("<div id=\"featuresForm\"></div>").dialog({
-                        width: 930,
-                        title: "Features",
-                        open: function () {
-                            $detachedChildren.appendTo($dialogContainer);
+        requireOnce(["jqueryUiOptions"], function() {
+            }, function() {
+                featuresModel.callerSpinner = spinnerArea;
+                featuresModel.tryItNowButton = tryItNowButton;
+                featuresModel.featureName = featureName;
+                featuresModel.dialogVideos = dialogVideos;
+                $.ajax({
+                    url: constants.FEATURES_URL,
+                    success: function(data) {
+                        var $dialogContainer = $("#featuresForm");
+                        var $detachedChildren = $dialogContainer.children().detach();
+                        $("<div id=\"featuresForm\"></div>").dialog({
+                            width: 930,
+                            title: "Features",
+                            open: function() {
+                                $detachedChildren.appendTo($dialogContainer);
+                            }
+                        });
+                        $("#featuresForm").empty().append(data);
+                        if (_featuresController) {
+                            _featuresController.open();
                         }
-                    });
-                    $("#featuresForm").empty().append(data);
-                    if (_featuresController) {
-                        _featuresController.open();
                     }
-                }
-            });
-        }
+                });
+            }
         );
     }
 
     function dateProblems(id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["dateProblems", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function (DateProblems) {
-                DateProblems.callerSpinner = spinnerArea;
-            }, function () {
+            requireOnce(["dateProblems", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function(DateProblems) {
+                    DateProblems.callerSpinner = spinnerArea;
+                }, function() {
                     $.ajax({
                         url: constants.DATE_PROBLEMS_URL,
                         success: function(data) {
@@ -408,9 +409,9 @@ define(function(require) {
     function incompleteOrdinances(id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["incompleteOrdinances", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function (IncompleteOrdinances) {
-                IncompleteOrdinances.callerSpinner = spinnerArea;
-            }, function () {
+            requireOnce(["incompleteOrdinances", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function(IncompleteOrdinances) {
+                    IncompleteOrdinances.callerSpinner = spinnerArea;
+                }, function() {
                     $.ajax({
                         url: constants.INCOMPLETE_ORDINANCES_URL,
                         success: function(data) {
@@ -444,7 +445,7 @@ define(function(require) {
     function placeProblems(id, name) {
         if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["placeProblems", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function (PlaceProblems) {
+            requireOnce(["placeProblems", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function(PlaceProblems) {
                     PlaceProblems.callerSpinner = spinnerArea;
                 }, function() {
                     $.ajax({
@@ -483,7 +484,7 @@ define(function(require) {
             requireOnce(['personUrlOptions'], function(PersonUrlOptions) {
                 personUrlOptions = PersonUrlOptions;
                 personUrlOptions.callerSpinner = spinnerArea;
-            }, function () {
+            }, function() {
                 $.ajax({
                     url: constants.PERSON_URL_OPTIONS_URL,
                     success: function(data) {
@@ -521,7 +522,7 @@ define(function(require) {
         startingPoint: function(id, name) {
             return startingPoint(id, name);
         },
-        feedback: function () {
+        feedback: function() {
             return feedback();
         },
         findClues: function (id, name) {
@@ -545,7 +546,7 @@ define(function(require) {
         set featuresModel(value) {
             featuresModel = value;
         },
-        features: function (tryItNowButton, featureName, dialogVideos) {
+        features: function(tryItNowButton, featureName, dialogVideos) {
             return features(tryItNowButton, featureName, dialogVideos);
         },
         dateProblems: function(id, name) {
@@ -682,7 +683,11 @@ define(function(require) {
         },
         set findCluesReportController(value) {
             _findCluesReportController = value;
+        },
+        get person() {
+            return person;
         }
+
     };
 
     return researchHelper;

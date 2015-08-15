@@ -6,105 +6,103 @@ define(function(require) {
     var requireOnce = lazyRequire.once();
 
     var researchHelper;
-    var msgBox;
 
-    $("#startingPoint").unbind("click").bind("click", function (e) {
-        requireOnce(['researchHelper'], function (ResearchHelper) {
+    $("#startingPoint").unbind("click").bind("click", function(e) {
+        requireOnce(['researchHelper'], function(ResearchHelper) {
             researchHelper = ResearchHelper;
-        }, function () {
+        }, function() {
             researchHelper.startingPoint();
         });
 
         return false;
     });
 
-    $("#findClues").unbind("click").bind("click", function (e) {
-        requireOnce(['researchHelper'], function (ResearchHelper) {
+    $("#findClues").unbind("click").bind("click", function(e) {
+        requireOnce(['researchHelper'], function(ResearchHelper) {
             researchHelper = ResearchHelper;
-        }, function () {
+        }, function() {
             researchHelper.findClues();
         });
         return false;
     });
 
-    $("#retrieve").unbind("click").bind("click", function (e) {
-        requireOnce(['researchHelper'], function (ResearchHelper) {
+    $("#retrieve").unbind("click").bind("click", function(e) {
+        requireOnce(['researchHelper'], function(ResearchHelper) {
             researchHelper = ResearchHelper;
-        }, function () {
+        }, function() {
             researchHelper.retrieve();
         });
         return false;
     });
 
-    $("#findPerson").unbind("click").bind("click", function (e) {
-        requireOnce(['researchHelper'], function (ResearchHelper) {
+    $("#findPerson").unbind("click").bind("click", function(e) {
+        requireOnce(['researchHelper'], function(ResearchHelper) {
             researchHelper = ResearchHelper;
-        }, function () {
+        }, function() {
             researchHelper.findPerson();
         });
         return false;
     });
 
-    $("#possibleDuplicates").unbind("click").bind("click", function (e) {
-         requireOnce(['researchHelper'], function (ResearchHelper) {
+    $("#possibleDuplicates").unbind("click").bind("click", function(e) {
+        requireOnce(['researchHelper'], function(ResearchHelper) {
             researchHelper = ResearchHelper;
-        }, function () {
+        }, function() {
             researchHelper.possibleDuplicates();
         });
         return false;
     });
 
-    $("#hints").unbind("click").bind("click", function (e) {
-         requireOnce(['researchHelper'], function (ResearchHelper) {
+    $("#hints").unbind("click").bind("click", function(e) {
+        requireOnce(['researchHelper'], function(ResearchHelper) {
             researchHelper = ResearchHelper;
-        }, function () {
+        }, function() {
             researchHelper.hints();
         });
         return false;
     });
 
 
-    
-    $("#features").unbind("click").bind("click", function (e) {
-        requireOnce(['researchHelper'], function (ResearchHelper) {
+    $("#features").unbind("click").bind("click", function(e) {
+        requireOnce(['researchHelper'], function(ResearchHelper) {
             researchHelper = ResearchHelper;
-        }, function () {
+        }, function() {
             researchHelper.features();
         });
         return false;
     });
 
-    $("#incompleteOrdinances").unbind("click").bind("click", function (e) {
-        requireOnce(['researchHelper'], function (ResearchHelper) {
+    $("#incompleteOrdinances").unbind("click").bind("click", function(e) {
+        requireOnce(['researchHelper'], function(ResearchHelper) {
             researchHelper = ResearchHelper;
-        }, function () {
+        }, function() {
             researchHelper.incompleteOrdinances();
         });
         return false;
     });
 
-    $("#dateProblems").unbind("click").bind("click", function (e) {
-        requireOnce(['researchHelper'], function (ResearchHelper) {
+    $("#dateProblems").unbind("click").bind("click", function(e) {
+        requireOnce(['researchHelper'], function(ResearchHelper) {
             researchHelper = ResearchHelper;
-        }, function () {
+        }, function() {
             researchHelper.dateProblems();
         });
         return false;
     });
 
-    $("#placeProblems").unbind("click").bind("click", function (e) {
-        requireOnce(['researchHelper'], function (ResearchHelper) {
+    $("#placeProblems").unbind("click").bind("click", function(e) {
+        requireOnce(['researchHelper'], function(ResearchHelper) {
             researchHelper = ResearchHelper;
-        }, function () {
+        }, function() {
             researchHelper.placeProblems();
         });
         return false;
     });
 
     $("#clearStorage").unbind("click").bind("click", function(e) {
-        requireOnce(['system'], function (System) {
+        requireOnce(['system'], function(System) {
             system = System;
-        }, function () {
+        }, function() {
             system.clearStorage();
             //        $.fancybox.message.info("Cleared Storage Successfully");
         });
@@ -112,9 +110,9 @@ define(function(require) {
     });
 
     $("#refreshAndReset").unbind("click").bind("click", function(e) {
-        requireOnce(['system'], function (System) {
+        requireOnce(['system'], function(System) {
             system = System;
-        }, function () {
+        }, function() {
             system.clearStorage();
             system.relogin();
             //        $.fancybox.message.info("Cleared Storage Successfully");
@@ -123,19 +121,19 @@ define(function(require) {
     });
 
     $("#refresh").unbind("click").bind("click", function(e) {
-        requireOnce(['system'], function (System) {
+        requireOnce(['system'], function(System) {
             system = System;
-        }, function () {
+        }, function() {
             system.relogin();
             //        $.fancybox.message.info("Cleared Storage Successfully");
         });
         return false;
     });
 
-    $("#feedback").unbind("click").bind("click", function (e) {
-        requireOnce(['researchHelper'], function (ResearchHelper) {
+    $("#feedback").unbind("click").bind("click", function(e) {
+        requireOnce(['researchHelper'], function(ResearchHelper) {
             researchHelper = ResearchHelper;
-        }, function () {
+        }, function() {
             researchHelper.feedback();
         });
         return false;
@@ -158,20 +156,20 @@ define(function(require) {
 
         if (lastCalled) {
             switch (lastCalled) {
-               case constants.STARTING_POINT:
-                    $('#startingPoint').click();
-                    break;
-               case constants.FIND_PERSON:
-                    $('#findPerson').click();
-                    break;
-               case constants.HINTS:
-                    $('#hints').click();
-                    break;
-               case constants.INCOMPLETE_ORDINANCES:
-                    $('#incompleteOrdinances').click();
-                    break;
-                default:
-                    break;
+            case constants.STARTING_POINT:
+                $('#startingPoint').click();
+                break;
+            case constants.FIND_PERSON:
+                $('#findPerson').click();
+                break;
+            case constants.HINTS:
+                $('#hints').click();
+                break;
+            case constants.INCOMPLETE_ORDINANCES:
+                $('#incompleteOrdinances').click();
+                break;
+            default:
+                break;
             }
 
         }
@@ -180,14 +178,56 @@ define(function(require) {
 
     function delayLoading() {
         system.keepSessionAlive();
+
+        requireOnce(['researchHelper', 'findPersonHelper', 'findPerson', 'retrieve', 'string', "formValidation", "jqueryUiOptions", "bootstrapValidation", 'fancybox', 'fancyboxMedia', "css!/Content/css/lib/research/bootstrap-table.min.css", "css!/Content/css/vendor/formValidation.min.css", "css!/Content/js/vendor/fancybox/jquery.fancybox.css"], function (ResearchHelper) {
+            researchHelper = ResearchHelper;
+        }, function () {
+            researchHelper.person.getPersonInfo();
+            $('.fancyboxvideo').fancybox({
+                openEffect: 'none',
+                closeEffect: 'none',
+                helpers: {
+                    media: true,
+                    title: {
+                        type: 'inside'
+                    }
+                },
+                fitToView: false,
+                aspectRatio: true,
+                maxWidth: "100%",
+                maxHeight: "100%",
+                beforeLoad: function () {
+                    this.title = $(this.element).attr('caption');
+                },
+                afterLoad: function () {
+                    this.width = $(this.element).data("width");
+                    this.height = $(this.element).data("height");
+                }
+            });
+            $("#helpDialog").fancybox({
+                helpers: {
+                    title: null,
+                    overlay: null,
+                    padding: [20, 20, 20, 20]
+                },
+                'transitionIn': 'none',
+                'transitionOut': 'none',
+                'changeFade': 0,
+                openEffect: 'none',
+                closeEffect: 'none'
+            });
+
+        });
+
     }
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         loadLastCalled();
-        setTimeout(delayLoading, 2000);
+        setTimeout(delayLoading, 1000);
     });
 
     var researchController = {
+    
     };
 
     return researchController;

@@ -1,4 +1,4 @@
-﻿define(function (require) {
+﻿define(function(require) {
 
     var $ = require("jquery");
     var person = require("person");
@@ -11,7 +11,7 @@
     var _callerSpinner;
     var _callback;
     var _addSelect = true;
-    
+
     var _title;
     var _retrievedRecords = 0;
     var _reports;
@@ -53,7 +53,7 @@
     function findReport() {
         var found = false;
         if (_reports) {
-            $.each(_reports, function (i) {
+            $.each(_reports, function(i) {
                 if (_reports[i].DisplayMember && _reports[i].DisplayMember.indexOf(person.id) > -1) {
                     person.reportId = _reports[i].ValueMember;
                     found = true;
@@ -66,7 +66,7 @@
 
     function loadReportData() {
         $.ajax({
-            'async': false,
+//            'async': false,
             url: constants.GET_REPORT_LIST_URL,
             success: function(data) {
                 if (data && data.errorMessage) {
@@ -79,6 +79,10 @@
 
                 }
 
+            },
+            'beforeSend': function() {
+            },
+            'complete': function() {
             }
         });
         return false;
@@ -90,7 +94,7 @@
             $.ajax({
                 'async': false,
                 url: constants.GET_REPORT_LIST_URL,
-                success: function (data) {
+                success: function(data) {
                     if (data && data.errorMessage) {
                         msgBox.error(data.errorMessage);
                     } else {
@@ -98,7 +102,7 @@
                             _reports = data.list;
                             var found = false;
                             save();
-                            $.each(_reports, function (i) {
+                            $.each(_reports, function(i) {
                                 if (_reports[i].ValueMember === person.reportId) {
                                     found = true;
                                 } else if (data[i].DisplayMember.indexOf(person.id) > -1) {
@@ -125,13 +129,13 @@
                 $.ajax({
                     'async': false,
                     url: constants.GET_REPORT_LIST_URL,
-                    success: function (data) {
+                    success: function(data) {
                         if (data && data.errorMessage) {
                             msgBox.error(data.errorMessage);
                         } else {
                             if (data) {
                                 _reports = data.list;
-                                $.each(_reports, function (i) {
+                                $.each(_reports, function(i) {
                                     if (person.reportId && (parseInt(person.reportId) === 0)) {
                                         optionhtml = '<option value="' + _reports[i].ValueMember + '" selected>' + _reports[i].DisplayMember + '</option>';
                                         person.reportId = _reports[i].ValueMember;
@@ -152,7 +156,7 @@
                     reportId.append(optionhtml);
                 }
                 var found = false;
-                $.each(data, function (i) {
+                $.each(data, function(i) {
                     if (data[i].ValueMember === person.reportId) {
                         found = true;
                     } else if (data[i].DisplayMember.indexOf(person.id) > -1) {
@@ -201,22 +205,22 @@
         set retrievedRecords(value) {
             _retrievedRecords = value;
         },
-        findReport: function () {
+        findReport: function() {
             return findReport();
         },
-        loadReports: function (reportId, refreshReport) {
+        loadReports: function(reportId, refreshReport) {
             loadReports(reportId, refreshReport);
         },
-        clear: function () {
+        clear: function() {
             clear();
         },
-        reset: function () {
+        reset: function() {
             reset();
         },
-        save: function () {
+        save: function() {
             save();
         },
-        loadReportData: function () {
+        loadReportData: function() {
             loadReportData();
         },
         get callerSpinner() {
@@ -238,9 +242,8 @@
             _selected = value;
         }
 
-        
+
     };
 
     return retrieve;
 });
-

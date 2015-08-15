@@ -140,7 +140,7 @@ define(function (require) {
 
         if (possibleDuplicates.displayType === "start") {
             $.ajax({
-                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "possibleDuplicates": possibleDuplicates.possibleDuplicates, "possibleMatches": possibleDuplicates.possibleMatches, "reportId": person.reportId },
+                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "includePossibleDuplicates": possibleDuplicates.includePossibleMatches, "includePossibleMatches": possibleDuplicates.includePossibleMatches, "reportId": person.reportId },
                 url: constants.POSSIBLE_DUPLICATES_REPORT_DATA_URL,
                 success: function (data) {
                     if (data && data.errorMessage) {

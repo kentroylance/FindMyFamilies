@@ -2185,11 +2185,11 @@ namespace FindMyFamilies.DataAccess {
             sb.AppendLine("Message:  " + message + ((e != null) ? e.ToString() : ""));
             sb.AppendLine("Error Message:  " + session.ErrorMessage);
             sb.AppendLine("Response Message:  " + session.ResponseMessage);
-            if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
+            if ((response != null) && response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                 sb.AppendLine("Possible Solution:  Token may be invalid or expired.");
-            } else if (session.ResponseMessage.IndexOf("unexpected token") > -1) {
+            } else if ((session.ResponseMessage != null) && session.ResponseMessage.IndexOf("unexpected token") > -1) {
                 sb.AppendLine("Possible Solution:  The template uri is probably invalid, please make sure the uri is correct");
-            } else if (session.ResponseMessage.IndexOf("FamilySearch Best Practice") > -1) {
+            } else if ((session.ResponseMessage != null) && session.ResponseMessage.IndexOf("FamilySearch Best Practice") > -1) {
                 var index = session.ResponseMessage.IndexOf("FamilySearch Best Practice");
                 var test = "Possible Solution: " + session.ResponseMessage.Substring(index, session.ResponseMessage.Length - index);
                 sb.AppendLine("Possible Solution: " + session.ResponseMessage.Substring(index, session.ResponseMessage.Length - index));

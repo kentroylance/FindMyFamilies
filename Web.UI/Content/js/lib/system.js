@@ -126,8 +126,16 @@
 
     function keepSessionAlive() {
 
-        $.get(constants.KEEP_SESSION_ALIVE_URL, function(data) {
+//        $.get(constants.KEEP_SESSION_ALIVE_URL, function(data) {
+//        });
+        $.ajax({
+            url: constants.KEEP_SESSION_ALIVE_URL,
+            'beforeSend': function () {
+            },
+            'complete': function () {
+            }
         });
+
 
         setTimeout(keepSessionAlive, 1140000);
     }

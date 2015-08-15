@@ -103,6 +103,8 @@ namespace FindMyFamilies.Web.Controllers {
 
         public void ResetTokenHourExpire() {
             TokenHourExpire = DateTime.Now.AddMinutes(120);
+            AddCookie("TokenHourExpire", TokenHourExpire.Value.ToString("O"));
+
             //            if (Token24HourExpire == null) {
             //                Token24HourExpire = DateTime.Now.AddHours(24);
             //            }

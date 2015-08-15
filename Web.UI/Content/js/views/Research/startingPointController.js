@@ -139,6 +139,18 @@ define(function(require) {
         $("startingPointGeneration").val(person.generation);
     }
 
+    function mouseOverTrigger() {
+        person.id = $('option:selected', $(this)).val();
+        person.name = $('option:selected', $(this)).text();
+        var id = $(this).attr("id");
+        person.getPersonInfoHover(id, "startingPointPersonId");
+        
+    }
+
+    function mouseOutTrigger() {
+        $('#startingPointPersonInfoDiv').hide();
+    }
+
     function open() {
         startingPoint.form = $("#startingPointForm");
         loadEvents();
@@ -147,6 +159,33 @@ define(function(require) {
         retrieve.findReport();
         updateForm();
         system.openForm(startingPoint.form, startingPoint.formTitleImage, startingPoint.spinner);
+        $(document).ready(function () {
+            var hoverIntentConfig = {
+                sensitivity: 1,
+                interval: 100,
+                timeout: 300,
+                over: mouseOverTrigger,
+                out: mouseOutTrigger
+            }
+
+            $(".personAction1").hoverIntent(hoverIntentConfig);
+
+
+//            $.ajax({
+//                data: { "id": person.id },
+//                url: '/Home/GetPersonInfo',
+//                success: function (data) {
+//                    if (data) {
+//                        alert("done");
+//                        var test = "";
+//                    }
+//                },
+//                'beforeSend': function () {
+//                },
+//                'complete': function () {
+//                }
+//            });
+        });
     }
 
     function clear() {

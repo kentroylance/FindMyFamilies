@@ -8,6 +8,7 @@
 
     var researchHelper;
 
+
     function loadFeature(tryItNowButton, featureName, dialogVideos) {
         requireOnce(['researchHelper'], function (ResearchHelper) {
             researchHelper = ResearchHelper;
@@ -65,11 +66,61 @@
             skin: 'borderlesslight',
             skinsPath: '/Content/LayerSlider/layerslider/skins/'
         });
+
+    });
+
+    function delayLoading() {
         $("img.lazy").lazyload({
             threshold: 200
         });
+        requireOnce(['researchHelper', 'findPersonHelper', 'findPerson', 'retrieve', 'string', "formValidation", "jqueryUiOptions", "bootstrapValidation", 'fancybox', 'fancyboxMedia', "css!/Content/css/lib/research/bootstrap-table.min.css", "css!/Content/css/vendor/formValidation.min.css", "css!/Content/js/vendor/fancybox/jquery.fancybox.css"], function (ResearchHelper) {
+            researchHelper = ResearchHelper;
+        }, function () {
+            researchHelper.person.getPersonInfo();
 
+            $('.fancyboxvideo').fancybox({
+                openEffect: 'none',
+                closeEffect: 'none',
+                helpers: {
+                    media: true,
+                    title: {
+                        type: 'inside'
+                    }
+                },
+                fitToView: false,
+                aspectRatio: true,
+                maxWidth: "100%",
+                maxHeight: "100%",
+                beforeLoad: function () {
+                    this.title = $(this.element).attr('caption');
+                },
+                afterLoad: function () {
+                    this.width = $(this.element).data("width");
+                    this.height = $(this.element).data("height");
+                }
+            });
+            $("#helpDialog").fancybox({
+                helpers: {
+                    title: null,
+                    overlay: null,
+                    padding: [20, 20, 20, 20]
+                },
+                'transitionIn': 'none',
+                'transitionOut': 'none',
+                'changeFade': 0,
+                openEffect: 'none',
+                closeEffect: 'none'
+            });
+
+
+        });
+
+    }
+
+    $(document).ready(function () {
+        setTimeout(delayLoading, 1000);
     });
+
 
     var indexController = {
     };

@@ -89,6 +89,7 @@
     var RETRIEVE_DATA_URL = '/Home/RetrieveData';
     var SEARCH_CRITERIA_LIST_URL = "/Home/SearchCriteriaList";
     var RESEARCH_URL = "/Home/Research";
+    var GET_PERSON_INFO = "/Home/GetPersonInfo";
 
     var FIND_A_GRAVE = "http://www.findagrave.com/cgi-bin/fg.cgi?page=gsr";
     var GOOGLE = "https://www.google.com/#q=";
@@ -414,7 +415,11 @@
         },
         get FIND_CLUES_REPORT() {
             return FIND_CLUES_REPORT;
+        },
+        get GET_PERSON_INFO() {
+            return GET_PERSON_INFO;
         }
+        
 
         
     }

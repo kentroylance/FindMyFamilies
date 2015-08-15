@@ -94,6 +94,58 @@ namespace FindMyFamilies.BusinessObject {
             return gedcomx;
         }
 
+        public FindListItemDO GetPersonWithSpouseParents(ResearchDO researchDO, ref SessionDO session) {
+            var persons = new Dictionary<string, PersonDO>();
+            SpouseRelationship spouseRelationship = null;
+            var person = getPersonWithParents(researchDO.PersonId, ref persons, ref session);
+            persons = GetDescendants(ref researchDO, ref session, true);
+            if ((persons.Count < 1) || !persons.ContainsKey(person.Id)) {
+                persons.Add(person.Id, person);
+                if (!person.Father.IsEmpty) {
+                    persons.Add(person.Father.Id, person.Father);
+                }
+                if (!person.Mother.IsEmpty) {
+                    persons.Add(person.Mother.Id, person.Mother);
+                }
+                spouseRelationship = personDAO.GetSpouses(person.Id, ref session);
+            } else {
+                if (persons[person.Id].Father.IsEmpty && !person.Father.IsEmpty) {
+                    persons[person.Id].Father = person.Father;
+                }
+                if (persons[person.Id].Mother.IsEmpty && !person.Mother.IsEmpty) {
+                    persons[person.Id].Mother = person.Mother;
+                }
+                if (persons[person.Id].HasSpouseLink) {
+                    spouseRelationship = personDAO.GetSpouses(person.Id, ref session);
+                }
+            }
+
+            if (persons.Count > 1) {
+                if ((spouseRelationship != null) && (spouseRelationship.Persons.Count > 0)) {
+                    PersonDO spouseDO = null;
+                    foreach (var spouseGx in spouseRelationship.Persons) {
+                        if (!persons.ContainsKey(spouseGx.Id)) {
+                            spouseDO = personDAO.GetPerson(spouseGx);
+                            persons.Add(spouseDO.Id, spouseDO);
+                            persons[person.Id].Spouses.Add(spouseDO.Id, persons[spouseDO.Id]);
+                        } else {
+                            if (!persons[person.Id].Spouses.ContainsKey(spouseGx.Id)) {
+                                persons[person.Id].Spouses.Add(spouseGx.Id, persons[spouseGx.Id]);
+                                if (persons[person.Id].Spouse.IsEmpty) {
+                                    persons[person.Id].Spouse = persons[spouseGx.Id];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            FindListItemDO findListItemDO = new FindListItemDO();
+            personDAO.PopulateFindListItem(persons[person.Id], ref findListItemDO);
+
+            return findListItemDO;
+        }
+
         public PersonDO GetPersonInformation(ResearchDO researchDO, ref SessionDO session) {
             var persons = new Dictionary<string, PersonDO>();
             SpouseRelationship spouseRelationship = null;
@@ -620,11 +672,11 @@ namespace FindMyFamilies.BusinessObject {
             }
 
             ResearchDO researchDO = new ResearchDO();
-            researchDO.PersonId = datesInputDO.PersonId;
+            researchDO.PersonId = datesInputDO.Id;
             researchDO.ResearchType = datesInputDO.ResearchType;
             researchDO.Generation = datesInputDO.Generation;
             researchDO.ReportId = datesInputDO.ReportId;
-            researchDO.PersonName = datesInputDO.PersonName;
+            researchDO.PersonName = datesInputDO.FullName;
 
             var ancestors = getPersons(ref researchDO, ref session);
 
@@ -730,11 +782,11 @@ namespace FindMyFamilies.BusinessObject {
             }
 
             ResearchDO researchDO = new ResearchDO();
-            researchDO.PersonId = placesInputDO.PersonId;
+            researchDO.PersonId = placesInputDO.Id;
             researchDO.ResearchType = placesInputDO.ResearchType;
             researchDO.Generation = placesInputDO.Generation;
             researchDO.ReportId = placesInputDO.ReportId;
-            researchDO.PersonName = placesInputDO.PersonName;
+            researchDO.PersonName = placesInputDO.FullName;
 
             var ancestors = getPersons(ref researchDO, ref session);
 
@@ -1346,35 +1398,28 @@ namespace FindMyFamilies.BusinessObject {
             var personName = "";
 
             ResearchDO researchDO = new ResearchDO();
-            researchDO.PersonId = possibleDuplicateInputDO.PersonId;
+            researchDO.PersonId = possibleDuplicateInputDO.Id;
             researchDO.ResearchType = possibleDuplicateInputDO.ResearchType;
             researchDO.Generation = possibleDuplicateInputDO.Generation;
             researchDO.ReportId = possibleDuplicateInputDO.ReportId;
-            researchDO.PersonName = possibleDuplicateInputDO.PersonName;
+            researchDO.PersonName = possibleDuplicateInputDO.FullName;
 
             var ancestors = getPersons(ref researchDO, ref session);
-
-            if (!session.Error) {
-                PossibleDuplicateDO possibleDuplicate = null;
-                if ((ancestors != null) && (ancestors.Count > 0)) {
-                    foreach (var ancestor in ancestors) {
-                        if (!possibleDuplicates.ContainsKey(ancestor.Value.Id)) {
-                            possibleDuplicate = personDAO.GetPossibleDuplicates(ancestor.Value, ref session);
-                            if (session.Error) {
-                                break;
-                            }
-                            if ((possibleDuplicate != null) && (possibleDuplicate.Results > 0)) {
-                                if ((possibleDuplicateInputDO.IncludePossibleDuplicates && possibleDuplicate.Duplicates) || (possibleDuplicateInputDO.IncludePossibleMatches && possibleDuplicate.Matches)) {
-                                    possibleDuplicates.Add(ancestor.Value.Id, possibleDuplicate);
-                                    possibleDuplicateListItems.Add(GetPossibleDuplicateListItem(possibleDuplicate, ancestor.Value));
-                                }
+            PossibleDuplicateDO possibleDuplicate = null;
+            if ((ancestors != null) && (ancestors.Count > 0)) {
+                foreach (var ancestor in ancestors) {
+                    if (!possibleDuplicates.ContainsKey(ancestor.Value.Id)) {
+                        possibleDuplicate = personDAO.GetPossibleDuplicates(ancestor.Value, ref session);
+                        if ((possibleDuplicate != null) && (possibleDuplicate.Results > 0)) {
+                            if ((possibleDuplicateInputDO.IncludePossibleDuplicates && possibleDuplicate.Duplicates) || (possibleDuplicateInputDO.IncludePossibleMatches && possibleDuplicate.Matches)) {
+                                possibleDuplicates.Add(ancestor.Value.Id, possibleDuplicate);
+                                possibleDuplicateListItems.Add(GetPossibleDuplicateListItem(possibleDuplicate, ancestor.Value));
                             }
                         }
                     }
                 }
             }
             return possibleDuplicateListItems.OrderByDescending(o => o.Count).ToList();
-            ;
         }
 
         private void AssignAscendancy(ref ResearchDO researchDO, ref SessionDO session, ref Dictionary<string, PersonDO> persons) {
@@ -2143,7 +2188,9 @@ namespace FindMyFamilies.BusinessObject {
                         //                    FindClueListItemDO.FullName = person.Fullname;
                         findClueListItemDo.clue = "Person's death date is \"Deceased\" and was born between 1850 and 1940";
                         findClueListItemDo.helpers = criteriaId;
-                        analyzeListItems.Add(findClueListItemDo);
+                        if (!isDuplicateValidation(person, findClueListItemDo.clue, analyzeListItems)) {
+                            analyzeListItems.Add(findClueListItemDo);
+                        }
                     }
                     if ((MeetsCriteria(findCluesInputDo, person, 2) && ((person.BirthYear > 1849) && (person.BirthYear < 1941)) && (person.IsFemale) && (person.DeathYear < 1) && (!person.HasSpouse))) {
                         //                    FindClueListItemDO.Id = id;
@@ -2155,7 +2202,9 @@ namespace FindMyFamilies.BusinessObject {
                         //                    FindClueListItemDO.Male = person.IsMale;
                         findClueListItemDo.clue = "Female child with no spouse and no death date, lived between (between 1850 and 1940)";
                         findClueListItemDo.helpers = criteriaId;
-                        analyzeListItems.Add(findClueListItemDo);
+                        if (!isDuplicateValidation(person, findClueListItemDo.clue, analyzeListItems)) {
+                            analyzeListItems.Add(findClueListItemDo);
+                        }
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 4) && ((person.HasSpouse) && (!person.HasChildrenLink))) {
                         //                    FindClueListItemDO.Id = id;
@@ -2168,7 +2217,9 @@ namespace FindMyFamilies.BusinessObject {
                         criteriaId = 4;
                         findClueListItemDo.clue = "Person has a spouse" + (person.YearsLived > 0 ? ", lived " + person.YearsLived + " years" : "") + ", and no children.";
                         findClueListItemDo.helpers = criteriaId;
-                        analyzeListItems.Add(findClueListItemDo);
+                        if (!isDuplicateValidation(person, findClueListItemDo.clue, analyzeListItems)) {
+                            analyzeListItems.Add(findClueListItemDo);
+                        }
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 5) && ((person.HasSpouse) && (person.NumberOfChildren == 1) && ((person.YearsLived > 0) && person.YearsLived > findCluesInputDo.AgeLimit))) {
                         //                    FindClueListItemDO.Id = id;
@@ -2181,7 +2232,9 @@ namespace FindMyFamilies.BusinessObject {
                         criteriaId = 5;
                         findClueListItemDo.clue = "Person has a spouse" + (person.YearsLived > 0 ? ", lived " + person.YearsLived + " years" : "") + (((person.YearsLived > 0) && person.YearsLived > findCluesInputDo.AgeLimit) ? ", lived longer than " + findCluesInputDo.AgeLimit + " years" : "") + ", and only one child.";
                         findClueListItemDo.helpers = criteriaId;
-                        analyzeListItems.Add(findClueListItemDo);
+                        if (!isDuplicateValidation(person, findClueListItemDo.clue, analyzeListItems)) {
+                            analyzeListItems.Add(findClueListItemDo);
+                        }
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 6) && ((!person.HasSpouse) && (!person.HasChildrenLink) && ((person.YearsLived > 0) && person.YearsLived > findCluesInputDo.AgeLimit))) {
                         //                    FindClueListItemDO.Id = id;
@@ -2194,7 +2247,9 @@ namespace FindMyFamilies.BusinessObject {
                         criteriaId = 6;
                         findClueListItemDo.clue = "Person has no spouse " + (person.YearsLived > 0 ? ", lived " + person.YearsLived + " years" : "") + (((person.YearsLived > 0) && person.YearsLived > findCluesInputDo.AgeLimit) ? ", lived longer than " + findCluesInputDo.AgeLimit + " years" : "") + ", and no children.";
                         findClueListItemDo.helpers = criteriaId;
-                        analyzeListItems.Add(findClueListItemDo);
+                        if (!isDuplicateValidation(person, findClueListItemDo.clue, analyzeListItems)) {
+                            analyzeListItems.Add(findClueListItemDo);
+                        }
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 7) && ((!person.HasSpouse) && (person.NumberOfChildren == 1))) {
                         //                    FindClueListItemDO.Id = id;
@@ -2207,7 +2262,9 @@ namespace FindMyFamilies.BusinessObject {
                         criteriaId = 7;
                         findClueListItemDo.clue = "Person has no spouse " + (person.YearsLived > 0 ? "lived " + person.YearsLived + " years " : "") + ", and only one child.";
                         findClueListItemDo.helpers = criteriaId;
-                        analyzeListItems.Add(findClueListItemDo);
+                        if (!isDuplicateValidation(person, findClueListItemDo.clue, analyzeListItems)) {
+                            analyzeListItems.Add(findClueListItemDo);
+                        }
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 10) && (person.BirthYear > 1000) && (!person.Mother.IsEmpty && ((person.Mother.DeathYear > 1000) && (person.BirthYear > person.Mother.DeathYear)))) {
                         //                    FindClueListItemDO.Id = id;
@@ -2220,7 +2277,9 @@ namespace FindMyFamilies.BusinessObject {
                         criteriaId = 10;
                         findClueListItemDo.clue = "Person's birth year " + person.BirthYear + " is after mother's death year " + person.Mother.DeathYear + ".";
                         findClueListItemDo.helpers = criteriaId;
-                        analyzeListItems.Add(findClueListItemDo);
+                        if (!isDuplicateValidation(person, findClueListItemDo.clue, analyzeListItems)) {
+                            analyzeListItems.Add(findClueListItemDo);
+                        }
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 11) && ((person.DeathYear > 1000) && (person.MarriageYear > 1000) && (person.DeathYear < person.MarriageYear))) {
                         //                    FindClueListItemDO.Id = id;
@@ -2233,7 +2292,9 @@ namespace FindMyFamilies.BusinessObject {
                         criteriaId = 11;
                         findClueListItemDo.clue = "Person's death year " + person.DeathYear + " is earlier than the marriage year " + person.MarriageYear + ".";
                         findClueListItemDo.helpers = criteriaId;
-                        analyzeListItems.Add(findClueListItemDo);
+                        if (!isDuplicateValidation(person, findClueListItemDo.clue, analyzeListItems)) {
+                            analyzeListItems.Add(findClueListItemDo);
+                        }
                     }
                     if (MeetsCriteria(findCluesInputDo, person, 12) && (person.IsFemale && ((person.NumberOfChildren > 0) && (person.LastChild.BirthYear > 1000) && (person.YearsLived > 39) && ((person.LastChild.BirthYear + 35) < (person.BirthYear + 40))))) {
                         //                    FindClueListItemDO.Id = id;
@@ -2246,7 +2307,9 @@ namespace FindMyFamilies.BusinessObject {
                         criteriaId = 12;
                         findClueListItemDo.clue = "Last child was born 4 or more years before turning 40.";
                         findClueListItemDo.helpers = criteriaId;
-                        analyzeListItems.Add(findClueListItemDo);
+                        if (!isDuplicateValidation(person, findClueListItemDo.clue, analyzeListItems)) {
+                            analyzeListItems.Add(findClueListItemDo);
+                        }
                     }
 
                     //        private int _LastChild4YearsMother40;
@@ -2271,7 +2334,7 @@ namespace FindMyFamilies.BusinessObject {
                                     if (gap < 30) {
                                         var problem = gap + " year gap between " + child.Fullname + " and " + nextChild.Fullname;
                                         var problem1 = gap + " year gap between " + nextChild.Fullname + " and " + child.Fullname;
-                                        if (MeetsCriteria(findCluesInputDo, person, 3) && (!isDuplicateValidation(problem, analyzeListItems) && !isDuplicateValidation(problem1, analyzeListItems))) {
+                                        if (MeetsCriteria(findCluesInputDo, person, 3) && (!isDuplicateValidation(person, problem, analyzeListItems) && !isDuplicateValidation(person, problem1, analyzeListItems))) {
                                             //                                        FindClueListItemDO.Id = id;
                                             //                                        FindClueListItemDO.PersonId = person.Id;
                                             //                                        FindClueListItemDO.CriteriaId = 3;
@@ -2411,11 +2474,11 @@ namespace FindMyFamilies.BusinessObject {
             //            }
         }
 
-        private bool isDuplicateValidation(string clue, List<FindClueListItemDO> analyzeListItems) {
+        private bool isDuplicateValidation(PersonDO person, string clue, List<FindClueListItemDO> analyzeListItems) {
             var isDuplicate = false;
 
             foreach (var analyzeListItemDO in analyzeListItems) {
-                if (analyzeListItemDO.clue.Equals(clue)) {
+                if (person.Id.Equals(analyzeListItemDO.id) && analyzeListItemDO.clue.Equals(clue)) {
                     isDuplicate = true;
                 }
             }

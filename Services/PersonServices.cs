@@ -88,6 +88,10 @@ namespace FindMyFamilies.Services {
             return personBO.GetPersonInformation(researchDO, ref session);
         }
 
+        public FindListItemDO GetPersonWithSpouseParents(ResearchDO researchDO, ref SessionDO session) {
+            return personBO.GetPersonWithSpouseParents(researchDO, ref session);
+        }
+
 //        public ArrayList GetAncestorsList(ResearchDO ResearchDO, ref SessionDO session) {
 //            return personBO.GetAncestorsList(ResearchDO, ref session);
 //        }

@@ -14,7 +14,8 @@
             layerslider: 'vendor/layerslider.kreaturamedia.jquery',
             bootstrap: 'vendor/bootstrap3.2.0',
             spin: 'vendor/spin.min',
-            fancybox: 'vendor/jquery.fancybox.pack',
+            fancybox: 'vendor/fancybox/jquery.fancybox.pack',
+            fancyboxMedia: 'vendor/fancybox/helpers/jquery.fancybox-media',
             normalize: 'vendor/normalize',
             lazyload: 'vendor/jquery.lazyload',
             string: 'vendor/string.min',
@@ -166,12 +167,16 @@
                 exports: '_layoutController'
             },
             indexController: {
-                deps: ['jquery', 'system', 'features', 'feedback'],
+                deps: ['jquery', 'system'],
                 exports: 'indexController'
             },
             fancybox: {
                 deps: ['jquery'],
                 exports: 'fancybox'
+            },
+            fancyboxMedia: {
+                deps: ['jquery', 'fancybox'],
+                exports: 'fancyboxMedia'
             },
             person: {
                 deps: ['jquery', 'system', 'constants'],
@@ -190,7 +195,7 @@
                 exports: 'researchController'
             },
             startingPointController: {
-                deps: ['jquery', 'startingPoint', 'startingPointReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
+                deps: ['jquery', 'startingPoint', 'startingPointReport', 'hoverIntent', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'startingPointController'
             },
             findCluesController: {

@@ -16,5 +16,6 @@ namespace FindMyFamilies.Data {
         public string fatherName { get; set; }
         public string spouseName { get; set; }
         public string spouseGender { get; set; }
+        public string errorMessage { get; set; }
 	}
 }

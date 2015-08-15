@@ -114,6 +114,10 @@ namespace FindMyFamilies.Services {
             return PersonServices.Instance.GetPersonInformation(researchDO, ref session);
         }
 
+        public FindListItemDO GetPersonWithSpouseParents(ResearchDO researchDO, ref SessionDO session) {
+            return PersonServices.Instance.GetPersonWithSpouseParents(researchDO, ref session);
+        }
+
         public Gedcomx GetPersonDescendancyWithSpouse(String personId, String spouseId, string generations, ref SessionDO session) {
             return PersonServices.Instance.GetPersonDescendancyWithSpouse(personId, spouseId, generations, ref session);
         }
