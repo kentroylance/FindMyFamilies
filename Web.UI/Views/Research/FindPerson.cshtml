@@ -46,7 +46,16 @@
                 </div>
                 <div class="twoButtons">
                     <button name="findButton" type="submit" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-execute24 dialog-buttons"></i> Find</button>
-                    <button id="previousButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-previous24 dialog-buttons"></i> Previous</button>
+                    <div class="btn-group">
+                        <button type="button" class=" btn-u btn-brd btn-brd-hover rounded btn-u-blue dropdown-toggle" data-toggle="dropdown" data-style="expand-left">
+                            <i class="fa fmf-previous24 dialog-buttons"></i>
+                            Previous
+                        </button>
+                        <ul class="dropdown-menu help-dropdown" role="menu">
+                            <li><a id="previousFind" href="#">Find</a></li>
+                            <li><a id="previousDialog" href="#">Dialog</a></li>
+                        </ul>
+                    </div>
                     <button type='button' id="clearButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-clean24 dialog-buttons"></i> Clear</button>
                 </div>
             </form>

@@ -3,7 +3,6 @@
     dir: '../Release',
     baseUrl: "./js",
     mainConfigFile: '../Content/js/main.js',
-    optimize: "none",
     paths: {
         main: "../js/main"
     },

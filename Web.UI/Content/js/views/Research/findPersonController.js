@@ -12,28 +12,19 @@ define(function(require) {
     var person = require('person');
     var researchHelper = require('researchHelper');
 
+    var _previousType = "find";
+
     function loadEvents() {
         $("#findPersonOptionsButton").unbind('click').bind('click', function (e) {
             findPersonHelper.findOptions(e, findPerson);
         });
 
-        $("#clearButton").unbind('click').bind('click', function(e) {
-            $("#personId").val("");
-            $("#firstName").val("");
-            $("#lastName").val("");
-            $("#gender").val("");
-            $("#birthYear").val("");
-            $("#deathYear").val("");
-            $('#firstName').focus();
-            // Revalidate the fields
-            validateRow1(findPerson.form.data('formValidation'));
-            findPerson.form
-                .formValidation('revalidateField', 'gender')
-                .formValidation('revalidateField', 'birthYear')
-                .formValidation('revalidateField', 'deathYear');
+        $("#clearButton").unbind('click').bind('click', function (e) {
+            clear();
         });
 
-        $("#previousButton").unbind('click').bind('click', function(e) {
+        $("#previousFind").unbind('click').bind('click', function(e) {
+            _previousType = "find";
             $("#personId").val(findPerson.personId);
             $("#firstName").val(findPerson.firstName);
             $("#lastName").val(findPerson.lastName);
@@ -49,6 +40,24 @@ define(function(require) {
                 .formValidation('revalidateField', 'deathYear');
 
             $('#submit').focus();
+            submit();
+        });
+
+        $("#previousDialog").unbind('click').bind('click', function (e) {
+            _previousType = "dialog";
+            if (person.id) {
+                $("#personId").val(person.id);
+
+                // Revalidate the fields
+                validateRow1(findPerson.form.data('formValidation'));
+                findPerson.form
+                    .formValidation('revalidateField', 'gender')
+                    .formValidation('revalidateField', 'birthYear')
+                    .formValidation('revalidateField', 'deathYear');
+
+                $('#submit').focus();
+                submit();
+            }
         });
 
         $("#findPersonSelectButton").unbind('click').bind('click', function (e) {
@@ -296,6 +305,22 @@ define(function(require) {
 
     }
 
+    function clear() {
+        $("#personId").val("");
+        $("#firstName").val("");
+        $("#lastName").val("");
+        $("#gender").val("");
+        $("#birthYear").val("");
+        $("#deathYear").val("");
+        $('#firstName').focus();
+        // Revalidate the fields
+        validateRow1(findPerson.form.data('formValidation'));
+        findPerson.form
+            .formValidation('revalidateField', 'gender')
+            .formValidation('revalidateField', 'birthYear')
+            .formValidation('revalidateField', 'deathYear');
+    }
+
     function validateRow1(fv) {
 
         if (string($("#personId").val()).isEmpty() && string($("#firstName").val()).isEmpty() && string($("#lastName").val()).isEmpty()) {
@@ -347,7 +372,9 @@ define(function(require) {
             findPerson.birthYear = $("#birthYear").val();
             findPerson.deathYear = $("#deathYear").val();
 
-            findPerson.save();
+            if (_previousType === "find") {
+                findPerson.save();
+            }
 
             $.ajax({
                 url: constants.FIND_PERSONS_URL,
