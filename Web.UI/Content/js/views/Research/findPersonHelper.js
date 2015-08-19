@@ -208,8 +208,6 @@ define(function(require) {
 
     function getMenuOptions(row) {
         var menuOptions = "";
-        person.includeMiddleName = true;
-        person.includePlace = true;
 
         window.researchHelper = researchHelper;
 
@@ -220,7 +218,7 @@ define(function(require) {
             case 'fmf-urls':
                     isOpen = $("#personUrlsForm").is(':visible');
                     if (!isOpen) {
-                        menuOptions += "<li><a onclick=\"researchHelper.personUrlOptions('" + row.id + "','" + row.fullName + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-family16\"></span> Family Research Urls</a></li>";
+                        menuOptions += "<li><a onclick=\"researchHelper.displayPersonUrls('" + row.id + "','" + row.fullName + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-family16\"></span> Family Research Urls</a></li>";
                     }
                 break;
             case 'fmf-starting':

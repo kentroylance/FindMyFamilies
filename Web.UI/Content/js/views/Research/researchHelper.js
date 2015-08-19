@@ -190,14 +190,16 @@ define(function(require) {
         }
     }
 
-    function displayPersonUrls() {
+    function displayPersonUrls(id, name) {
         loadSpinner();
-        personUrlOptions.callerSpinner = spinnerArea;
-        if (personUrlOptions.id && system.isAuthenticated()) {
+        if (system.isAuthenticated()) {
+            person.id = id;
+            person.name = name;
+            person.save();
             $.ajax({
                 url: constants.DISPLAY_PERSON_URLS_URL,
                 data: {
-                    "personId": personUrlOptions.id,
+                    "personId": id,
                     "includeMaidenName": person.includeMaidenName,
                     "includeMiddleName": person.includeMiddleName,
                     "includePlace": person.includePlace,
@@ -558,8 +560,8 @@ define(function(require) {
         incompleteOrdinances: function(id, name) {
             return incompleteOrdinances(id, name);
         },
-        displayPersonUrls: function() {
-            displayPersonUrls();
+        displayPersonUrls: function(id, name) {
+            displayPersonUrls(id, name);
         },
         personUrlOptions: function(id, name) {
             personUrlOptions(id, name);

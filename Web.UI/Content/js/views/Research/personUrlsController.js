@@ -7,6 +7,7 @@ define(function(require) {
 
     // models
     var personUrls = require('personUrls');
+    var person = require('person');
 
     function row(id, firstName, middleName, lastName, fullName, gender, birthYear, deathYear, birthPlace) {
         this.id = id;
@@ -40,6 +41,26 @@ define(function(require) {
 
     function loadEvents() {
 
+        $("#personUrlsMaidenName").change(function (e) {
+            person.includeMaidenName = $("#personUrlsMaidenName").prop("checked");
+            return false;
+        });
+
+        $("#personUrlsMiddleName").change(function (e) {
+            person.includeMiddleName = $("#personUrlsMiddleName").prop("checked");
+            return false;
+        });
+
+        $("#personUrlsPlace").change(function (e) {
+            person.includePlace = $("#personUrlsPlace").prop("checked");
+            return false;
+        });
+
+        $("#personUrlsYearRange").change(function (e) {
+            person.yearRange = $("#personUrlsYearRange").val();
+            return false;
+        });
+
         $("#personUrlsOptionsButton").unbind('click').bind('click', function (e) {
             findPersonHelper.findOptions(e, findPerson);
         });
@@ -69,6 +90,21 @@ define(function(require) {
     }
 
     function updateForm() {
+        if (person.generation) {
+            $("#personUrlsGeneration").val(person.generation);
+        }
+        if (person.includeMaidenName) {
+            $('#personUrlsMaidenName').prop('checked', person.includeMaidenName);
+        }
+        if (person.includeMiddleName) {
+            $('#personUrlsMiddleName').prop('checked', person.includeMiddleName);
+        }
+        if (person.includePlace) {
+            $('#personUrlsPlace').prop('checked', person.includePlace);
+        }
+        if (person.yearRange) {
+            $("#personUrlsYearRange").val(person.yearRange);
+        }
     }
 
     function mouseOverTrigger() {
