@@ -95,7 +95,7 @@
     }
 
     function isInList(id, name) {
-        if (_history[id] === undefined) {
+        if (!_history || _history[id] === undefined) {
             if ($.isEmptyObject(_history)) {
                 _history = {};
             }
@@ -110,7 +110,7 @@
         id.empty();
         if (Object.keys(_history).length <= constants.HISTORY_MAX) {
             $.each(_history, function(i, value) {
-                var optionhtml = '<option value="' + i + '" selected>' + value + '</option>';
+                optionhtml = '<option value="' + i + '" selected>' + value + '</option>';
                 id.append(optionhtml);
             });
         } else {
@@ -124,7 +124,7 @@
             });
 
             $.each(_history, function(i, value) {
-                var optionhtml = '<option value="' + i + '" selected>' + value + '</option>';
+                optionhtml = '<option value="' + i + '" selected>' + value + '</option>';
                 id.append(optionhtml);
             });
         }
@@ -192,7 +192,7 @@
                 data: { "id": _id },
                 url: constants.GET_PERSON_INFO,
                 success: function(data) {
-                    if (data) {
+                    if (data && data.firstName) {
                         _firstName = data.firstName;
                         _middleName = data.middleName;
                         _lastName = data.lastName;

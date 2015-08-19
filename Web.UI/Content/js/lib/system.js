@@ -15,6 +15,7 @@
     var _initialized;
     var _lastCalled;
     var _spinnerArea;
+    var _msgBox;
 
     function getSpinnerArea() {
         if (_spinnerArea) {

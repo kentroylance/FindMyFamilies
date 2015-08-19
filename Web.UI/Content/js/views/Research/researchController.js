@@ -6,6 +6,7 @@ define(function(require) {
     var requireOnce = lazyRequire.once();
 
     var researchHelper;
+    var msgBox;
 
     $("#startingPoint").unbind("click").bind("click", function(e) {
         requireOnce(['researchHelper'], function(ResearchHelper) {
@@ -100,34 +101,20 @@ define(function(require) {
     });
 
     $("#clearStorage").unbind("click").bind("click", function(e) {
-        requireOnce(['system'], function(System) {
-            system = System;
-        }, function() {
-            system.clearStorage();
-            //        $.fancybox.message.info("Cleared Storage Successfully");
-        });
+        system.clearStorage();
         return false;
     });
 
     $("#refreshAndReset").unbind("click").bind("click", function(e) {
-        requireOnce(['system'], function(System) {
-            system = System;
-        }, function() {
-            system.clearStorage();
-            system.relogin();
-            //        $.fancybox.message.info("Cleared Storage Successfully");
-        });
+        system.clearStorage();
+//        researchHelper.msgBox.message("Cleared Storage Successfully");
+        system.relogin();
         return false;
     });
 
     $("#refresh").unbind("click").bind("click", function(e) {
-        requireOnce(['system'], function(System) {
-            system = System;
-        }, function() {
-            system.relogin();
-            //        $.fancybox.message.info("Cleared Storage Successfully");
-        });
-        return false;
+       system.relogin();
+       return false;
     });
 
     $("#feedback").unbind("click").bind("click", function(e) {

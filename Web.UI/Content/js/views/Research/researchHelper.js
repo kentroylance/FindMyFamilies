@@ -686,6 +686,9 @@ define(function(require) {
         },
         get person() {
             return person;
+        },
+        get msgBox() {
+            return msgBox;
         }
 
     };
