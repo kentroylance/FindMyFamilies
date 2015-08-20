@@ -80,7 +80,7 @@ define(function(require) {
 
         personUrls.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function(e) {
             if (personUrls.callerSpinner) {
-                system.spinnerArea = personUrls.callerSpinner;
+                system.spinnerArea = personUrls.callerSpinner; 
             } else {
                 system.spinnerArea = constants.DEFAULT_SPINNER_AREA;
             }

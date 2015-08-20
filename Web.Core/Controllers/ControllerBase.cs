@@ -286,6 +286,8 @@ namespace FindMyFamilies.Web.Controllers {
                             session.CurrentPerson = Service.GetPerson(person);
                             PersonId = session.CurrentPerson.Id;
                             DisplayName = session.CurrentPerson.Firstname + " " + session.CurrentPerson.Lastname;
+                            AddCookie("DisplayName", DisplayName);
+                            AddCookie("PersonId", PersonId);
                             UpdateLayout();
                             break;
                         }
