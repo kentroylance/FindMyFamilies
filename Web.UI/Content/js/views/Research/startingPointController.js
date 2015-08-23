@@ -44,6 +44,9 @@ define(function(require) {
         if (startingPoint.duplicates) {
             $('#startingPointDuplicates').prop('checked', startingPoint.duplicates);
         }
+        if (startingPoint.clues) {
+            $('#startingPointClues').prop('checked', startingPoint.clues);
+        }
         if (person.reportId) {
             $("#startingPointReportId").val(person.reportId);
         }
@@ -139,15 +142,15 @@ define(function(require) {
         $("startingPointGeneration").val(person.generation);
     }
 
-    function mouseOverTrigger() {
+    function startingPointMouseOver() {
         person.id = $('option:selected', $(this)).val();
         person.name = $('option:selected', $(this)).text();
         var id = $(this).attr("id");
         person.getPersonInfoHover(id, "startingPointPersonId");
-        
+
     }
 
-    function mouseOutTrigger() {
+    function startingPointMouseOut() {
         $('#startingPointPersonInfoDiv').hide();
     }
 
@@ -164,11 +167,11 @@ define(function(require) {
                 sensitivity: 1,
                 interval: 100,
                 timeout: 300,
-                over: mouseOverTrigger,
-                out: mouseOutTrigger
+                over: startingPointMouseOver,
+                out: startingPointMouseOut
             }
 
-            $(".personAction1").hoverIntent(hoverIntentConfig);
+            $(".startingPointAction").hoverIntent(hoverIntentConfig);
 
 
 //            $.ajax({
@@ -386,7 +389,12 @@ define(function(require) {
             startingPoint.born18101850 = $("#startingPointBorn18101850").prop("checked");
         });
 
-        $("#startingPointLivedInUSA").change(function(e) {
+
+        $("#startingPointClues").change(function (e) {
+            startingPoint.clues = $("#startingPointClues").prop("checked");
+        });
+
+        $("#startingPointLivedInUSA").change(function (e) {
             startingPoint.livedInUSA = $("#startingPointLivedInUSA").prop("checked");
         });
 
@@ -394,7 +402,7 @@ define(function(require) {
             startingPoint.ordinances = $("#startingPointOrdinances").prop("checked");
             if (startingPoint.ordinances) {
                 $('#startingPointNonMormon').prop('checked', true);
-                msgBox.warning("Selecting <b>IncompleteOrdinances</b> will add 1-3 seconds more time for each " + person.researchType.substring(0, person.researchType.length - 1) + " that is processed.");
+                msgBox.warning("Selecting <b>Ordinances</b> will add 1-3 seconds more time for each " + person.researchType.substring(0, person.researchType.length - 1) + " that is processed.");
             }
 
         });
@@ -434,7 +442,7 @@ define(function(require) {
         loadReports: function(refreshReport) {
             loadReports(refreshReport);
         }
-        
+
     };
 
     researchHelper.startingPointController = startingPointController;

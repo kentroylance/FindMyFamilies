@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using FindMyFamilies.Util;
 
 namespace FindMyFamilies.Data {
-    public class IncompleteOrdinanceDO {
-        public IncompleteOrdinanceDO() {
+    public class OrdinancesDO {
+        public OrdinancesDO() {
             Generation = 2;
             ResearchType = Constants.RESEARCH_TYPE_ANCESTORS;
         }

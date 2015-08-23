@@ -51,10 +51,10 @@
             placeProblemsController: 'views/research/placeProblemsController',
             placeProblemsReport: 'views/research/placeProblemsReport',
             placeProblemsReportController: 'views/research/placeProblemsReportController',
-            incompleteOrdinances: 'views/research/incompleteOrdinances',
-            incompleteOrdinancesController: 'views/research/incompleteOrdinancesController',
-            incompleteOrdinancesReport: 'views/research/incompleteOrdinancesReport',
-            incompleteOrdinancesReportController: 'views/research/incompleteOrdinancesReportController',
+            ordinances: 'views/research/ordinances',
+            ordinancesController: 'views/research/ordinancesController',
+            ordinancesReport: 'views/research/ordinancesReport',
+            ordinancesReportController: 'views/research/ordinancesReportController',
             findClues: 'views/research/findClues',
             findCluesController: 'views/research/findCluesController',
             findCluesReport: 'views/research/findCluesReport',
@@ -117,9 +117,9 @@
                 deps: ['jquery', 'person', 'constants'],
                 exports: 'features'
             },
-            incompleteOrdinances: {
+            ordinances: {
                 deps: ['jquery', 'person', 'constants'],
-                exports: 'incompleteOrdinances'
+                exports: 'ordinances'
             },
             startingPointReport: {
                 exports: 'startingPointReport'
@@ -136,8 +136,8 @@
             placeProblemsReport: {
                 exports: 'placeProblemsReport'
             },
-            incompleteOrdinancesReport: {
-                exports: 'incompleteOrdinancesReport'
+            ordinancesReport: {
+                exports: 'ordinancesReport'
             },
             findCluesReport: {
                 exports: 'findCluesReport'
@@ -254,13 +254,13 @@
                 deps: ['jquery', 'placeProblems', 'placeProblemsReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'placeProblemsController'
             },
-            incompleteOrdinancesReportController: {
-                deps: ['jquery', 'incompleteOrdinancesReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
-                exports: 'incompleteOrdinancesReportController'
+            ordinancesReportController: {
+                deps: ['jquery', 'ordinancesReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
+                exports: 'ordinancesReportController'
             },
-            incompleteOrdinancesController: {
-                deps: ['jquery', 'incompleteOrdinances', 'incompleteOrdinancesReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
-                exports: 'incompleteOrdinancesController'
+            ordinancesController: {
+                deps: ['jquery', 'ordinances', 'ordinancesReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
+                exports: 'ordinancesController'
             },
             findPersonController: {
                 deps: ['jquery', 'hoverIntent', 'formValidation', 'bootstrapValidation', 'findPerson', 'findPersonHelper', 'system', 'constants', 'person', 'lazyload', 'string'],

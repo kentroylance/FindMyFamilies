@@ -73,11 +73,11 @@ define(function(require) {
         return false;
     });
 
-    $("#incompleteOrdinances").unbind("click").bind("click", function(e) {
+    $("#ordinances").unbind("click").bind("click", function(e) {
         requireOnce(['researchHelper'], function(ResearchHelper) {
             researchHelper = ResearchHelper;
         }, function() {
-            researchHelper.incompleteOrdinances();
+            researchHelper.ordinances();
         });
         return false;
     });
@@ -153,7 +153,7 @@ define(function(require) {
                 $('#hints').click();
                 break;
             case constants.INCOMPLETE_ORDINANCES:
-                $('#incompleteOrdinances').click();
+                $('#ordinances').click();
                 break;
             default:
                 break;

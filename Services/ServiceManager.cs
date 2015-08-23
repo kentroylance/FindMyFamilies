@@ -86,8 +86,8 @@ namespace FindMyFamilies.Services {
             PersonServices.Instance.SendFeedback(feedbackDO, ref session);
         }
 
-        public List<OrdinanceListItemDO> GetOrdinances(IncompleteOrdinanceDO incompleteOrdinanceDo, ref SessionDO session) {
-            return PersonServices.Instance.GetOrdinances(incompleteOrdinanceDo, ref session);
+        public List<OrdinanceListItemDO> GetOrdinances(OrdinancesDO ordinancesDo, ref SessionDO session) {
+            return PersonServices.Instance.GetOrdinances(ordinancesDo, ref session);
         }
 
         public List<FindClueListItemDO> FindClues(FindCluesInputDO findCluesInputDo, ref SessionDO session) {

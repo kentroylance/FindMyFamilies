@@ -143,9 +143,9 @@ define(function (require) {
                 data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "SearchCriteria": findClues.searchCriteria, "GapInChildren": findClues.gapInChildren, "AgeLimit": findClues.ageLimit, "ReportId": person.reportId },
                 url: constants.FIND_CLUES_REPORT_DATA_URL,
                 success: function (data) {
+                    system.stopSpinner(true);
                     if (data && data.errorMessage) {
                         system.spinnerArea = findClues.spinner;
-                        system.stopSpinner(true);
                         msgBox.error(data.errorMessage);
                     } else {
                         findClues.previous = data.list;
@@ -161,7 +161,7 @@ define(function (require) {
             system.spinnerArea = findClues.spinner;
             system.stopSpinner(true);
             $("#findCluesReportTable").bootstrapTable("append", findClues.previous);
-            system.openForm(findCluesReport.form, findCluesReport.formTitleImage, findCluesReport.spinner);
+            system.openForm(findCluesReport.form, findCluesReport.formTitleImage);
         }
 
     }

@@ -143,9 +143,9 @@ define(function (require) {
                 data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "includePossibleDuplicates": possibleDuplicates.includePossibleMatches, "includePossibleMatches": possibleDuplicates.includePossibleMatches, "reportId": person.reportId },
                 url: constants.POSSIBLE_DUPLICATES_REPORT_DATA_URL,
                 success: function (data) {
+                    system.stopSpinner(true);
                     if (data && data.errorMessage) {
                         system.spinnerArea = possibleDuplicates.spinner;
-                        system.stopSpinner(true);
                         msgBox.error(data.errorMessage);
                     } else {
                         possibleDuplicates.previous = data.list;

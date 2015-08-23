@@ -11,7 +11,7 @@ Icon classes can be used entirely standalone. They are named after their origina
 */
 .fmf-about16 {
   background-image: url(research.png);
-  background-position: -16px -294px;
+  background-position: -32px -294px;
   width: 16px;
   height: 16px;
 }
@@ -23,13 +23,13 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .fmf-ancestry16 {
   background-image: url(research.png);
-  background-position: 0px -294px;
+  background-position: -16px -294px;
   width: 16px;
   height: 16px;
 }
 .fmf-billiongraves16 {
   background-image: url(research.png);
-  background-position: -288px -270px;
+  background-position: 0px -294px;
   width: 16px;
   height: 16px;
 }
@@ -362,6 +362,12 @@ Icon classes can be used entirely standalone. They are named after their origina
   background-position: -144px -270px;
   width: 24px;
   height: 24px;
+}
+.fmf-temple16 {
+  background-image: url(research.png);
+  background-position: -288px -270px;
+  width: 16px;
+  height: 16px;
 }
 .fmf-temple24 {
   background-image: url(research.png);

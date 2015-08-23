@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -160,27 +160,27 @@ namespace FindMyFamilies.Web.Controllers {
         }
 
         [System.Web.Mvc.HttpGet]
-        public ActionResult IncompleteOrdinances() {
-            return PartialView("~/Views/Research/IncompleteOrdinances.cshtml");
+        public ActionResult Ordinances() {
+            return PartialView("~/Views/Research/Ordinances.cshtml");
         }
 
         [System.Web.Mvc.HttpGet]
-        public ActionResult IncompleteOrdinancesReportHtml() {
-            return PartialView("~/Views/Research/IncompleteOrdinancesReport.cshtml");
+        public ActionResult OrdinancesReportHtml() {
+            return PartialView("~/Views/Research/OrdinancesReport.cshtml");
         }
 
         [System.Web.Mvc.HttpGet]
-        public JsonResult IncompleteOrdinancesReportData(IncompleteOrdinanceDO incompleteOrdinanceDO) {
+        public JsonResult OrdinancesReportData(OrdinancesDO ordinancesDO) {
             var result = new ResultDO();
 
-            if (incompleteOrdinanceDO != null) {
+            if (ordinancesDO != null) {
                 try {
                     session = GetSession();
-                    result.list = Service.GetOrdinances(incompleteOrdinanceDO, ref session);
+                    result.list = Service.GetOrdinances(ordinancesDO, ref session);
                     ResetTokenHourExpire();
                     result.errorMessage = session.ErrorMessage;
                 } catch (Exception) {
-                    result.errorMessage = "Error retrieving incomplete ordinance report data";
+                    result.errorMessage = "Error retrieving ordinance report data";
                 }
             }
 

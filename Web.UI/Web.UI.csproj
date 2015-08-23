@@ -492,10 +492,12 @@
     <Content Include="Content\js\views\Research\featuresController.js" />
     <Content Include="Content\js\views\Research\feedbackController.js" />
     <Content Include="Content\js\views\Research\hintsReportController.js" />
+    <Content Include="Content\js\views\Research\ordinances.js" />
+    <Content Include="Content\js\views\Research\ordinancesController.js" />
+    <Content Include="Content\js\views\Research\ordinancesReport.js" />
+    <Content Include="Content\js\views\Research\ordinancesReportController.js" />
     <Content Include="Content\js\views\Research\placeProblemsController.js" />
-    <Content Include="Content\js\views\Research\incompleteOrdinancesController.js" />
     <Content Include="Content\js\views\Research\placeProblemsReportController.js" />
-    <Content Include="Content\js\views\Research\incompleteOrdinancesReportController.js" />
     <Content Include="Content\js\views\Research\personUrlOptionsController.js" />
     <Content Include="Content\js\views\Research\personUrls.js" />
     <Content Include="Content\js\views\Research\personUrlsController.js" />
@@ -564,8 +566,6 @@
     <Content Include="Content\js\views\Research\dateProblemsReport.js" />
     <Content Include="Content\js\views\Research\hintsController.js" />
     <Content Include="Content\js\views\Research\hintsReport.js" />
-    <Content Include="Content\js\views\Research\incompleteOrdinances.js" />
-    <Content Include="Content\js\views\Research\IncompleteOrdinancesReport.js" />
     <Content Include="Content\js\views\Research\personUrlOptions.js" />
     <Content Include="Content\js\views\Research\placeProblems.js" />
     <Content Include="Content\js\views\Research\placeProblemsReport.js" />
@@ -1446,8 +1446,8 @@
     <Content Include="Views\Research\FindPerson.cshtml" />
     <Content Include="Views\Research\Hints.cshtml" />
     <Content Include="Views\Research\HintsReport.cshtml" />
-    <Content Include="Views\Research\IncompleteOrdinances.cshtml" />
-    <Content Include="Views\Research\IncompleteOrdinancesReport.cshtml" />
+    <Content Include="Views\Research\Ordinances.cshtml" />
+    <Content Include="Views\Research\OrdinancesReport.cshtml" />
     <Content Include="Views\Research\PersonUrlOptions.cshtml" />
     <Content Include="Views\Research\PersonUrls.cshtml" />
     <Content Include="Views\Research\PlaceProblems.cshtml" />

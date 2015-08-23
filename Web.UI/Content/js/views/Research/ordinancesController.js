@@ -12,23 +12,23 @@ define(function(require) {
 
     // models
     var person = require('person');
-    var incompleteOrdinances = require('incompleteOrdinances');
-    var incompleteOrdinancesReport = require('incompleteOrdinancesReport');
+    var ordinances = require('ordinances');
+    var ordinancesReport = require('ordinancesReport');
     var retrieve = require('retrieve');
 
     function updateForm() {
         if (person.id) {
-            $("#incompleteOrdinancesPersonId").val(person.id);
+            $("#ordinancesPersonId").val(person.id);
         }
         if (person.researchType) {
-            $("#incompleteOrdinancesResearchType").val(person.researchType);
+            $("#ordinancesResearchType").val(person.researchType);
         }
         if (person.generation) {
-            $("#incompleteOrdinancesGeneration").val(person.generation);
+            $("#ordinancesGeneration").val(person.generation);
         }
-        
+
         if (person.reportId) {
-            $("#incompleteOrdinancesReportId").val(person.reportId);
+            $("#ordinancesReportId").val(person.reportId);
         }
         if (person.addChildren) {
             $('#addChildren').prop('checked', person.addChildren);
@@ -36,18 +36,18 @@ define(function(require) {
     }
 
     function addGenerationOptions(options) {
-        var select = $("<select class=\"form-control select1Digit\" id=\"incompleteOrdinancesGeneration\"\>");
+        var select = $("<select class=\"form-control select1Digit\" id=\"ordinancesGeneration\"\>");
         $.each(options, function(a, b) {
             select.append($("<option/>").attr("value", b).text(b));
         });
-        $('#incompleteOrdinancesGenerationDiv').empty();
-        $("#incompleteOrdinancesGenerationDiv").append(select);
-        $('#incompleteOrdinancesGenerationDiv').nextAll().remove();
+        $('#ordinancesGenerationDiv').empty();
+        $("#ordinancesGenerationDiv").append(select);
+        $('#ordinancesGenerationDiv').nextAll().remove();
         if ((person.researchType === "Ancestors") && (person.reportId === constants.REPORT_ID)) {
-            $("#incompleteOrdinancesGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: middle; margin-top: -0.625em; margin-left: .7em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -1.4em;\">&nbsp;<span style=\"font-weight: normal;\">Add Children</span></label>");
+            $("#ordinancesGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: middle; margin-top: -0.625em; margin-left: .7em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -1.4em;\">&nbsp;<span style=\"font-weight: normal;\">Add Children</span></label>");
         }
-        $("#incompleteOrdinancesGeneration").change(function(e) {
-            var generation = $("#incompleteOrdinancesGeneration").val();
+        $("#ordinancesGeneration").change(function(e) {
+            var generation = $("#ordinancesGeneration").val();
             if (person.researchType === constants.DESCENDANTS) {
                 if (generation > 1) {
                     msgBox.warning("Selecting two generations of Descendants will more than double the time to retrieve descendants.");
@@ -57,8 +57,8 @@ define(function(require) {
                     msgBox.warning("Increasing the number of generations will increase the time to retrieve ancestors.");
                 }
             }
-            person.generation = $("#incompleteOrdinancesGeneration").val();
-            person.resetReportId($("#incompleteOrdinancesReportId"));
+            person.generation = $("#ordinancesGeneration").val();
+            person.resetReportId($("#ordinancesReportId"));
         });
 
     }
@@ -69,7 +69,7 @@ define(function(require) {
         options[1] = "2";
         options[2] = "3";
         addGenerationOptions(options);
-        $("#incompleteOrdinancesGeneration").val(person.generation);
+        $("#ordinancesGeneration").val(person.generation);
     }
 
     function addAncestorGenerationOptions() {
@@ -82,12 +82,12 @@ define(function(require) {
         options[5] = "7";
         options[6] = "8";
         addGenerationOptions(options);
-        $("#incompleteOrdinancesGeneration").val(person.generation);
+        $("#ordinancesGeneration").val(person.generation);
     }
 
     function updateResearchData() {
-        $("#incompleteOrdinancesReportId").val(person.reportId);
-        var reportText = $("#incompleteOrdinancesReportId option:selected").text();
+        $("#ordinancesReportId").val(person.reportId);
+        var reportText = $("#ordinancesReportId option:selected").text();
         if (reportText && reportText.length > 8 && reportText !== "Select") {
             var nameIndex = reportText.indexOf("Name: ") + 6;
             var dateIndex = reportText.indexOf(", Date:  ");
@@ -97,8 +97,8 @@ define(function(require) {
             person.name = reportText.substring(nameIndex + 11, dateIndex);
             person.researchType = reportText.substring(researchTypeIndex + 17, generationoIndex);
             person.generation = reportText.substring(generationoIndex + 16, generationoIndex + 17);
-            person.loadPersons($("#incompleteOrdinancesPersonId"));
-            //                person.reportId = $("#incompleteOrdinancesReportId option:selected").val();
+            person.loadPersons($("#ordinancesPersonId"));
+            //                person.reportId = $("#ordinancesReportId option:selected").val();
         }
         if (person.researchType === constants.DESCENDANTS) {
             addDecendantGenerationOptions();
@@ -109,7 +109,7 @@ define(function(require) {
     }
 
     function loadReports(refreshReport) {
-        retrieve.loadReports($("#incompleteOrdinancesReportId"), refreshReport);
+        retrieve.loadReports($("#ordinancesReportId"), refreshReport);
         updateResearchData();
     }
 
@@ -119,17 +119,17 @@ define(function(require) {
         } else {
             person.generation = "2";
         }
-        $("incompleteOrdinancesGeneration").val(person.generation);
+        $("ordinancesGeneration").val(person.generation);
     }
 
     function open() {
-        incompleteOrdinances.form = $("#incompleteOrdinancesForm");
+        ordinances.form = $("#ordinancesForm");
         loadEvents();
         loadReports();
-        person.loadPersons($("#incompleteOrdinancesPersonId"));
+        person.loadPersons($("#ordinancesPersonId"));
         retrieve.findReport();
         updateForm();
-        system.openForm(incompleteOrdinances.form, incompleteOrdinances.formTitleImage, incompleteOrdinances.spinner);
+        system.openForm(ordinances.form, ordinances.formTitleImage, ordinances.spinner);
     }
 
     function clear() {
@@ -142,24 +142,24 @@ define(function(require) {
     }
 
     function resetReportId() {
-        person.resetReportId($("#incompleteOrdinancesReportId"));
+        person.resetReportId($("#ordinancesReportId"));
         updateResearchData();
     }
 
     function loadEvents() {
-        $('#incompleteOrdinancesPerson').change(function(e) {
+        $('#ordinancesPerson').change(function(e) {
             debugger;
         });
 
-        $("#incompleteOrdinancesReportId").change(function(e) {
-            person.reportId = $("#incompleteOrdinancesReportId option:selected").val();
+        $("#ordinancesReportId").change(function(e) {
+            person.reportId = $("#ordinancesReportId option:selected").val();
             if (person.reportId === constants.REPORT_ID) {
                 msgBox.warning("Even though the \"Select\" option is availiable to retrieve family search data, to avoid performance problems it is best practice to first retrieve the data before analyzing.");
             }
             updateResearchData();
         });
 
-        $('#incompleteOrdinancesPersonId').change(function(e) {
+        $('#ordinancesPersonId').change(function(e) {
             person.id = $('option:selected', $(this)).val();
             person.name = $('option:selected', $(this)).text();
             if (retrieve.findReport()) {
@@ -169,8 +169,8 @@ define(function(require) {
             }
         });
 
-        $('#incompleteOrdinancesResearchType').change(function(e) {
-            person.researchType = $("#incompleteOrdinancesResearchType").val();
+        $('#ordinancesResearchType').change(function(e) {
+            person.researchType = $("#ordinancesResearchType").val();
             if (person.researchType === constants.DESCENDANTS) {
                 person.generationAncestors = person.generation;
                 person.generation = person.generationDescendants;
@@ -185,11 +185,11 @@ define(function(require) {
             resetReportId();
         });
 
-        $("#incompleteOrdinancesFindPersonButton").unbind('click').bind('click', function() {
+        $("#ordinancesFindPersonButton").unbind('click').bind('click', function() {
             researchHelper.findPerson(function(result) {
                 var findPersonModel = require('findPerson');
                 if (result) {
-                    var changed = (findPersonModel.id === $("#incompleteOrdinancesPersonId").val()) ? false : true;
+                    var changed = (findPersonModel.id === $("#ordinancesPersonId").val()) ? false : true;
                     if (changed) {
                         person.id = findPersonModel.id;
                         person.name = findPersonModel.name;
@@ -199,20 +199,20 @@ define(function(require) {
                             resetReportId();
                         }
                     }
-                    incompleteOrdinances.save();
-                    person.loadPersons($("#incompleteOrdinancesPersonId"));
+                    ordinances.save();
+                    person.loadPersons($("#ordinancesPersonId"));
                 }
                 findPersonModel.reset();
             });
             return false;
         });
 
-        $("#incompleteOrdinancesRetrieveButton").unbind('click').bind('click', function() {
+        $("#ordinancesRetrieveButton").unbind('click').bind('click', function() {
             researchHelper.retrieve(function(result) {
                 var retrieve = require('retrieve');
                 if (result) {
                     person.reportId = retrieve.reportId;
-                    incompleteOrdinances.save();
+                    ordinances.save();
                     loadReports(true);
                 }
                 retrieve.reset();
@@ -220,41 +220,41 @@ define(function(require) {
             return false;
         });
 
-        $("#incompleteOrdinancesHelpButton").unbind('click').bind('click', function(e) {
+        $("#ordinancesHelpButton").unbind('click').bind('click', function(e) {
         });
 
-        $("#incompleteOrdinancesCloseButton").unbind('click').bind('click', function(e) {
-            incompleteOrdinances.form.dialog(constants.CLOSE);
+        $("#ordinancesCloseButton").unbind('click').bind('click', function(e) {
+            ordinances.form.dialog(constants.CLOSE);
         });
 
-        $("#incompleteOrdinancesResetButton").unbind('click').bind('click', function(e) {
+        $("#ordinancesResetButton").unbind('click').bind('click', function(e) {
             reset();
         });
 
-        $("#incompleteOrdinancesPreviousButton").unbind('click').bind('click', function(e) {
-            if (!incompleteOrdinances.previous) {
+        $("#ordinancesPreviousButton").unbind('click').bind('click', function(e) {
+            if (!ordinances.previous) {
                 if (window.localStorage) {
-                    incompleteOrdinances.previous = JSON.parse(localStorage.getItem(constants.INCOMPLETE_ORDINANCES_PREVIOUS));
+                    ordinances.previous = JSON.parse(localStorage.getItem(constants.ORDINANCES_PREVIOUS));
                 }
             }
-            incompleteOrdinancesReport.displayType = "previous";
-            if (incompleteOrdinances.previous) {
+            ordinancesReport.displayType = "previous";
+            if (ordinances.previous) {
                 $.ajax({
-                    url: constants.INCOMPLETE_ORDINANCES_REPORT_HTML_URL,
+                    url: constants.ORDINANCES_REPORT_HTML_URL,
                     success: function(data) {
-                        var $dialogContainer = $('#incompleteOrdinancesReportForm');
+                        var $dialogContainer = $('#ordinancesReportForm');
                         var $detachedChildren = $dialogContainer.children().detach();
-                        $('<div id=\"incompleteOrdinancesReportForm\"></div>').dialog({
-                            title: "Incomplete Ordinances",
+                        $('<div id=\"ordinancesReportForm\"></div>').dialog({
+                            title: " Ordinances",
                             width: 975,
                             open: function() {
                                 $detachedChildren.appendTo($dialogContainer);
                                 $(this).css("maxHeight", 700);
                             }
                         });
-                        $("#incompleteOrdinancesReportForm").empty().append(data);
-                        if (researchHelper && researchHelper.incompleteOrdinancesReportController) {
-                            researchHelper.incompleteOrdinancesReportController.open();
+                        $("#ordinancesReportForm").empty().append(data);
+                        if (researchHelper && researchHelper.ordinancesReportController) {
+                            researchHelper.ordinancesReportController.open();
                         }
                     }
                 });
@@ -263,34 +263,34 @@ define(function(require) {
             }
         });
 
-        $("#incompleteOrdinancesSubmitButton").unbind('click').bind('click', function(e) {
+        $("#ordinancesSubmitButton").unbind('click').bind('click', function(e) {
             if (system.isAuthenticated()) {
                 if (!person.id) {
                     msgBox.message("You must first select a person from Family Search");
                 }
-                incompleteOrdinancesReport.displayType = "start";
-                incompleteOrdinances.save();
+                ordinancesReport.displayType = "start";
+                ordinances.save();
 
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
                         requireOnce(["css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
                             }, function() {
                                 $.ajax({
-                                    url: constants.INCOMPLETE_ORDINANCES_REPORT_HTML_URL,
+                                    url: constants.ORDINANCES_REPORT_HTML_URL,
                                     success: function(data) {
-                                        var $dialogContainer = $('#incompleteOrdinancesReportForm');
+                                        var $dialogContainer = $('#ordinancesReportForm');
                                         var $detachedChildren = $dialogContainer.children().detach();
-                                        $("<div id=\"incompleteOrdinancesReportForm\"></div>").dialog({
-                                            title: "Incomplete Ordinances",
+                                        $("<div id=\"ordinancesReportForm\"></div>").dialog({
+                                            title: " Ordinances",
                                             width: 975,
                                             height: 515,
                                             open: function() {
                                                 $detachedChildren.appendTo($dialogContainer);
                                             }
                                         });
-                                        $("#incompleteOrdinancesReportForm").empty().append(data);
-                                        if (researchHelper && researchHelper.incompleteOrdinancesReportController) {
-                                            researchHelper.incompleteOrdinancesReportController.open();
+                                        $("#ordinancesReportForm").empty().append(data);
+                                        if (researchHelper && researchHelper.ordinancesReportController) {
+                                            researchHelper.ordinancesReportController.open();
                                         }
                                     }
                                 });
@@ -299,7 +299,7 @@ define(function(require) {
                     }
                 });
             } else {
-                incompleteOrdinancesReport.form.dialog("close");
+                ordinancesReport.form.dialog("close");
                 system.relogin();
             }
             return false;
@@ -311,41 +311,41 @@ define(function(require) {
             if (person.addChildren) {
                 msgBox.warning("Selecting <b>Add Children</b> check box will probably double the time to retrieve ancestors.");
             }
-            person.resetReportId($("#incompleteOrdinancesReportId"));
+            person.resetReportId($("#ordinancesReportId"));
             updateResearchData();
         });
 
 
 
-        $("#incompleteOrdinancesCancelButton").unbind('click').bind('click', function(e) {
-            incompleteOrdinances.form.dialog(constants.CLOSE);
+        $("#ordinancesCancelButton").unbind('click').bind('click', function(e) {
+            ordinances.form.dialog(constants.CLOSE);
         });
 
-        incompleteOrdinances.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function(e) {
-            if (incompleteOrdinances.callerSpinner) {
-                system.spinnerArea = incompleteOrdinances.callerSpinner;
+        ordinances.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function(e) {
+            if (ordinances.callerSpinner) {
+                system.spinnerArea = ordinances.callerSpinner;
             } else {
                 system.spinnerArea = constants.DEFAULT_SPINNER_AREA;
             }
-            incompleteOrdinances.save();
+            ordinances.save();
         });
     }
 
-    var incompleteOrdinancesController = {
+    var ordinancesController = {
         open: function() {
             open();
         },
         loadReports: function(refreshReport) {
             loadReports(refreshReport);
         }
-        
+
     };
 
-    researchHelper.incompleteOrdinancesController = incompleteOrdinancesController;
+    researchHelper.ordinancesController = ordinancesController;
     open();
 
-    return incompleteOrdinancesController;
+    return ordinancesController;
 });
 
 
-//# sourceURL=incompleteOrdinancesController.js
+//# sourceURL=ordinancesController.js

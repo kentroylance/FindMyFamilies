@@ -613,7 +613,7 @@ namespace FindMyFamilies.BusinessObject {
                     if (persons != null && persons.Count > 0) {
                         var id = 1;
                         foreach (var personDO in persons) {
-                            validate(ref id, personDO.Value.Id, persons, findCluesInputDO, ref findClueListItems);
+                            validate(ref id, persons[personDO.Value.Id], findCluesInputDO, ref findClueListItems);
                             id++;
                         }
                     }
@@ -1101,17 +1101,17 @@ namespace FindMyFamilies.BusinessObject {
             return ordinanceInfo;
         }
 
-        public List<OrdinanceListItemDO> GetOrdinances(IncompleteOrdinanceDO incompleteOrdinanceDo, ref SessionDO session) {
+        public List<OrdinanceListItemDO> GetOrdinances(OrdinancesDO ordinancesDO, ref SessionDO session) {
             var ordinances = new Dictionary<string, OrdinanceDO>();
             var ordinanceListItems = new List<OrdinanceListItemDO>();
             var personName = "";
 
             ResearchDO researchDO = new ResearchDO();
-            researchDO.PersonId = incompleteOrdinanceDo.Id;
-            researchDO.ResearchType = incompleteOrdinanceDo.ResearchType;
-            researchDO.Generation = incompleteOrdinanceDo.Generation;
-            researchDO.ReportId = incompleteOrdinanceDo.ReportId;
-            researchDO.PersonName = incompleteOrdinanceDo.FullName;
+            researchDO.PersonId = ordinancesDO.Id;
+            researchDO.ResearchType = ordinancesDO.ResearchType;
+            researchDO.Generation = ordinancesDO.Generation;
+            researchDO.ReportId = ordinancesDO.ReportId;
+            researchDO.PersonName = ordinancesDO.FullName;
 
             var ancestors = getPersons(ref researchDO, ref session);
 
@@ -1197,136 +1197,215 @@ namespace FindMyFamilies.BusinessObject {
             }
         }
 
+//        private bool canCheck(StartingPointInputDO startingPointInputDO, bool bornBetween1810and1850, bool livedInUSA) {
+//            bool canCheck = false;
+//
+//            if ((startingPointInputDO.Born18101850 && bornBetween1810and1850) || (!startingPointInputDO.Born18101850)) {
+//                canCheck = true;
+//            }
+//
+//            if ((startingPointInputDO.LivedInUSA && livedInUSA) || (!startingPointInputDO.LivedInUSA)) {
+//                canCheck = true;
+//            }
+//
+//            return canCheck;
+//        }
+
         private StartingPointListItemDO GetStartingPoints(PersonDO personDO, StartingPointInputDO startingPointInputDO, ref SessionDO session) {
             StartingPointListItemDO startingPointListItemDO = new StartingPointListItemDO();
             FindListItemDO findListItemDO = (FindListItemDO) startingPointListItemDO;
+            bool bornBetween1810and1850 = false;
+            bool livedInUSA = false;
 
             if (!personDO.Living) {
                 personDAO.PopulateFindListItem(personDO, ref findListItemDO);
                 startingPointListItemDO.Reasons = "";
+                string bornBetween1810and1850Reason = "";
+                string bornInUSA = "";
+                string diedInUSA = "";
+                bool requiredMet = false;
                 if (startingPointInputDO.Born18101850 && ((personDO.BirthYear >= 1810) && (personDO.BirthYear <= 1850))) {
-                    startingPointListItemDO.Reasons += "BornBetween1810and1850[" + personDO.BirthYear.ToString() + "]~";
-                    startingPointListItemDO.Count++;
-                }
-                if (startingPointInputDO.LivedInUSA && personDO.BirthYear < 1) {
-                    startingPointListItemDO.Reasons += "NoBirthDate[" + personDO.BirthDateString + "]~";
-                    startingPointListItemDO.Count++;
-                }
-
-                if (startingPointInputDO.LivedInUSA && string.IsNullOrEmpty(personDO.BirthPlace)) {
-                    startingPointListItemDO.Reasons += "NoBirthPlace~";
-                    startingPointListItemDO.Count++;
+                    bornBetween1810and1850Reason = "BornBetween1810and1850[" + personDO.BirthYear.ToString() + "]~";
                 }
 
                 if (startingPointInputDO.LivedInUSA) {
                     if (!string.IsNullOrEmpty(personDO.BirthPlace)) {
                         var birthPlace = personDO.BirthPlace.ToLower();
                         if ((birthPlace.IndexOf("united states") > -1) || (birthPlace.IndexOf("usa") > -1) || (birthPlace.IndexOf("u.s.a") > -1) || (birthPlace.IndexOf("united") > -1) || (birthPlace.IndexOf("states") > -1)) {
-                            startingPointListItemDO.Reasons += "BornInUSA[" + personDO.BirthPlace + "]~";
-                            startingPointListItemDO.Count++;
+                            bornInUSA = "BornInUSA[" + personDO.BirthPlace + "]~";
                         }
                     }
 
                     if (!string.IsNullOrEmpty(personDO.DeathPlace)) {
                         var deathPlace = personDO.DeathPlace.ToLower();
                         if ((deathPlace.IndexOf("united states") > -1) || (deathPlace.IndexOf("usa") > -1) || (deathPlace.IndexOf("u.s.a") > -1) || (deathPlace.IndexOf("united") > -1) || (deathPlace.IndexOf("states") > -1)) {
-                            startingPointListItemDO.Reasons += "DiedInUSA[" + personDO.DeathPlace + "]~";
-                            startingPointListItemDO.Count++;
+                            diedInUSA = "DiedInUSA[" + personDO.DeathPlace + "]~";
                         }
                     }
                 }
+                if (startingPointInputDO.Born18101850 && !startingPointInputDO.LivedInUSA) {
+                    if (!string.IsNullOrEmpty(bornBetween1810and1850Reason)) {
+                        startingPointListItemDO.Reasons += bornBetween1810and1850Reason;
+                        startingPointListItemDO.Count++;
+                        requiredMet = true;
 
-                if (startingPointInputDO.NonMormon || startingPointInputDO.NeedOrdinances) {
-                    OrdinanceDO ordinance = personDAO.GetOrdinances(personDO, ref session);
-                    if (!session.Error && (ordinance != null) && !personDO.Living) {
-                        if ((ordinance.Baptism.reservable) || (ordinance.Confirmation.reservable) || (ordinance.Initiatory.reservable) || (ordinance.Endowment.reservable)) {
-                            startingPointListItemDO.Reasons += "IncompleteOrdinances[" + GetOrdinanceInfo(ordinance) + "]~";
+                    }
+                } else if (!startingPointInputDO.Born18101850 && startingPointInputDO.LivedInUSA) {
+                    if (!string.IsNullOrEmpty(bornInUSA)) {
+                        startingPointListItemDO.Reasons += bornInUSA;
+                        startingPointListItemDO.Count++;
+                        requiredMet = true;
+
+                    }
+                    if (!string.IsNullOrEmpty(diedInUSA)) {
+                        startingPointListItemDO.Reasons += diedInUSA;
+                        startingPointListItemDO.Count++;
+                        requiredMet = true;
+
+                    }
+                } else if (startingPointInputDO.Born18101850 && startingPointInputDO.LivedInUSA) {
+                    if (!string.IsNullOrEmpty(bornBetween1810and1850Reason) && (!string.IsNullOrEmpty(bornInUSA) || !string.IsNullOrEmpty(diedInUSA))) {
+                        startingPointListItemDO.Reasons += bornBetween1810and1850Reason;
+                        startingPointListItemDO.Count++;
+                        if (!string.IsNullOrEmpty(bornInUSA)) {
+                            startingPointListItemDO.Reasons += bornInUSA;
                             startingPointListItemDO.Count++;
-                        } else {
-                            if (((ordinance.SealedToParent != null) && ordinance.SealedToParent.reservable) || ((ordinance.SealedToSpouse != null) && ordinance.SealedToSpouse.reservable)) {
-                                startingPointListItemDO.Reasons += "IncompleteOrdinances[" + GetOrdinanceInfo(ordinance) + "]~";
-                                startingPointListItemDO.Count++;
-                            }
                         }
-                        if (ordinance.Baptism.date != null) {
-                            if (personDO.DeathYear > 100) {
-                                if (ordinance.Baptism.date.normalized.Length > 4) {
-                                    DateTime? baptismDate = null;
-                                    try {
-                                        baptismDate = Dates.GetDateTime(ordinance.Baptism.date.original);
-                                    } catch (Exception) {
-                                    }
-                                    var notNeeded = ordinance.Baptism.status.Equals("Not Needed") ? true : false;
-                                    if (startingPointInputDO.NonMormon && ((baptismDate != null) && !notNeeded && baptismDate.Value.Year > personDO.DeathYear)) {
-                                        startingPointListItemDO.Reasons += "NonMormon~";
-                                        startingPointListItemDO.Count++;
+                        if (!string.IsNullOrEmpty(diedInUSA)) {
+                            startingPointListItemDO.Reasons += diedInUSA;
+                            startingPointListItemDO.Count++;
+                        }
+                        requiredMet = true;
+                    }
+                    
+                } else if (!startingPointInputDO.Born18101850 && !startingPointInputDO.LivedInUSA) {
+                    requiredMet = true;
+                }
+
+
+                if (requiredMet) {
+//                    if (!string.IsNullOrEmpty(bornBetween1810and1850Reason)) {
+//                        startingPointListItemDO.Reasons += "NoBirthDate[" + personDO.BirthDateString + "]~";
+//                        startingPointListItemDO.Count++;
+//                    }
+//
+//                    if (startingPointInputDO.LivedInUSA && string.IsNullOrEmpty(personDO.BirthPlace)) {
+//                        startingPointListItemDO.Reasons += "NoBirthPlace~";
+//                        startingPointListItemDO.Count++;
+//                    }
+
+                    if (startingPointInputDO.NonMormon || startingPointInputDO.NeedOrdinances) {
+                        OrdinanceDO ordinance = personDAO.GetOrdinances(personDO, ref session);
+                        if (!session.Error && (ordinance != null) && !personDO.Living) {
+                            if ((ordinance.Baptism.reservable) || (ordinance.Confirmation.reservable) || (ordinance.Initiatory.reservable) || (ordinance.Endowment.reservable)) {
+                                startingPointListItemDO.Reasons += "Ordinances[" + GetOrdinanceInfo(ordinance) + "]~";
+                                startingPointListItemDO.Count = startingPointListItemDO.Count + 5;
+                            } else {
+                                if (((ordinance.SealedToParent != null) && ordinance.SealedToParent.reservable) || ((ordinance.SealedToSpouse != null) && ordinance.SealedToSpouse.reservable)) {
+                                    startingPointListItemDO.Reasons += "Ordinances[" + GetOrdinanceInfo(ordinance) + "]~";
+                                    startingPointListItemDO.Count = startingPointListItemDO.Count + 5;
+                                }
+                            }
+                            if (ordinance.Baptism.date != null) {
+                                if (personDO.DeathYear > 100) {
+                                    if (ordinance.Baptism.date.normalized.Length > 4) {
+                                        DateTime? baptismDate = null;
+                                        try {
+                                            baptismDate = Dates.GetDateTime(ordinance.Baptism.date.original);
+                                        } catch (Exception) {
+                                        }
+                                        var notNeeded = ordinance.Baptism.status.Equals("Not Needed") ? true : false;
+                                        if (startingPointInputDO.NonMormon && ((baptismDate != null) && !notNeeded && baptismDate.Value.Year > personDO.DeathYear)) {
+                                            startingPointListItemDO.Reasons += "NonMormon~";
+                                            startingPointListItemDO.Count++;
+                                        }
+                                    } else {
+                                        var baptismYear = Convert.ToInt16(ordinance.Baptism.date.normalized);
+
+                                        var notNeeded = ordinance.Baptism.status.Equals("Not Needed") ? true : false;
+                                        if (startingPointInputDO.NonMormon && ((baptismYear > 100) && !notNeeded && baptismYear > personDO.DeathYear)) {
+                                            startingPointListItemDO.Reasons += "NonMormon~";
+                                            startingPointListItemDO.Count++;
+                                        }
                                     }
                                 } else {
-                                    var baptismYear = Convert.ToInt16(ordinance.Baptism.date.normalized);
+                                    if (ordinance.Baptism.date.normalized.Length > 4) {
+                                        DateTime? baptismDate = null;
+                                        try {
+                                            baptismDate = Dates.GetDateTime(ordinance.Baptism.date.original);
+                                        } catch (Exception) {
+                                        }
+                                        var notNeeded = ordinance.Baptism.status.Equals("Not Needed") ? true : false;
+                                        if (startingPointInputDO.NonMormon && ((baptismDate != null) && !notNeeded && baptismDate.Value.Year > personDO.BirthYear + 100)) {
+                                            startingPointListItemDO.Reasons += "NonMormon~";
+                                            startingPointListItemDO.Count++;
+                                        }
+                                    } else {
+                                        var baptismYear = Convert.ToInt16(ordinance.Baptism.date.normalized);
 
-                                    var notNeeded = ordinance.Baptism.status.Equals("Not Needed") ? true : false;
-                                    if (startingPointInputDO.NonMormon && ((baptismYear > 100) && !notNeeded && baptismYear > personDO.DeathYear)) {
-                                        startingPointListItemDO.Reasons += "NonMormon~";
-                                        startingPointListItemDO.Count++;
+                                        var notNeeded = ordinance.Baptism.status.Equals("Not Needed") ? true : false;
+                                        if (startingPointInputDO.NonMormon && ((baptismYear > 100) && !notNeeded && baptismYear > personDO.DeathYear + 100)) {
+                                            startingPointListItemDO.Reasons += "NonMormon~";
+                                            startingPointListItemDO.Count++;
+                                        }
                                     }
                                 }
                             } else {
-                                if (ordinance.Baptism.date.normalized.Length > 4) {
-                                    DateTime? baptismDate = null;
-                                    try {
-                                        baptismDate = Dates.GetDateTime(ordinance.Baptism.date.original);
-                                    } catch (Exception) {
-                                    }
-                                    var notNeeded = ordinance.Baptism.status.Equals("Not Needed") ? true : false;
-                                    if (startingPointInputDO.NonMormon && ((baptismDate != null) && !notNeeded && baptismDate.Value.Year > personDO.BirthYear + 100)) {
-                                        startingPointListItemDO.Reasons += "NonMormon~";
-                                        startingPointListItemDO.Count++;
-                                    }
-                                } else {
-                                    var baptismYear = Convert.ToInt16(ordinance.Baptism.date.normalized);
-
-                                    var notNeeded = ordinance.Baptism.status.Equals("Not Needed") ? true : false;
-                                    if (startingPointInputDO.NonMormon && ((baptismYear > 100) && !notNeeded && baptismYear > personDO.DeathYear + 100)) {
-                                        startingPointListItemDO.Reasons += "NonMormon~";
-                                        startingPointListItemDO.Count++;
-                                    }
+                                var notNeeded = ordinance.Baptism.status.Equals("Not Needed") ? true : false;
+                                if (!notNeeded) {
+                                    startingPointListItemDO.Reasons += "NonMormon~";
+                                    startingPointListItemDO.Count++;
                                 }
                             }
                         } else {
-                            var notNeeded = ordinance.Baptism.status.Equals("Not Needed") ? true : false;
-                            if (!notNeeded) {
+                            if (startingPointInputDO.NonMormon) {
                                 startingPointListItemDO.Reasons += "NonMormon~";
                                 startingPointListItemDO.Count++;
                             }
                         }
-                    } else {
-                        if (startingPointInputDO.NonMormon) {
-                            startingPointListItemDO.Reasons += "NonMormon~";
-                            startingPointListItemDO.Count++;
+                    }
+
+                    if (!session.Error && startingPointInputDO.Duplicates) {
+                        PossibleDuplicateDO possibleDuplicate = personDAO.GetPossibleDuplicates(personDO, ref session);
+                        if ((possibleDuplicate != null) && possibleDuplicate.Results > 0) {
+                            foreach (var entry in possibleDuplicate.Entries) {
+                                if (entry.Score > .5) {
+                                    startingPointListItemDO.Reasons += "PossibleDuplicate[" + entry.Fullname + " (" + entry.Score + ")]~";
+                                    startingPointListItemDO.Count++;
+                                }
+                            }
                         }
                     }
-                }
 
-                if (!session.Error && startingPointInputDO.Duplicate) {
-                    PossibleDuplicateDO possibleDuplicate = personDAO.GetPossibleDuplicates(personDO, ref session);
-                    if ((possibleDuplicate != null) && possibleDuplicate.Results > 0) {
-                        foreach (var entry in possibleDuplicate.Entries) {
-                            if (entry.Score > .5) {
-                                startingPointListItemDO.Reasons += "PossibleDuplicate[" + entry.Fullname + " (" + entry.Score + ")]~";
+                    if (!session.Error && startingPointInputDO.Hints) {
+                        HintDO hint = personDAO.GetHints(personDO, ref session);
+                        if ((hint != null) && hint.Results > 0) {
+                            if ((hint.Entries != null) && (hint.Entries.Count > 0)) {
+                                foreach (var entry in hint.Entries) {
+                                    startingPointListItemDO.Reasons += "Hint[" + entry.Fullname + " (" + entry.Score + ")]~";
+                                    startingPointListItemDO.Count++;
+                                }
+                            }
+                        }
+                    }
+
+                    if (!session.Error && startingPointInputDO.Clues) {
+                        var id = 1;
+                        var findClueListItems = new List< FindClueListItemDO>();
+                        var findCluesInputDO = new FindCluesInputDO();
+                        findCluesInputDO.AgeLimit = 18;
+                        findCluesInputDO.SearchCriteria = 0;
+                        findCluesInputDO.GapInChildren = 3;
+
+                        validate(ref id, personDO, findCluesInputDO, ref findClueListItems);
+                        if ((findClueListItems != null) && findClueListItems.Count > 0) {
+                            foreach (var item in findClueListItems) {
+                                startingPointListItemDO.Reasons += "Clue[" + item.clue + ")]~";
                                 startingPointListItemDO.Count++;
                             }
                         }
                     }
-                }
 
-                if (!session.Error && startingPointInputDO.Hint) {
-                    HintDO hint = personDAO.GetHints(personDO, ref session);
-                    if ((hint != null) && hint.Results > 0) {
-                        foreach (var entry in hint.Entries) {
-                            startingPointListItemDO.Reasons += "Hint[" + entry.Fullname + " (" + entry.Score + ")]~";
-                            startingPointListItemDO.Count++;
-                        }
-                    }
                 }
             }
 
@@ -2165,11 +2244,11 @@ namespace FindMyFamilies.BusinessObject {
             return meetsCriteria;
         }
 
-        public void validate(ref int id, string personId, Dictionary<string, PersonDO> persons, FindCluesInputDO findCluesInputDo, ref List<FindClueListItemDO> analyzeListItems) {
+        public void validate(ref int id, PersonDO person, FindCluesInputDO findCluesInputDo, ref List<FindClueListItemDO> analyzeListItems) {
             FindClueListItemDO findClueListItemDo = new FindClueListItemDO();
             FindListItemDO findListItemDO = (FindListItemDO) findClueListItemDo;
 
-            var person = persons[personId];
+//            var person = persons[personId];
             personDAO.PopulateFindListItem(person, ref findListItemDO);
             //            FindClueListItemDO.Name = person.Id + "~" + person.Fullname;
             if (person.Id.Equals("KWCN-2VW")) {

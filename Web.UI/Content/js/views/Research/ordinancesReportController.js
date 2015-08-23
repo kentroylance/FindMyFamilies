@@ -8,39 +8,39 @@ define(function(require) {
 
     // models
     var person = require('person');
-    var incompleteOrdinances = require('incompleteOrdinances');
-    var incompleteOrdinancesController = require('incompleteOrdinancesController');
-    var incompleteOrdinancesReport = require('incompleteOrdinancesReport');
+    var ordinances = require('ordinances');
+    var ordinancesController = require('ordinancesController');
+    var ordinancesReport = require('ordinancesReport');
 
     function loadEvents() {
 
-        $("#incompleteOrdinancesReportOptionsButton").unbind('click').bind('click', function(e) {
-            findPersonHelper.findOptions(e, incompleteOrdinancesReport);
+        $("#ordinancesReportOptionsButton").unbind('click').bind('click', function(e) {
+            findPersonHelper.findOptions(e, ordinancesReport);
         });
 
-        $("#incompleteOrdinancesReportSaveButton").unbind('click').bind('click', function(e) {
-            incompleteOrdinances.savePrevious();
-            incompleteOrdinancesReport.form.dialog(constants.CLOSE);
+        $("#ordinancesReportSaveButton").unbind('click').bind('click', function(e) {
+            ordinances.savePrevious();
+            ordinancesReport.form.dialog(constants.CLOSE);
         });
 
 
-        $("#incompleteOrdinancesReportCancelButton").unbind('click').bind('click', function(e) {
-            incompleteOrdinancesReport.form.dialog(constants.CLOSE);
+        $("#ordinancesReportCancelButton").unbind('click').bind('click', function(e) {
+            ordinancesReport.form.dialog(constants.CLOSE);
         });
 
-        $("#incompleteOrdinancesReportCloseButton").unbind('click').bind('click', function(e) {
-            incompleteOrdinancesReport.form.dialog(constants.CLOSE);
+        $("#ordinancesReportCloseButton").unbind('click').bind('click', function(e) {
+            ordinancesReport.form.dialog(constants.CLOSE);
         });
 
-        incompleteOrdinancesReport.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function(e) {
-            system.spinnerArea = incompleteOrdinances.spinner;
+        ordinancesReport.form.unbind(constants.DIALOG_CLOSE).bind(constants.DIALOG_CLOSE, function(e) {
+            system.spinnerArea = ordinances.spinner;
             person.save();
-            if (incompleteOrdinancesReport.callback) {
-                if (typeof (incompleteOrdinancesReport.callback) === "function") {
-                    incompleteOrdinancesReport.callback(person.selected);
+            if (ordinancesReport.callback) {
+                if (typeof (ordinancesReport.callback) === "function") {
+                    ordinancesReport.callback(person.selected);
                 }
             }
-//            incompleteOrdinancesReport.reset();
+//            ordinancesReport.reset();
         });
 
         window.nameEvents = {
@@ -48,13 +48,13 @@ define(function(require) {
                     $(this).append(findPersonHelper.getMenuOptions(row));
             },
             'mouseout .personAction1': function (e, value, row, index) {
-                $('#incompleteOrdinancesPersonInfoDiv').hide();
+                $('#ordinancesPersonInfoDiv').hide();
             },
             'mouseover .personAction1': function (e, value, row, index) {
 
                 $('#content').empty();
 
-                var html = "<label><span style=\"color: " + _incompleteOrdinancesPerson.getPersonColor(row.gender) + "\">" + row.fullName + "</span></label><br>";
+                var html = "<label><span style=\"color: " + _ordinancesPerson.getPersonColor(row.gender) + "\">" + row.fullName + "</span></label><br>";
                 html += "<b>ID:</b>  " + row.id + "<br>";
                 html += '<b>Birth Date:</b>  ' + ((row.birthYear) ? (row.birthYear) : "") + '<br>';
                 html += '<b>Birth Place:</b>  ' + ((row.birthPlace) ? (row.birthPlace) : "") + '<br>';
@@ -62,29 +62,29 @@ define(function(require) {
                 html += '<b>Death Place:</b>  ' + ((row.deathPlace) ? (row.deathPlace) : "") + '<br>';
                 html += "<b>Spouse:</b>";
                 if (row.spouseName) {
-                    html += "  <span style=\"color: " + _incompleteOrdinancesPerson.getPersonColor(row.spouseGender) + "\">" + row.spouseName + "</span><br>";
+                    html += "  <span style=\"color: " + _ordinancesPerson.getPersonColor(row.spouseGender) + "\">" + row.spouseName + "</span><br>";
                 } else {
                     html += "<br>";
                 }
                 html += "<b>Mother:</b>";
                 if (row.motherName) {
-                    html += "  <span style=\"color: " + _incompleteOrdinancesPerson.getPersonColor("Female") + "\">" + row.motherName + "</span><br>";
+                    html += "  <span style=\"color: " + _ordinancesPerson.getPersonColor("Female") + "\">" + row.motherName + "</span><br>";
                 } else {
                     html += "<br>";
                 }
                 html += "<b>Father:</b>";
                 if (row.fatherName) {
-                    html += "  <span style=\"color: " + _incompleteOrdinancesPerson.getPersonColor("Male") + "\">" + row.fatherName + "</span><br>";
+                    html += "  <span style=\"color: " + _ordinancesPerson.getPersonColor("Male") + "\">" + row.fatherName + "</span><br>";
                 } else {
                     html += "<br>";
                 }
 
                 $('#content').append(html);
-                $('#incompleteOrdinancesPersonInfoDiv').show();
-                $("#incompleteOrdinancesPersonInfoDiv").position({
+                $('#ordinancesPersonInfoDiv').show();
+                $("#ordinancesPersonInfoDiv").position({
                     my: "center+33 center-45",
                     at: "center",
-                    of: $("#incompleteOrdinancesReportForm")
+                    of: $("#ordinancesReportForm")
                 });
 
 
@@ -93,7 +93,7 @@ define(function(require) {
 
         var $result = $('#eventsResult');
 
-        $('#incompleteOrdinancessTable').on('all.bs.table', function(e, name, args) {
+        $('#ordinancessTable').on('all.bs.table', function(e, name, args) {
                 console.log('Event:', name, ', data:', args);
             })
             .on('click-row.bs.table', function(e, row, $element) {
@@ -135,38 +135,38 @@ define(function(require) {
     }
 
     function open() {
-        incompleteOrdinancesReport.form = $("#incompleteOrdinancesReportForm");
+        ordinancesReport.form = $("#ordinancesReportForm");
         loadEvents();
 
-        if (incompleteOrdinances.displayType === "start") {
+        if (ordinances.displayType === "start") {
             $.ajax({
                 data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "reportId": person.reportId },
-                url: constants.INCOMPLETE_ORDINANCES_REPORT_DATA_URL,
+                url: constants.ORDINANCES_REPORT_DATA_URL,
                 success: function(data) {
+                    system.stopSpinner(true);
                     if (data && data.errorMessage) {
-                        system.spinnerArea = incompleteOrdinances.spinner;
-                        system.stopSpinner(true);
+                        system.spinnerArea = ordinances.spinner;
                         msgBox.error(data.errorMessage);
                     } else {
-                        incompleteOrdinances.previous = data.list;
-                        $("#incompleteOrdinancesReportTable").bootstrapTable("append", data.list);
-                        system.openForm(incompleteOrdinancesReport.form, incompleteOrdinancesReport.formTitleImage, incompleteOrdinancesReport.spinner);
+                        ordinances.previous = data.list;
+                        $("#ordinancesReportTable").bootstrapTable("append", data.list);
+                        system.openForm(ordinancesReport.form, ordinancesReport.formTitleImage, ordinancesReport.spinner);
                         if (person.reportId === constants.REPORT_ID) {
-                            incompleteOrdinancesController.loadReports(true);
+                            ordinancesController.loadReports(true);
                         }
                     }
                 }
             });
         } else {
-            system.spinnerArea = incompleteOrdinances.spinner;
+            system.spinnerArea = ordinances.spinner;
             system.stopSpinner(true);
-            $("#incompleteOrdinancesReportTable").bootstrapTable("append", incompleteOrdinances.previous);
-            system.openForm(incompleteOrdinancesReport.form, incompleteOrdinancesReport.formTitleImage, incompleteOrdinancesReport.spinner);
+            $("#ordinancesReportTable").bootstrapTable("append", ordinances.previous);
+            system.openForm(ordinancesReport.form, ordinancesReport.formTitleImage, ordinancesReport.spinner);
         }
 
     }
 
-    var incompleteOrdinancesReportController = {
+    var ordinancesReportController = {
         open: function() {
             open();
         },
@@ -175,19 +175,19 @@ define(function(require) {
         }
     };
 
-    researchHelper.incompleteOrdinancesReportController = incompleteOrdinancesReportController;
+    researchHelper.ordinancesReportController = ordinancesReportController;
     open();
 
-    return incompleteOrdinancesReportController;
+    return ordinancesReportController;
 });
 
-var _incompleteOrdinancesPerson = require('person');
-var _incompleteOrdinancesSystem = require('system');
+var _ordinancesPerson = require('person');
+var _ordinancesSystem = require('system');
 
 function nameFormatter(value, row, index) {
     var result = "";
     if (row.id) {
-        result = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default dropdown-btn personAction1\"><span style=\"color: " + _incompleteOrdinancesPerson.getPersonColor(row.gender) + "\">" + _incompleteOrdinancesPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
+        result = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default dropdown-btn personAction1\"><span style=\"color: " + _ordinancesPerson.getPersonColor(row.gender) + "\">" + _ordinancesPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
     }
     return result;
 }
@@ -200,4 +200,4 @@ function statusFormatter(value) {
     return result;
 }
 
-//# sourceURL=incompleteOrdinancesReportController.js
+//# sourceURL=ordinancesReportController.js

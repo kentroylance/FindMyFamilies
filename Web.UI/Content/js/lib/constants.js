@@ -11,7 +11,7 @@
     var STARTING_POINT_PREVIOUS = "startingPointPrevious";
     var HINTS_PREVIOUS = "hintsPrevious";
     var DATE_PROBLEMS_PREVIOUS = "dateProblemsPrevious";
-    var INCOMPLETE_ORDINANCES_PREVIOUS = "incompleteOrdinancesPrevious";
+    var ORDINANCES_PREVIOUS = "ordinancesPrevious";
     var POSSIBLE_DUPLICATES_PREVIOUS = "possibleDuplicatesPrevious";
     var FIND_CLUES_PREVIOUS = "findCluesPrevious";
     var PLACE_PROBLEMS_PREVIOUS = "placeProblemsPrevious";
@@ -44,8 +44,8 @@
     var FEATURES = "features";
     var DATE_PROBLEMS = "dateProblems";
     var DATE_PROBLEMS_REPORT = "dateProblemsReport";
-    var INCOMPLETE_ORDINANCES = "incompleteOrdinances";
-    var INCOMPLETE_ORDINANCES_REPORT = "incompleteOrdinancesReport";
+    var ORDINANCES = "ordinances";
+    var ORDINANCES_REPORT = "ordinancesReport";
     var POSSIBLE_DUPLICATES = "possibleDuplicates";
     var POSSIBLE_DUPLICATES_REPORT = "possibleDuplicatesReport";
     var PLACE_PROBLEMS = "placeProblems";
@@ -73,9 +73,9 @@
     var DATE_PROBLEMS_URL = '/Home/DateProblems';
     var DATE_PROBLEMS_REPORT_HTML_URL = '/Home/DateProblemsReportHtml';
     var DATE_PROBLEMS_REPORT_DATA_URL = '/Home/DateProblemsReportData';
-    var INCOMPLETE_ORDINANCES_URL = '/Home/IncompleteOrdinances';
-    var INCOMPLETE_ORDINANCES_REPORT_HTML_URL = '/Home/IncompleteOrdinancesReportHtml';
-    var INCOMPLETE_ORDINANCES_REPORT_DATA_URL = '/Home/IncompleteOrdinancesReportData';
+    var ORDINANCES_URL = '/Home/Ordinances';
+    var ORDINANCES_REPORT_HTML_URL = '/Home/OrdinancesReportHtml';
+    var ORDINANCES_REPORT_DATA_URL = '/Home/OrdinancesReportData';
     var PLACE_PROBLEMS_URL = '/Home/PlaceProblems';
     var PLACE_PROBLEMS_REPORT_HTML_URL = '/Home/PlaceProblemsReportHtml';
     var PLACE_PROBLEMS_REPORT_DATA_URL = '/Home/PlaceProblemsReportData';
@@ -254,26 +254,26 @@
         get FEATURES_HTML() {
             return FEATURES_HTML;
         },
-        get INCOMPLETE_ORDINANCES() {
-            return INCOMPLETE_ORDINANCES;
+        get ORDINANCES() {
+            return ORDINANCES;
         },
-        get INCOMPLETE_ORDINANCES_REPORT() {
-            return INCOMPLETE_ORDINANCES_REPORT;
+        get ORDINANCES_REPORT() {
+            return ORDINANCES_REPORT;
         },
-        get INCOMPLETE_ORDINANCES_URL() {
-            return INCOMPLETE_ORDINANCES_URL;
+        get ORDINANCES_URL() {
+            return ORDINANCES_URL;
         },
-        get INCOMPLETE_ORDINANCES_PREVIOUS() {
-            return INCOMPLETE_ORDINANCES_PREVIOUS;
+        get ORDINANCES_PREVIOUS() {
+            return ORDINANCES_PREVIOUS;
         },
-        get INCOMPLETE_ORDINANCES_REPORT_HTML_URL() {
-            return INCOMPLETE_ORDINANCES_REPORT_HTML_URL;
+        get ORDINANCES_REPORT_HTML_URL() {
+            return ORDINANCES_REPORT_HTML_URL;
         },
-        get INCOMPLETE_ORDINANCES_REPORT_DATA_URL() {
-            return INCOMPLETE_ORDINANCES_REPORT_DATA_URL;
+        get ORDINANCES_REPORT_DATA_URL() {
+            return ORDINANCES_REPORT_DATA_URL;
         },
-        get INCOMPLETE_ORDINANCES_HTML() {
-            return INCOMPLETE_ORDINANCES_HTML;
+        get ORDINANCES_HTML() {
+            return ORDINANCES_HTML;
         },
         get DATE_PROBLEMS() {
             return DATE_PROBLEMS;

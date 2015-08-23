@@ -133,7 +133,7 @@ define(function(require) {
     function open() {
         findClues.form = $("#findCluesForm");
         loadEvents();
-        loadSearchCriteria(); 
+        loadSearchCriteria();
         loadReports();
         person.loadPersons($("#findCluesPersonId"));
         retrieve.findReport();
@@ -266,7 +266,7 @@ define(function(require) {
                     findClues.previous = JSON.parse(localStorage.getItem(constants.FIND_CLUES_PREVIOUS));
                 }
             }
-            findCluesReport.displayType = "previous";
+            findClues.displayType = "previous";
             if (findClues.previous) {
                 $.ajax({
                     url: constants.FIND_CLUES_REPORT_HTML_URL,
@@ -298,7 +298,7 @@ define(function(require) {
                 if (!person.id) {
                     msgBox.message("You must first select a person from Family Search");
                 }
-                findCluesReport.displayType = "start";
+                findClues.displayType = "start";
                 findClues.save();
 
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
@@ -365,7 +365,7 @@ define(function(require) {
             findClues.ordinances = $("#findCluesOrdinances").prop("checked");
             if (findClues.ordinances) {
                 $('#findCluesNonMormon').prop('checked', true);
-                msgBox.warning("Selecting <b>IncompleteOrdinances</b> will add 1-3 seconds more time for each " + findClues.researchType.substring(0, findClues.researchType.length - 1) + " that is processed.");
+                msgBox.warning("Selecting <b>Ordinances</b> will add 1-3 seconds more time for each " + findClues.researchType.substring(0, findClues.researchType.length - 1) + " that is processed.");
             }
 
         });
@@ -405,7 +405,7 @@ define(function(require) {
         loadReports: function(refreshReport) {
             loadReports(refreshReport);
         }
-        
+
     };
 
     researchHelper.findCluesController = findCluesController;

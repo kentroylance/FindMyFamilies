@@ -23,7 +23,7 @@ namespace FindMyFamilies.Data {
             set;
         }
 
-        public bool OrdinancesIncomplete {
+        public bool Ordinances {
             get;
             set;
         }

@@ -143,9 +143,9 @@ define(function (require) {
                 data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "empty": dateProblems.empty, "invalid": dateProblems.invalid, "invalidFormat": dateProblems.invalidFormat, "incomplete": dateProblems.incomplete, "reportId": person.reportId },
                 url: constants.DATE_PROBLEMS_REPORT_DATA_URL,
                 success: function (data) {
+                    system.stopSpinner(true);
                     if (data && data.errorMessage) {
                         system.spinnerArea = dateProblems.spinner;
-                        system.stopSpinner(true);
                         msgBox.error(data.errorMessage);
                     } else {
                         dateProblems.previous = data.list;

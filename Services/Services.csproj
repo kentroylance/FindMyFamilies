@@ -148,6 +148,7 @@
     <Compile Include="Data\Base\FindPersonOptionsDOBase.cs" />
     <Compile Include="Data\FindPersonOptionsDO.cs" />
     <Compile Include="Data\FamilySearchTokenData.cs" />
+    <Compile Include="Data\OrdinancesDO.cs" />
     <Compile Include="Data\PlaceInputDO.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
@@ -258,9 +259,6 @@
     <Compile Include="Data\NextIDDO.cs" />
     <Compile Include="Data\PagingDO.cs" />
     <Compile Include="Data\ReportDO.cs" />
-    <Compile Include="Data\IncompleteOrdinanceDO.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="Data\SecurityDO.cs" />
     <Compile Include="Data\TranslationDetailDO.cs" />
     <Compile Include="Data\TranslationDO.cs" />

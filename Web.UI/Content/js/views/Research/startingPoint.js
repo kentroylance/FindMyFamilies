@@ -20,19 +20,23 @@
     var _ordinances = false;
     var _hints = false;
     var _duplicates = false;
+    var _clues = false;
+    var _sources = false;
 
-    function StartingPointDO(nonMormon, livedInUSA, born18101850, ordinances, hints, duplicates) {
+    function StartingPointDO(nonMormon, livedInUSA, born18101850, ordinances, hints, duplicates, clues, sources) {
         this.nonMormon = nonMormon;
         this.livedInUSA = livedInUSA;
         this.born18101850 = born18101850;
         this.ordinances = ordinances;
         this.hints = hints;
         this.duplicates = duplicates;
+        this.clues = clues;
+        this.sources = sources;
     }
 
     function save() {
         if (window.localStorage) {
-            var startingPointDO = new StartingPointDO(_nonMormon, _livedInUSA, _born18101850, _ordinances, _hints, _duplicates);
+            var startingPointDO = new StartingPointDO(_nonMormon, _livedInUSA, _born18101850, _ordinances, _hints, _duplicates, _clues, _sources);
             localStorage.setItem(constants.STARTING_POINT, JSON.stringify(startingPointDO));
         }
         person.save();
@@ -61,6 +65,8 @@
         _ordinances = startingPointDO.ordinances;
         _hints = startingPointDO.hints;
         _duplicates = startingPointDO.duplicates;
+        _clues = startingPointDO.clues;
+        _sources = startingPointDO.sources;
     }
 
     var startingPoint = {
@@ -120,6 +126,18 @@
         },
         set hints(value) {
             _hints = value;
+        },
+        get sources() {
+            return _sources;
+        },
+        set sources(value) {
+            _sources = value;
+        },
+        get clues() {
+            return _clues;
+        },
+        set clues(value) {
+            _clues = value;
         },
         get callerSpinner() {
             return _callerSpinner;

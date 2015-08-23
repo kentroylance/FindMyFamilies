@@ -44,15 +44,15 @@ define(function (require) {
         });
 
         window.nameEvents = {
-            'click .personAction': function(e, value, row, index) {
+            'click .startingPointReportOptionsAction': function (e, value, row, index) {
                  $(this).append(findPersonHelper.getMenuOptions(row));
             },
-            'mouseout .personAction1': function (e, value, row, index) {
-                $('#startingPointPersonInfoDiv').hide();
+            'mouseout .startingPointReportAction': function (e, value, row, index) {
+                $('#startingPointReportPersonInfoDiv').hide();
             },
-            'mouseover .personAction1': function (e, value, row, index) {
+            'mouseover .startingPointReportAction': function (e, value, row, index) {
 
-                $('#content').empty();
+                $('#startingPointReportPersonInfoContent').empty();
 
                 var html = "<label><span style=\"color: " + _startingPointPerson.getPersonColor(row.gender) + "\">" + row.fullName + "</span></label><br>";
                 html += "<b>ID:</b>  " + row.id + "<br>";
@@ -79,12 +79,12 @@ define(function (require) {
                     html += "<br>";
                 }
 
-                $('#content').append(html);
-                $('#startingPointPersonInfoDiv').show();
-                $("#startingPointPersonInfoDiv").position({
+                $('#startingPointReportPersonInfoContent').append(html);
+                $('#startingPointReportPersonInfoDiv').show();
+                $("#startingPointReportPersonInfoDiv").position({
                     my: "center+33 center-45",
                     at: "center",
-                    of: $("#startingPointForm")
+                    of: $("#startingPointReportForm")
                 });
 
 
@@ -140,12 +140,12 @@ define(function (require) {
 
         if (startingPointReport.displayType === "start") {
             $.ajax({
-                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "nonMormon": startingPoint.nonMormon, "born18101850": startingPoint.born18101850, "livedInUSA": startingPoint.livedInUSA, "needOrdinances": startingPoint.ordinances, "hint": startingPoint.hints, "duplicate": startingPoint.duplicates, "reportId": person.reportId },
+                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "nonMormon": startingPoint.nonMormon, "born18101850": startingPoint.born18101850, "livedInUSA": startingPoint.livedInUSA, "needOrdinances": startingPoint.ordinances, "hints": startingPoint.hints, "duplicates": startingPoint.duplicates, "clues": startingPoint.clues, "sources": startingPoint.sources, "reportId": person.reportId },
                 url: constants.STARTING_POINT_REPORT_DATA_URL,
                 success: function (data) {
+                    system.stopSpinner(true);
                     if (data && data.errorMessage) {
                         system.spinnerArea = startingPoint.spinner;
-                        system.stopSpinner(true);
                         msgBox.error(data.errorMessage);
                     } else {
                         startingPoint.previous = data.list;
@@ -187,7 +187,7 @@ var _startingPointSystem = require('system');
 function nameFormatter(value, row, index) {
     var result = "";
     if (row.id) {
-        result = "<div class=\"btn-group \"><button type=\"button\" class=\"btn btn-default dropdown-btn personAction1\"><span style=\"color: " + _startingPointPerson.getPersonColor(row.gender) + "\">" + _startingPointPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
+        result = "<div class=\"btn-group \"><button type=\"button\" class=\"btn btn-default dropdown-btn startingPointReportAction\"><span style=\"color: " + _startingPointPerson.getPersonColor(row.gender) + "\">" + _startingPointPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"startingPointReportOptionsAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
     }
     return result;
 }
@@ -220,9 +220,15 @@ function reasonsFormatter(value) {
                 result += "<p>Possible Duplicate - <b>" + possibleDuplicate + "</b></p>";
             } else if (reason.indexOf("NoBirthPlace") > -1) {
                 result += "<p>No birth place</p>";
-            } else if (reason.indexOf("IncompleteOrdinances") > -1) {
-                var ordinances = reason.substring(reason.indexOf("[") + 1, reason.length - 2);
-                result += "<p>IncompleteOrdinances - </p>" + ordinances + "<p></p>";
+            } else if (reason.indexOf("Ordinance") > -1) {
+                var ordinance = reason.substring(reason.indexOf("[") + 1, reason.length - 2);
+                result += "<p>Ordinance - </p>" + ordinance + "<p></p>";
+            } else if (reason.indexOf("Clue") > -1) {
+                var clue = reason.substring(reason.indexOf("[") + 1, reason.length - 2);
+                result += "<p>Clue - " + clue + "</p>";
+            } else if (reason.indexOf("Source") > -1) {
+                var source = reason.substring(reason.indexOf("[") + 1, reason.length - 2);
+                result += "<p>Source - " + source + "</p>";
             } else {
                 result = value;
             }

@@ -22,6 +22,7 @@ define(function(require) {
     _findUrls['fmf-retrieve'] = 'Retrieve';
     _findUrls['fmf-starting'] = 'Starting Point';
     _findUrls['fmf-clues'] = 'Find Clues';
+    _findUrls['fmf-ordin'] = 'Ordinances';
     _findUrls['fs-fan'] = 'Family Search - Fan Chart';
     _findUrls['fs-desc'] = 'Family Search - Descendancy';
     _findUrls['fs-tree'] = 'Family Search - Tree';
@@ -239,6 +240,12 @@ define(function(require) {
                         menuOptions += "<li><a onclick=\"researchHelper.findClues('" + row.id + "','" + row.fullName + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-clue16\"></span> Find Clues</a></li>";
                     }
                     break;
+            case 'fmf-ordin':
+                    isOpen = $("#ordinancesForm").is(':visible');
+                    if (!isOpen) {
+                        menuOptions += "<li><a onclick=\"researchHelper.ordinances('" + row.id + "','" + row.fullName + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-temple16\"></span> Ordinances</a></li>";
+                    }
+                    break;
             case 'fmf-retrieve':
                 isOpen = $("#retrieveForm").is(':visible');
                 if (!isOpen) {
@@ -274,16 +281,16 @@ define(function(require) {
             //                menuOptions += "<li><a href=\"" + system.familySearchSystem() + "/tree/#view=ancestor&person=" + row.id + "\" target=\" _tab\" ><span class=\"fa fmf-familysearch16\"></span> Family Search - Person</a></li>";
 //                break;
             case 'fs-tree':
-                menuOptions += "<li><a href=\"" + system.familySearchSystem() + "/tree/#view=tree&section=pedigree&person=" + row.id + "\" target=\" _tab\" ><span class=\"fa fmf-familysearch16\"></span> Family Search - Tree</a></li>";
+                menuOptions += "<li><a href=\"" + system.familySearchSystem() + "/tree/#view=tree&person=" + row.id + "&section=pedigree\" target=\" _tab\" ><span class=\"fa fmf-familysearch16\"></span> Family Search - Tree</a></li>";
                 break;
             case 'fs-desc':
-                menuOptions += "<li><a href=\"" + system.familySearchSystem() + "/tree/#view=tree&section=descendancy&person=" + row.id + "\" target=\" _tab\" ><span class=\"fa fmf-familysearch16\"></span> Family Search - Descendancy</a></li>";
+                menuOptions += "<li><a href=\"" + system.familySearchSystem() + "/tree/#view=tree&person=" + row.id + "&section=descendancy\" target=\" _tab\" ><span class=\"fa fmf-familysearch16\"></span> Family Search - Descendancy</a></li>";
                 break;
             case 'fs-fan':
-                menuOptions += "<li><a href=\"" + system.familySearchSystem() + "/tree/#view=tree&section=fan&person=" + row.id + "\" target=\" _tab\" ><span class=\"fa fmf-familysearch16\"></span> Family Search - Fan</a></li>";
+                menuOptions += "<li><a href=\"" + system.familySearchSystem() + "/tree/#view=tree&person=" + row.id + "&section=fan\" target=\" _tab\" ><span class=\"fa fmf-familysearch16\"></span> Family Search - Fan</a></li>";
                 break;
             case 'fs-person':
-                menuOptions += "<li><a href=\"" + system.familySearchSystem() + "/tree/#view=tree&section=person&person=" + row.id + "\" target=\" _tab\" ><span class=\"fa fmf-familysearch16\"></span> Family Search - Person</a></li>";
+                menuOptions += "<li><a href=\"" + system.familySearchSystem() + "/tree/#view=ancestor&person=" + row.id + "\" target=\" _tab\" ><span class=\"fa fmf-familysearch16\"></span> Family Search - Person</a></li>";
                 break;
             case 'fs-search':
                 menuOptions += "<li><a href=\"" + system.familySearchSystem() + "/search/record/results?count=20&query=%2Bgivenname%3A" + getMiddleNameQuote(row.middleName) + row.firstName + getMiddleName(row.middleName, system.familySearchSystem()) + getMiddleNameQuote(row.middleName) + "~%20%2Bsurname%3A" + getLastName(row.lastName) + getPlace(row.birthPlace, system.familySearchSystem()) + getBirthYear(row.birthYear, system.familySearchSystem()) + getDeathYear(row.deathYear, system.familySearchSystem()) + "~&treeref=" + row.id + "\" target=\" _tab\" ><span class=\"fa fmf-familysearch16\"></span> Family Search - Search</a></li>";

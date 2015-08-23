@@ -1,27 +1,27 @@
-﻿define(function(require) {
+define(function(require) {
 
     var $ = require('jquery');
     var person = require('person');
     var constants = require('constants');
 
-    var _formName = "incompleteOrdinancesForm";
+    var _formName = "ordinancesForm";
     var _formTitleImage = "fa fmf-temple24";
-    var _form = $("#incompleteOrdinancesForm");
+    var _form = $("#ordinancesForm");
     var _previous;
     var _displayType = "start";
     var _generationAncestors = constants.GENERATION;
     var _generationDescendants = "1";
-    var _spinner = "incompleteOrdinancesSpinner";
+    var _spinner = "ordinancesSpinner";
     var _callerSpinner;
 
-    function IncompleteOrdinancesDO() {
+    function OrdinancesDO() {
 
     }
 
     function save() {
         if (window.localStorage) {
-            var incompleteOrdinancesDO = new IncompleteOrdinancesDO();
-            localStorage.setItem(constants.INCOMPLETE_ORDINANCES, JSON.stringify(incompleteOrdinancesDO));
+            var ordinancesDO = new OrdinancesDO();
+            localStorage.setItem(constants.ORDINANCES, JSON.stringify(ordinancesDO));
         }
         person.save();
     }
@@ -29,23 +29,23 @@
     function savePrevious() {
         if (_previous) {
 	    if (window.localStorage) {
-	        localStorage.setItem(constants.INCOMPLETE_ORDINANCES_PREVIOUS, JSON.stringify(_previous));
+	        localStorage.setItem(constants.ORDINANCES_PREVIOUS, JSON.stringify(_previous));
             }
         }
     }
-    
+
     if (window.localStorage) {
-        var incompleteOrdinancesDO = JSON.parse(localStorage.getItem(constants.INCOMPLETE_ORDINANCES));
-        if (!incompleteOrdinancesDO) {
-            incompleteOrdinancesDO = new IncompleteOrdinancesDO();
+        var ordinancesDO = JSON.parse(localStorage.getItem(constants.ORDINANCES));
+        if (!ordinancesDO) {
+            ordinancesDO = new OrdinancesDO();
         }
-	if (!incompleteOrdinancesDO.researchType) {
-           
+	if (!ordinancesDO.researchType) {
+
         }
-     
+
     }
 
-    var incompleteOrdinances = {
+    var ordinances = {
         formName: _formName,
         formTitleImage: _formTitleImage,
         spinner: _spinner,
@@ -99,7 +99,7 @@
         }
     };
 
-    return incompleteOrdinances;
+    return ordinances;
 });
 
-//# sourceURL=incompleteOrdinances.js
+//# sourceURL=ordinances.js

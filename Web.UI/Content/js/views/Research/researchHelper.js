@@ -28,8 +28,8 @@ define(function(require) {
     var _hintsReportController;
     var _feedbackController;
     var _featuresController;
-    var _incompleteOrdinancesController;
-    var _incompleteOrdinancesReportController;
+    var _ordinancesController;
+    var _ordinancesReportController;
     var _dateProblemsController;
     var _dateProblemsReportController;
     var _placeProblemsController;
@@ -408,32 +408,32 @@ define(function(require) {
         }
     }
 
-    function incompleteOrdinances(id, name) {
-        if (system.isAuthenticated()) {
+    function ordinances(id, name) {
+          if (system.isAuthenticated()) {
             loadSpinner();
-            requireOnce(["incompleteOrdinances", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function(IncompleteOrdinances) {
-                    IncompleteOrdinances.callerSpinner = spinnerArea;
+            requireOnce(["ordinances", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function(Ordinances) {
+                    Ordinances.callerSpinner = spinnerArea;
                 }, function() {
                     $.ajax({
-                        url: constants.INCOMPLETE_ORDINANCES_URL,
+                        url: constants.ORDINANCES_URL,
                         success: function(data) {
-                            var $dialogContainer = $("#incompleteOrdinancesForm");
+                            var $dialogContainer = $("#ordinancesForm");
                             var $detachedChildren = $dialogContainer.children().detach();
-                            $("<div id=\"incompleteOrdinancesForm\"></div>").dialog({
+                            $("<div id=\"ordinancesForm\"></div>").dialog({
                                 width: 775,
-                                title: "Incomplete Ordinances",
+                                title: "Ordinances",
                                 open: function() {
                                     $detachedChildren.appendTo($dialogContainer);
                                 }
                             });
-                            $("#incompleteOrdinancesForm").empty().append(data);
+                            $("#ordinancesForm").empty().append(data);
                             if (id) {
                                 person.id = id;
                                 person.name = name;
                                 person.reportId = constants.REPORT_ID;
                             }
-                            if (_incompleteOrdinancesController) {
-                                _incompleteOrdinancesController.open();
+                            if (_ordinancesController) {
+                                _ordinancesController.open();
                             }
                         }
                     });
@@ -557,8 +557,8 @@ define(function(require) {
         placeProblems: function(id, name) {
             return placeProblems(id, name);
         },
-        incompleteOrdinances: function(id, name) {
-            return incompleteOrdinances(id, name);
+        ordinances: function(id, name) {
+            return ordinances(id, name);
         },
         displayPersonUrls: function(id, name) {
             displayPersonUrls(id, name);
@@ -620,17 +620,17 @@ define(function(require) {
         set hintsReportController(value) {
             _hintsReportController = value;
         },
-        get incompleteOrdinancesController() {
-            return _incompleteOrdinancesController;
+        get ordinancesController() {
+            return _ordinancesController;
         },
-        set incompleteOrdinancesController(value) {
-            _incompleteOrdinancesController = value;
+        set ordinancesController(value) {
+            _ordinancesController = value;
         },
-        get incompleteOrdinancesReportController() {
-            return _incompleteOrdinancesReportController;
+        get ordinancesReportController() {
+            return _ordinancesReportController;
         },
-        set incompleteOrdinancesReportController(value) {
-            _incompleteOrdinancesReportController = value;
+        set ordinancesReportController(value) {
+            _ordinancesReportController = value;
         },
         get dateProblemsController() {
             return _dateProblemsController;

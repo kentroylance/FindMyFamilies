@@ -143,9 +143,9 @@ define(function (require) {
                 data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "nonMormon": placeProblems.nonMormon, "born18101850": placeProblems.born18101850, "livedInUSA": placeProblems.livedInUSA, "needOrdinances": placeProblems.ordinances, "hint": placeProblems.hints, "duplicate": placeProblems.duplicates, "reportId": person.reportId },
                 url: constants.PLACE_PROBLEMS_REPORT_DATA_URL,
                 success: function (data) {
+                    system.stopSpinner(true);
                     if (data && data.errorMessage) {
                         system.spinnerArea = placeProblems.spinner;
-                        system.stopSpinner(true);
                         msgBox.error(data.errorMessage);
                     } else {
                         placeProblems.previous = data.list;

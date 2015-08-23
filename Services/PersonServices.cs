@@ -124,8 +124,8 @@ namespace FindMyFamilies.Services {
            return personBO.GetPlaces(placeInputDO, ref session);
         }
 
-        public List<OrdinanceListItemDO> GetOrdinances(IncompleteOrdinanceDO incompleteOrdinanceDo, ref SessionDO session) {
-            return personBO.GetOrdinances(incompleteOrdinanceDo, ref session);
+        public List<OrdinanceListItemDO> GetOrdinances(OrdinancesDO ordinancesDo, ref SessionDO session) {
+            return personBO.GetOrdinances(ordinancesDo, ref session);
         }
 
         public List<HintListItemDO> GetHints(HintInputDO hintInputDO, ref SessionDO session) {

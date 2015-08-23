@@ -29,8 +29,10 @@ namespace FindMyFamilies.Data {
         public bool Born18101850 { get; set; }
         public bool LivedInUSA { get; set; }
         public bool NeedOrdinances { get; set; }
-        public bool Hint { get; set; }
-        public bool Duplicate { get; set; }
+        public bool Hints { get; set; }
+        public bool Clues { get; set; }
+        public bool Sources { get; set; }
+        public bool Duplicates { get; set; }
         public int ReportId { get; set; }
 
     }
