@@ -901,3 +901,28 @@ h1 i, h2 i, h3 i, h4 i, h5 i, h6 i {
     width: 10%;
     padding-left: 2px;
 }
+
+.list-group {
+    margin-bottom: 0;
+}
+
+.list-group-item {
+    padding: 0;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+
+}
+
+.fa-2x {
+    font-size: 1.5em;
+    margin-right: .4em;
+}
+
+.option-label {
+    padding-top: 0px !important;
+}
+
+.option-checkboxes {
+    margin-top: 1px !important;
+}
