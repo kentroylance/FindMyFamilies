@@ -231,7 +231,7 @@ define(function(require) {
             case 'fmf-hints':
                     isOpen = $("#hintsForm").is(':visible');
                     if (!isOpen) {
-                        menuOptions += "<li><a onclick=\"researchHelper.hints('" + row.id + "','" + row.fullName + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-hints16\"></span> Hints</a></li>";
+                        menuOptions += "<li><a onclick=\"researchHelper.hints('" + row.id + "','" + row.fullName + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-hint16\"></span> Hints</a></li>";
                     }
                 break;
             case 'fmf-clues':
@@ -313,7 +313,7 @@ define(function(require) {
                 var $dialogContainer = $("#findPersonOptionsForm");
                 var $detachedChildren = $dialogContainer.children().detach();  
                 $("<div id=\"findPersonOptionsForm\"></div>").dialog({
-                    width: 260,
+                    width: 600,
                     title: "Find Options",
                     open: function () {
                         $detachedChildren.appendTo($dialogContainer);

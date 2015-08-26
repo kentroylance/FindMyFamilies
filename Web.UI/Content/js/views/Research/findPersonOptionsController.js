@@ -39,55 +39,73 @@ define(function(require) {
     }
 
     function loadOptions() {
-        var select1 = $("#findPersonOptions1");
-        $.each(findPersonHelper.findUrls, function (i, value) {
-            var optionhtml = '<option value="' + i + '">' + value + '</option>';
-            select1.append(optionhtml);
+        //var select1 = $("#findPersonOptions1");
+        //$.each(findPersonHelper.findUrls, function (i, value) {
+        //    var optionhtml = '<option value="' + i + '">' + value + '</option>';
+        //    select1.append(optionhtml);
+        //});
+
+        //var select2 = $("#findPersonOptions2");
+        //$.each(findPersonHelper.findUrls, function (i, value) {
+        //    var optionhtml = '<option value="' + i + '">' + value + '</option>';
+        //    select2.append(optionhtml);
+        //});
+
+        //var select3 = $("#findPersonOptions3");
+        //$.each(findPersonHelper.findUrls, function (i, value) {
+        //    var optionhtml = '<option value="' + i + '">' + value + '</option>';
+        //    select3.append(optionhtml);
+        //});
+
+        //var select4 = $("#findPersonOptions4");
+        //$.each(findPersonHelper.findUrls, function (i, value) {
+        //    var optionhtml = '<option value="' + i + '">' + value + '</option>';
+        //    select4.append(optionhtml);
+        //});
+
+        //var select5 = $("#findPersonOptions5");
+        //$.each(findPersonHelper.findUrls, function (i, value) {
+        //    var optionhtml = '<option value="' + i + '">' + value + '</option>';
+        //    select5.append(optionhtml);
+        //});
+
+        //var select6 = $("#findPersonOptions6");
+        //$.each(findPersonHelper.findUrls, function (i, value) {
+        //    var optionhtml = '<option value="' + i + '">' + value + '</option>';
+        //    select6.append(optionhtml);
+        //});
+
+        //var select7 = $("#findPersonOptions7");
+        //$.each(findPersonHelper.findUrls, function (i, value) {
+        //    var optionhtml = '<option value="' + i + '">' + value + '</option>';
+        //    select7.append(optionhtml);
+        //});
+
+        //select1.val(person.findPersonOptions[0]);
+        //select2.val(person.findPersonOptions[1]);
+        //select3.val(person.findPersonOptions[2]);
+        //select4.val(person.findPersonOptions[3]);
+        //select5.val(person.findPersonOptions[4]);
+        //select6.val(person.findPersonOptions[5]);
+        //select7.val(person.findPersonOptions[6]);
+
+        $("ul.list-group").sortable({
+            connectWith: "ul"
         });
 
-        var select2 = $("#findPersonOptions2");
-        $.each(findPersonHelper.findUrls, function (i, value) {
-            var optionhtml = '<option value="' + i + '">' + value + '</option>';
-            select2.append(optionhtml);
+        $("#list1").on("sortreceive", function (event, ui) {
+            if ($("#list1 li").length > 7) {
+                $(ui.sender).sortable('cancel');
+            }
         });
 
-        var select3 = $("#findPersonOptions3");
-        $.each(findPersonHelper.findUrls, function (i, value) {
-            var optionhtml = '<option value="' + i + '">' + value + '</option>';
-            select3.append(optionhtml);
+        $("#list1").sortable({
+            stop: function(e, ui) {
+                var sortedIDs = $("#list1").sortable("toArray");
+            }
         });
 
-        var select4 = $("#findPersonOptions4");
-        $.each(findPersonHelper.findUrls, function (i, value) {
-            var optionhtml = '<option value="' + i + '">' + value + '</option>';
-            select4.append(optionhtml);
-        });
-
-        var select5 = $("#findPersonOptions5");
-        $.each(findPersonHelper.findUrls, function (i, value) {
-            var optionhtml = '<option value="' + i + '">' + value + '</option>';
-            select5.append(optionhtml);
-        });
-
-        var select6 = $("#findPersonOptions6");
-        $.each(findPersonHelper.findUrls, function (i, value) {
-            var optionhtml = '<option value="' + i + '">' + value + '</option>';
-            select6.append(optionhtml);
-        });
-
-        var select7 = $("#findPersonOptions7");
-        $.each(findPersonHelper.findUrls, function (i, value) {
-            var optionhtml = '<option value="' + i + '">' + value + '</option>';
-            select7.append(optionhtml);
-        });
-
-        select1.val(person.findPersonOptions[0]);
-        select2.val(person.findPersonOptions[1]);
-        select3.val(person.findPersonOptions[2]);
-        select4.val(person.findPersonOptions[3]);
-        select5.val(person.findPersonOptions[4]);
-        select6.val(person.findPersonOptions[5]);
-        select7.val(person.findPersonOptions[6]);
+        $("#list1, #list2").disableSelection();
     }
 
     function open() {
