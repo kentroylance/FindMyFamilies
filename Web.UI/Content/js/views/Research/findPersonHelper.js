@@ -296,6 +296,9 @@ define(function(require) {
             case 'fs-search':
                 menuOptions += "<li><a href=\"" + system.familySearchSystem() + "/search/record/results?count=20&query=%2Bgivenname%3A" + getMiddleNameQuote(row.middleName) + row.firstName + getMiddleName(row.middleName, system.familySearchSystem()) + getMiddleNameQuote(row.middleName) + "~%20%2Bsurname%3A" + getLastName(row.lastName) + getPlace(row.birthPlace, system.familySearchSystem()) + getBirthYear(row.birthYear, system.familySearchSystem()) + getDeathYear(row.deathYear, system.familySearchSystem()) + "~&treeref=" + row.id + "\" target=\" _tab\" ><span class=\"fa fmf-familysearch16\"></span> Family Search - Search</a></li>";
                 break;
+            case 'billgrave':
+                menuOptions += "<li><a href=\"" + constants.FIND_A_GRAVE + "&GSfn=" + row.firstName + getMiddleName(row.middleName, constants.FIND_A_GRAVE) + "&GSln=" + getLastName(row.lastName) + getBirthYear(row.birthYear, constants.FIND_A_GRAVE) + getDeathYear(row.deathYear, constants.FIND_A_GRAVE) + "&GScntry=0&GSst=0&GSgrid=&df=all&GSob=n\" target=\" _tab\" ><span class=\"fa fmf-billiongraves16\"></span> Billion Graves</a></li>";
+                break;
             default:
                 break;
             }
@@ -365,6 +368,9 @@ define(function(require) {
             break;
         case 'fs-search':
             icon = "fa fmf-familysearch16";
+            break;
+        case 'billgrave':
+            icon = "fa fmf-billiongraves16";
             break;
         default:
             break;
