@@ -23,6 +23,7 @@ define(function(require) {
     _findUrls['fmf-starting'] = 'Starting Point';
     _findUrls['fmf-clues'] = 'Find Clues';
     _findUrls['fmf-ordin'] = 'Ordinances';
+    _findUrls['fmf-hints'] = 'Hints';
     _findUrls['fs-fan'] = 'Family Search - Fan Chart';
     _findUrls['fs-desc'] = 'Family Search - Descendancy';
     _findUrls['fs-tree'] = 'Family Search - Tree';
@@ -303,6 +304,75 @@ define(function(require) {
         return menuOptions;
     }
 
+
+    function getIconForMenuOptions(key) {
+        var icon = "";
+
+        switch (key) {
+        case 'fmf-urls':
+            icon = "fa fmf-family16";
+            break;
+        case 'fmf-starting':
+            icon = "fa fmf-compass16";
+            break;
+        case 'fmf-hints':
+            icon = "fa fmf-hint16";
+            break;
+        case 'fmf-clues':
+            icon = "fa fmf-clue16";
+            break;
+        case 'fmf-ordin':
+            icon = "fa fmf-temple16";
+            break;
+        case 'fmf-retrieve':
+            icon = "fa fmf-retrieve16";
+            break;
+        case 'google':
+            icon = "fa fmf-google16";
+            break;
+        case 'findmypast':
+            icon = "fa fmf-findmypast16";
+            break;
+        case 'myheritage':
+            icon = "fa fmf-myheritage16";
+            break;
+        case 'ancestry':
+            icon = "fa fmf-ancestry16";
+            break;
+        case 'findagrave':
+            icon = "fa fmf-findagrave16";
+            break;
+        case 'amerancest':
+            icon = "fa fmf-american16";
+            break;
+        case 'puz-descend':
+            icon = "fa fmf-puzilla16";
+            break;
+        case 'puz-ancest':
+            icon = "fa fmf-puzilla16";
+            break;
+        case 'fs-tree':
+            icon = "fa fmf-familysearch16";
+            break;
+        case 'fs-desc':
+            icon = "fa fmf-familysearch16";
+            break;
+        case 'fs-fan':
+            icon = "fa fmf-familysearch16";
+            break;
+        case 'fs-person':
+            icon = "fa fmf-familysearch16";
+            break;
+        case 'fs-search':
+            icon = "fa fmf-familysearch16";
+            break;
+        default:
+            break;
+        }
+        return icon;
+    }
+
+
     function findOptions(e, module) {
         e.preventDefault();
         system.startSpinner();
@@ -333,6 +403,9 @@ define(function(require) {
         },
         get findUrls() {
             return _findUrls;
+        },
+        getIconForMenuOptions: function(key) {
+            return getIconForMenuOptions(key);
         },
         findOptions: function(e, module) {
             return findOptions(e, module);
