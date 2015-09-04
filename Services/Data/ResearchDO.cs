@@ -8,6 +8,7 @@ namespace FindMyFamilies.Data {
     [ProtoContract(ImplicitFields = ImplicitFields.AllFields, AsReferenceDefault = true)]
     public class ResearchDO {
         private int _ReportId;
+        private string _ReportFile;
         private int _SearchCriteria;
         private int _GapInChildren;
         private int _Generation;
@@ -228,6 +229,14 @@ namespace FindMyFamilies.Data {
             }
         }
 
+        public string ReportFile {
+            get {
+                return _ReportFile;
+            }
+            set {
+                _ReportFile = value;
+            }
+        }
 
     }
 }

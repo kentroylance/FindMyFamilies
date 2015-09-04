@@ -44,15 +44,15 @@ define(function(require) {
         });
 
         window.nameEvents = {
-            'click .personAction': function(e, value, row, index) {
-                    $(this).append(findPersonHelper.getMenuOptions(row));
+            'click .ordinancesReportOptionsAction': function (e, value, row, index) {
+                 $(this).append(findPersonHelper.getMenuOptions(row));
             },
-            'mouseout .personAction1': function (e, value, row, index) {
-                $('#ordinancesPersonInfoDiv').hide();
+            'mouseout .ordinancesReportAction': function (e, value, row, index) {
+                $('#ordinancesReportPersonInfoDiv').hide();
             },
-            'mouseover .personAction1': function (e, value, row, index) {
+            'mouseover .ordinancesReportAction': function (e, value, row, index) {
 
-                $('#content').empty();
+                $('#ordinancesReportPersonInfoContent').empty();
 
                 var html = "<label><span style=\"color: " + _ordinancesPerson.getPersonColor(row.gender) + "\">" + row.fullName + "</span></label><br>";
                 html += "<b>ID:</b>  " + row.id + "<br>";
@@ -79,9 +79,9 @@ define(function(require) {
                     html += "<br>";
                 }
 
-                $('#content').append(html);
-                $('#ordinancesPersonInfoDiv').show();
-                $("#ordinancesPersonInfoDiv").position({
+                $('#ordinancesReportPersonInfoContent').append(html);
+                $('#ordinancesReportPersonInfoDiv').show();
+                $("#ordinancesReportPersonInfoDiv").position({
                     my: "center+33 center-45",
                     at: "center",
                     of: $("#ordinancesReportForm")
@@ -140,7 +140,7 @@ define(function(require) {
 
         if (ordinances.displayType === "start") {
             $.ajax({
-                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "reportId": person.reportId },
+                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "reportId": person.reportId, "reportFile": person.reportFile },
                 url: constants.ORDINANCES_REPORT_DATA_URL,
                 success: function(data) {
                     system.stopSpinner(true);
@@ -152,6 +152,8 @@ define(function(require) {
                         $("#ordinancesReportTable").bootstrapTable("append", data.list);
                         system.openForm(ordinancesReport.form, ordinancesReport.formTitleImage, ordinancesReport.spinner);
                         if (person.reportId === constants.REPORT_ID) {
+                            person.reportId = data.reportId;
+                            person.reportFile = data.reportFile;
                             ordinancesController.loadReports(true);
                         }
                     }
@@ -187,7 +189,7 @@ var _ordinancesSystem = require('system');
 function nameFormatter(value, row, index) {
     var result = "";
     if (row.id) {
-        result = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default dropdown-btn personAction1\"><span style=\"color: " + _ordinancesPerson.getPersonColor(row.gender) + "\">" + _ordinancesPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
+        result = "<div class=\"btn-group \"><button type=\"button\" class=\"btn btn-default dropdown-btn ordinancesReportAction\"><span style=\"color: " + _ordinancesPerson.getPersonColor(row.gender) + "\">" + _ordinancesPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"ordinancesReportOptionsAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
     }
     return result;
 }

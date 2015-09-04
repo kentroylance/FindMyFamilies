@@ -866,7 +866,7 @@ h1 i, h2 i, h3 i, h4 i, h5 i, h6 i {
         z-index: 1;
 }
 
- .startingPointPersonInfo {
+ .personInfoDialog {
         background: rgba(240, 240, 240, .99);
         width: 350px;
         height: auto;

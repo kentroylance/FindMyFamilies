@@ -14,6 +14,9 @@
     var _spinner = "possibleDuplicatesSpinner";
     var _callerSpinner;
 
+    var _personId = "possibleDuplicatesPersonId";
+    var _personContent = "possibleDuplicatesContent";
+    var _personInfoDiv = "possibleDuplicatesPersonInfoDiv";
     var _includePossibleDuplicates = true;
     var _includePossibleMatches;
 
@@ -100,6 +103,15 @@
         },
         set callerSpinner(value) {
             _callerSpinner = value;
+        },
+        get personId() {
+            return _personId;
+        },
+        get personContent() {
+            return _personContent;
+        },
+        get personInfoDiv() {
+            return _personInfoDiv;
         },
         save: function() {
             save();

@@ -14,6 +14,9 @@ define(function(require) {
     var _spinner = "placeProblemsSpinner";
     var _callerSpinner;
 
+    var _personId = "placeProblemsPersonId";
+    var _personContent = "placeProblemsContent";
+    var _personInfoDiv = "placeProblemsPersonInfoDiv";
     function PlaceProblemsDO() {
 
     }
@@ -84,6 +87,15 @@ define(function(require) {
         },
         set callerSpinner(value) {
             _callerSpinner = value;
+        },
+        get personId() {
+            return _personId;
+        },
+        get personContent() {
+            return _personContent;
+        },
+        get personInfoDiv() {
+            return _personInfoDiv;
         },
         save: function() {
             save();

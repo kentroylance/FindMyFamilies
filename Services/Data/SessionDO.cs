@@ -9,6 +9,7 @@ namespace FindMyFamilies.Data {
         private string _ErrorMessage;
         private string _MessageType;
         private string _RedirectUri;
+        private string _ReportID;
 
 
         public SessionDO() {
@@ -219,6 +220,11 @@ namespace FindMyFamilies.Data {
         }
 
         public string DisplayName {
+            get;
+            set;
+        }
+
+        public string ReportID {
             get;
             set;
         }

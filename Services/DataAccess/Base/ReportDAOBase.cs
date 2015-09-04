@@ -41,13 +41,14 @@ namespace FindMyFamilies.DataAccess {
 		public const string REPORT_ID = "report_id";
 		public const string REPORT_DATE = "report_date";
 		public const string LANGUAGE_ID = "language_id";
-		public const string REPORT_BY = "report_by";
+		public const string USER_ID = "user_id";
+		public const string PERSON_ID = "person_id";
+		public const string PERSON_NAME = "person_name";
 		public const string REPORT_FILE = "report_file";
 		public const string REPORT_DESCRIPTION = "report_description";
-		public const string EMAILED = "emailed";
-		public const string PRIVATE = "private";
-		public const string PRIVATE_VIEW = "private_view";
-		public const string REPORT_TYPE = "report_type";
+		public const string RECORDS = "records";
+		public const string RESEARCH_TYPE = "research_type";
+		public const string GENERATION = "generation";
 
 		/// <summary>
 		/// Purpose: Class constructor.
@@ -62,15 +63,17 @@ namespace FindMyFamilies.DataAccess {
 		/// <param name = "reader">IDataReader reader</param>
 		public virtual ReportDO MapToDataTransferObject(IDataReader reader) {
 			ReportDO reportDO = new ReportDO();
-			reportDO.ReportId = (int)GetValue(reader, REPORT_ID);
+			reportDO.ReportID = (int)GetValue(reader, REPORT_ID);
 			reportDO.ReportDate = (DateTime)GetValue(reader, REPORT_DATE);
 			reportDO.LanguageID = (string)GetValue(reader, LANGUAGE_ID);
-			reportDO.ReportBy = (string)GetValue(reader, REPORT_BY);
+			reportDO.UserID = (string)GetValue(reader, USER_ID);
+			reportDO.PersonID = (string)GetValue(reader, PERSON_ID);
+			reportDO.PersonName = (string)GetValue(reader, PERSON_NAME);
 			reportDO.ReportFile = (string)GetValue(reader, REPORT_FILE);
 			reportDO.ReportDescription = (string)GetValue(reader, REPORT_DESCRIPTION);
-			reportDO.Emailed = (bool)GetValue(reader, EMAILED);
-			reportDO.Private = (string)GetValue(reader, PRIVATE);
-			reportDO.PrivateView = (string)GetValue(reader, PRIVATE_VIEW);
+			reportDO.Records = (string)GetValue(reader, RECORDS);
+			reportDO.ResearchType = (string)GetValue(reader, RESEARCH_TYPE);
+			reportDO.Generation = (string)GetValue(reader, GENERATION);
 			reportDO.GenerateNextID = false;
 			return reportDO;
 		}
@@ -85,18 +88,19 @@ namespace FindMyFamilies.DataAccess {
 				IDataCommand command = dataSource.GetCommand(CREATE);
 				command.SetParameter(ReportDAO.REPORT_DATE, reportDO.ReportDate);
 				command.SetParameter(ReportDAO.LANGUAGE, reportDO.Language);
-				command.SetParameter(ReportDAO.REPORT_BY, reportDO.ReportBy);
+				command.SetParameter(ReportDAO.USER_ID, reportDO.UserID);
+				command.SetParameter(ReportDAO.PERSON_ID, reportDO.PersonID);
+				command.SetParameter(ReportDAO.PERSON_NAME, reportDO.PersonName);
 				command.SetParameter(ReportDAO.REPORT_FILE, reportDO.ReportFile);
 				command.SetParameter(ReportDAO.REPORT_DESCRIPTION, reportDO.ReportDescription);
-				command.SetParameter(ReportDAO.EMAILED, reportDO.Emailed);
-				command.SetParameter(ReportDAO.PRIVATE, reportDO.Private);
-				command.SetParameter(ReportDAO.PRIVATE_VIEW, reportDO.PrivateView);
-				command.SetParameter(ReportDAO.REPORT_TYPE, reportDO.ReportType);
+				command.SetParameter(ReportDAO.RECORDS, reportDO.Records);
+				command.SetParameter(ReportDAO.RESEARCH_TYPE, reportDO.ResearchType);
+				command.SetParameter(ReportDAO.GENERATION, reportDO.Generation);
 				reader = command.ExecuteReader();
 				if (reader.Read()) {
-					reportDO.ReportId = reader.GetInt32(0);
+					reportDO.ReportID = reader.GetInt32(0);
 				}
-				ProcessResult(reader, reportDO.ReportId, reportDO, Constants.OPERATION_CREATE, logCategory);
+				ProcessResult(reader, reportDO.ReportID, reportDO, Constants.OPERATION_CREATE, logCategory);
 			} catch (Exception ex) {
 				string errorMessage = Resource.GetErrorMessage(MessageKeys.REPORT_CANNOT_CREATE, reportDO.Language, ex);
 				throw new DataAccessException(errorMessage, ex, logCategory);
@@ -117,15 +121,17 @@ namespace FindMyFamilies.DataAccess {
 			IDataReader reader = null;
 			try {
 				IDataCommand command = dataSource.GetCommand(UPDATE);
-				command.SetParameter(ReportDAO.REPORT_ID, reportDO.ReportId);
+				command.SetParameter(ReportDAO.REPORT_ID, reportDO.ReportID);
 				command.SetParameter(ReportDAO.REPORT_DATE, reportDO.ReportDate);
 				command.SetParameter(ReportDAO.LANGUAGE, reportDO.Language);
-				command.SetParameter(ReportDAO.REPORT_BY, reportDO.ReportBy);
+				command.SetParameter(ReportDAO.USER_ID, reportDO.UserID);
+				command.SetParameter(ReportDAO.PERSON_ID, reportDO.PersonID);
+				command.SetParameter(ReportDAO.PERSON_NAME, reportDO.PersonName);
 				command.SetParameter(ReportDAO.REPORT_FILE, reportDO.ReportFile);
 				command.SetParameter(ReportDAO.REPORT_DESCRIPTION, reportDO.ReportDescription);
-				command.SetParameter(ReportDAO.EMAILED, reportDO.Emailed);
-				command.SetParameter(ReportDAO.PRIVATE, reportDO.Private);
-				command.SetParameter(ReportDAO.PRIVATE_VIEW, reportDO.PrivateView);
+				command.SetParameter(ReportDAO.RECORDS, reportDO.Records);
+				command.SetParameter(ReportDAO.RESEARCH_TYPE, reportDO.ResearchType);
+				command.SetParameter(ReportDAO.GENERATION, reportDO.Generation);
 				reader = command.ExecuteReader();
 				ProcessResult(reader, reportDO, logCategory);
 			} catch (Exception ex) {
@@ -146,7 +152,7 @@ namespace FindMyFamilies.DataAccess {
 			IDataReader reader = null;
 			try {
 				IDataCommand command = dataSource.GetCommand(DELETE);
-				command.SetParameter(ReportDAO.REPORT_ID, reportDO.ReportId);
+				command.SetParameter(ReportDAO.REPORT_ID, reportDO.ReportID);
 				reader = command.ExecuteReader();
 				ProcessResult(reader, reportDO, logCategory);
 			} catch (Exception ex) {
@@ -167,22 +173,23 @@ namespace FindMyFamilies.DataAccess {
 			IDataReader reader = null;
 			try {
 				IDataCommand command = dataSource.GetCommand(READ);
-				command.SetParameter(ReportDAO.REPORT_ID, reportDO.ReportId);
+				command.SetParameter(ReportDAO.REPORT_ID, reportDO.ReportID);
 				reader = command.ExecuteReader();
 
 				// populate the detail object from the SQL Server Data Reader
 				reportDO = new ReportDO();
 				if (reader.Read()) {
-					reportDO.ReportId = (int)GetValue(reader, REPORT_ID);
+					reportDO.ReportID = (int)GetValue(reader, REPORT_ID);
 					reportDO.ReportDate = (DateTime)GetValue(reader, REPORT_DATE);
 					reportDO.LanguageID = (string)GetValue(reader, LANGUAGE_ID);
-					reportDO.ReportBy = (string)GetValue(reader, REPORT_BY);
+					reportDO.UserID = (string)GetValue(reader, USER_ID);
+					reportDO.PersonID = (string)GetValue(reader, PERSON_ID);
+					reportDO.PersonName = (string)GetValue(reader, PERSON_NAME);
 					reportDO.ReportFile = (string)GetValue(reader, REPORT_FILE);
 					reportDO.ReportDescription = (string)GetValue(reader, REPORT_DESCRIPTION);
-					reportDO.Emailed = (bool)GetValue(reader, EMAILED);
-					reportDO.Private = (string)GetValue(reader, PRIVATE);
-					reportDO.PrivateView = (string)GetValue(reader, PRIVATE_VIEW);
-					reportDO.ReportType = (string)GetValue(reader, REPORT_TYPE);
+					reportDO.Records = (string)GetValue(reader, RECORDS);
+					reportDO.ResearchType = (string)GetValue(reader, RESEARCH_TYPE);
+					reportDO.Generation = (string)GetValue(reader, GENERATION);
 				}
 				ProcessResult(reader, reportDO, logCategory);
 			} catch (Exception ex) {
@@ -225,5 +232,4 @@ namespace FindMyFamilies.DataAccess {
 		}
 
 	}
-}
-
+}

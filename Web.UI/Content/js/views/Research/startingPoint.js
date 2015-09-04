@@ -14,6 +14,10 @@
     var _spinner = "startingPointSpinner";
     var _callerSpinner;
 
+    var _personId = "startingPointPersonId";
+    var _personContent = "startingPointContent";
+    var _personInfoDiv = "startingPointPersonInfoDiv";
+
     var _nonMormon = false;
     var _born18101850 = false;
     var _livedInUSA = false;
@@ -156,6 +160,15 @@
         },
         set displayType(value) {
             _displayType = value;
+        },
+        get personId() {
+            return _personId;
+        },
+        get personContent() {
+            return _personContent;
+        },
+        get personInfoDiv() {
+            return _personInfoDiv;
         },
         save: function() {
             save();

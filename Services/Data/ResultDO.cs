@@ -13,5 +13,7 @@ namespace FindMyFamilies.Data {
         public string errorMessage { get; set; }
         public bool error { get; set; }
         public string message { get; set; }
+        public string reportId { get; set; }
+        public string reportFile { get; set; }
 	}
 }

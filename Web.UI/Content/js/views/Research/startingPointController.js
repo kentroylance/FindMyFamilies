@@ -55,103 +55,19 @@ define(function(require) {
         }
     }
 
-    function addGenerationOptions(options) {
-        var select = $("<select class=\"form-control select1Digit\" id=\"startingPointGeneration\"\>");
-        $.each(options, function(a, b) {
-            select.append($("<option/>").attr("value", b).text(b));
-        });
-        $('#startingPointGenerationDiv').empty();
-        $("#startingPointGenerationDiv").append(select);
-        $('#startingPointGenerationDiv').nextAll().remove();
-        if ((person.researchType === "Ancestors") && (person.reportId === constants.REPORT_ID)) {
-            $("#startingPointGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: middle; margin-top: -0.625em; margin-left: .7em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -1.4em;\">&nbsp;<span style=\"font-weight: normal;\">Add Children</span></label>");
-        }
-        $("#startingPointGeneration").change(function(e) {
-            var generation = $("#startingPointGeneration").val();
-            if (person.researchType === constants.DESCENDANTS) {
-                if (generation > 1) {
-                    msgBox.warning("Selecting two generations of Descendants will more than double the time to retrieve descendants.");
-                }
-            } else {
-                if (generation > person.generation) {
-                    msgBox.warning("Increasing the number of generations will increase the time to retrieve ancestors.");
-                }
-            }
-            person.generation = $("#startingPointGeneration").val();
-            person.resetReportId($("#startingPointReportId"));
-        });
-
-    }
-
-    function addDecendantGenerationOptions() {
-        var options = [];
-        options[0] = "1";
-        options[1] = "2";
-        options[2] = "3";
-        addGenerationOptions(options);
-        $("#startingPointGeneration").val(person.generation);
-    }
-
-    function addAncestorGenerationOptions() {
-        var options = [];
-        options[0] = "2";
-        options[1] = "3";
-        options[2] = "4";
-        options[3] = "5";
-        options[4] = "6";
-        options[5] = "7";
-        options[6] = "8";
-        addGenerationOptions(options);
-        $("#startingPointGeneration").val(person.generation);
-    }
-
     function updateResearchData() {
-        $("#startingPointReportId").val(person.reportId);
-        var reportText = $("#startingPointReportId option:selected").text();
-        if (reportText && reportText.length > 8 && reportText !== "Select") {
-            var nameIndex = reportText.indexOf("Name: ") + 6;
-            var dateIndex = reportText.indexOf(", Date:  ");
-            var researchTypeIndex = reportText.indexOf(", Research Type: ");
-            var generationoIndex = reportText.indexOf(",  Generations: ");
-            person.id = reportText.substring(nameIndex, nameIndex + 8);
-            person.name = reportText.substring(nameIndex + 11, dateIndex);
-            person.researchType = reportText.substring(researchTypeIndex + 17, generationoIndex);
-            person.generation = reportText.substring(generationoIndex + 16, generationoIndex + 17);
-            person.loadPersons($("#startingPointPersonId"));
-            //                person.reportId = $("#startingPointReportId option:selected").val();
-        }
+        retrieve.populatePersonFromReport("startingPointReportId", "startingPointPersonId");
         if (person.researchType === constants.DESCENDANTS) {
-            addDecendantGenerationOptions();
+            person.addDecendantGenerationOptions("startingPointGeneration", "startingPointReportId", "startingPointPersonId", "startingPointGenerationDiv");
         } else {
-            addAncestorGenerationOptions();
+            person.addAncestorGenerationOptions("startingPointGeneration", "startingPointReportId", "startingPointPersonId", "startingPointGenerationDiv");
         }
         updateForm();
     }
 
     function loadReports(refreshReport) {
-        retrieve.loadReports($("#startingPointReportId"), refreshReport);
+        retrieve.loadReports("startingPointReportId", refreshReport);
         updateResearchData();
-    }
-
-
-    function setHiddenFields() {
-        if (person.researchType === constants.ANCESTORS) {
-        } else {
-            person.generation = "2";
-        }
-        $("startingPointGeneration").val(person.generation);
-    }
-
-    function startingPointMouseOver() {
-        person.id = $('option:selected', $(this)).val();
-        person.name = $('option:selected', $(this)).text();
-        var id = $(this).attr("id");
-        person.getPersonInfoHover(id, "startingPointPersonId");
-
-    }
-
-    function startingPointMouseOut() {
-        $('#startingPointPersonInfoDiv').hide();
     }
 
     function open() {
@@ -167,28 +83,20 @@ define(function(require) {
                 sensitivity: 1,
                 interval: 100,
                 timeout: 300,
-                over: startingPointMouseOver,
-                out: startingPointMouseOut
+                over: mouseOver,
+                out: mouseOut
             }
 
             $(".startingPointAction").hoverIntent(hoverIntentConfig);
-
-
-//            $.ajax({
-//                data: { "id": person.id },
-//                url: '/Home/GetPersonInfo',
-//                success: function (data) {
-//                    if (data) {
-//                        alert("done");
-//                        var test = "";
-//                    }
-//                },
-//                'beforeSend': function () {
-//                },
-//                'complete': function () {
-//                }
-//            });
         });
+    }
+
+    function mouseOver() {
+        person.mouseOver(this, startingPoint);
+    }
+
+    function mouseOut() {
+        person.mouseOut(startingPoint);
     }
 
     function clear() {
@@ -221,11 +129,7 @@ define(function(require) {
         $('#startingPointPersonId').change(function(e) {
             person.id = $('option:selected', $(this)).val();
             person.name = $('option:selected', $(this)).text();
-            if (retrieve.findReport()) {
-                updateResearchData();
-            } else {
-                resetReportId();
-            }
+            retrieve.checkReports("startingPointReportId");
         });
 
         $('#startingPointResearchType').change(function(e) {
@@ -233,16 +137,17 @@ define(function(require) {
             if (person.researchType === constants.DESCENDANTS) {
                 person.generationAncestors = person.generation;
                 person.generation = person.generationDescendants;
-                addDecendantGenerationOptions();
+                person.addDecendantGenerationOptions("startingPointGeneration", "startingPointReportId", "startingPointPersonId", "startingPointGenerationDiv");
             } else {
                 person.generationDescendants = person.generation;
                 person.generation = person.generationAncestors;
-                addAncestorGenerationOptions();
+                person.addAncestorGenerationOptions("startingPointGeneration", "startingPointReportId", "startingPointPersonId", "startingPointGenerationDiv");
             }
 
-            setHiddenFields();
-            resetReportId();
+            person.setHiddenFields("startingPointGeneration");
+            retrieve.checkReports("startingPointReportId", "startingPointPersonId");
         });
+
 
         $("#startingPointFindPersonButton").unbind('click').bind('click', function() {
             researchHelper.findPerson(function(result) {
@@ -252,14 +157,11 @@ define(function(require) {
                     if (changed) {
                         person.id = findPersonModel.id;
                         person.name = findPersonModel.name;
-                        if (retrieve.findReport()) {
-                            updateResearchData();
-                        } else {
-                            resetReportId();
-                        }
+                        $("#startingPointPersonId").val(person.id);
+                        retrieve.checkReports("startingPointReportId", "startingPointPersonId");
                     }
-                    startingPoint.save();
                     person.loadPersons($("#startingPointPersonId"));
+                    startingPoint.save();
                 }
                 findPersonModel.reset();
                 system.spinnerArea = startingPoint.spinnerArea;
@@ -293,12 +195,10 @@ define(function(require) {
         });
 
         $("#startingPointPreviousButton").unbind('click').bind('click', function(e) {
-            if (!startingPoint.previous) {
-                if (window.localStorage) {
-                    startingPoint.previous = JSON.parse(localStorage.getItem(constants.STARTING_POINT_PREVIOUS));
-                }
+            if (window.localStorage) {
+                startingPoint.previous = JSON.parse(localStorage.getItem(constants.STARTING_POINT_PREVIOUS));
             }
-            startingPointReport.displayType = "previous";
+            startingPoint.displayType = "previous";
             if (startingPoint.previous) {
                 $.ajax({
                     url: constants.STARTING_POINT_REPORT_HTML_URL,
@@ -330,7 +230,7 @@ define(function(require) {
                 if (!person.id) {
                     msgBox.message("You must first select a person from Family Search");
                 }
-                startingPointReport.displayType = "start";
+                startingPoint.displayType = "start";
 
                 startingPoint.save();
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {

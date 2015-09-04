@@ -197,6 +197,5 @@ namespace findmyfamilies.Services {
 			ReportBO.DeleteReports(reportDOs);
 		}
 		
-		
 	}
 }

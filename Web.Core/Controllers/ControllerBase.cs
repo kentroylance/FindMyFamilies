@@ -101,8 +101,21 @@ namespace FindMyFamilies.Web.Controllers {
             }
         }
 
+        public DateTime GetCurrentDateTime() {
+            string clientTimezone = GetCookie("timezone");
+            var dateTime = DateTime.UtcNow;
+            var timezone = TimeZoneInfo .FindSystemTimeZoneById("Mountain Standard Time");
+            if (clientTimezone.Equals("America/Denver")) {
+                timezone = TimeZoneInfo .FindSystemTimeZoneById("Mountain Standard Time");
+            }
+            var utcOffset = new DateTimeOffset (dateTime, TimeSpan .Zero);
+            var result  = utcOffset.ToOffset(timezone.GetUtcOffset(utcOffset));
+            return result.DateTime;
+        }
+
         public void ResetTokenHourExpire() {
-            TokenHourExpire = DateTime.Now.AddMinutes(120);
+            Logger.Debug("ResetTokenHourExpire");
+            TokenHourExpire = GetCurrentDateTime().AddMinutes(60); //.DateTime.Now.AddMinutes(120);
             AddCookie("TokenHourExpire", TokenHourExpire.Value.ToString("O"));
 
             //            if (Token24HourExpire == null) {
@@ -113,12 +126,11 @@ namespace FindMyFamilies.Web.Controllers {
 
         public void ResetToken24HourExpire() {
             Logger.Debug("ResetToken24HourExpire");
-            Token24HourExpire = DateTime.Now.AddHours(24);
-            Logger.Debug("TokenHourExpire: " + TokenHourExpire);
+            Token24HourExpire = GetCurrentDateTime().AddHours(24); //DateTime.Now.AddHours(24);
+            AddCookie("Token24HourExpire", Token24HourExpire.Value.ToString("O"));
             if (TokenHourExpire == null) {
-                TokenHourExpire = DateTime.Now.AddMinutes(120);
+                ResetTokenHourExpire();
             }
-            //            Logger.Debug("Token24HourExpire1 " + DisplayName + ": 1" + Token24HourExpire.Value);
         }
 
         protected SessionDO GetSession() {

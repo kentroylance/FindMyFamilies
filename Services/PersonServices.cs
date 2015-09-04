@@ -149,13 +149,8 @@ namespace FindMyFamilies.Services {
             return personBO.GetChildParentRelationships(personId, ref session);
         }
 
-   		/// <summary>
-		/// Purpose: Read Reports by Report By
-		/// </summary>
-		/// <returns>Returns Report data objects by page</returns>
-		/// <param name = "reportDO">ReportDO reportDO</param>
-		public IList ReadReportsByReport(ReportDO reportDO) {
-			return ReportBO.ReadReportsByReportBy(reportDO);
+		public IList ReadReportsByUser(ReportDO reportDO) {
+			return ReportBO.ReadReportsByUser(reportDO);
 		}
 
 

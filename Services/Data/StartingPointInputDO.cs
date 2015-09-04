@@ -34,6 +34,7 @@ namespace FindMyFamilies.Data {
         public bool Sources { get; set; }
         public bool Duplicates { get; set; }
         public int ReportId { get; set; }
+        public string ReportFile { get; set; }
 
     }
 }

@@ -138,9 +138,9 @@ define(function (require) {
         startingPointReport.form = $("#startingPointReportForm");
         loadEvents();
 
-        if (startingPointReport.displayType === "start") {
+        if (startingPoint.displayType === "start") {
             $.ajax({
-                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "nonMormon": startingPoint.nonMormon, "born18101850": startingPoint.born18101850, "livedInUSA": startingPoint.livedInUSA, "needOrdinances": startingPoint.ordinances, "hints": startingPoint.hints, "duplicates": startingPoint.duplicates, "clues": startingPoint.clues, "sources": startingPoint.sources, "reportId": person.reportId },
+                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "nonMormon": startingPoint.nonMormon, "born18101850": startingPoint.born18101850, "livedInUSA": startingPoint.livedInUSA, "needOrdinances": startingPoint.ordinances, "hints": startingPoint.hints, "duplicates": startingPoint.duplicates, "clues": startingPoint.clues, "sources": startingPoint.sources, "reportId": person.reportId, "reportFile": person.reportFile },
                 url: constants.STARTING_POINT_REPORT_DATA_URL,
                 success: function (data) {
                     system.stopSpinner(true);
@@ -152,6 +152,8 @@ define(function (require) {
                         $("#startingPointReportTable").bootstrapTable("append", data.list);
                         system.openForm(startingPointReport.form, startingPointReport.formTitleImage, startingPointReport.spinner);
                         if (person.reportId === constants.REPORT_ID) {
+                            person.reportId = data.reportId;
+                            person.reportFile = data.reportFile;
                             startingPointController.loadReports(true);
                         }
                     }

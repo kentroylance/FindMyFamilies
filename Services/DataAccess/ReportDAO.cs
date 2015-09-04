@@ -117,16 +117,16 @@ namespace FindMyFamilies.DataAccess {
 		}
 
         /// <summary>
-		/// Purpose: Reads reports by report_by records from table Report by search criteria.
+		/// Purpose: Reads reports by user records from table Report by search criteria.
 		/// </summary>
 		/// <returns>Returns a collection of Reports</returns>
-		public virtual ICollection ReadReportsByReportBy(ReportDO reportDO) {
+		public virtual ICollection ReadReportsByUser(ReportDO reportDO) {
 			IList reports = new ArrayList();
 			IDataReader reader = null;
 			try {
-	        	IDataCommand command = dataSource.GetCommand(ReportDO.READ_REPORTS_BY_REPORT_BY);
-            	command.SetParameter(ReportDAO.REPORT_BY, reportDO.ReportBy);
-            	command.SetParameter(ReportDAO.REPORT_TYPE, reportDO.ReportType);
+	        	IDataCommand command = dataSource.GetCommand(ReportDO.READ_REPORTS_BY_USER);
+            	command.SetParameter(ReportDAO.USER_ID, reportDO.UserID);
+            	command.SetParameter(ReportDAO.RESEARCH_TYPE, reportDO.ResearchType);
 				command.SetParameter(LANGUAGE, reportDO.Language);
 				reader = command.ExecuteReader();
 		
@@ -143,7 +143,7 @@ namespace FindMyFamilies.DataAccess {
 				}
 				ProcessResult(reader, reportDO, logCategory);
 			} catch (Exception ex) {
-				string errorMessage = Resource.GetErrorMessage(MessageKeys.READ_REPORTS_BY_REPORT_BY, reportDO.Language, ex);
+				string errorMessage = Resource.GetErrorMessage(MessageKeys.READ_REPORTS_BY_USER, reportDO.Language, ex);
 				throw new DataAccessException(errorMessage, ex, logCategory);
 			} finally {
 				if (reader != null) {
@@ -161,16 +161,16 @@ namespace FindMyFamilies.DataAccess {
 			IList reports = new ArrayList();
 			IDataReader reader = null;
 			try {
-	        	IDataCommand command = dataSource.GetCommand(ReportDO.READ_REPORTS_LIST);
-            	command.SetParameter(ReportDAO.REPORT_BY, reportDO.ReportBy);
-            	command.SetParameter(ReportDAO.REPORT_TYPE, reportDO.ReportType);
+	        	IDataCommand command = dataSource.GetCommand(ReportDO.READ_REPORTS_BY_USER);
+            	command.SetParameter(ReportDAO.USER_ID, reportDO.UserID);
+            	command.SetParameter(ReportDAO.RESEARCH_TYPE, reportDO.ResearchType);
 				command.SetParameter(LANGUAGE, reportDO.Language);
 				reader = command.ExecuteReader();
 		
 				// populate the detail object from the SQL Server Data Reader
 				while (reader.Read()) {
-				    int reportID = (int) GetValue(reader, REPORT_ID);
-					reports.Add(new ListItemDO(Convert.ToString(reportID), (string)GetValue(reader, REPORT_DESCRIPTION)));
+				    int reportId = (int) GetValue(reader, REPORT_ID);
+					reports.Add(new ReportListItemDO(Convert.ToString(reportId), ((DateTime)GetValue(reader, REPORT_DATE)).ToString(Constants.DATETIME_FORMAT), (string)GetValue(reader, REPORT_FILE), (string)GetValue(reader, PERSON_ID), (string)GetValue(reader, PERSON_NAME), (string)GetValue(reader, RECORDS), (string)GetValue(reader, RESEARCH_TYPE), (string)GetValue(reader, GENERATION)));
 				}
 				if (reader.NextResult()) {
 					reader.Read();

@@ -53,6 +53,8 @@ define(function(require) {
                                         retrieve.selected = false;
                                     }
                                     retrieve.reportId = data.ReportId;
+                                    retrieve.reportFile = data.ReportFile;
+
                                     system.stopSpinner();
                                     msgBox.message("Successfully retrieved <b>" + data.RetrievedRecords + "</b> " + person.researchType + ".");
                                     retrieve.form.dialog("close");

@@ -43,6 +43,10 @@ namespace FindMyFamilies.Web.Controllers {
                 try {
                     session = GetSession();
                     result.list = Service.GetStartingPoints(startingPoint, ref session);
+                    if (startingPoint.ReportId == 0) {
+                        result.reportId = session.ReportID;
+                        result.reportFile = session.ReportFilePath;
+                    }
                     ResetTokenHourExpire();
                     result.errorMessage = session.ErrorMessage;
                 } catch (Exception) {
@@ -93,6 +97,10 @@ namespace FindMyFamilies.Web.Controllers {
                 try {
                     session = GetSession();
                     result.list = Service.GetDates(dateInputDO, ref session);
+                    if (dateInputDO.ReportId == 0) {
+                        result.reportId = session.ReportID;
+                        result.reportFile = session.ReportFilePath;
+                    }
                     ResetTokenHourExpire();
                     result.errorMessage = session.ErrorMessage;
                 } catch (Exception) {
@@ -121,6 +129,10 @@ namespace FindMyFamilies.Web.Controllers {
                 try {
                     session = GetSession();
                     result.list = Service.GetPlaces(placeInputDO, ref session);
+                    if (placeInputDO.ReportId == 0) {
+                        result.reportId = session.ReportID;
+                        result.reportFile = session.ReportFilePath;
+                    }
                     ResetTokenHourExpire();
                     result.errorMessage = session.ErrorMessage;
                 } catch (Exception) {
@@ -149,6 +161,10 @@ namespace FindMyFamilies.Web.Controllers {
                 try {
                     session = GetSession();
                     result.list = Service.FindClues(findCluesInputDO, ref session);
+                    if (findCluesInputDO.ReportId == 0) {
+                        result.reportId = session.ReportID;
+                        result.reportFile = session.ReportFilePath;
+                    }
                     ResetTokenHourExpire();
                     result.errorMessage = session.ErrorMessage;
                 } catch (Exception) {
@@ -177,6 +193,10 @@ namespace FindMyFamilies.Web.Controllers {
                 try {
                     session = GetSession();
                     result.list = Service.GetOrdinances(ordinancesDO, ref session);
+                    if (ordinancesDO.ReportId == 0) {
+                        result.reportId = session.ReportID;
+                        result.reportFile = session.ReportFilePath;
+                    }
                     ResetTokenHourExpire();
                     result.errorMessage = session.ErrorMessage;
                 } catch (Exception) {
@@ -215,6 +235,10 @@ namespace FindMyFamilies.Web.Controllers {
                 try {
                     session = GetSession();
                     result.list = Service.GetHints(hintInputDO, ref session);
+                    if (hintInputDO.ReportId == 0) {
+                        result.reportId = session.ReportID;
+                        result.reportFile = session.ReportFilePath;
+                    }
                     ResetTokenHourExpire();
                     result.errorMessage = session.ErrorMessage;
                 } catch (Exception) {
@@ -243,6 +267,10 @@ namespace FindMyFamilies.Web.Controllers {
                 try {
                     session = GetSession();
                     result.list = Service.GetPossibleDuplicates(possibleDuplicatesInputDO, ref session);
+                    if (possibleDuplicatesInputDO.ReportId == 0) {
+                        result.reportId = session.ReportID;
+                        result.reportFile = session.ReportFilePath;
+                    }
                     ResetTokenHourExpire();
                     result.errorMessage = session.ErrorMessage;
                 } catch (Exception) {
@@ -455,12 +483,13 @@ namespace FindMyFamilies.Web.Controllers {
         private ResultDO GetReports() {
             var result = new ResultDO();
             var report = new ReportDO();
-            report.ReportType = "Research";
-            report.ReportBy = PersonId; //"KW71-97V";
+            report.ResearchType = "Research";
+            report.UserID = PersonId; //"KW71-97V";
             try {
-                result.list = PersonServices.Instance.ReadReportsByReport(report);
-            } catch (Exception) {
-                result.errorMessage = "Error retrieving reports";
+                result.list = PersonServices.Instance.ReadReportsByUser(report);
+            } catch (Exception e) {
+                Logger.Error(e.Message, e);
+                result.errorMessage = "Error retrieving reports: " + e.Message;
             }
 
             return result;
@@ -519,7 +548,7 @@ namespace FindMyFamilies.Web.Controllers {
         public static List<SelectListItem> GetReports(ArrayList reports) {
             var reportSelectList = new List<SelectListItem>();
             foreach (ReportDO report in reports) {
-                reportSelectList.Add(new SelectListItem {Text = report.ReportFile, Value = report.ReportId.ToString()});
+                reportSelectList.Add(new SelectListItem {Text = report.ReportFile, Value = report.ReportID.ToString()});
             }
 
             return reportSelectList;

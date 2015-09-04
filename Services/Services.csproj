@@ -191,6 +191,7 @@
     <Compile Include="Data\DateInputDO.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Data\ReportListItemDO.cs" />
     <Compile Include="Data\PossibleDuplicateListItemDO.cs" />
     <Compile Include="Data\RetrieveDO.cs" />
     <Compile Include="Data\ResultDO.cs" />

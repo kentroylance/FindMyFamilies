@@ -44,15 +44,15 @@ define(function (require) {
         });
 
         window.nameEvents = {
-            'click .personAction': function(e, value, row, index) {
-                    $(this).append(findPersonHelper.getMenuOptions(row));
+            'click .findCluesReportOptionsAction': function (e, value, row, index) {
+                 $(this).append(findPersonHelper.getMenuOptions(row));
             },
-            'mouseout .personAction1': function (e, value, row, index) {
-                $('#findCluesPersonInfoDiv').hide();
+            'mouseout .findCluesReportAction': function (e, value, row, index) {
+                $('#findCluesReportPersonInfoDiv').hide();
             },
-            'mouseover .personAction1': function (e, value, row, index) {
+            'mouseover .findCluesReportAction': function (e, value, row, index) {
 
-                $('#content').empty();
+                $('#findCluesReportPersonInfoContent').empty();
 
                 var html = "<label><span style=\"color: " + _findCluesPerson.getPersonColor(row.gender) + "\">" + row.fullName + "</span></label><br>";
                 html += "<b>ID:</b>  " + row.id + "<br>";
@@ -79,9 +79,9 @@ define(function (require) {
                     html += "<br>";
                 }
 
-                $('#content').append(html);
-                $('#findCluesPersonInfoDiv').show();
-                $("#findCluesPersonInfoDiv").position({
+                $('#findCluesReportPersonInfoContent').append(html);
+                $('#findCluesReportPersonInfoDiv').show();
+                $("#findCluesReportPersonInfoDiv").position({
                     my: "center+33 center-45",
                     at: "center",
                     of: $("#findCluesReportForm")
@@ -140,7 +140,7 @@ define(function (require) {
 
         if (findClues.displayType === "start") {
             $.ajax({
-                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "SearchCriteria": findClues.searchCriteria, "GapInChildren": findClues.gapInChildren, "AgeLimit": findClues.ageLimit, "ReportId": person.reportId },
+                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "SearchCriteria": findClues.searchCriteria, "GapInChildren": findClues.gapInChildren, "AgeLimit": findClues.ageLimit, "ReportId": person.reportId, "reportFile": person.reportFile},
                 url: constants.FIND_CLUES_REPORT_DATA_URL,
                 success: function (data) {
                     system.stopSpinner(true);
@@ -152,6 +152,8 @@ define(function (require) {
                         $("#findCluesReportTable").bootstrapTable("append", data.list);
                         system.openForm(findCluesReport.form, findCluesReport.formTitleImage, findCluesReport.spinner);
                         if (person.reportId === constants.REPORT_ID) {
+                            person.reportId = data.reportId;
+                            person.reportFile = data.reportFile;
                             findCluesController.loadReports(true);
                         }
                     }
@@ -188,7 +190,7 @@ var msgBox = require('msgBox');
 function nameFormatter(value, row, index) {
     var result = "";
     if (row.id) {
-        result = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default dropdown-btn personAction1\"><span style=\"color: " + _findCluesPerson.getPersonColor(row.gender) + "\">" + _findCluesPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
+        result = "<div class=\"btn-group \"><button type=\"button\" class=\"btn btn-default dropdown-btn findCluesReportAction\"><span style=\"color: " + _findCluesPerson.getPersonColor(row.gender) + "\">" + _findCluesPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"findCluesReportOptionsAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
     }
     return result;
 }

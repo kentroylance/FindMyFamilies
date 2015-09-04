@@ -40,91 +40,19 @@ define(function(require) {
         }
     }
 
-    function addGenerationOptions(options) {
-        var select = $("<select class=\"form-control select1Digit\" id=\"possibleDuplicatesGeneration\"\>");
-        $.each(options, function (a, b) {
-            select.append($("<option/>").attr("value", b).text(b));
-        });
-        $('#possibleDuplicatesGenerationDiv').empty();
-        $("#possibleDuplicatesGenerationDiv").append(select);
-        $('#possibleDuplicatesGenerationDiv').nextAll().remove();
-        if ((person.researchType === "Ancestors") && (person.reportId === constants.REPORT_ID)) {
-            $("#possibleDuplicatesGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: middle; margin-top: -0.625em; margin-left: .7em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -1.4em\">&nbsp;<span style=\"font-weight: normal\">Add Children</span></label>");
-        }
-        $("#possibleDuplicatesGeneration").change(function (e) {
-            var generation = $("#possibleDuplicatesGeneration").val();
-            if (person.researchType === constants.DESCENDANTS) {
-                if (generation > 1) {
-                    msgBox.warning("Selecting two generations of Descendants will more than double the time to retrieve descendants.");
-                }
-            } else {
-                if (generation > person.generation) {
-                    msgBox.warning("Increasing the number of generations will increase the time to retrieve ancestors.");
-                }
-            }
-            person.generation = $("#possibleDuplicatesGeneration").val();
-            person.resetReportId($("#possibleDuplicatesReportId"));
-        });
-
-    }
-
-    function addDecendantGenerationOptions() {
-        var options = [];
-        options[0] = "1";
-        options[1] = "2";
-        options[2] = "3";
-        addGenerationOptions(options);
-        $("#possibleDuplicatesGeneration").val(person.generation);
-    }
-
-    function addAncestorGenerationOptions() {
-        var options = [];
-        options[0] = "2";
-        options[1] = "3";
-        options[2] = "4";
-        options[3] = "5";
-        options[4] = "6";
-        options[5] = "7";
-        options[6] = "8";
-        addGenerationOptions(options);
-        $("#possibleDuplicatesGeneration").val(person.generation);
-    }
-
     function updateResearchData() {
-        $("#possibleDuplicatesReportId").val(person.reportId);
-        var reportText = $("#possibleDuplicatesReportId option:selected").text();
-        if (reportText && reportText.length > 8 && reportText !== "Select") {
-            var nameIndex = reportText.indexOf("Name: ") + 6;
-            var dateIndex = reportText.indexOf(", Date:  ");
-            var researchTypeIndex = reportText.indexOf(", Research Type: ");
-            var generationoIndex = reportText.indexOf(",  Generations: ");
-            person.id = reportText.substring(nameIndex, nameIndex + 8);
-            person.name = reportText.substring(nameIndex + 11, dateIndex);
-            person.researchType = reportText.substring(researchTypeIndex + 17, generationoIndex);
-            person.generation = reportText.substring(generationoIndex + 16, generationoIndex + 17);
-            person.loadPersons($("#possibleDuplicatesPersonId"));
-            //                person.reportId = $("#possibleDuplicatesReportId option:selected").val();
-        }
+        retrieve.populatePersonFromReport("possibleDuplicatesReportId", "possibleDuplicatesPersonId");
         if (person.researchType === constants.DESCENDANTS) {
-            addDecendantGenerationOptions();
+            person.addDecendantGenerationOptions("possibleDuplicatesGeneration", "possibleDuplicatesReportId", "possibleDuplicatesPersonId", "possibleDuplicatesGenerationDiv");
         } else {
-            addAncestorGenerationOptions();
+            person.addAncestorGenerationOptions("possibleDuplicatesGeneration", "possibleDuplicatesReportId", "possibleDuplicatesPersonId", "possibleDuplicatesGenerationDiv");
         }
         updateForm();
     }
 
     function loadReports(refreshReport) {
-        retrieve.loadReports($("#possibleDuplicatesReportId"), refreshReport);
+        retrieve.loadReports("possibleDuplicatesReportId", refreshReport);
         updateResearchData();
-    }
-
-
-    function setHiddenFields() {
-        if (person.researchType === constants.ANCESTORS) {
-        } else {
-            person.generation = "2";
-        }
-        $("possibleDuplicatesGeneration").val(person.generation);
     }
 
     function open() {
@@ -135,6 +63,25 @@ define(function(require) {
         retrieve.findReport();
         updateForm();
         system.openForm(possibleDuplicates.form, possibleDuplicates.formTitleImage, possibleDuplicates.spinner);
+        $(document).ready(function () {
+            var hoverIntentConfig = {
+                sensitivity: 1,
+                interval: 100,
+                timeout: 300,
+                over: mouseOver,
+                out: mouseOut
+            }
+
+            $(".possibleDuplicatesAction").hoverIntent(hoverIntentConfig);
+        });
+    }
+
+    function mouseOver() {
+        person.mouseOver(this, possibleDuplicates);
+    }
+
+    function mouseOut() {
+        person.mouseOut(possibleDuplicates);
     }
 
     function clear() {
@@ -167,11 +114,7 @@ define(function(require) {
         $('#possibleDuplicatesPersonId').change(function(e) {
             person.id = $('option:selected', $(this)).val();
             person.name = $('option:selected', $(this)).text();
-            if (retrieve.findReport()) {
-                updateResearchData();
-            } else {
-                resetReportId();
-            }
+            retrieve.checkReports("possibleDuplicatesReportId");
         });
 
         $('#possibleDuplicatesResearchType').change(function(e) {
@@ -179,15 +122,15 @@ define(function(require) {
             if (person.researchType === constants.DESCENDANTS) {
                 person.generationAncestors = person.generation;
                 person.generation = person.generationDescendants;
-                addDecendantGenerationOptions();
+                person.addDecendantGenerationOptions("possibleDuplicatesGeneration", "possibleDuplicatesReportId", "possibleDuplicatesPersonId", "possibleDuplicatesGenerationDiv");
             } else {
                 person.generationDescendants = person.generation;
                 person.generation = person.generationAncestors;
-                addAncestorGenerationOptions();
+                person.addAncestorGenerationOptions("possibleDuplicatesGeneration", "possibleDuplicatesReportId", "possibleDuplicatesPersonId", "possibleDuplicatesGenerationDiv");
             }
 
-            setHiddenFields();
-            resetReportId();
+            person.setHiddenFields("possibleDuplicatesGeneration");
+            retrieve.checkReports("possibleDuplicatesReportId", "possibleDuplicatesPersonId");
         });
 
         $("#possibleDuplicatesFindPersonButton").unbind('click').bind('click', function() {
@@ -198,16 +141,14 @@ define(function(require) {
                     if (changed) {
                         person.id = findPersonModel.id;
                         person.name = findPersonModel.name;
-                        if (retrieve.findReport()) {
-                            updateResearchData();
-                        } else {
-                            resetReportId();
-                        }
+                        $("#possibleDuplicatesPersonId").val(person.id);
+                        retrieve.checkReports("possibleDuplicatesReportId", "possibleDuplicatesPersonId");
                     }
-                    possibleDuplicates.save();
                     person.loadPersons($("#possibleDuplicatesPersonId"));
+                    possibleDuplicates.save();
                 }
                 findPersonModel.reset();
+                system.spinnerArea = possibleDuplicates.spinnerArea;
             });
             return false;
         });
@@ -221,6 +162,7 @@ define(function(require) {
                     loadReports(true);
                 }
                 retrieve.reset();
+                system.spinnerArea = possibleDuplicates.spinnerArea;
             });
             return false;
         });
@@ -237,13 +179,11 @@ define(function(require) {
         });
 
         $("#possibleDuplicatesPreviousButton").unbind('click').bind('click', function (e) {
-            if (!possibleDuplicates.previous) {
-                if (window.localStorage) {
-                    possibleDuplicates.previous = JSON.parse(localStorage.getItem(constants.POSSIBLE_DUPLICATES_PREVIOUS));
-                }
+            if (window.localStorage) {
+                placeProblems.previous = JSON.parse(localStorage.getItem(constants.PLACE_PROBLEMS_PREVIOUS));
             }
+            possibleDuplicates.displayType = "previous";
             if (possibleDuplicates.previous) {
-                possibleDuplicatesReport.displayType = "previous";
                 $.ajax({
                     url: constants.POSSIBLE_DUPLICATES_REPORT_HTML_URL,
                     success: function (data) {
@@ -266,6 +206,7 @@ define(function(require) {
             } else {
                 msgBox.message("Sorry, there is nothing previous to display.");
             }
+            system.spinnerArea = possibleDuplicates.spinnerArea;
         });
 
         $("#possibleDuplicatesSubmitButton").unbind('click').bind('click', function (e) {
@@ -273,7 +214,7 @@ define(function(require) {
                 if (!person.id) {
                     msgBox.message("You must first select a person from Family Search");
                 }
-                possibleDuplicatesReport.displayType = "start";
+                possibleDuplicates.displayType = "start";
                 possibleDuplicates.save();
 
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
@@ -346,7 +287,11 @@ define(function(require) {
     var possibleDuplicatesController = {
         open: function () {
             open();
+        },
+        loadReports: function(refreshReport) {
+            loadReports(refreshReport);
         }
+
     };
 
     researchHelper.possibleDuplicatesController = possibleDuplicatesController;

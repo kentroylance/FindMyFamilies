@@ -47,7 +47,7 @@
 			<list name=""/>
 		</lists>
 	</validation>
-    <validation name="ReportBO" action="ReadReportsByReportBy" dataObject="ReportDO" authenticate="true" groups="" javaScriptFile="">
+    <validation name="ReportBO" action="ReadReportsByUser" dataObject="ReportDO" authenticate="true" groups="" javaScriptFile="">
         <lists>
             <list name=""/>
         </lists>

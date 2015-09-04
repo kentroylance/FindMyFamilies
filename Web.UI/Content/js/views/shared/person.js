@@ -4,6 +4,9 @@
     var system = require('system');
     var constants = require('constants');
 
+    var _msgBox;
+    var _retrieve;
+
     var _id;
     var _name;
     var _firstName;
@@ -30,11 +33,12 @@
     var _findPersonOptions = {};
     var _callerSpinner;
     var _reportId = constants.REPORT_ID;
+    var _reportFile;
     var _addChildren;
     var _generationAncestors = constants.GENERATION;
     var _generationDescendants = "1";
 
-    function PersonDO(id, name, firstName, middleName, lastName, fullName, gender, birthYear, deathYear, birthPlace, deathPlace, motherName, fatherName, spouseName, spouseGender, researchType, generation, includeMaidenName, includeMiddleName, includePlace, yearRange, history, findPersonOptions, reportId, addChildren) {
+    function PersonDO(id, name, firstName, middleName, lastName, fullName, gender, birthYear, deathYear, birthPlace, deathPlace, motherName, fatherName, spouseName, spouseGender, researchType, generation, includeMaidenName, includeMiddleName, includePlace, yearRange, history, findPersonOptions, reportId, addChildren, reportFile) {
         this.id = id;
         this.name = name;
         this.firstName = firstName;
@@ -60,6 +64,7 @@
         this.findPersonOptions = findPersonOptions;
         this.reportId = reportId;
         this.addChildren = addChildren;
+        this.reportFile = reportFile;
     }
 
     function getPersonImage(gender) {
@@ -89,7 +94,7 @@
 
     function save() {
         if (window.localStorage) {
-            var person = new PersonDO(_id, _name, _firstName, _middleName, _lastName, _fullName, _gender, _birthYear, _deathYear, _birthPlace, _deathPlace, _motherName, _fatherName, _spouseName, _spouseGender, _researchType, _generation, _includeMaidenName, _includeMiddleName, _includePlace, _yearRange, _history, _findPersonOptions, _reportId, _addChildren);
+            var person = new PersonDO(_id, _name, _firstName, _middleName, _lastName, _fullName, _gender, _birthYear, _deathYear, _birthPlace, _deathPlace, _motherName, _fatherName, _spouseName, _spouseGender, _researchType, _generation, _includeMaidenName, _includeMiddleName, _includePlace, _yearRange, _history, _findPersonOptions, _reportId, _addChildren, _reportFile);
             localStorage.setItem(constants.PERSON, JSON.stringify(person));
         }
     }
@@ -102,6 +107,76 @@
             _history[id] = name;
             shiftPersons();
         }
+    }
+
+    function setHiddenFields(generationInput) {
+        if (_researchType === constants.ANCESTORS) {
+        } else {
+            _generation = "2";
+        }
+        $('#' + generationInput).val(_generation);
+    }
+
+    function mouseOver(control, model) {
+//        _id = $('option:selected', $(control)).val();
+//        _name = $('option:selected', $(control)).text();
+//        var id = $(control).attr("id");
+        getPersonInfoHover(model);
+    }
+
+    function mouseOut(model) {
+        $('#' + model.personInfoDiv).hide();
+    }
+
+    function addGenerationOptions(options, generationInput, reportInput, personInput, generationInputDiv) {
+        var generationDiv = $('#' + generationInputDiv);
+        var select = $("<select class=\"form-control select1Digit\" id=\"" + generationInput + "\"\>");
+        $.each(options, function (a, b) {
+            select.append($("<option/>").attr("value", b).text(b));
+        });
+        generationDiv.empty();
+        generationDiv.append(select);
+        generationDiv.nextAll().remove();
+        if (_researchType === "Ancestors") {
+            generationDiv.after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: middle; margin-top: -0.625em; margin-left: .7em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -1.4em;\">&nbsp;<span style=\"font-weight: normal;\">Add Children</span></label>");
+        }
+        var generation = $('#' + generationInput);
+        generation.change(function (e) {
+            var generationVal = generation.val();
+            if (_researchType === constants.DESCENDANTS) {
+                if (generationVal > 1) {
+                    _msgBox.warning("Selecting two generations of Descendants will more than double the time to retrieve descendants.");
+                }
+            } else {
+                if (generationVal > _generation) {
+                    _msgBox.warning("Increasing the number of generations will increase the time to retrieve ancestors.");
+                }
+            }
+            _generation = generationVal;
+            _retrieve.checkReports(reportInput, personInput);
+        });
+    }
+
+    function addDecendantGenerationOptions(generationInput, reportInput, personInput, generationInputDiv) {
+        var options = [];
+        options[0] = "1";
+        options[1] = "2";
+        options[2] = "3";
+        addGenerationOptions(options, generationInput, reportInput, personInput, generationInputDiv);
+        $("#" + generationInput).val(_generation);
+    }
+
+    function addAncestorGenerationOptions(generationInput, reportInput, personInput, generationInputDiv) {
+        var options = [];
+        options[0] = "2";
+        options[1] = "3";
+        options[2] = "4";
+        options[3] = "5";
+        options[4] = "6";
+        options[5] = "7";
+        options[6] = "8";
+        addGenerationOptions(options, generationInput, reportInput, personInput, generationInputDiv);
+        $("#" + generationInput).val(_generation);
     }
 
     function loadPersons(id) {
@@ -131,10 +206,14 @@
         id.val(_id);
     }
 
-    function getPersonInfoHoverHtml(id, personIdType) {
+    function getPersonInfoHoverHtml(model) {
         var html = "";
-        if (id === personIdType) {
-            html = "<label><span style=\"color: " + getPersonColor(_gender) + "\">" + _name + "</span></label><br>";
+        var personId = $('#' + model.personId).val();
+
+        if (_id === personId) {
+            var personContent = $('#' + model.personContent);
+            var personInfoDiv = $('#' + model.personInfoDiv);
+//            html = "<label><span style=\"color: " + getPersonColor(_gender) + "\">" + _name + "</span></label><br>";
             html += "<b>ID:</b>  " + _id + "<br>";
             html += '<b>Birth Date:</b>  ' + ((_birthYear) ? (_birthYear) : "") + '<br>';
             html += '<b>Birth Place:</b>  ' + ((_birthPlace) ? (_birthPlace) : "") + '<br>';
@@ -158,13 +237,13 @@
             } else {
                 html += "<br>";
             }
-            $('#startingPointContent').empty();
-            $('#startingPointContent').append(html);
-            $('#startingPointPersonInfoDiv').show();
-            $("#startingPointPersonInfoDiv").position({
+            personContent.empty();
+            personContent.append(html);
+            personInfoDiv.show();
+            personInfoDiv.position({
                 my: "center+200 center",
                 at: "center",
-                of: $("#startingPointForm")
+                of: model.form
             });
         } else {
 //            html = "<label><span style=\"color: " + getPersonColor(_gender) + "\">" + _name + "</span></label><br>";
@@ -182,11 +261,11 @@
 //                of: $("#startingPointForm")
 //            });
         }
-        return html;
+//        return false;
     }
 
 
-    function getPersonInfoHover(id, personIdType) {
+    function getPersonInfoHover(model) {
         if (_id && (!_firstName || (_firstName && _name.indexOf(_fullName) < 0))) {
             $.ajax({
                 data: { "id": _id },
@@ -207,12 +286,12 @@
                         _spouseName = data.spouseName;
                         _spouseGender = data.spouseGender;
                         save();
-                        getPersonInfoHoverHtml(id, personIdType);
+                        getPersonInfoHoverHtml(model);
                     }
                 }
             });
         } else {
-            getPersonInfoHoverHtml(id, personIdType);
+            getPersonInfoHoverHtml(model);
         }
     }
 
@@ -252,6 +331,7 @@
             reportId.val(constants.REPORT_ID);
         }
         _reportId = constants.REPORT_ID;
+        _reportFile = "";
     }
 
     function load() {
@@ -263,11 +343,7 @@
                 person.generation = constants.GENERATION;
             }
 
-            if (!person.id) {
-                person.id = system.userId;
-                person.name = system.userName;
-            }
-            if (!person.name) {
+            if (!person.id || !person.name || (person && person.id === "0")) {
                 person.id = system.userId;
                 person.name = system.userName;
             }
@@ -296,6 +372,8 @@
             _includeMiddleName = person.includeMiddleName;
             _includePlace = person.includePlace;
             _yearRange = person.yearRange;
+            _reportId = person.reportId;
+            _reportFile = person.reportFile;
             if (!_yearRange) {
                 _yearRange = constants.YEAR_RANGE;
             }
@@ -316,8 +394,10 @@
             //     _reportId = startingPoint.reportId;
             if (!_reportId) {
                 _reportId = constants.REPORT_ID;
+                _reportFile = "";
             }
-            //      _addChildren = startingPoint.addChildren;
+            _addChildren = person.addChildren;
+            _generation = person.generation;
             if (_generation) {
                 if (_researchType === constants.ANCESTORS) {
                     _generationAncestors = _generation;
@@ -533,7 +613,22 @@
         getPersonInfoHover: function(id, personIdType) {
             return getPersonInfoHover(id, personIdType);
         },
-        clear: function() {
+        addDecendantGenerationOptions: function (generationInput, reportInput, personInput, generationInputDiv) {
+            addDecendantGenerationOptions(generationInput, reportInput, personInput, generationInputDiv);
+        },
+        addAncestorGenerationOptions: function (generationInput, reportInput, personInput, generationInputDiv) {
+            addAncestorGenerationOptions(generationInput, reportInput, personInput, generationInputDiv);
+        },
+        mouseOver: function (control, personInput) {
+            mouseOver(control, personInput);
+        },
+        mouseOut: function (personInfoDiv) {
+            mouseOut(personInfoDiv);
+        },
+        setHiddenFields: function (generationInput) {
+            setHiddenFields(generationInput);
+        },
+        clear: function () {
             clear();
         },
         get callerSpinner() {
@@ -565,6 +660,24 @@
         },
         set reportId(value) {
             _reportId = value;
+        },
+        get msgBox() {
+            return _msgBox;
+        },
+        set msgBox(value) {
+            _msgBox = value;
+        },
+        get retrieve() {
+            return _retrieve;
+        },
+        set retrieve(value) {
+            _retrieve = value;
+        },
+        get reportFile() {
+            return _reportFile;
+        },
+        set reportFile(value) {
+            _reportFile = value;
         },
         reset: function() {
             reset();

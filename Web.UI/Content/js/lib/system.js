@@ -127,7 +127,8 @@
     function keepSessionAlive() {
 
 //        $.get(constants.KEEP_SESSION_ALIVE_URL, function(data) {
-//        });
+        //        });
+        isAuthenticated();
         $.ajax({
             url: constants.KEEP_SESSION_ALIVE_URL,
             'beforeSend': function () {
@@ -137,7 +138,7 @@
         });
 
 
-        setTimeout(keepSessionAlive, 1140000);
+        setTimeout(keepSessionAlive, 1140000);//1140000);
     }
     
     window.onerror = function(errorText, url, lineNumber) {

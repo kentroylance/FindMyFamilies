@@ -1,6 +1,6 @@
 ﻿<div class="panel-body">
     <form class="form-horizontal" role="form">
-        <div class="form-group">
+        <div class="form-group" id="startingPointReportIdGroup" style="display: none;">
             <label for="startingPointReportId" class="col-sm-2 control-label">Retrieved:</label>
             <div class="col-sm-10">
                 <div class="input-group">
@@ -26,7 +26,7 @@
             <label for="startingPointPersonId" class="col-sm-2 control-label">Name:</label>
             <div class="col-sm-6">
                 <div class="input-group">
-                    <select class="form-control  startingPointAction" id="startingPointPersonId"></select>
+                    <select class="form-control startingPointAction" id="startingPointPersonId"></select>
                     <span class="input-group-btn">
                             <button id="startingPointFindPersonButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-search24 dialog-buttons btn-retrieve-find"></i> Find</button>
                         </span>
@@ -34,9 +34,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="startingPointGenerationDiv" class="col-sm-2 control-label">Generations:</label>
+            <label for="startingPointGenerationDiv" class="col-sm-2 control-label">Generation:</label>
             <div class="col-sm-4">
-                <div class="input-group">
+                <div class="input-group addChildren-box">
                     <div id="startingPointGenerationDiv"></div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
         </div>
     </form>
 </div>
-<div id="startingPointPersonInfoDiv" class="startingPointPersonInfo">
+<div id="startingPointPersonInfoDiv" class="personInfoDialog">
     <div id="startingPointContent"></div>
 </div>
 <div id="startingPointSpinner"/>

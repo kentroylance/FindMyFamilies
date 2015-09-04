@@ -14,7 +14,7 @@ namespace FindMyFamilies.Data {
     [ProtoContract(ImplicitFields = ImplicitFields.AllFields, AsReferenceDefault = true)]
 	public class ReportDO : ReportDOBase {
 
-   		public const string READ_REPORTS_BY_REPORT_BY = "ReadReportsByReportBy";
+   		public const string READ_REPORTS_BY_USER = "ReadReportsByUser";
    		public const string READ_REPORTS_LIST = "ReadReportsList";
 
 		/// <summary>
@@ -24,7 +24,7 @@ namespace FindMyFamilies.Data {
 		}
 
 		public ReportDO(int ReportID) : base() {
-			this.ReportId = ReportID;
+			this.ReportID = ReportID;
 		}
 
 		// Property Declarations

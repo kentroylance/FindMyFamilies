@@ -1,4 +1,6 @@
-﻿(function() {
+﻿/// <reference path="vendor/jqwidgets/jqwidgets/jqxcore.js" />
+/// <reference path="vendor/jqwidgets/jqwidgets/jqxcore.js" />
+(function() {
     require.config({
 //        urlArgs: "bust=" + (new Date()).getTime(),
         waitSeconds: 200,
@@ -19,9 +21,19 @@
             normalize: 'vendor/normalize',
             lazyload: 'vendor/jquery.lazyload',
             string: 'vendor/string.min',
+            jstz: 'vendor/jstz',
             lazyRequire: 'lib/lazyRequire',
             _layoutController: 'views/shared/_layoutController',
             _layoutEvents: 'views/shared/_layoutEvents',
+            jqxcore: 'vendor/jqwidgets/jqwidgets/jqxcore',
+            jqxBaseFramework: 'vendor/jqwidgets/jqwidgets/jqxBaseFramework',
+            jqxdata: 'vendor/jqwidgets/jqwidgets/jqxdata',
+            jqxbuttons: 'vendor/jqwidgets/jqwidgets/jqxbuttons',
+            jqxscrollbar: 'vendor/jqwidgets/jqwidgets/jqxscrollbar',
+            jqxmenu: 'vendor/jqwidgets/jqwidgets/jqxmenu',
+            jqxgrid: 'vendor/jqwidgets/jqwidgets/jqxgrid',
+            jqxgridselection: 'vendor/jqwidgets/jqwidgets/jqxgrid.selection',
+            jqxdropdownbutton: 'vendor/jqwidgets/jqwidgets/jqxdropdownbutton',
             msgBox: 'lib/msgBox',
             constants: 'lib/constants',
             system: 'lib/system',
@@ -158,6 +170,37 @@
                 deps: ['jquery'],
                 exports: "jQuery.ui"
             },
+            jstz: {
+                exports: "jstz"
+            },
+            jqxcore: {
+                deps: ["jquery", "jqueryui", "jqueryUiOptions"],
+                exports: "jqxcore"
+            },
+            jqxdata: {
+                deps: ["jqxcore"],
+                exports: "jqxdata"
+            },
+            jqxscrollbar: {
+                deps: ["jqxcore"],
+                exports: "jqxscrollbar"
+            },
+            jqxmenu: {
+                deps: ["jqxcore"],
+                exports: "jqxmenu"
+            },
+            jqxgrid: {
+                deps: ["jqxcore"],
+                exports: "jqxgrid"
+            },
+            jqxgridselection: {
+                deps: ["jqxcore"],
+                exports: "jqxgridselection"
+            },
+            jqxdropdownbutton: {
+                deps: ["jqxcore"],
+                exports: "jqxdropdownbutton"
+            },
             bootstrap: {
                 deps: ['jquery'],
                 exports: "$"
@@ -199,7 +242,7 @@
                 exports: 'startingPointController'
             },
             findCluesController: {
-                deps: ['jquery', 'findClues', 'findCluesReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
+                deps: ['jquery', 'findClues', 'findCluesReport', 'hoverIntent', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'findCluesController'
             },
             retrieveController: {
@@ -219,7 +262,7 @@
                 exports: 'possibleDuplicatesReportController'
             },
             possibleDuplicatesController: {
-                deps: ['jquery', 'possibleDuplicates', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
+                deps: ['jquery', 'possibleDuplicates', 'hoverIntent', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'possibleDuplicatesController'
             },
             hintsReportController: {
@@ -227,7 +270,7 @@
                 exports: 'hintsReportController'
             },
             hintsController: {
-                deps: ['jquery', 'hints', 'hintsReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
+                deps: ['jquery', 'hints', 'hintsReport', 'hoverIntent', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'hintsController'
             },
             feedbackController: {
@@ -243,7 +286,7 @@
                 exports: 'dateProblemsReportController'
             },
             dateProblemsController: {
-                deps: ['jquery', 'dateProblems', 'dateProblemsReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
+                deps: ['jquery', 'dateProblems', 'dateProblemsReport', 'hoverIntent', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'dateProblemsController'
             },
             placeProblemsReportController: {
@@ -251,7 +294,7 @@
                 exports: 'dateProblemsReportController'
             },
             placeProblemsController: {
-                deps: ['jquery', 'placeProblems', 'placeProblemsReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
+                deps: ['jquery', 'placeProblems', 'placeProblemsReport', 'hoverIntent', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'placeProblemsController'
             },
             ordinancesReportController: {
@@ -259,7 +302,7 @@
                 exports: 'ordinancesReportController'
             },
             ordinancesController: {
-                deps: ['jquery', 'ordinances', 'ordinancesReport', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
+                deps: ['jquery', 'ordinances', 'ordinancesReport', 'hoverIntent', 'researchHelper', 'msgBox', 'system', 'constants', 'person', 'lazyload'],
                 exports: 'ordinancesController'
             },
             findPersonController: {
@@ -292,7 +335,7 @@
                 exports: 'system'
             },
             retrieve: {
-                deps: ["jquery", "system", "person"]
+                deps: ["jquery", "system", "person", "msgBox"]
             },
             msgBox: {
                 deps: ["jquery", "jqueryui", "jqueryUiOptions"]

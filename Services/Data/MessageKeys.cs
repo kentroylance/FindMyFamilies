@@ -190,7 +190,7 @@ namespace FindMyFamilies.Data {
 		public readonly static String ERROR_GROUP_READ_ALL = "error.group.read.all";
 		public readonly static String ERROR_GROUP_UPDATE = "error.group.Update";
 		public readonly static String ERROR_GROUP_DELETE = "error.group.Delete";
-		public readonly static String READ_REPORTS_BY_REPORT_BY = "error.report.read.report.by";
+		public readonly static String READ_REPORTS_BY_USER = "error.report.read.by.user";
 		public readonly static String READ_REPORTS_LIST = "error.report.read.list";
 		public readonly static String EMAIL_CANNOT_READ_BY_EMAIL = "error.email.read.by.email";
 		public readonly static String MEMBER_CANNOT_READ_BY_MEMBER = "error.member.read.by.member";

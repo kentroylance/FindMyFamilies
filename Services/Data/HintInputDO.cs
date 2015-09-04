@@ -33,6 +33,11 @@ namespace FindMyFamilies.Data {
             set;
         }
 
+        public string ReportFile {
+            get;
+            set;
+        }
+
         public int RetrievedRecords {
             get;
             set;

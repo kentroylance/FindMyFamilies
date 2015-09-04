@@ -44,15 +44,15 @@ define(function (require) {
         });
 
         window.nameEvents = {
-            'click .personAction': function(e, value, row, index) {
-                $(this).append(findPersonHelper.getMenuOptions(row));
+            'click .hintsReportOptionsAction': function (e, value, row, index) {
+                 $(this).append(findPersonHelper.getMenuOptions(row));
             },
-            'mouseout .personAction1': function (e, value, row, index) {
-                $('#hintsPersonInfoDiv').hide();
+            'mouseout .hintsReportAction': function (e, value, row, index) {
+                $('#hintsReportPersonInfoDiv').hide();
             },
-            'mouseover .personAction1': function (e, value, row, index) {
+            'mouseover .hintsReportAction': function (e, value, row, index) {
 
-                $('#content').empty();
+                $('#hintsReportPersonInfoContent').empty();
 
                 var html = "<label><span style=\"color: " + _hintsPerson.getPersonColor(row.gender) + "\">" + row.fullName + "</span></label><br>";
                 html += "<b>ID:</b>  " + row.id + "<br>";
@@ -79,9 +79,9 @@ define(function (require) {
                     html += "<br>";
                 }
 
-                $('#content').append(html);
-                $('#hintsPersonInfoDiv').show();
-                $("#hintsPersonInfoDiv").position({
+                $('#hintsReportPersonInfoContent').append(html);
+                $('#hintsReportPersonInfoDiv').show();
+                $("#hintsReportPersonInfoDiv").position({
                     my: "center+33 center-45",
                     at: "center",
                     of: $("#hintsReportForm")
@@ -140,7 +140,7 @@ define(function (require) {
 
         if (hints.displayType === "start") {
             $.ajax({
-                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "topScore": hints.topScore, "count": hints.count, "reportId": person.reportId },
+                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "topScore": hints.topScore, "count": hints.count, "reportId": person.reportId, "reportFile": person.reportFile  },
                 url: constants.HINTS_REPORT_DATA_URL,
                 success: function (data) {
                     system.stopSpinner(true);
@@ -152,6 +152,8 @@ define(function (require) {
                         $("#hintsReportTable").bootstrapTable("append", data.list);
                         system.openForm(hintsReport.form, hintsReport.formTitleImage, hintsReport.spinner);
                         if (person.reportId === constants.REPORT_ID) {
+                            person.reportId = data.reportId;
+                            person.reportFile = data.reportFile;
                             hintsController.loadReports(true);
                         }
                     }
@@ -187,7 +189,7 @@ var _hintsSystem = require('system');
 function nameFormatter(value, row, index) {
     var result = "";
     if (row.id) {
-        result = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default dropdown-btn personAction1\"><span style=\"color: " + _hintsPerson.getPersonColor(row.gender) + "\">" + _hintsPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
+        result = "<div class=\"btn-group \"><button type=\"button\" class=\"btn btn-default dropdown-btn hintsReportAction\"><span style=\"color: " + _hintsPerson.getPersonColor(row.gender) + "\">" + _hintsPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"hintsReportOptionsAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
     }
     return result;
 }

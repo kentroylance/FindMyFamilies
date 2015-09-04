@@ -91,7 +91,7 @@ namespace FindMyFamilies.DataAccess {
                 }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
-                    if (session.Error || (!session.Error & (response.Data == null))) {
+                    if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error & (response.Data == null)))) {
                         if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                             session.ErrorMessage = "Unauthorized to retrieve person descendancy with spouse from FamilySearch";
                         } else {
@@ -160,7 +160,7 @@ namespace FindMyFamilies.DataAccess {
                 }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
-                    if (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null))) {
+                    if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null)))) {
                         if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                             session.ErrorMessage = "Unauthorized to retrieve person ancestry with spouse from FamilySearch";
                         } else {
@@ -227,7 +227,7 @@ namespace FindMyFamilies.DataAccess {
                 }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
-                    if (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null))) {
+                    if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null)))) {
                         if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                             session.ErrorMessage = "Unauthorized to retrieve descendants from FamilySearch";
                         } else {
@@ -296,7 +296,7 @@ namespace FindMyFamilies.DataAccess {
                     }
 
                     if (RestHelper.InvalidResponse(response, ref session)) {
-                        if (session.Error || (!session.Error && (response.Data == null || response.Data.persons == null))) {
+                        if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error && (response.Data == null || response.Data.persons == null)))) {
                             if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                                 session.ErrorMessage = "Unauthorized to retrieve ordinance info from FamilySearch";
                             } else {
@@ -371,7 +371,7 @@ namespace FindMyFamilies.DataAccess {
                 }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
-                    if (session.Error || (!session.Error & (response.Data == null))) {
+                    if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error & (response.Data == null)))) {
                         if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                             session.ErrorMessage = "Unauthorized to retrieve possible duplicates from FamilySearch";
                         } else {
@@ -474,7 +474,7 @@ namespace FindMyFamilies.DataAccess {
             }
 
             if (RestHelper.InvalidResponse(response, ref session)) {
-                if (session.Error || (!session.Error & (response.Data == null))) {
+                if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error & (response.Data == null)))) {
                     if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                         session.ErrorMessage = "Unauthorized to find persons from FamilySearch";
                     } else {
@@ -675,11 +675,9 @@ namespace FindMyFamilies.DataAccess {
                 }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
-                    if (session.Error || (!session.Error & (response.Data == null))) {
+                    if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error & (response.Data == null)))) {
                         if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                             session.ErrorMessage = "Unauthorized to retrieve hints from FamilySearch";
-                        } else {
-                            session.ErrorMessage = "Received error retrieving hints from FamilySearch";
                         }
                         if (response.Data == null) {
                             session.ResponseData = "Data is null";
@@ -821,7 +819,7 @@ namespace FindMyFamilies.DataAccess {
                 }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
-                    if (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null))) {
+                    if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null)))) {
                         if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                             session.ErrorMessage = "Unauthorized to retrieve current person from FamilySearch";
                         } else {
@@ -896,7 +894,7 @@ namespace FindMyFamilies.DataAccess {
                 }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
-                    if (session.Error || (!session.Error & (response.Data == null))) {
+                    if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error & (response.Data == null)))) {
                         if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                             session.ErrorMessage = "Unauthorized to determine if church member from FamilySearch";
                         } else {
@@ -960,7 +958,7 @@ namespace FindMyFamilies.DataAccess {
                 }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
-                    if (session.Error || (!session.Error & (response.Data == null))) {
+                    if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error & (response.Data == null)))) {
                         if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                             session.ErrorMessage = "Unauthorized to logout from FamilySearch";
                         } else {
@@ -1024,7 +1022,7 @@ namespace FindMyFamilies.DataAccess {
                 }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
-                    if (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null))) {
+                    if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null)))) {
                         if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                             session.ErrorMessage = "Unauthorized to retrieve person with details from FamilySearch";
                         } else {
@@ -1093,7 +1091,7 @@ namespace FindMyFamilies.DataAccess {
                 }
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
-                    if (session.Error || (!session.Error & (response.Data == null))) {
+                    if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error & (response.Data == null)))) {
                         if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                             session.ErrorMessage = "Unauthorized to retrieving person with relationships from FamilySearch";
                         } else {
@@ -1734,7 +1732,7 @@ namespace FindMyFamilies.DataAccess {
                     }
 
                     if (RestHelper.InvalidResponse(response, ref session)) {
-                        if (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null))) {
+                        if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null)))) {
                             if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                                 session.ErrorMessage = "Unauthorized to retrieve person from FamilySearch";
                             } else {
@@ -1803,7 +1801,7 @@ namespace FindMyFamilies.DataAccess {
                     }
 
                     if (RestHelper.InvalidResponse(response, ref session)) {
-                        if (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null))) {
+                        if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null)))) {
                             if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                                 session.ErrorMessage = "Unauthorized to retrieve spouse relationships from FamilySearch";
                             } else {
@@ -1873,7 +1871,7 @@ namespace FindMyFamilies.DataAccess {
                     }
 
                     if (RestHelper.InvalidResponse(response, ref session)) {
-                        if (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null))) {
+                        if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null)))) {
                             if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                                 session.ErrorMessage = "Unauthorized to retrieve parent relationships from FamilySearch";
                             } else {
@@ -1942,7 +1940,7 @@ namespace FindMyFamilies.DataAccess {
                     }
 
                     if (RestHelper.InvalidResponse(response, ref session)) {
-                        if (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null))) {
+                        if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null)))) {
                             if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                                 session.ErrorMessage = "Unauthorized to retrieve child relationships from FamilySearch";
                             } else {
@@ -2009,7 +2007,7 @@ namespace FindMyFamilies.DataAccess {
                     }
 
                     if (RestHelper.InvalidResponse(response, ref session)) {
-                        if (session.Error || (!session.Error & (response.Data == null))) {
+                        if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error & (response.Data == null)))) {
                             if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                                 session.ErrorMessage = "Unauthorized to retrieve child relationships from FamilySearch";
                             } else {
@@ -2076,7 +2074,7 @@ namespace FindMyFamilies.DataAccess {
                     }
 
                     if (RestHelper.InvalidResponse(response, ref session)) {
-                        if (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null))) {
+                        if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error && (response.Data == null || response.Data.Persons == null)))) {
                             if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                                 session.ErrorMessage = "Unauthorized to retrieve ancestors from FamilySearch";
                             } else {
@@ -2149,7 +2147,7 @@ namespace FindMyFamilies.DataAccess {
                     }
 
                     if (RestHelper.InvalidResponse(response, ref session)) {
-                        if (session.Error || (!session.Error & (response.Data == null)) || response.Data.Persons == null) {
+                        if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error & (response.Data == null)) || response.Data.Persons == null)) {
                             if (response.StatusCode.Equals(HttpStatusCode.Unauthorized)) {
                                 session.ErrorMessage = "Unauthorized to retrieve descendants from FamilySearch";
                             } else {

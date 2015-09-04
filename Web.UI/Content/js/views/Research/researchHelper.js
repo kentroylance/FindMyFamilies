@@ -9,10 +9,10 @@ define(function(require) {
     var retrieveModel = require('retrieve');
     var personUrlOptionsModel = require('personUrlOptions');
     var msgBox = require('msgBox');
+    var timezone = require('jstz');
     var lazyRequire = require("lazyRequire");
     var requireOnce = lazyRequire.once();
     require("findPerson");
-    require("retrieve");
     require("fancybox");
     require("fancyboxMedia");
 
@@ -121,9 +121,8 @@ define(function(require) {
 
             requireOnce(["jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function() {
             }, function() {
-                var retrieve = require('retrieve');
-                retrieve.callback = callback;
-                retrieve.callerSpinner = spinnerArea;
+                retrieveModel.callback = callback;
+                retrieveModel.callerSpinner = spinnerArea;
                 $.ajax({
                     url: constants.RETRIEVE_URL,
                     success: function(data) {
@@ -691,9 +690,14 @@ define(function(require) {
         },
         get msgBox() {
             return msgBox;
+        },
+        get timezone() {
+            return timezone;
         }
-
     };
+
+    person.msgBox = msgBox;
+    person.retrieve = retrieveModel;
 
     return researchHelper;
 });

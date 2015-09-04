@@ -166,10 +166,18 @@ define(function(require) {
     function delayLoading() {
         system.keepSessionAlive();
 
-        requireOnce(['researchHelper', 'findPersonHelper', 'findPerson', 'retrieve', 'string', "formValidation", "jqueryUiOptions", "bootstrapValidation", 'fancybox', 'fancyboxMedia', "css!/Content/css/lib/research/bootstrap-table.min.css", "css!/Content/css/vendor/formValidation.min.css", "css!/Content/js/vendor/fancybox/jquery.fancybox.css"], function (ResearchHelper) {
+//        requireOnce(['researchHelper', 'jqxcore', 'jqxdata', 'jqxscrollbar', 'jqxmenu', 'jqxgrid', 'jqxgridselection', 'jqxdropdownbutton', 'findPersonHelper', 'findPerson', 'retrieve', 'string', "formValidation", "bootstrapValidation", 'fancybox', 'fancyboxMedia', "jqueryUiOptions", 'jquery', 'jqueryui', "css!/Content/js/vendor/jqwidgets/jqwidgets/styles/jqx.base.css", "css!/Content/css/lib/research/bootstrap-table.min.css", "css!/Content/css/vendor/formValidation.min.css", "css!/Content/js/vendor/fancybox/jquery.fancybox.css"], function (ResearchHelper) {
+        requireOnce(['researchHelper', 'findPersonHelper', 'findPerson', 'msgBox', 'retrieve', 'string', "formValidation", "bootstrapValidation", 'fancybox', 'fancyboxMedia', "jqueryUiOptions", 'jquery', 'jqueryui', "css!/Content/js/vendor/jqwidgets/jqwidgets/styles/jqx.base.css", "css!/Content/css/lib/research/bootstrap-table.min.css", "css!/Content/css/vendor/formValidation.min.css", "css!/Content/js/vendor/fancybox/jquery.fancybox.css"], function (ResearchHelper) {
             researchHelper = ResearchHelper;
         }, function () {
             researchHelper.person.getPersonInfo();
+            var zone = researchHelper.timezone.determine();
+            system.setCookie('timezone', zone.name(), 365);
+            var now = new Date();
+
+   //         var test = now.format("dd/MM/yyyy hh:mm TT");
+
+
             $('.fancyboxvideo').fancybox({
                 openEffect: 'none',
                 closeEffect: 'none',

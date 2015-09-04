@@ -44,15 +44,15 @@ define(function (require) {
         });
 
         window.nameEvents = {
-            'click .personAction': function(e, value, row, index) {
-                    $(this).append(findPersonHelper.getMenuOptions(row));
+            'click .placeProblemsReportOptionsAction': function (e, value, row, index) {
+                 $(this).append(findPersonHelper.getMenuOptions(row));
             },
-            'mouseout .personAction1': function (e, value, row, index) {
-                $('#placeProblemsPersonInfoDiv').hide();
+            'mouseout .placeProblemsReportAction': function (e, value, row, index) {
+                $('#placeProblemsReportPersonInfoDiv').hide();
             },
-            'mouseover .personAction1': function (e, value, row, index) {
+            'mouseover .placeProblemsReportAction': function (e, value, row, index) {
 
-                $('#content').empty();
+                $('#placeProblemsReportPersonInfoContent').empty();
 
                 var html = "<label><span style=\"color: " + _placeProblemsPerson.getPersonColor(row.gender) + "\">" + row.fullName + "</span></label><br>";
                 html += "<b>ID:</b>  " + row.id + "<br>";
@@ -79,9 +79,9 @@ define(function (require) {
                     html += "<br>";
                 }
 
-                $('#content').append(html);
-                $('#placeProblemsPersonInfoDiv').show();
-                $("#placeProblemsPersonInfoDiv").position({
+                $('#placeProblemsReportPersonInfoContent').append(html);
+                $('#placeProblemsReportPersonInfoDiv').show();
+                $("#placeProblemsReportPersonInfoDiv").position({
                     my: "center+33 center-45",
                     at: "center",
                     of: $("#placeProblemsReportForm")
@@ -140,7 +140,7 @@ define(function (require) {
 
         if (placeProblems.displayType === "start") {
             $.ajax({
-                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "nonMormon": placeProblems.nonMormon, "born18101850": placeProblems.born18101850, "livedInUSA": placeProblems.livedInUSA, "needOrdinances": placeProblems.ordinances, "hint": placeProblems.hints, "duplicate": placeProblems.duplicates, "reportId": person.reportId },
+                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "nonMormon": placeProblems.nonMormon, "born18101850": placeProblems.born18101850, "livedInUSA": placeProblems.livedInUSA, "needOrdinances": placeProblems.ordinances, "hint": placeProblems.hints, "duplicate": placeProblems.duplicates, "reportId": person.reportId, "reportFile": person.reportFile },
                 url: constants.PLACE_PROBLEMS_REPORT_DATA_URL,
                 success: function (data) {
                     system.stopSpinner(true);
@@ -152,6 +152,8 @@ define(function (require) {
                         $("#placeProblemsReportTable").bootstrapTable("append", data.list);
                         system.openForm(placeProblemsReport.form, placeProblemsReport.formTitleImage, placeProblemsReport.spinner);
                         if (person.reportId === constants.REPORT_ID) {
+                            person.reportId = data.reportId;
+                            person.reportFile = data.reportFile;
                             placeProblemsController.loadReports(true);
                         }
                     }
@@ -187,7 +189,7 @@ var _placeProblemsSystem = require('system');
 function nameFormatter(value, row, index) {
     var result = "";
     if (row.id) {
-        result = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default dropdown-btn personAction1\"><span style=\"color: " + _placeProblemsPerson.getPersonColor(row.gender) + "\">" + _placeProblemsPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
+        result = "<div class=\"btn-group \"><button type=\"button\" class=\"btn btn-default dropdown-btn placeProblemsReportAction\"><span style=\"color: " + _placeProblemsPerson.getPersonColor(row.gender) + "\">" + _placeProblemsPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"placeProblemsReportOptionsAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
     }
     return result;
 }

@@ -108,15 +108,15 @@ namespace FindMyFamilies.BusinessObject {
 		/// </summary>
 		/// <returns>Returns a Collection of ReportDO Data Objects in a ICollection</returns>
 		/// <param name = "reportDO">ReportDO reportDO</param>
-		public IList ReadReportsByReportBy(ReportDO reportDO) {
+		public IList ReadReportsByUser(ReportDO reportDO) {
 			IList reports = new ArrayList();
 			if (IsValid(this, MethodBase.GetCurrentMethod().Name, reportDO)) {
 				reports = ReportDAO.ReadReportsList(reportDO);
                 if (reports.Count > 4) {
                     ArrayList list = (ArrayList) reports;
                     for (int i = reports.Count; i > 4; i--) {
-                        int reportID = Convert.ToInt32((((ListItemDO) list[i - 1]).ValueMember));
-                        ReportDO deleteDO = new ReportDO(reportID);
+                        int reportId = Convert.ToInt32((((ReportListItemDO) list[i - 1]).reportId));
+                        ReportDO deleteDO = new ReportDO(reportId);
                         ReportDAO.DeleteReport(deleteDO);
                         if (!Strings.IsEmpty(deleteDO.ReportFile)) {
                             File.Delete(deleteDO.ReportFile);

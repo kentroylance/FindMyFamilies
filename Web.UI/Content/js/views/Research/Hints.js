@@ -13,6 +13,9 @@
     var _generationDescendants = "1";
     var _spinner = "hintsSpinner";
 
+    var _personId = "hintsPersonId";
+    var _personContent = "hintsContent";
+    var _personInfoDiv = "hintsPersonInfoDiv";
     var _topScore = true;
     var _count = false;
 
@@ -82,6 +85,15 @@
         },
         set displayType(value) {
             _displayType = value;
+        },
+        get personId() {
+            return _personId;
+        },
+        get personContent() {
+            return _personContent;
+        },
+        get personInfoDiv() {
+            return _personInfoDiv;
         },
         get topScore() {
             return _topScore;

@@ -14,6 +14,10 @@ define(function(require) {
     var _spinner = "ordinancesSpinner";
     var _callerSpinner;
 
+    var _personId = "ordinancesPersonId";
+    var _personContent = "ordinancesContent";
+    var _personInfoDiv = "ordinancesPersonInfoDiv";
+    
     function OrdinancesDO() {
 
     }
@@ -84,6 +88,15 @@ define(function(require) {
         },
         set callerSpinner(value) {
             _callerSpinner = value;
+        },
+        get personId() {
+            return _personId;
+        },
+        get personContent() {
+            return _personContent;
+        },
+        get personInfoDiv() {
+            return _personInfoDiv;
         },
         save: function() {
             save();

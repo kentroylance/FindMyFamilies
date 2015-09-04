@@ -43,91 +43,19 @@ define(function(require) {
         }
     }
 
-    function addGenerationOptions(options) {
-        var select = $("<select class=\"form-control select1Digit\" id=\"findCluesGeneration\"\>");
-        $.each(options, function(a, b) {
-            select.append($("<option/>").attr("value", b).text(b));
-        });
-        $('#findCluesGenerationDiv').empty();
-        $("#findCluesGenerationDiv").append(select);
-        $('#findCluesGenerationDiv').nextAll().remove();
-        if ((person.researchType === "Ancestors") && (person.reportId === constants.REPORT_ID)) {
-            $("#findCluesGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: middle; margin-top: -0.625em; margin-left: .7em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -1.4em;\">&nbsp;<span style=\"font-weight: normal;\">Add Children</span></label>");
-        }
-        $("#findCluesGeneration").change(function(e) {
-            var generation = $("#findCluesGeneration").val();
-            if (person.researchType === constants.DESCENDANTS) {
-                if (generation > 1) {
-                    msgBox.warning("Selecting two generations of Descendants will more than double the time to retrieve descendants.");
-                }
-            } else {
-                if (generation > person.generation) {
-                    msgBox.warning("Increasing the number of generations will increase the time to retrieve ancestors.");
-                }
-            }
-            person.generation = $("#findCluesGeneration").val();
-            person.resetReportId($("#findCluesReportId"));
-        });
-
-    }
-
-    function addDecendantGenerationOptions() {
-        var options = [];
-        options[0] = "1";
-        options[1] = "2";
-        options[2] = "3";
-        addGenerationOptions(options);
-        $("#startingPointGeneration").val(person.generation);
-    }
-
-    function addAncestorGenerationOptions() {
-        var options = [];
-        options[0] = "2";
-        options[1] = "3";
-        options[2] = "4";
-        options[3] = "5";
-        options[4] = "6";
-        options[5] = "7";
-        options[6] = "8";
-        addGenerationOptions(options);
-        $("#startingPointGeneration").val(person.generation);
-    }
-
     function updateResearchData() {
-        $("#findCluesReportId").val(person.reportId);
-        var reportText = $("#findCluesReportId option:selected").text();
-        if (reportText && reportText.length > 8 && reportText !== "Select") {
-            var nameIndex = reportText.indexOf("Name: ") + 6;
-            var dateIndex = reportText.indexOf(", Date:  ");
-            var researchTypeIndex = reportText.indexOf(", Research Type: ");
-            var generationoIndex = reportText.indexOf(",  Generations: ");
-            person.id = reportText.substring(nameIndex, nameIndex + 8);
-            person.name = reportText.substring(nameIndex + 11, dateIndex);
-            person.researchType = reportText.substring(researchTypeIndex + 17, generationoIndex);
-            person.generation = reportText.substring(generationoIndex + 16, generationoIndex + 17);
-            person.loadPersons($("#startingPointPersonId"));
-            //                person.reportId = $("#startingPointReportId option:selected").val();
-        }
+        retrieve.populatePersonFromReport("findCluesReportId", "findCluesPersonId");
         if (person.researchType === constants.DESCENDANTS) {
-            addDecendantGenerationOptions();
+            person.addDecendantGenerationOptions("findCluesGeneration", "findCluesReportId", "findCluesPersonId", "findCluesGenerationDiv");
         } else {
-            addAncestorGenerationOptions();
+            person.addAncestorGenerationOptions("findCluesGeneration", "findCluesReportId", "findCluesPersonId", "findCluesGenerationDiv");
         }
         updateForm();
     }
 
     function loadReports(refreshReport) {
-        retrieve.loadReports($("#findCluesReportId"), refreshReport);
+        retrieve.loadReports("findCluesReportId", refreshReport);
         updateResearchData();
-    }
-
-
-    function setHiddenFields() {
-        if (person.researchType === constants.ANCESTORS) {
-        } else {
-            person.generation = "2";
-        }
-        $("findCluesGeneration").val(person.generation);
     }
 
     function open() {
@@ -139,6 +67,25 @@ define(function(require) {
         retrieve.findReport();
         updateForm();
         system.openForm(findClues.form, findClues.formTitleImage, findClues.spinner);
+        $(document).ready(function () {
+            var hoverIntentConfig = {
+                sensitivity: 1,
+                interval: 100,
+                timeout: 300,
+                over: mouseOver,
+                out: mouseOut
+            }
+
+            $(".findCluesAction").hoverIntent(hoverIntentConfig);
+        });
+    }
+
+    function mouseOver() {
+        person.mouseOver(this, findClues);
+    }
+
+    function mouseOut() {
+        person.mouseOut(findClues);
     }
 
     function clear() {
@@ -189,11 +136,7 @@ define(function(require) {
         $('#findCluesPersonId').change(function(e) {
             person.id = $('option:selected', $(this)).val();
             person.name = $('option:selected', $(this)).text();
-            if (retrieve.findReport()) {
-                updateResearchData();
-            } else {
-                resetReportId();
-            }
+            retrieve.checkReports("findCluesReportId");
         });
 
         $('#findCluesResearchType').change(function(e) {
@@ -201,15 +144,15 @@ define(function(require) {
             if (person.researchType === constants.DESCENDANTS) {
                 person.generationAncestors = person.generation;
                 person.generation = person.generationDescendants;
-                addDecendantGenerationOptions();
+                person.addDecendantGenerationOptions("findCluesGeneration", "findCluesReportId", "findCluesPersonId", "findCluesGenerationDiv");
             } else {
                 person.generationDescendants = person.generation;
                 person.generation = person.generationAncestors;
-                addAncestorGenerationOptions();
+                person.addAncestorGenerationOptions("findCluesGeneration", "findCluesReportId", "findCluesPersonId", "findCluesGenerationDiv");
             }
 
-            setHiddenFields();
-            resetReportId();
+            person.setHiddenFields("findCluesGeneration");
+            retrieve.checkReports("findCluesReportId", "findCluesPersonId");
         });
 
         $("#findCluesFindPersonButton").unbind('click').bind('click', function() {
@@ -220,14 +163,11 @@ define(function(require) {
                     if (changed) {
                         person.id = findPersonModel.id;
                         person.name = findPersonModel.name;
-                        if (retrieve.findReport()) {
-                            updateResearchData();
-                        } else {
-                            resetReportId();
-                        }
+                        $("#findCluesPersonId").val(person.id);
+                        retrieve.checkReports("findCluesReportId", "findCluesPersonId");
                     }
-                    findClues.save();
                     person.loadPersons($("#findCluesPersonId"));
+                    findClues.save();
                 }
                 findPersonModel.reset();
                 system.spinnerArea = findClues.spinnerArea;
@@ -261,10 +201,8 @@ define(function(require) {
         });
 
         $("#findCluesPreviousButton").unbind('click').bind('click', function(e) {
-            if (!findClues.previous) {
-                if (window.localStorage) {
-                    findClues.previous = JSON.parse(localStorage.getItem(constants.FIND_CLUES_PREVIOUS));
-                }
+            if (window.localStorage) {
+                findClues.previous = JSON.parse(localStorage.getItem(constants.FIND_CLUES_PREVIOUS));
             }
             findClues.displayType = "previous";
             if (findClues.previous) {

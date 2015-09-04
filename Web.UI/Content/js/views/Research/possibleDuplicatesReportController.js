@@ -44,15 +44,15 @@ define(function (require) {
         });
 
         window.nameEvents = {
-            'click .personAction': function(e, value, row, index) {
-                    $(this).append(findPersonHelper.getMenuOptions(row));
+            'click .possibleDuplicatesReportOptionsAction': function (e, value, row, index) {
+                 $(this).append(findPersonHelper.getMenuOptions(row));
             },
-            'mouseout .personAction1': function (e, value, row, index) {
-                $('#possibleDuplicatesPersonInfoDiv').hide();
+            'mouseout .possibleDuplicatesReportAction': function (e, value, row, index) {
+                $('#possibleDuplicatesReportPersonInfoDiv').hide();
             },
-            'mouseover .personAction1': function (e, value, row, index) {
+            'mouseover .possibleDuplicatesReportAction': function (e, value, row, index) {
 
-                $('#content').empty();
+                $('#possibleDuplicatesReportPersonInfoContent').empty();
 
                 var html = "<label><span style=\"color: " + _possibleDuplicatesPerson.getPersonColor(row.gender) + "\">" + row.fullName + "</span></label><br>";
                 html += "<b>ID:</b>  " + row.id + "<br>";
@@ -79,9 +79,9 @@ define(function (require) {
                     html += "<br>";
                 }
 
-                $('#content').append(html);
-                $('#possibleDuplicatesPersonInfoDiv').show();
-                $("#possibleDuplicatesPersonInfoDiv").position({
+                $('#possibleDuplicatesReportPersonInfoContent').append(html);
+                $('#possibleDuplicatesReportPersonInfoDiv').show();
+                $("#possibleDuplicatesReportPersonInfoDiv").position({
                     my: "center+33 center-45",
                     at: "center",
                     of: $("#possibleDuplicatesReportForm")
@@ -140,7 +140,7 @@ define(function (require) {
 
         if (possibleDuplicates.displayType === "start") {
             $.ajax({
-                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "includePossibleDuplicates": possibleDuplicates.includePossibleMatches, "includePossibleMatches": possibleDuplicates.includePossibleMatches, "reportId": person.reportId },
+                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "includePossibleDuplicates": possibleDuplicates.includePossibleMatches, "includePossibleMatches": possibleDuplicates.includePossibleMatches, "reportId": person.reportId, "reportFile": person.reportFile },
                 url: constants.POSSIBLE_DUPLICATES_REPORT_DATA_URL,
                 success: function (data) {
                     system.stopSpinner(true);
@@ -152,6 +152,8 @@ define(function (require) {
                         $("#possibleDuplicatesReportTable").bootstrapTable("append", data.list);
                         system.openForm(possibleDuplicatesReport.form, possibleDuplicatesReport.formTitleImage, possibleDuplicatesReport.spinner);
                         if (person.reportId === constants.REPORT_ID) {
+                            person.reportId = data.reportId;
+                            person.reportFile = data.reportFile;
                             possibleDuplicatesController.loadReports(true);
                         }
                     }
@@ -187,7 +189,7 @@ var _possibleDuplicatesSystem = require('system');
 function nameFormatter(value, row, index) {
     var result = "";
     if (row.id) {
-        result = "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default dropdown-btn personAction1\"><span style=\"color: " + _possibleDuplicatesPerson.getPersonColor(row.gender) + "\">" + _possibleDuplicatesPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"personAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
+        result = "<div class=\"btn-group \"><button type=\"button\" class=\"btn btn-default dropdown-btn possibleDuplicatesReportAction\"><span style=\"color: " + _possibleDuplicatesPerson.getPersonColor(row.gender) + "\">" + _possibleDuplicatesPerson.getPersonImage(row.gender) + row.fullName + "</span></button><a class=\"possibleDuplicatesReportOptionsAction\" href=\"javascript:void(0)\" title=\"Select button for options to research other websites\"><button type=\"button\" class=\"btn btn-success dropdown-toggle\" data-toggle=\"dropdown\"><span class=\"caret\"></span><span class=\"sr-only\">Toggle Dropdown</span></button></a></div>";
     }
     return result;
 }

@@ -14,33 +14,36 @@ namespace FindMyFamilies.Data {
 	/// <summary>
 	/// Purpose: DataTransferObject Base class for the 'Report'.
 	/// </summary>
-    [ProtoContract(ImplicitFields = ImplicitFields.AllFields, AsReferenceDefault = true)]
+	[ProtoContract(ImplicitFields = ImplicitFields.AllFields, AsReferenceDefault = true)]
+
 	public class ReportDOBase : DataTransferObject {
 
 		// Report Constants
 		public const string TABLE_NAME = "REPORT";
-		public const string REPORT_ID = "ReportId";
+		public const string REPORT_ID = "ReportID";
 		public const string REPORT_DATE = "ReportDate";
 		public const string LANGUAGE_ID = "LanguageID";
-		public const string REPORT_BY = "ReportBy";
+		public const string USER_ID = "UserID";
+		public const string PERSON_ID = "PersonID";
+		public const string PERSON_NAME = "PersonName";
 		public const string REPORT_FILE = "ReportFile";
-		public const string REPORT_DESCRIPTION = "ReportTitle";
-		public const string EMAILED = "Emailed";
-		public const string PRIVATE = "Private";
-		public const string PRIVATE_VIEW = "PrivateView";
-		public const string REPORT_TYPE = "ReportType";
+		public const string REPORT_DESCRIPTION = "ReportDescription";
+		public const string RECORDS = "Records";
+		public const string RESEARCH_TYPE = "ResearchType";
+		public const string GENERATION = "Generation";
 
 		// Property Declarations
 		private int		m_ReportID;  // Report_ID
 		private DateTime	m_ReportDate;  // Report_Date
 		private string	m_LanguageID;  // Language_ID
-		private string	m_ReportBy;  // Report_By
+		private string	m_UserID;  // User_ID
+		private string	m_PersonID;  // Person_ID
+		private string	m_PersonName;  // Person_Name
 		private string	m_ReportFile;  // Report_File
 		private string	m_ReportDescription;  // Report_Description
-		private bool		m_Emailed;  // Emailed
-		private string	m_Private;  // Private
-		private string	m_PrivateView;  // Private_View
-		private string	m_ReportType;  // Report_Type
+		private string	m_Records;  // Records
+		private string	m_ResearchType;  // Research_Type
+		private string	m_Generation;  // Generation
 
 		/// <summary>
 		/// Purpose: Class constructor.
@@ -53,7 +56,7 @@ namespace FindMyFamilies.Data {
 		/// <summary>
 		/// SQLFieldName: Report_ID
 		/// </summary>
-		public int ReportId {
+		public int ReportID {
 			get {
 				return m_ReportID;
 			}
@@ -65,7 +68,7 @@ namespace FindMyFamilies.Data {
 		/// <summary>
 		/// SQLFieldName: Report_Date
 		/// </summary>
-        public DateTime ReportDate {
+		public DateTime ReportDate {
 			get {
 				return GetDefaultValue(m_ReportDate);
 			}
@@ -77,7 +80,7 @@ namespace FindMyFamilies.Data {
 		/// <summary>
 		/// SQLFieldName: Language_ID
 		/// </summary>
-        public string LanguageID {
+		public string LanguageID {
 			get {
 				return GetDefaultValue(m_LanguageID);
 			}
@@ -87,21 +90,45 @@ namespace FindMyFamilies.Data {
 		}
 
 		/// <summary>
-		/// SQLFieldName: Report_By
+		/// SQLFieldName: User_ID
 		/// </summary>
-        public string ReportBy {
+		public string UserID {
 			get {
-				return GetDefaultValue(m_ReportBy);
+				return GetDefaultValue(m_UserID);
 			}
 			set {
-				m_ReportBy = value;
+				m_UserID = value;
+			}
+		}
+
+		/// <summary>
+		/// SQLFieldName: Person_ID
+		/// </summary>
+		public string PersonID {
+			get {
+				return GetDefaultValue(m_PersonID);
+			}
+			set {
+				m_PersonID = value;
+			}
+		}
+
+		/// <summary>
+		/// SQLFieldName: Person_Name
+		/// </summary>
+		public string PersonName {
+			get {
+				return GetDefaultValue(m_PersonName);
+			}
+			set {
+				m_PersonName = value;
 			}
 		}
 
 		/// <summary>
 		/// SQLFieldName: Report_File
 		/// </summary>
-        public string ReportFile {
+		public string ReportFile {
 			get {
 				return GetDefaultValue(m_ReportFile);
 			}
@@ -113,7 +140,7 @@ namespace FindMyFamilies.Data {
 		/// <summary>
 		/// SQLFieldName: Report_Description
 		/// </summary>
-        public string ReportDescription {
+		public string ReportDescription {
 			get {
 				return GetDefaultValue(m_ReportDescription);
 			}
@@ -123,52 +150,41 @@ namespace FindMyFamilies.Data {
 		}
 
 		/// <summary>
-		/// SQLFieldName: Emailed
+		/// SQLFieldName: Records
 		/// </summary>
-        public bool Emailed {
+		public string Records {
 			get {
-				return m_Emailed;
+				return GetDefaultValue(m_Records);
 			}
 			set {
-				m_Emailed = value;
+				m_Records = value;
 			}
 		}
 
 		/// <summary>
-		/// SQLFieldName: Private
+		/// SQLFieldName: Research_Type
 		/// </summary>
-        public string Private {
+		public string ResearchType {
 			get {
-				return GetDefaultValue(m_Private);
+				return GetDefaultValue(m_ResearchType);
 			}
 			set {
-				m_Private = value;
+				m_ResearchType = value;
 			}
 		}
 
 		/// <summary>
-		/// SQLFieldName: Private_View
+		/// SQLFieldName: Generation
 		/// </summary>
-        public string PrivateView {
+		public string Generation {
 			get {
-				return GetDefaultValue(m_PrivateView);
+				return GetDefaultValue(m_Generation);
 			}
 			set {
-				m_PrivateView = value;
-			}
-		}
-
-		/// <summary>
-		/// SQLFieldName: Report_Type
-		/// </summary>
-        public string ReportType {
-			get {
-				return GetDefaultValue(m_ReportType);
-			}
-			set {
-				m_ReportType = value;
+				m_Generation = value;
 			}
 		}
 
 	}
-}
+}
+

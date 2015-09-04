@@ -40,91 +40,19 @@ define(function(require) {
         }
     }
 
-    function addGenerationOptions(options) {
-        var select = $("<select class=\"form-control select1Digit\" id=\"hintsGeneration\"\>");
-        $.each(options, function(a, b) {
-            select.append($("<option/>").attr("value", b).text(b));
-        });
-        $('#hintsGenerationDiv').empty();
-        $("#hintsGenerationDiv").append(select);
-        $('#hintsGenerationDiv').nextAll().remove();
-        if ((person.researchType === "Ancestors") && (person.reportId === constants.REPORT_ID)) {
-            $("#hintsGenerationDiv").after("<span class=\"input-group-btn\"><input id=\"addChildren\" type=\"checkbox\" style=\"vertical-align: middle; margin-top: -0.625em; margin-left: .7em;\"/></span><label for=\"addChildren\" style=\"vertical-align: middle; margin-top: -1.4em\">&nbsp;<span style=\"font-weight: normal\">Add Children</span></label>");
-        }
-        $("#hintsGeneration").change(function (e) {
-            var generation = $("#hintsGeneration").val();
-            if (person.researchType === constants.DESCENDANTS) {
-                if (generation > 1) {
-                    msgBox.warning("Selecting two generations of Descendants will more than double the time to retrieve descendants.");
-                }
-            } else {
-                if (generation > person.generation) {
-                    msgBox.warning("Increasing the number of generations will increase the time to retrieve ancestors.");
-                }
-            }
-            person.generation = $("#hintsGeneration").val();
-            person.resetReportId($("#hintsReportId"));
-        });
-
-    }
-
-    function addDecendantGenerationOptions() {
-        var options = [];
-        options[0] = "1";
-        options[1] = "2";
-        options[2] = "3";
-        addGenerationOptions(options);
-        $("#hintsGeneration").val(person.generation);
-    }
-
-    function addAncestorGenerationOptions() {
-        var options = [];
-        options[0] = "2";
-        options[1] = "3";
-        options[2] = "4";
-        options[3] = "5";
-        options[4] = "6";
-        options[5] = "7";
-        options[6] = "8";
-        addGenerationOptions(options);
-            $("#hintsGeneration").val(person.generation);
-    }
-
     function updateResearchData() {
-        $("#hintsReportId").val(person.reportId);
-        var reportText = $("#hintsReportId option:selected").text();
-        if (reportText && reportText.length > 8 && reportText !== "Select") {
-            var nameIndex = reportText.indexOf("Name: ") + 6;
-            var dateIndex = reportText.indexOf(", Date:  ");
-            var researchTypeIndex = reportText.indexOf(", Research Type: ");
-            var generationoIndex = reportText.indexOf(",  Generations: ");
-            person.id = reportText.substring(nameIndex, nameIndex + 8);
-            person.name = reportText.substring(nameIndex + 11, dateIndex);
-            person.researchType = reportText.substring(researchTypeIndex + 17, generationoIndex);
-            person.generation = reportText.substring(generationoIndex + 16, generationoIndex + 17);
-            person.loadPersons($("#hintsPersonId"));
-            //                person.reportId = $("#hintsReportId option:selected").val();
-        }
+        retrieve.populatePersonFromReport("hintsReportId", "hintsPersonId");
         if (person.researchType === constants.DESCENDANTS) {
-            addDecendantGenerationOptions();
+            person.addDecendantGenerationOptions("hintsGeneration", "hintsReportId", "hintsPersonId", "hintsGenerationDiv");
         } else {
-            addAncestorGenerationOptions();
+            person.addAncestorGenerationOptions("hintsGeneration", "hintsReportId", "hintsPersonId", "hintsGenerationDiv");
         }
         updateForm();
     }
 
     function loadReports(refreshReport) {
-        retrieve.loadReports($("#hintsReportId"), refreshReport);
+        retrieve.loadReports("hintsReportId", refreshReport);
         updateResearchData();
-    }
-
-
-    function setHiddenFields() {
-        if (person.researchType === constants.ANCESTORS) {
-        } else {
-            person.generation = "2";
-        }
-        $("hintsGeneration").val(person.generation);
     }
 
     function open() {
@@ -135,6 +63,25 @@ define(function(require) {
         retrieve.findReport();
         updateForm();
         system.openForm(hints.form, hints.formTitleImage, hints.spinner);
+        $(document).ready(function () {
+            var hoverIntentConfig = {
+                sensitivity: 1,
+                interval: 100,
+                timeout: 300,
+                over: mouseOver,
+                out: mouseOut
+            }
+
+            $(".hintsAction").hoverIntent(hoverIntentConfig);
+        });
+    }
+
+    function mouseOver() {
+        person.mouseOver(this, hints);
+    }
+
+    function mouseOut() {
+        person.mouseOut(hints);
     }
 
     function clear() {
@@ -167,27 +114,23 @@ define(function(require) {
         $('#hintsPersonId').change(function(e) {
             person.id = $('option:selected', $(this)).val();
             person.name = $('option:selected', $(this)).text();
-            if (retrieve.findReport()) {
-                updateResearchData();
-            } else {
-                resetReportId();
-            }
+            retrieve.checkReports("hintsReportId");
         });
 
         $('#hintsResearchType').change(function(e) {
             person.researchType = $("#hintsResearchType").val();
             if (person.researchType === constants.DESCENDANTS) {
-                hints.generationAncestors = person.generation;
-                person.generation = hints.generationDescendants;
-                addDecendantGenerationOptions();
+                person.generationAncestors = person.generation;
+                person.generation = person.generationDescendants;
+                person.addDecendantGenerationOptions("hintsGeneration", "hintsReportId", "hintsPersonId", "hintsGenerationDiv");
             } else {
-                hints.generationDescendants = person.generation;
-                person.generation = hints.generationAncestors;
-                addAncestorGenerationOptions();
+                person.generationDescendants = person.generation;
+                person.generation = person.generationAncestors;
+                person.addAncestorGenerationOptions("hintsGeneration", "hintsReportId", "hintsPersonId", "hintsGenerationDiv");
             }
 
-            setHiddenFields();
-            resetReportId();
+            person.setHiddenFields("hintsGeneration");
+            retrieve.checkReports("hintsReportId", "hintsPersonId");
         });
 
         $("#hintsFindPersonButton").unbind('click').bind('click', function() {
@@ -198,16 +141,14 @@ define(function(require) {
                     if (changed) {
                         person.id = findPersonModel.id;
                         person.name = findPersonModel.name;
-                        if (retrieve.findReport()) {
-                            updateResearchData();
-                        } else {
-                            resetReportId();
-                        }
+                        $("#hintsPersonId").val(person.id);
+                        retrieve.checkReports("hintsReportId", "hintsPersonId");
                     }
-                    hints.save();
                     person.loadPersons($("#hintsPersonId"));
+                    hints.save();
                 }
                 findPersonModel.reset();
+                system.spinnerArea = hints.spinnerArea;
             });
             return false;
         });
@@ -221,6 +162,7 @@ define(function(require) {
                     loadReports(true);
                 }
                 retrieve.reset();
+                system.spinnerArea = hints.spinnerArea;
             });
             return false;
         });
@@ -237,12 +179,10 @@ define(function(require) {
         });
 
         $("#hintsPreviousButton").unbind('click').bind('click', function (e) {
-            if (!hints.previous) {
-                if (window.localStorage) {
-                    hints.previous = JSON.parse(localStorage.getItem(constants.HINTS_PREVIOUS));
-                }
+            if (window.localStorage) {
+                hints.previous = JSON.parse(localStorage.getItem(constants.HINTS_PREVIOUS));
             }
-            hintsReport.displayType = "previous";
+            hints.displayType = "previous";
             if (hints.previous) {
                 $.ajax({
                     url: constants.HINTS_REPORT_HTML_URL,
@@ -266,6 +206,7 @@ define(function(require) {
             } else {
                 msgBox.message("Sorry, there is nothing previous to display.");
             }
+            system.spinnerArea = hints.spinnerArea;
         });
 
         $("#hintsSubmitButton").unbind('click').bind('click', function (e) {
@@ -274,7 +215,7 @@ define(function(require) {
                     msgBox.message("You must first select a person from Family Search");
                 }
 
-                hintsReport.displayType = "start";
+                hints.displayType = "start";
                 hints.save();
                 msgBox.question("Depending on the number of generations you selected, this could take a minute or two.  Select Yes if you want to contine.", "Question", function(result) {
                     if (result) {
@@ -359,6 +300,7 @@ define(function(require) {
         loadReports: function(refreshReport) {
             loadReports(refreshReport);
         }
+
     };
 
     researchHelper.hintsController = hintsController;

@@ -587,7 +587,7 @@ namespace FindMyFamilies.Helper {
             string generation = researchDO.Generation.ToString();
             if (researchDO.RowsReturned > 0) {
                 if ((researchDO.Generation == 0) && !string.IsNullOrEmpty(researchDO.ReportTitle)) {
-                    int generationsPos = researchDO.ReportTitle.IndexOf("Generations:");
+                    int generationsPos = researchDO.ReportTitle.IndexOf("Generation:");
                     int recordsPos = researchDO.ReportTitle.IndexOf("Records:");
                     int length = (recordsPos - 2) - (generationsPos + 12);
                     generation = researchDO.ReportTitle.Substring(generationsPos + 12, length);
@@ -605,7 +605,7 @@ namespace FindMyFamilies.Helper {
                 if (!string.IsNullOrEmpty(researchDO.ReportTitle)) {
                     int researchTypePos = researchDO.ReportTitle.IndexOf("Research Type: ");
                     if (researchTypePos > -1) {
-                        int generationos = researchDO.ReportTitle.IndexOf("Generations: ");
+                        int generationos = researchDO.ReportTitle.IndexOf("Generation: ");
                         int length = (generationos - 3) - (researchTypePos + 15);
                         researchType = researchDO.ReportTitle.Substring(researchTypePos + 15, length);
                     }

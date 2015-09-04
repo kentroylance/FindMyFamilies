@@ -14,7 +14,7 @@
 	<message key="ReportCannotUpdate" value="Cannot Update Report"/>
 	<message key="ReportCannotDelete" value="Cannot Delete Report"/>
 	<message key="ReportCannotReadByPage" value="Cannot Read  Report"/>
-    <message key="ReportCannotReadByReportBy" value="Cannot Read Reports By Report By"/>
+    <message key="ReportCannotReadByPerson" value="Cannot Read Reports By Person"/>
     <message key="TranslationCannotCreate" value="Cannot Create a Translation"/>
 	<message key="TranslationCannotRead" value="Cannot Read Translation"/>
 	<message key="TranslationCannotReadAll" value="Cannot Read All Translations"/>

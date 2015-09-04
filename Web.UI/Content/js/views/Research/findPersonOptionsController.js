@@ -4,6 +4,7 @@ define(function(require) {
     var system = require('system');
     var constants = require('constants');
     var findPersonHelper = require('findPersonHelper');
+    var msgBox = require('msgBox');
 
     // models
     var findPersonOptions = require('findPersonOptions');
@@ -57,6 +58,7 @@ define(function(require) {
 
         $("#selected").on("sortreceive", function (event, ui) {
             if ($("#selected li").length > 7) {
+                msgBox.warning("Sorry, no more than seven options can be selected.  To add an available option to selected options, you must first remove a selected option.");
                 $(ui.sender).sortable('cancel');
             }
         });

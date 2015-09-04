@@ -14,6 +14,9 @@
     var _spinner = "findCluesSpinner";
     var _callerSpinner;
 
+    var _personId = "findCluesPersonId";
+    var _personContent = "findCluesContent";
+    var _personInfoDiv = "findCluesPersonInfoDiv";
     var _searchCriteria = "0";
     var _gapInChildren = "3";
     var _ageLimit = "18";
@@ -55,6 +58,7 @@
             }
         }
     }
+
     if (window.localStorage) {
         var findCluesDO = JSON.parse(localStorage.getItem(constants.FIND_CLUES));
         if (!findCluesDO) {
@@ -136,6 +140,15 @@
         },
         get searchCriteriaList() {
             return _searchCriteriaList;
+        },
+        get personId() {
+            return _personId;
+        },
+        get personContent() {
+            return _personContent;
+        },
+        get personInfoDiv() {
+            return _personInfoDiv;
         },
         save: function() {
             save();

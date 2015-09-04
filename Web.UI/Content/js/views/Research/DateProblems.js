@@ -14,6 +14,9 @@ define(function(require) {
     var _spinner = "dateProblemsSpinner";
     var _callerSpinner;
 
+    var _personId = "dateProblemsPersonId";
+    var _personContent = "dateProblemsContent";
+    var _personInfoDiv = "dateProblemsPersonInfoDiv";
     var _empty = true;
     var _invalid = false;
     var _invalidFormat = false;
@@ -119,6 +122,15 @@ define(function(require) {
         },
         set displayType(value) {
             _displayType = value;
+        },
+        get personId() {
+            return _personId;
+        },
+        get personContent() {
+            return _personContent;
+        },
+        get personInfoDiv() {
+            return _personInfoDiv;
         },
         save: function() {
             save();

@@ -1174,6 +1174,7 @@ namespace FindMyFamilies.BusinessObject {
             researchDO.ResearchType = hintInputDO.ResearchType;
             researchDO.Generation = hintInputDO.Generation;
             researchDO.ReportId = hintInputDO.ReportId;
+            researchDO.ReportFile = hintInputDO.ReportFile;
             researchDO.PersonName = hintInputDO.FullName;
 
             var ancestors = getPersons(ref researchDO, ref session);
@@ -1421,6 +1422,7 @@ namespace FindMyFamilies.BusinessObject {
             researchDO.ResearchType = startingPointInputDO.ResearchType;
             researchDO.Generation = startingPointInputDO.Generation;
             researchDO.ReportId = startingPointInputDO.ReportId;
+            researchDO.ReportFile = startingPointInputDO.ReportFile;
             researchDO.PersonName = startingPointInputDO.FullName;
 
             var ancestors = getPersons(ref researchDO, ref session);
@@ -1564,7 +1566,7 @@ namespace FindMyFamilies.BusinessObject {
 
             string reportFilePath = null;
             if (session.Action.Equals(Constants.ACTION_ANALYZE)) {
-                persons = GetPersonsFromReport(researchDO.ReportId);
+                persons = GetPersonsFromReport(researchDO.ReportId, researchDO.ReportFile);
                 //                ResearchDO.ReportTitle = report.ReportTitle;
             } else if (session.Action.Equals(Constants.ACTION_RETRIEVE_ANALYZE)) {
                 persons = GetPersonsFromReport(session.ReportFilePath);
@@ -1578,15 +1580,16 @@ namespace FindMyFamilies.BusinessObject {
             }
         }
 
-        public Dictionary<string, PersonDO> GetPersonsFromReport(int reportId) {
-            string reportFilePath = null;
+        public Dictionary<string, PersonDO> GetPersonsFromReport(int reportId, string reportFile) {
             var report = new ReportDO();
-            report.ReportId = reportId;
-            report = PersonServices.Instance.ReadReport(report);
-            if (report != null) {
-                reportFilePath = report.ReportFile;
+            report.ReportID = reportId;
+            if (string.IsNullOrEmpty(reportFile)) {
+                report = PersonServices.Instance.ReadReport(report);
+                if (report != null) {
+                    reportFile = report.ReportFile;
+                }
             }
-            return GetPersonsFromReport(reportFilePath);
+            return GetPersonsFromReport(reportFile);
         }
 
         public Dictionary<string, PersonDO> GetPersonsFromReport(string reportFilePath) {
@@ -1821,7 +1824,7 @@ namespace FindMyFamilies.BusinessObject {
         public void RetrieveDescendantsData(ref ResearchDO researchDO, ref SessionDO session, ref Dictionary<string, PersonDO> persons) {
             if (!String.IsNullOrEmpty(researchDO.PersonId)) {
                 if (researchDO.ReportId > 0) {
-                    persons = GetPersonsFromReport(researchDO.ReportId);
+                    persons = GetPersonsFromReport(researchDO.ReportId, researchDO.ReportFile);
                 } else {
                     persons = GetDescendants(ref researchDO, ref session, true);
                 }
@@ -1834,7 +1837,7 @@ namespace FindMyFamilies.BusinessObject {
         public void RetrieveAncestorsData(ref ResearchDO researchDO, ref SessionDO session, ref Dictionary<string, PersonDO> persons) {
             if (!String.IsNullOrEmpty(researchDO.PersonId)) {
                 if (researchDO.ReportId > 0) {
-                    persons = GetPersonsFromReport(researchDO.ReportId);
+                    persons = GetPersonsFromReport(researchDO.ReportId, researchDO.ReportFile);
                 } else {
                     persons = GetAncestors(ref researchDO, ref session);
                 }
@@ -1848,13 +1851,20 @@ namespace FindMyFamilies.BusinessObject {
             if (persons.Count > 0) {
                 try {
                     var report = new ReportDO();
-                    report.ReportType = "Research";
-                    report.ReportBy = session.Username;
+                    report.ResearchType = researchDO.ResearchType;
+                    report.UserID = session.Username;
+                    report.PersonID = researchDO.PersonId;
+                    report.PersonName = researchDO.PersonName;
                     report.ReportDate = Dates.TodaysDateTime();
-                    report.ReportDescription = (!string.IsNullOrEmpty(researchDO.ReportTitle) ? researchDO.ReportTitle + ". " : "") + "Name: " + researchDO.PersonId + " - " + researchDO.PersonName + ", Date:  " + report.ReportDate.ToString(Constants.DATETIME_FORMAT_HM) + ", Research Type: " + researchDO.ResearchType + ",  Generations: " + researchDO.Generation + ", Records: " + persons.Count;
-                    report.ReportFile = FilePathHelper.GetTempPath() + "/" + researchDO.CurrentPersonId + "_" + DateTime.Now.ToString("yyyyMMddHHmm") + "_Persons.bin";
+                    report.ReportDescription = researchDO.ReportTitle;
+                    report.Generation = researchDO.Generation.ToString();
+                    report.Records = researchDO.RetrievedRecords.ToString();
+                    report.ReportFile = FilePathHelper.GetTempPath() + "/" + session.Username + "_" + DateTime.Now.ToString("yyyyMMddHHmm") + "_Persons.bin";
                     PersonServices.Instance.CreateReport(report);
-                    researchDO.ReportId = report.ReportId;
+                    researchDO.ReportId = report.ReportID;
+                    researchDO.ReportFile = report.ReportFile;
+                    session.ReportID = report.ReportID.ToString();
+                    session.ReportFilePath = report.ReportFile;
                     if (File.Exists(report.ReportFile)) {
                         File.Delete(report.ReportFile);
                     }

@@ -44,17 +44,17 @@ define(function (require) {
         });
 
         window.nameEvents = {
-            'click .personAction': function(e, value, row, index) {
-                    $(this).append(findPersonHelper.getMenuOptions(row));
+            'click .placeProblemsReportOptionsAction': function (e, value, row, index) {
+                 $(this).append(findPersonHelper.getMenuOptions(row));
             },
-            'mouseout .personAction1': function (e, value, row, index) {
-                $('#dateProblemsPersonInfoDiv').hide();
+            'mouseout .placeProblemsReportAction': function (e, value, row, index) {
+                $('#placeProblemsReportPersonInfoDiv').hide();
             },
-            'mouseover .personAction1': function (e, value, row, index) {
+            'mouseover .placeProblemsReportAction': function (e, value, row, index) {
 
-                $('#content').empty();
+                $('#placeProblemsReportPersonInfoContent').empty();
 
-                var html = "<label><span style=\"color: " + _dateProblemsPerson.getPersonColor(row.gender) + "\">" + row.fullName + "</span></label><br>";
+                var html = "<label><span style=\"color: " + _placeProblemsPerson.getPersonColor(row.gender) + "\">" + row.fullName + "</span></label><br>";
                 html += "<b>ID:</b>  " + row.id + "<br>";
                 html += '<b>Birth Date:</b>  ' + ((row.birthYear) ? (row.birthYear) : "") + '<br>';
                 html += '<b>Birth Place:</b>  ' + ((row.birthPlace) ? (row.birthPlace) : "") + '<br>';
@@ -62,29 +62,29 @@ define(function (require) {
                 html += '<b>Death Place:</b>  ' + ((row.deathPlace) ? (row.deathPlace) : "") + '<br>';
                 html += "<b>Spouse:</b>";
                 if (row.spouseName) {
-                    html += "  <span style=\"color: " + _dateProblemsPerson.getPersonColor(row.spouseGender) + "\">" + row.spouseName + "</span><br>";
+                    html += "  <span style=\"color: " + _placeProblemsPerson.getPersonColor(row.spouseGender) + "\">" + row.spouseName + "</span><br>";
                 } else {
                     html += "<br>";
                 }
                 html += "<b>Mother:</b>";
                 if (row.motherName) {
-                    html += "  <span style=\"color: " + _dateProblemsPerson.getPersonColor("Female") + "\">" + row.motherName + "</span><br>";
+                    html += "  <span style=\"color: " + _placeProblemsPerson.getPersonColor("Female") + "\">" + row.motherName + "</span><br>";
                 } else {
                     html += "<br>";
                 }
                 html += "<b>Father:</b>";
                 if (row.fatherName) {
-                    html += "  <span style=\"color: " + _dateProblemsPerson.getPersonColor("Male") + "\">" + row.fatherName + "</span><br>";
+                    html += "  <span style=\"color: " + _placeProblemsPerson.getPersonColor("Male") + "\">" + row.fatherName + "</span><br>";
                 } else {
                     html += "<br>";
                 }
 
-                $('#content').append(html);
-                $('#dateProblemsPersonInfoDiv').show();
-                $("#dateProblemsPersonInfoDiv").position({
+                $('#placeProblemsReportPersonInfoContent').append(html);
+                $('#placeProblemsReportPersonInfoDiv').show();
+                $("#placeProblemsReportPersonInfoDiv").position({
                     my: "center+33 center-45",
                     at: "center",
-                    of: $("#dateProblemsReportForm")
+                    of: $("#placeProblemsReportForm")
                 });
 
 
@@ -140,7 +140,7 @@ define(function (require) {
 
         if (dateProblems.displayType === "start") {
             $.ajax({
-                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "empty": dateProblems.empty, "invalid": dateProblems.invalid, "invalidFormat": dateProblems.invalidFormat, "incomplete": dateProblems.incomplete, "reportId": person.reportId },
+                data: { "id": person.id, "fullName": person.name, "generation": person.generation, "researchType": person.researchType, "empty": dateProblems.empty, "invalid": dateProblems.invalid, "invalidFormat": dateProblems.invalidFormat, "incomplete": dateProblems.incomplete, "reportId": person.reportId, "reportFile": person.reportFile  },
                 url: constants.DATE_PROBLEMS_REPORT_DATA_URL,
                 success: function (data) {
                     system.stopSpinner(true);
@@ -152,6 +152,8 @@ define(function (require) {
                         $("#dateProblemsReportTable").bootstrapTable("append", data.list);
                         system.openForm(dateProblemsReport.form, dateProblemsReport.formTitleImage, dateProblemsReport.spinner);
                         if (person.reportId === constants.REPORT_ID) {
+                            person.reportId = data.reportId;
+                            person.reportFile = data.reportFile;
                             dateProblemsController.loadReports(true);
                         }
                     }
