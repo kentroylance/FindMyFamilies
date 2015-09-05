@@ -110,13 +110,16 @@ namespace FindMyFamilies.Web.Controllers {
             }
             var utcOffset = new DateTimeOffset (dateTime, TimeSpan .Zero);
             var result  = utcOffset.ToOffset(timezone.GetUtcOffset(utcOffset));
+
+
+
             return result.DateTime;
         }
 
         public void ResetTokenHourExpire() {
-            Logger.Debug("ResetTokenHourExpire");
+ //           Logger.Debug("ResetTokenHourExpire");
             TokenHourExpire = GetCurrentDateTime().AddMinutes(60); //.DateTime.Now.AddMinutes(120);
-            AddCookie("TokenHourExpire", TokenHourExpire.Value.ToString("O"));
+            AddCookie("TokenHourExpire", TokenHourExpire.Value.ToString("G"));
 
             //            if (Token24HourExpire == null) {
             //                Token24HourExpire = DateTime.Now.AddHours(24);
@@ -125,9 +128,9 @@ namespace FindMyFamilies.Web.Controllers {
         }
 
         public void ResetToken24HourExpire() {
-            Logger.Debug("ResetToken24HourExpire");
+ //           Logger.Debug("ResetToken24HourExpire");
             Token24HourExpire = GetCurrentDateTime().AddHours(24); //DateTime.Now.AddHours(24);
-            AddCookie("Token24HourExpire", Token24HourExpire.Value.ToString("O"));
+            AddCookie("Token24HourExpire", Token24HourExpire.Value.ToString("G"));
             if (TokenHourExpire == null) {
                 ResetTokenHourExpire();
             }

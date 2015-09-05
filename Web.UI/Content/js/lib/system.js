@@ -324,6 +324,7 @@
         var authenticated = true;
         var tokenHourExpire = getCookie("TokenHourExpire");
         var token24HourExpire = getCookie("Token24HourExpire");
+
         if (tokenHourExpire && token24HourExpire) {
             var tokenHourExpireDate = new Date(tokenHourExpire);
             var token24HourExpireDate = new Date(token24HourExpire);
@@ -355,7 +356,7 @@
         }
     }
 
-    if (isAuthenticated()) {
+    if (_userName) {
         document.getElementById("displayPerson").innerHTML = _userName + "<b>&nbsp;-&nbsp;" + _userId + "</b>&nbsp;";
     } else {
         var loginInfoLi = document.getElementById("loginInfo");

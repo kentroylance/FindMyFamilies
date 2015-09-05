@@ -95,13 +95,15 @@
     function checkReports(reportInput) {
         person.resetReportId($('#' + reportInput));
         var data = retrieve.reports;
-        $.each(data, function(i) {
-            if ((data[i].id === person.id) && (data[i].researchType === person.researchType) && (data[i].generation === person.generation)) {
-                person.reportId = data[i].reportId;
-                person.reportFile = data[i].reportFile;
-                return false;
-            }
-        });
+        if (data) {
+            $.each(data, function(i) {
+                if ((data[i].id === person.id) && (data[i].researchType === person.researchType) && (data[i].generation === person.generation)) {
+                    person.reportId = data[i].reportId;
+                    person.reportFile = data[i].reportFile;
+                    return false;
+                }
+            });
+        }
         $('#' + reportInput).val(person.reportId);
     }
 
@@ -109,21 +111,22 @@
     function populatePersonFromReport(reportInput, personInput) {
         $('#' + reportInput).val(person.reportId);
         var data = retrieve.reports;
-        $.each(data, function(i) {
-            if (data[i].id === person.id) {
-                person.reportId = data[i].reportId;
-                person.reportFile = data[i].reportFile;
-                if ((data[i].researchType === person.researchType) && (data[i].generation === person.generation)) {
-                    person.id = data[i].id;
-                    person.name = data[i].fullName;
-                    person.researchType = data[i].researchType;
-                    person.generation = data[i].generation;
-                    person.loadPersons($('#' + personInput));
-                    return false;
+        if (data) {
+            $.each(data, function (i) {
+                if (data[i].id === person.id) {
+                    person.reportId = data[i].reportId;
+                    person.reportFile = data[i].reportFile;
+                    if ((data[i].researchType === person.researchType) && (data[i].generation === person.generation)) {
+                        person.id = data[i].id;
+                        person.name = data[i].fullName;
+                        person.researchType = data[i].researchType;
+                        person.generation = data[i].generation;
+                        person.loadPersons($('#' + personInput));
+                        return false;
+                    }
                 }
-            }
-        });
-
+            });
+        }
     }
 
     function loadReports(reportInput, refreshReport) {
