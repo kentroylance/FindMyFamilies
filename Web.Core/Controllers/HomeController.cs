@@ -26,6 +26,16 @@ namespace FindMyFamilies.Web.Controllers {
         }
 
         [System.Web.Mvc.HttpGet]
+        public ActionResult FAQ() {
+            return PartialView("~/Views/Faq/Faq.cshtml");
+        }
+
+        [System.Web.Mvc.HttpGet]
+        public ActionResult Help() {
+            return PartialView("~/Views/Help/Help.cshtml");
+        }
+
+        [System.Web.Mvc.HttpGet]
         public ActionResult FindPersonOptions() {
             return PartialView("~/Views/Research/FindPersonOptions.cshtml");
         }
@@ -241,7 +251,8 @@ namespace FindMyFamilies.Web.Controllers {
                     }
                     ResetTokenHourExpire();
                     result.errorMessage = session.ErrorMessage;
-                } catch (Exception) {
+                } catch (Exception e) {
+                    Logger.Error(e.Message, e);
                     result.errorMessage = "Error retrieving hint report data";
                 }
             }
@@ -273,7 +284,8 @@ namespace FindMyFamilies.Web.Controllers {
                     }
                     ResetTokenHourExpire();
                     result.errorMessage = session.ErrorMessage;
-                } catch (Exception) {
+                } catch (Exception e) {
+                    Logger.Error(e.Message, e);
                     result.errorMessage = "Error retrieving possible duplicates report data";
                 }
             }

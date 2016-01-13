@@ -39,6 +39,10 @@
             system: 'lib/system',
             researchController: 'views/research/researchController',
             research: 'views/research/research',
+            faq: 'views/faq/faq',
+            faqController: 'views/faq/faqController',
+            help: 'views/help/help',
+            helpController: 'views/help/helpController',
             startingPoint: 'views/research/startingPoint',
             startingPointController: 'views/research/startingPointController',
             startingPointReport: 'views/research/startingPointReport',
@@ -232,6 +236,14 @@
             findClues: {
                 deps: ['jquery', 'person', 'constants'],
                 exports: 'findClues'
+            },
+            faqController: {
+                deps: ['jquery'],
+                exports: 'faqController'
+            },
+            helpController: {
+                deps: ['jquery'],
+                exports: 'helpController'
             },
             researchController: {
                 deps: ['jquery', 'system'],

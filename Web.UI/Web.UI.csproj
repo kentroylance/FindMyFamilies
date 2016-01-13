@@ -152,9 +152,11 @@
     <Content Include="Build\r.js" />
     <Content Include="Content\css\app\finder.css" />
     <Content Include="Content\css\app\FindPerson.css" />
+    <Content Include="Content\css\help.css" />
     <Content Include="Content\css\index-sprite.css" />
     <Content Include="Content\css\index.png" />
     <Content Include="Content\css\lib\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\css\faq.css" />
     <Content Include="Content\css\research-sprite.css" />
     <Content Include="Content\css\research.png" />
     <Content Include="Content\css\style.css" />
@@ -176,6 +178,14 @@
     <Content Include="Content\css\vendor\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\css\vendor\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\css\vendor\jquery-ui-1.11.4.css" />
+    <Content Include="Content\css\vendor\line-icons\fonts\Simple-Line-Icons.dev.svg" />
+    <Content Include="Content\css\vendor\line-icons\fonts\Simple-Line-Icons.svg" />
+    <Content Include="Content\css\vendor\line-icons\icons-lte-ie7.js" />
+    <Content Include="Content\css\vendor\line-icons\index.html" />
+    <Content Include="Content\css\vendor\line-icons\License.txt" />
+    <Content Include="Content\css\vendor\line-icons\line-icons.css" />
+    <Content Include="Content\css\vendor\line-icons\Readme.txt" />
+    <Content Include="Content\css\vendor\line-icons\style.css" />
     <Content Include="Content\css\view\Research\fmf16-icons.css" />
     <Content Include="Content\css\view\Research\fmf24-icons.css" />
     <Content Include="Content\css\view\Research\fmf64-icons.css" />
@@ -1153,6 +1163,10 @@
     <Content Include="Content\js\vendor\spin.min.js" />
     <Content Include="Content\js\vendor\string.js" />
     <Content Include="Content\js\vendor\string.min.js" />
+    <Content Include="Content\js\views\Help\help.js" />
+    <Content Include="Content\js\views\Help\helpController.js" />
+    <Content Include="Content\js\views\Faq\faq.js" />
+    <Content Include="Content\js\views\Faq\faqController.js" />
     <Content Include="Content\js\views\Research\dateProblemsController.js" />
     <Content Include="Content\js\views\Research\dateProblemsReportController.js" />
     <Content Include="Content\js\views\Research\features.js" />
@@ -2071,6 +2085,9 @@
     <Content Include="Content\js\vendor\jqwidgets\scripts\jquery-1.10.2.min.map" />
     <Content Include="Content\js\vendor\jqwidgets\scripts\jquery-1.11.1.min.map" />
     <Content Include="Content\js\vendor\jqwidgets\scripts\jquery.mobile-1.4.3.min.map" />
+    <Content Include="Content\css\vendor\line-icons\fonts\Simple-Line-Icons.eot" />
+    <Content Include="Content\css\vendor\line-icons\fonts\Simple-Line-Icons.ttf" />
+    <Content Include="Content\css\vendor\line-icons\fonts\Simple-Line-Icons.woff" />
     <None Include="Properties\PublishProfiles\File System.pubxml" />
     <None Include="Properties\PublishProfiles\findmyfamilies.com - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\FindMyFamilies.com.pubxml" />
@@ -2080,6 +2097,8 @@
     <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Help\page_clients.html" />
+    <Content Include="Views\Faq\page_faq1.html" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -2136,6 +2155,8 @@
     <Content Include="Views\Research\Feedback.cshtml" />
     <Content Include="Views\Research\FeedbackReport.cshtml" />
     <Content Include="Views\Research\Features.cshtml" />
+    <Content Include="Views\Faq\Faq.cshtml" />
+    <Content Include="Views\Help\Help.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />

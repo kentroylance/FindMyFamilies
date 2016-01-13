@@ -161,7 +161,7 @@
         var options = [];
         options[0] = "1";
         options[1] = "2";
-        options[2] = "3";
+//        options[2] = "3";
         addGenerationOptions(options, generationInput, reportInput, personInput, generationInputDiv);
         $("#" + generationInput).val(_generation);
     }
@@ -173,8 +173,8 @@
         options[2] = "4";
         options[3] = "5";
         options[4] = "6";
-        options[5] = "7";
-        options[6] = "8";
+//        options[5] = "7";
+//        options[6] = "8";
         addGenerationOptions(options, generationInput, reportInput, personInput, generationInputDiv);
         $("#" + generationInput).val(_generation);
     }

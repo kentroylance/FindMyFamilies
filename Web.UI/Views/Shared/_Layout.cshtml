@@ -36,14 +36,14 @@
                         <li id="loginInfo"><a href="#" id="displayPerson"></a></li>
                         <li id="loginInfoDivider" class="topbar-devider"></li>
                         <li>
-                        <li>
-                            <a>Help&nbsp;<b class="caret"></b></a>
-                            <ul class="languages">
-                                <li><a class="fancybox" data-fancybox-type="iframe" href="~/Content/person.pdf">Person</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="topbar-devider"></li>
+@*                        <li>*@
+@*                            <a>Help&nbsp;<b class="caret"></b></a>*@
+@*                            <ul class="languages">*@
+@*                                <li><a class="fancybox" data-fancybox-type="iframe" href="~/Content/person.pdf">Person</a></li>*@
+@*                            </ul>*@
+@*                        </li>*@
+@**@
+@*                        <li class="topbar-devider"></li>*@
                         <li id="logout">@Html.ActionLink("Logout", "Logout", "Home")</li>
                         <li id="login" class="hidden">@Html.ActionLink("Login", "Research", "Home")</li>
                     </ul>
@@ -68,6 +68,8 @@
                         <ul class="nav navbar-nav">
 
                             <li>@Html.ActionLink("Research", "Research", "Home")</li>
+                            <li>@Html.ActionLink("Help", "Help", "Home")</li>
+                            <li>@Html.ActionLink("FAQ", "Faq", "Home")</li>
                             <li><a id="feedback" href="#">Feedback</a></li>
                             <!-- Search Block
                 <li><a href="http://findmyfamilies.wordpress.com/">Blog</a></li>
