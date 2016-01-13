@@ -390,3 +390,46 @@ a, a:focus, a:hover, a:active {
 .panel-body { 
   padding: 15px !important;
 }
+
+/*Help Page
+------------------------------------*/
+.help-page {
+	margin-top: 10px;
+	margin-bottom: 50px;
+	padding-bottom: 30px;
+	border-bottom: solid 1px #eee; 
+}
+
+.help-page ul {
+	margin-bottom: 10px;
+}
+
+.help-page li {
+	margin: 0 5px 3px 0;
+}
+
+.help-page h3 {
+	margin-top: 0;
+	font-size: 22px;
+}
+
+.help-page img {
+	padding: 4px;
+	margin: 5px 0; 
+	border: solid 1px #eee;
+	background: #fafafa;
+}
+
+.help-page:hover img {
+	border-color: #bbb;
+}
+
+@media (max-width: 992px) { 
+	.help-page {
+		text-align: center;
+	}
+	.help-page img {
+		margin: 0 auto 30px;
+	}
+}
+
