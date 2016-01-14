@@ -242,7 +242,7 @@
                 exports: 'faqController'
             },
             helpController: {
-                deps: ['jquery'],
+                deps: ['jquery', 'system'],
                 exports: 'helpController'
             },
             researchController: {

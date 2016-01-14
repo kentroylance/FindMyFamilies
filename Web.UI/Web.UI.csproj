@@ -1805,6 +1805,10 @@
     <Content Include="Images\Execute.png" />
     <Content Include="Images\faces.jpg" />
     <Content Include="Images\family.png" />
+    <Content Include="Images\FamilyHistory1stConvert.png" />
+    <Content Include="Images\FamilyHistory1stConvert8.png" />
+    <Content Include="Images\FamilyHistoryCourse1.24.png" />
+    <Content Include="Images\FamilyHistoryCourse1.8.png" />
     <Content Include="Images\FamilySearch.png" />
     <Content Include="Images\FamilySearch2.png" />
     <Content Include="Images\feedback.png" />

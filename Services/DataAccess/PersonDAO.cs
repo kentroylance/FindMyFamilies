@@ -352,10 +352,12 @@ namespace FindMyFamilies.DataAccess {
             try {
                 request = RestHelper.Instance.GetRequest(Constants.TEMPLATE_PERSON_DUPLICATES, inputs, ref session, ref restClient);
             } catch (Exception e) {
+                logger.Error(e.Message, e);
                 var message = "Failed to create REST request while retrieving possible duplicate info from FamilySearch";
                 LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
                 throw new DataAccessException(message, e, session);
             }
+
 
             if (request != null) {
                 request.Method = Method.GET;
@@ -365,10 +367,16 @@ namespace FindMyFamilies.DataAccess {
                 try {
                     response = restClient.Execute<PossibleDuplicate>(request);
                 } catch (Exception e) {
+                    logger.Error(e.Message, e);
                     string message = "Failed to execute REST request while retrieving possible duplicate info from FamilySearch";
                     LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
                     throw new DataAccessException(message, e, session);
                 }
+
+                logger.Error("StatusCode: " + response.StatusCode);
+                logger.Error("Data: " + response.Data);
+                logger.Error("ErrorMessage: " + session.ErrorMessage);
+                logger.Error("ResponseData: " + session.ResponseData);
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
                     if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error & (response.Data == null)))) {
@@ -669,10 +677,16 @@ namespace FindMyFamilies.DataAccess {
                 try {
                     response = restClient.Execute<Hint>(request);
                 } catch (Exception e) {
+                    logger.Error(e.Message, e);
                     string message = "Failed to execute REST request while retrieving hints from FamilySearch.";
                     LogRestError(message, inputs, request, response, session, new StackTrace(true).GetFrames(), e);
                     throw new DataAccessException(message, e, session);
                 }
+
+                logger.Error("StatusCode: " + response.StatusCode);
+                logger.Error("Data: " + response.Data);
+                logger.Error("ErrorMessage: " + session.ErrorMessage);
+                logger.Error("ResponseData: " + session.ResponseData);
 
                 if (RestHelper.InvalidResponse(response, ref session)) {
                     if (!response.StatusCode.Equals(HttpStatusCode.NoContent) && (session.Error || (!session.Error & (response.Data == null)))) {

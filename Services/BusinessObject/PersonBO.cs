@@ -478,19 +478,21 @@ namespace FindMyFamilies.BusinessObject {
             if ((descendants != null) && (descendants.Persons != null)) {
                 PersonDO personDO = null;
                 for (var i = descendants.Persons.Count - 1; i > -1; i--) {
-                    personDO = personDAO.GetPerson(descendants.Persons[i]);
-                    persons.Add(personDO.Id, personDO);
-                    personsPedigree.Add((string.IsNullOrEmpty(personDO.AscendancyNumber) ? personDO.DescendancyNumber : personDO.AscendancyNumber), personDO);
-                    //                       PopulatePerson(personDO.Id, ref persons, ref session, Constants.RESEARCH_TYPE_ANCESTORS);
-                    logger.Info("PopulatePerson = " + personDO.Fullname);
+                    if (!persons.ContainsKey(descendants.Persons[i].Id)) {
+                        personDO = personDAO.GetPerson(descendants.Persons[i]);
+                        persons.Add(personDO.Id, personDO);
+                        personsPedigree.Add((string.IsNullOrEmpty(personDO.AscendancyNumber) ? personDO.DescendancyNumber : personDO.AscendancyNumber), personDO);
+                        //                       PopulatePerson(personDO.Id, ref persons, ref session, Constants.RESEARCH_TYPE_ANCESTORS);
+                    }
                 }
 
                 foreach (var relationship in descendants.Relationships) {
                     if (relationship.Type.Equals("http://gedcomx.org/Couple")) {
                         persons[relationship.Person1.ResourceId].Spouse = persons[relationship.Person2.ResourceId];
-                        persons[relationship.Person1.ResourceId].Spouses.Add(relationship.Person2.ResourceId, persons[relationship.Person2.ResourceId]);
+                        AddSpouse(persons[relationship.Person2.ResourceId], persons[relationship.Person1.ResourceId].Spouses, 0);
+
                         persons[relationship.Person2.ResourceId].Spouse = persons[relationship.Person1.ResourceId];
-                        persons[relationship.Person2.ResourceId].Spouses.Add(relationship.Person1.ResourceId, persons[relationship.Person1.ResourceId]);
+                        AddSpouse(persons[relationship.Person1.ResourceId], persons[relationship.Person2.ResourceId].Spouses, 0);
                     }
                 }
 
@@ -505,7 +507,7 @@ namespace FindMyFamilies.BusinessObject {
                         var key = personDesc.Value.DescendancyNumber.Substring(0, position);
                         if (personsPedigree.ContainsKey(key)) {
                             parent1 = personsPedigree[key];
-                            persons[parent1.Id].Children.Add(personDesc.Value.Id, persons[personDesc.Value.Id]);
+                            AddChildren(persons[personDesc.Value.Id], persons[parent1.Id].Children, 0);
                             if (parent1.IsMale) {
                                 persons[personDesc.Value.Id].Father = persons[parent1.Id];
                             } else {
@@ -514,7 +516,7 @@ namespace FindMyFamilies.BusinessObject {
                         }
                         if (personsPedigree.ContainsKey(key + "-S")) {
                             parent2 = personsPedigree[key + "-S"];
-                            persons[parent2.Id].Children.Add(personDesc.Value.Id, persons[personDesc.Value.Id]);
+                            AddChildren(persons[personDesc.Value.Id], persons[parent2.Id].Children, 0);
                             if (parent2.IsMale) {
                                 persons[personDesc.Value.Id].Father = persons[parent2.Id];
                             } else {
