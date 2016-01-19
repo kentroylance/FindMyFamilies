@@ -143,9 +143,13 @@
     color: coral;
 }
 
-a, a:focus, a:hover, a:active {
-    text-decoration: underline ;
+a, a:focus, a:active {
     color: #72c02c;
+}
+
+a:hover{
+    text-decoration: underline;
+    color: coral;
 }
 
 
@@ -433,3 +437,55 @@ a, a:focus, a:hover, a:active {
 	}
 }
 
+.help-content-padding {
+    padding-left: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.inside-content {
+    padding-left: 0px;
+}
+
+@media (min-width: 992px) {
+    .col-md-9 {
+        width: 65%;
+    }
+}
+
+@media (min-width: 992px) {
+    .popular-content-body {
+        width: 142%;
+    }
+}
+
+.popular-content-size {
+    font-size: 15px;
+}
+
+li a {
+    color: #72c02c; 
+}
+
+.fa-angle-right:before {
+    color: #72c02c;
+}
+.fa-map-marker:before {
+    color: #3498db;
+}
+
+.fa-globe:before {
+    color: #3498db;
+}
+
+.fa-briefcase:before {
+    color: #3498db;
+}
+
+.fa-film:before {
+    color: #3498db;
+}
+
+.fa-file-pdf-o:before {
+    color: #3498db;
+}
