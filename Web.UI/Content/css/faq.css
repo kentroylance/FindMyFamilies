@@ -412,9 +412,12 @@ li a {
 }
 
 .content {
-    padding-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 0px;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
-.panel-body {
-    padding: 15px;
+.box-content {
+    padding: 15px !important;
 }
