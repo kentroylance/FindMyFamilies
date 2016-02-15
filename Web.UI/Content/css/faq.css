@@ -144,8 +144,15 @@
 }
 
 a, a:focus, a:hover, a:active {
-    text-decoration: underline ;
+    text-decoration: none ;
     color: #72c02c;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+li a {
+    color: #585f69;
 }
 
 
@@ -165,7 +172,7 @@ a, a:focus, a:hover, a:active {
 
 .faq-page .top-part i {
 	float: left;
-	color: #777;
+	color: #3498db;
 	font-size: 20px;
 	padding-top: 3px;
 	margin-right: 10px;
@@ -291,6 +298,7 @@ a, a:focus, a:hover, a:active {
 
 .tab-v1 .tab-content { 
   padding: 10px 0;
+  padding-top: 25px;
 }
 
 .tab-v1 .tab-content img {
@@ -369,12 +377,12 @@ a, a:focus, a:hover, a:active {
   font-size: 14px;
   padding: 5px 15px;
   background: #fefefe;
-  color: coral;
+  color: #68af28;
   text-decoration: none;
 }
 
 .acc-v1 .panel-heading:hover a {
-  color: #68af28;
+  color: coral;
   text-decoration: underline;
 }
 
@@ -387,6 +395,26 @@ a, a:focus, a:hover, a:active {
   color: #68af28;
 }
 
-.panel-body { 
-  padding: 15px !important;
+.fa-angle-right:before {
+    color: #72c02c;
+}
+
+.list-color {
+    color: #72c02c;
+}
+
+.list-color:hover {
+    color: coral;
+}
+
+.popular-padding {
+    padding-left: 0px !important;
+}
+
+.content {
+    padding-bottom: 20px;
+}
+
+.panel-body {
+    padding: 15px;
 }
