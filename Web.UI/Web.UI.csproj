@@ -151,6 +151,7 @@
     <Content Include="Build\build.js" />
     <Content Include="Build\r.js" />
     <Content Include="Content\css\app\finder.css" />
+    <Content Include="Content\css\app\googleSearch.css" />
     <Content Include="Content\css\app\FindPerson.css" />
     <Content Include="Content\css\help.css" />
     <Content Include="Content\css\index-sprite.css" />
@@ -1173,6 +1174,9 @@
     <Content Include="Content\js\views\Research\feedback.js" />
     <Content Include="Content\js\views\Research\featuresController.js" />
     <Content Include="Content\js\views\Research\feedbackController.js" />
+    <Content Include="Content\js\views\Research\googleSearchHelper.js" />
+    <Content Include="Content\js\views\Research\googleSearch.js" />
+    <Content Include="Content\js\views\Research\googleSearchController.js" />
     <Content Include="Content\js\views\Research\hintsReportController.js" />
     <Content Include="Content\js\views\Research\ordinances.js" />
     <Content Include="Content\js\views\Research\ordinancesController.js" />
@@ -2161,6 +2165,7 @@
     <Content Include="Views\Research\Features.cshtml" />
     <Content Include="Views\Faq\Faq.cshtml" />
     <Content Include="Views\Help\Help.cshtml" />
+    <Content Include="Views\Research\GoogleSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />

@@ -45,7 +45,16 @@ define(function(require) {
         return false;
     });
 
-    $("#possibleDuplicates").unbind("click").bind("click", function(e) {
+    $("#googleSearch").unbind("click").bind("click", function (e) {
+        requireOnce(['researchHelper'], function (ResearchHelper) {
+            researchHelper = ResearchHelper;
+        }, function () {
+            researchHelper.googleSearch();
+        });
+        return false;
+    });
+
+    $("#possibleDuplicates").unbind("click").bind("click", function (e) {
         requireOnce(['researchHelper'], function(ResearchHelper) {
             researchHelper = ResearchHelper;
         }, function() {
@@ -148,6 +157,9 @@ define(function(require) {
                 break;
             case constants.FIND_PERSON:
                 $('#findPerson').click();
+                break;
+            case constants.GOOGLE_SEARCH:
+                $('#googleSearch').click();
                 break;
             case constants.HINTS:
                 $('#hints').click();

@@ -6,9 +6,9 @@ define(function(require) {
     var string = require('string');
     var person = require('person');
     var researchHelper = require('researchHelper');
-    var findPersonOptions = require('findPersonOptions');
+//    var googleSearchOptions = require('googleSearchOptions');
 
-    var _findPersonOptionsController;
+//    var _googleSearchOptionsController;
     var _findUrls = {};
     _findUrls['fmf-urls'] = 'Family Research Urls';
     _findUrls['ancestry'] = 'Ancestry';
@@ -29,7 +29,7 @@ define(function(require) {
     _findUrls['fs-tree'] = 'Family Search - Tree';
     _findUrls['fs-search'] = 'Family Search - Search';
     _findUrls['fs-person'] = 'Family Search - Person';
-    _findUrls['fmf-google'] = 'Google Search';
+    _findUrls['google'] = 'Google Search';
 
     function getMiddleNameQuote(middleName) {
         var result = "";
@@ -56,6 +56,8 @@ define(function(require) {
                 result = "%20" + middleName;
             } else if (website === system.familySearchSystem()) {
                 result = "%20" + middleName;
+            } else if (website === constants.GOOGLE) {
+                result = "+" + middleName;
             }
         }
         return result;
@@ -131,6 +133,8 @@ define(function(require) {
                     result += string(value).trim() + "%2C%20";
                 });
                 result = result.substring(0, result.length - 6) + "%22";
+            } else if (webSite === constants.GOOGLE) {
+                result = birthPlace;
             }
         }
         return result;
@@ -157,6 +161,8 @@ define(function(require) {
                 result = "&fromyear=" + (string(birthYear).toInt() - string(person.yearRange).toInt());
             } else if (webSite === system.familySearchSystem()) {
                 result = "~%20%2Bbirth_year%3A" + (string(birthYear).toInt() - string(person.yearRange).toInt()) + "-" + (string(birthYear).toInt() + string(person.yearRange).toInt());
+            } else if (webSite === constants.GOOGLE) {
+                result = birthYear + "";
             }
         }
         return result;
@@ -182,6 +188,8 @@ define(function(require) {
                 result = "&toyear=" + (string(deathYear).toInt() + string(person.yearRange).toInt());
             } else if (webSite === system.familySearchSystem()) {
                 result = "~%20%2Bdeath_year%3A" + (string(deathYear).toInt() - string(person.yearRange).toInt()) + "-" + (string(deathYear).toInt() + string(person.yearRange).toInt());
+            } else if (webSite === constants.GOOGLE) {
+                result = "" + deathYear;
             }
         }
 
@@ -207,7 +215,7 @@ define(function(require) {
 
         menuOptions += "<ul class=\"dropdown-menu\" role=\"menu\" aria-labelledby=\"dLabel\" >";
         var isOpen = false;
-        $.each(person.findPersonOptions, function(key, value) {
+        $.each(person.googleSearchOptions, function(key, value) {
             switch (value) {
             case 'fmf-urls':
                     isOpen = $("#personUrlsForm").is(':visible');
@@ -245,11 +253,8 @@ define(function(require) {
                     menuOptions += "<li><a onclick=\"researchHelper.retrieve(null, '" + row.id + "','" + row.fullName + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-retrieve16\"></span> Retrieve</a></li>";
                 }
                 break;
-            case 'fmf-google':
-                isOpen = $("#googleSearchForm").is(':visible');
-                if (!isOpen) {
-                    menuOptions += "<li><a onclick=\"researchHelper.googleSearch('" + row.id + "','" + row.fullName + "','" + row.firstName + "','" + row.middleName + "','" + row.lastName + "','" + row.birthYear + "','" + row.deathYear + "','" + row.birthPlace + "');\" href=\"javascript:void(0);\"><span class=\"fa fmf-google16\"></span> Google Search</a></li>";
-                }
+            case 'google':
+                menuOptions += "<li><a href=\"" + constants.GOOGLE + row.firstName + getMiddleName(row.middleName, constants.GOOGLE) + "+" + getLastName(row.lastName) + "+" + getBirthYear(row.birthYear, constants.GOOGLE) + "+" + getDeathYear(row.deathYear, constants.GOOGLE) + "+" + getPlace(row.birthPlace, constants.GOOGLE) + "\" target=\" _tab\" ><span class=\"fa fmf-google16\"></span> Google</a></li>";
                 break;
             case 'findmypast':
                 menuOptions += "<li><a href=\"" + constants.FIND_MY_PAST + "firstname=" + row.firstName + getMiddleName(row.middleName, constants.FIND_MY_PAST) + "&lastname=" + getLastName(row.lastName) + getBirthYear(row.birthYear, constants.FIND_MY_PAST) + "\" target=\" _tab\" ><span class=\"fa fmf-findmypast16\"></span> Find My Past</a></li>";
@@ -325,7 +330,7 @@ define(function(require) {
         case 'fmf-retrieve':
             icon = "fa fmf-retrieve16";
             break;
-        case 'fmf-google':
+        case 'google':
             icon = "fa fmf-google16";
             break;
         case 'findmypast':
@@ -374,31 +379,31 @@ define(function(require) {
     }
 
 
-    function findOptions(e, module) {
-        e.preventDefault();
-        system.startSpinner();
-        findPersonOptions.callerSpinner = system.spinnerArea;
-        $.ajax({
-            url: constants.FIND_PERSON_OPTIONS_URL,
-            success: function (data) {
-                var $dialogContainer = $("#findPersonOptionsForm");
-                var $detachedChildren = $dialogContainer.children().detach();  
-                $("<div id=\"findPersonOptionsForm\"></div>").dialog({
-                    width: 600,
-                    title: "Find Options",
-                    open: function () {
-                        $detachedChildren.appendTo($dialogContainer);
-                    }
-                });
-                $("#findPersonOptionsForm").empty().append(data);
-                if (_findPersonOptionsController) {
-                    _findPersonOptionsController.open();
-                }
-            }
-        });
-    }
+//    function findOptions(e, module) {
+//        e.preventDefault();
+//        system.startSpinner();
+//        googleSearchOptions.callerSpinner = system.spinnerArea;
+//        $.ajax({
+//            url: constants.FIND_PERSON_OPTIONS_URL,
+//            success: function (data) {
+//                var $dialogContainer = $("#googleSearchOptionsForm");
+//                var $detachedChildren = $dialogContainer.children().detach();  
+//                $("<div id=\"googleSearchOptionsForm\"></div>").dialog({
+//                    width: 600,
+//                    title: "Find Options",
+//                    open: function () {
+//                        $detachedChildren.appendTo($dialogContainer);
+//                    }
+//                });
+//                $("#googleSearchOptionsForm").empty().append(data);
+//                if (_googleSearchOptionsController) {
+//                    _googleSearchOptionsController.open();
+//                }
+//            }
+//        });
+//    }
 
-    var findPersonHelper = {
+    var googleSearchHelper = {
         getMenuOptions: function(row) {
             return getMenuOptions(row);
         },
@@ -410,20 +415,20 @@ define(function(require) {
         },
         findOptions: function(e, module) {
             return findOptions(e, module);
-        },
-        get findPersonOptionsController() {
-            return _findPersonOptionsController;
-        },
-        set findPersonOptionsController(value) {
-            _findPersonOptionsController = value;
-        },
+        }
+//        get googleSearchOptionsController() {
+//            return _googleSearchOptionsController;
+//        },
+//        set googleSearchOptionsController(value) {
+//            _googleSearchOptionsController = value;
+//        },
 
 
     };
 
 
-    return findPersonHelper;
+    return googleSearchHelper;
 });
 
 
-//# sourceURL=findPersonHelper.js
+//# sourceURL=googleSearchHelper.js

@@ -18,6 +18,7 @@ define(function(require) {
 
     var _startingPointController;
     var _findPersonController;
+    var _googleSearchController;
     var _startingPointReportController;
     var _possibleDuplicatesController;
     var _possibleDuplicatesReportController;
@@ -183,6 +184,87 @@ define(function(require) {
                         }
                     });
                 }
+            );
+        } else {
+            system.relogin();
+        }
+    }
+
+
+    function startingPoint(id, name) {
+        if (system.isAuthenticated()) {
+            loadSpinner();
+            requireOnce(["startingPoint", "jqueryUiOptions", "css!/Content/css/lib/research/bootstrap-table.min.css"], function (StartingPoint) {
+                StartingPoint.callerSpinner = spinnerArea;
+            }, function () {
+                $.ajax({
+                    url: constants.STARTING_POINT_URL,
+                    success: function (data) {
+                        var $dialogContainer = $("#startingPointForm");
+                        var $detachedChildren = $dialogContainer.children().detach();
+                        $("<div id=\"startingPointForm\"></div>").dialog({
+                            width: 775,
+                            title: "Starting Point",
+                            open: function () {
+                                $detachedChildren.appendTo($dialogContainer);
+                            }
+                        });
+                        $("#startingPointForm").empty().append(data);
+                        if (id) {
+                            person.id = id;
+                            person.name = name;
+                            person.reportId = constants.REPORT_ID;
+                        }
+                        if (_startingPointController) {
+                            _startingPointController.open();
+                        }
+                    }
+                });
+            }
+            );
+        } else {
+            system.relogin();
+        }
+    }
+
+    function googleSearch(id, fullName, firstName,  middleName, lastName, birthYear, deathYear, birthPlace) {
+        if (system.isAuthenticated()) {
+            loadSpinner();
+            requireOnce(["googleSearch", "formValidation", "jqueryUiOptions", "bootstrapValidation", "css!/Content/css/lib/research/bootstrap-table.min.css", "css!/Content/css/vendor/formValidation.min.css"], function (GoogleSearch) {
+                GoogleSearch.callerSpinner = spinnerArea;
+            }, function () {
+                $.ajax({
+                    url: constants.GOOGLE_SEARCH_URL,
+                    success: function (data) {
+                        var $dialogContainer = $("#googleSearchForm");
+                        var $detachedChildren = $dialogContainer.children().detach();
+                        $("<div id=\"googleSearchForm\"></div>").dialog({
+                            width: 1100,
+                            title: "Google Search",
+                            open: function () {
+                                $detachedChildren.appendTo($dialogContainer);
+                            }
+                        }
+                        );
+                        $("#googleSearchForm").empty().append(data);
+                        if (id || fullName || firstName || middleName || lastName || birthYear || deathYear || birthPlace) {
+                            person.id = id;
+                            person.fullName = fullName;
+                            person.firstName = firstName;
+                            person.middleName = middleName;
+                            person.lastName = lastName;
+                            person.birthYear = birthYear;
+                            person.deathYear = deathYear;
+                            person.birthPlace = birthPlace;
+                            var googleSearch = require('googleSearch');
+                            googleSearch.copyFromPerson();
+                        }
+                        if (_googleSearchController) {
+                            _googleSearchController.open();
+                        }
+                    }
+                });
+            }
             );
         } else {
             system.relogin();
@@ -517,7 +599,10 @@ define(function(require) {
         findPerson: function(deferred) {
             return findPerson(deferred);
         },
-        retrieve: function(deferred, id, name) {
+        googleSearch: function (id, fullName, firstName, middleName, lastName, birthYear, deathYear, birthPlace) {
+            return googleSearch(id, fullName, firstName, middleName, lastName, birthYear, deathYear, birthPlace);
+        },
+        retrieve: function (deferred, id, name) {
             return retrieve(deferred, id, name);
         },
         startingPoint: function(id, name) {
@@ -576,6 +661,12 @@ define(function(require) {
         },
         set findPersonController(value) {
             _findPersonController = value;
+        },
+        get googleSearchController() {
+            return _googleSearchController;
+        },
+        set googleSearchController(value) {
+            _googleSearchController = value;
         },
         get startingPointReportController() {
             return _startingPointReportController;

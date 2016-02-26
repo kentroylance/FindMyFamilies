@@ -1,0 +1,109 @@
+<link href="~/Content/css/app/googleSearch.css" rel="stylesheet" type="text/css"/>
+<div class="panel-body">
+    <div class="panel panel-blue">
+        <div class="panel-body">
+            <form id="googleSearchForm" role="form" method="post">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <label class="control-label">First</label>
+                            <input type="text" class="form-control" name="googleFirstName" id="googleFirstName" />
+                        </div>
+                        <div class="col-xs-4">
+                            <label class="control-label">Middle</label>
+                            <input type="text" class="form-control" name="googleMiddleName" id="googleMiddleName" />
+                        </div>
+                        <div class="col-xs-4">
+                            <label class="control-label">Last</label>
+                            <input type="text" class="form-control" name="googleLastName" id="googleLastName" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <label class="control-label">Birth Year</label>
+                            <div>
+                                <input type="text" class="form-control" name="googleBirthYear" id="googleBirthYear">
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <label class="control-label">Death Year</label>
+                            <div>
+                                <input type="text" class="form-control" name="googleDeathYear" id="googleDeathYear">
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <label class="control-label">Birth Place</label>
+                            <div>
+                                <input type="text" class="form-control" name="googleBirthPlace" id="googleBirthPlace">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <label class="control-label">Options</label>
+                            <div>
+                                <select class="form-control" id="googleOptions">
+                                    <option></option>
+                                    <option selected>genealogy</option>
+                                </select>
+                            </div>
+                    </div>
+                        <div class="col-xs-1">
+                            <label class="control-label">Range</label>
+                            <div>
+                                <input type="text" class="form-control" name="googleYearRange" id="googleYearRange">
+                            </div>
+                        </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="control-label">Search String</label>
+                            <div>
+                                <textarea readonly class="form-control search-textarea" id="googleFeedbackMessage" name="message"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div id="googleSearchButtons" class="row" style="margin-top: .8em;">
+    <div class="text-center">
+        <button type='button' id="searchButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-execute24 dialog-buttons"></i> Search</button>
+@*        <button id="googleSearchSelectButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-green" data-style="expand-left"><i class="fa fmf-ok24 dialog-buttons"></i> Select</button>*@
+        @*        <button type='button' id="googleSearchOptionsButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-options24 dialog-buttons"></i> Options</button>*@
+        <button type='button' id="clearButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-clean24 dialog-buttons"></i> Clear</button>
+
+        <div class="btn-group">
+            <button type="button" id="helpButton" class=" btn-u btn-brd btn-brd-hover rounded btn-u-blue btn btn-primary dropdown-toggle" data-toggle="dropdown" data-style="expand-left">
+                <i class="fa fmf-help24 dialog-buttons"></i>
+                Help
+            </button>
+            <ul class="dropdown-menu help-dropdown" role="menu">
+                <li>
+                    <a href="#">Video</a>
+                </li>
+                <li>
+                    <a href="#">Tutorial</a>
+                </li>
+            </ul>
+        </div>
+        <button type='button' id="googleSearchCloseButton" class="btn-u btn-brd btn-brd-hover rounded btn-u-blue" data-style="expand-left"><i class="fa fmf-close24 dialog-buttons"></i> Close</button>
+    </div>
+</div>
+<div id="googleSearchSpinner"/>
+
+<div id="personInfoDiv" class="personInfo">
+    <div id="content"></div>
+</div>
+
+@*<script type="text/javascript" src="~/Content/js/vendor/bootstrap-dialog.min.js"></script>*@
+<script type="text/javascript">require(['main'], function(main) { require(['googleSearchController']); });</script>

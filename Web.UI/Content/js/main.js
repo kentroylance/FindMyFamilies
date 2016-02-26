@@ -77,6 +77,8 @@
             findCluesReportController: 'views/research/findCluesReportController',
             findPersonController: 'views/research/findPersonController',
             findPerson: 'views/research/findPerson',
+            googleSearchController: 'views/research/googleSearchController',
+            googleSearch: 'views/research/googleSearch',
             findPersonOptionsController: 'views/research/findPersonOptionsController',
             findPersonOptions: 'views/research/findPersonOptions',
             findPersonHelper: 'views/research/findPersonHelper',
@@ -108,6 +110,9 @@
             },
             findPerson: {
                 exports: 'findPerson'
+            },
+            googleSearch: {
+                exports: 'googleSearch'
             },
             possibleDuplicates: {
                 deps: ['jquery', 'person', 'constants'],
@@ -320,6 +325,10 @@
             findPersonController: {
                 deps: ['jquery', 'hoverIntent', 'formValidation', 'bootstrapValidation', 'findPerson', 'findPersonHelper', 'system', 'constants', 'person', 'lazyload', 'string'],
                 exports: 'findPersonController'
+            },
+            googleSearchController: {
+                deps: ['jquery', 'hoverIntent', 'formValidation', 'bootstrapValidation', 'googleSearch', 'system', 'constants', 'person', 'lazyload', 'string'],
+                exports: 'googleSearchController'
             },
             findPersonOptionsController: {
                 deps: ['jquery', 'findPersonOptions', 'findPersonHelper', 'findPerson', 'system', 'constants', 'person', 'lazyload', 'string'],

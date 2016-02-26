@@ -594,6 +594,12 @@ namespace FindMyFamilies.Web.Controllers {
             return PartialView("~/Views/Research/FindPerson.cshtml");
         }
 
+
+        [System.Web.Mvc.HttpGet]
+        public ActionResult GoogleSearch() {
+            return PartialView("~/Views/Research/GoogleSearch.cshtml");
+        }
+
         public ActionResult PersonUrlOptions() {
             return PartialView("~/Views/Research/PersonUrlOptions.cshtml");
         }

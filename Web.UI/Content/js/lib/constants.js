@@ -8,6 +8,7 @@
     var PERSON = "person";
     var RETRIEVE = "Retrieve";
     var FIND_PERSON = "findPerson";
+    var GOOGLE_SEARCH = "googleSearch";
     var STARTING_POINT_PREVIOUS = "startingPointPrevious";
     var HINTS_PREVIOUS = "hintsPrevious";
     var DATE_PROBLEMS_PREVIOUS = "dateProblemsPrevious";
@@ -80,6 +81,7 @@
     var PLACE_PROBLEMS_REPORT_HTML_URL = '/Home/PlaceProblemsReportHtml';
     var PLACE_PROBLEMS_REPORT_DATA_URL = '/Home/PlaceProblemsReportData';
     var FIND_PERSON_URL = '/Home/FindPerson';
+    var GOOGLE_SEARCH_URL = '/Home/GoogleSearch';
     var DISPLAY_PERSON_URLS_URL = "/Home/DisplayPersonUrls";
     var PERSON_URL_OPTIONS_URL = "/Home/PersonUrlOptions";
     var DISPLAY_PERSON_URL = "/Home/DisplayPerson";
@@ -142,6 +144,9 @@
         },
         get FIND_PERSON() {
             return FIND_PERSON;
+        },
+        get GOOGLE_SEARCH() {
+            return GOOGLE_SEARCH;
         },
         get RESEARCH_TYPE() {
             return ANCESTORS;
@@ -346,6 +351,9 @@
         },
         get RETRIEVE_DATA_URL() {
             return RETRIEVE_DATA_URL;
+        },
+        get GOOGLE_SEARCH_URL() {
+            return GOOGLE_SEARCH_URL;
         },
         get FIND_PERSON_URL() {
             return FIND_PERSON_URL;

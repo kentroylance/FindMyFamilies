@@ -1,0 +1,8 @@
+.search-textarea {
+     height: 200px !important;
+ }
+
+.panel-body { 
+  padding: 0 !important;
+  margin-bottom: 10px !important;
+}

@@ -384,11 +384,11 @@
                 _findPersonOptions = [];
                 _findPersonOptions.push('fmf-urls');
                 _findPersonOptions.push('ancestry');
+                _findPersonOptions.push('fmf-google');
                 _findPersonOptions.push('findagrave');
                 _findPersonOptions.push('puz-descend');
                 _findPersonOptions.push('myheritage');
                 _findPersonOptions.push('findmypast');
-                _findPersonOptions.push('amerancest');
             }
 
             //     _reportId = startingPoint.reportId;
@@ -452,7 +452,11 @@
             return _id;
         },
         set id(value) {
-            _id = value;
+            if (value && value !== "null") {
+                _id = value;
+            } else {
+                _id = "";
+            }
         },
         get name() {
             return _name;
@@ -460,53 +464,85 @@
         set name(value) {
             _name = value;
         },
+        get fullName() {
+            return _fullName;
+        },
+        set fullName(value) {
+            if (value && value !== "null") {
+                _fullName = value;
+            } else {
+                _fullName = "";
+            }
+        },
         get firstName() {
             return _firstName;
         },
         set firstName(value) {
-            _firstName = value;
-        },
-        get middleName() {
-            return _middleName;
-        },
-        set middleName(value) {
-            _middleName = value;
+            if (value && value !== "null") {
+                _firstName = value;
+            } else {
+                _firstName = "";
+            }
         },
         get lastName() {
             return _lastName;
         },
         set lastName(value) {
-            _lastName = value;
+            if (value && value !== "null") {
+                _lastName = value;
+            } else {
+                _lastName = "";
+            }
         },
-        get fullName() {
-            return _fullName;
+        get middleName() {
+            return _middleName;
         },
-        set fullName(value) {
-            _fullName = value;
+        set middleName(value) {
+            if (value && value !== "null") {
+                _middleName = value;
+            } else {
+                _middleName = "";
+            }
         },
         get gender() {
             return _gender;
         },
         set gender(value) {
-            _gender = value;
+            if (value && value !== "null") {
+                _gender = value;
+            } else {
+                _gender = "";
+            }
         },
         get birthYear() {
             return _birthYear;
         },
         set birthYear(value) {
-            _birthYear = value;
+            if (value && value !== "null") {
+                _birthYear = value;
+            } else {
+                _birthYear = "";
+            }
         },
         get deathYear() {
             return _deathYear;
         },
         set deathYear(value) {
-            _deathYear = value;
+            if (value && value !== "null") {
+                _deathYear = value;
+            } else {
+                _deathYear = "";
+            }
         },
         get birthPlace() {
             return _birthPlace;
         },
         set birthPlace(value) {
-            _birthPlace = value;
+            if (value && value !== "null") {
+                _birthPlace = value;
+            } else {
+                _birthPlace = "";
+            }
         },
         get deathPlace() {
             return _deathPlace;
