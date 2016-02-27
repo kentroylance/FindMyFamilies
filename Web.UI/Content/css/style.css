@@ -889,6 +889,10 @@ h1 i, h2 i, h3 i, h4 i, h5 i, h6 i {
      right: 25px;
 }
 
+#googleSearchForm .form-control-feedback {
+    right: 15px;
+}
+
 .input-group .form-control {
     z-index: 0;
 }
