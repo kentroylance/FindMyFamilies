@@ -77,7 +77,20 @@
 .btn-success {
     border-bottom-left-radius: 0px;
     border-top-left-radius: 0px;
+   background: #27ae60;
 }
+
+
+.btn-toggle-success {
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+    height: 38px;
+  color: white;
+  border-color: #27ae60;
+    font-size: 1em !important;
+    background: #27ae60;
+}
+
 .ui-dialog .ui-dialog-title {
     width: 87% !important;
 }

@@ -93,6 +93,32 @@ define(function(require) {
             findPerson.reset();
         });
 
+        $("#findPersonActionButton").unbind('click').bind('click', function (e) {
+            findPerson.personId = $("#personId").val();
+            findPerson.fullName = $("#firstName").val() + " " + $("#lastName").val();
+            findPerson.firstName = $("#firstName").val();
+            findPerson.middleName = "";
+            findPerson.lastName = $("#lastName").val();
+            findPerson.gender = $("#gender").val();
+            findPerson.birthYear = $("#birthYear").val();
+            findPerson.deathYear = $("#deathYear").val();
+            findPerson.birthPlace = "";
+
+            var findPersonOptionsBak = person.findPersonOptions;
+            person.findPersonOptions = [];
+            person.findPersonOptions.push('fmf-google');
+            person.findPersonOptions.push('findagrave');
+            person.findPersonOptions.push('ancestry');
+            person.findPersonOptions.push('myheritage');
+            person.findPersonOptions.push('findmypast');
+            person.findPersonOptions.push('billgrave');
+            person.findPersonOptions.push('fs-search');
+            person.findPersonOptions.push('amerancest');
+
+            $("#findPersonAction").append(findPersonHelper.getMenuOptions(findPerson));
+            person.findPersonOptions = findPersonOptionsBak;
+        });
+
         window.nameEvents = {
             'click .personAction': function(e, value, row, index) {
                 $(this).append(findPersonHelper.getMenuOptions(row));
