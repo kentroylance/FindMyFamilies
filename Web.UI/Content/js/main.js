@@ -79,6 +79,8 @@
             findPerson: 'views/research/findPerson',
             googleSearchController: 'views/research/googleSearchController',
             googleSearch: 'views/research/googleSearch',
+            donateController: 'views/donate/donateController',
+            donate: 'views/donate/donate',
             findPersonOptionsController: 'views/research/findPersonOptionsController',
             findPersonOptions: 'views/research/findPersonOptions',
             findPersonHelper: 'views/research/findPersonHelper',
@@ -113,6 +115,9 @@
             },
             googleSearch: {
                 exports: 'googleSearch'
+            },
+            donate: {
+                exports: 'donate'
             },
             possibleDuplicates: {
                 deps: ['jquery', 'person', 'constants'],
@@ -249,6 +254,10 @@
             helpController: {
                 deps: ['jquery', 'system'],
                 exports: 'helpController'
+            },
+            donateController: {
+                deps: ['jquery'],
+                exports: 'donateController'
             },
             researchController: {
                 deps: ['jquery', 'system'],

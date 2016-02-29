@@ -158,6 +158,7 @@
     <Content Include="Content\css\index.png" />
     <Content Include="Content\css\lib\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\css\faq.css" />
+    <Content Include="Content\css\donate.css" />
     <Content Include="Content\css\research-sprite.css" />
     <Content Include="Content\css\research.png" />
     <Content Include="Content\css\style.css" />
@@ -1174,6 +1175,8 @@
     <Content Include="Content\js\views\Research\feedback.js" />
     <Content Include="Content\js\views\Research\featuresController.js" />
     <Content Include="Content\js\views\Research\feedbackController.js" />
+    <Content Include="Content\js\views\Donate\donate.js" />
+    <Content Include="Content\js\views\Donate\donateController.js" />
     <Content Include="Content\js\views\Research\googleSearchHelper.js" />
     <Content Include="Content\js\views\Research\googleSearch.js" />
     <Content Include="Content\js\views\Research\googleSearchController.js" />
@@ -2166,6 +2169,7 @@
     <Content Include="Views\Faq\Faq.cshtml" />
     <Content Include="Views\Help\Help.cshtml" />
     <Content Include="Views\Research\GoogleSearch.cshtml" />
+    <Content Include="Views\Donate\Donate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />

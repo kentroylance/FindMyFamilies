@@ -9,6 +9,7 @@
     var RETRIEVE = "Retrieve";
     var FIND_PERSON = "findPerson";
     var GOOGLE_SEARCH = "googleSearch";
+    var DONATE = "donate";
     var STARTING_POINT_PREVIOUS = "startingPointPrevious";
     var HINTS_PREVIOUS = "hintsPrevious";
     var DATE_PROBLEMS_PREVIOUS = "dateProblemsPrevious";
@@ -82,6 +83,7 @@
     var PLACE_PROBLEMS_REPORT_DATA_URL = '/Home/PlaceProblemsReportData';
     var FIND_PERSON_URL = '/Home/FindPerson';
     var GOOGLE_SEARCH_URL = '/Home/GoogleSearch';
+    var DONATE_URL = '/Home/Donate';
     var DISPLAY_PERSON_URLS_URL = "/Home/DisplayPersonUrls";
     var PERSON_URL_OPTIONS_URL = "/Home/PersonUrlOptions";
     var DISPLAY_PERSON_URL = "/Home/DisplayPerson";
@@ -355,6 +357,9 @@
         get GOOGLE_SEARCH_URL() {
             return GOOGLE_SEARCH_URL;
         },
+        get DONATE_SEARCH_URL() {
+            return DONATE_SEARCH_URL;
+        },
         get FIND_PERSON_URL() {
             return FIND_PERSON_URL;
         },
@@ -375,6 +380,9 @@
         },
         get GOOGLE() {
             return GOOGLE;
+        },
+        get DONATE() {
+            return DONATE;
         },
         get ANCESTRY() {
             return ANCESTRY;

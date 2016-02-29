@@ -600,6 +600,11 @@ namespace FindMyFamilies.Web.Controllers {
             return PartialView("~/Views/Research/GoogleSearch.cshtml");
         }
 
+        [System.Web.Mvc.HttpGet]
+        public ActionResult Donate() {
+            return PartialView("~/Views/Donate/Donate.cshtml");
+        }
+
         public ActionResult PersonUrlOptions() {
             return PartialView("~/Views/Research/PersonUrlOptions.cshtml");
         }
