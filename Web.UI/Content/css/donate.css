@@ -2,332 +2,130 @@
 @import url('../css/vendor/line-icons/line-icons.css');
 @import url('../css/vendor/font-awesome-4.3.0/css/font-awesome.min.css');
 
-.ui-button-text-icon-primary .ui-button-text {
-    display: block;
-    padding: 5px 5px 5px 25px;
-    position: static;
+.panel-heading {
+    background: #585f69 !important;
 }
 
-/*FAQ-page
-------------------------------------*/
-.faq-breadcrumb {
-	text-align: center;
-	position: relative;
-	background: url(../../img/bg/12.jpg) no-repeat center;
-}
-
-.faq-breadcrumb:before {
-	left: 0;
-	width: 100%;
-	height: 100%;
-	content: " ";
-	position: absolute;
-	background: rgba(0,0,0,0.3);
-}
-
-.faq-page .tab-v1 {
-	margin-top: 19px;
-}
-
-.faq-page .tab-v1  .panel-title {
-	text-transform: uppercase;
-}
-
-/*Check-style*/
-.faq-page .check-style {
-	margin-bottom: 0;
-}
-
-.faq-page .check-style li {
-	margin-bottom: 10px;
-}
-
-.faq-page .check-style li:last-child {
-	margin-bottom: 0;
-}
-
-.faq-page .check-style i {
-	font-size: 18px;
-	font-weight: 600;
-	vertical-align: middle;
-    color: coral;
-}
-
-a, a:focus, a:hover, a:active {
-    text-decoration: none ;
-    color: #72c02c;
-}
-a:hover {
-    text-decoration: underline;
-}
-
-li a {
-    color: #585f69;
-}
-
-
-/*Check-style in Responsive*/
-@media (max-width: 450px) {
-	.faq-page .main-check .col-xs-6 {
-		width: 100%;
-	}
-}
-
-/*Faq-add*/
-.faq-page .faq-add {
-	padding: 15px;
-	margin-bottom: 20px;
-	border: 2px solid #eee;
-}
-
-.faq-page .top-part i {
-	float: left;
-	color: #3498db;
-	font-size: 20px;
-	padding-top: 3px;
-	margin-right: 10px;
-}
-
-.faq-page .new-title {
-	color: #72c02c;
-	font-size: 18px;
-	margin-bottom: 5px;
-}
-
-.faq-page .faq-add p {
-	line-height: 1.5;
-}
-
-/*ParallaxBg6
-------------------------------------*/
-/*Title-Box*/
-.faq-bg .title-box-v2 h2,
-.faq-bg .title-box-v2 p {
-	color: #fff;
-}
-
-/*Easy Block v3
-------------------------------------*/
-.easy-block-v3 {
-	text-align: left;
-	background: #585f69;
-	margin-bottom: 10px;
-	padding: 30px 20px 20px;
-}
-
-.easy-block-v3.first { 
-	background: #696f77; 
-}
-.easy-block-v3.second { 
-	background: #707780; 
-}
-.easy-block-v3.third { 
-	background: #787f88; 
-}
-
-.easy-block-v3 i {
-	color: #fff;
-	float: left;
-	font-size: 30px;
-	min-width: 45px;
-	padding-top: 10px;
-}
-
-.easy-block-v3 .inner-faq-b {
-	overflow: hidden;
-}
-
-.easy-block-v3 .inner-faq-b h2,
-.easy-block-v3 .inner-faq-b h3 {
-	font-size: 21px;
-	margin-bottom: 8px;
-}
-
-.easy-block-v3 .inner-faq-b h4 {
-	color: #fff;
-	font-size: 17px;
-	margin-bottom: 2px;
-}
-
-.easy-block-v3 .inner-faq-b h2,
-.easy-block-v3 .inner-faq-b h3,
-.easy-block-v3 .inner-faq-b p {
-	color: #fff;
-}
-
-/*Background Opacity
-------------------------------------*/
-.service-or {
-	overflow: hidden;
-	position: relative;
-}
-
-.service-bg {
-    width: 250px;
-    padding: 60px;
-    position: absolute;
-    top: -10px;
-    right: -100px;
-    background-color: rgba(255,255,255,0.1);
-    transform: rotate(55deg);   
-    -o-transform: rotate(55deg);
-    -ms-transform: rotate(55deg);
-    -moz-transform: rotate(55deg);
-    -webkit-transform: rotate(55deg);
-}
-
-/*Tabs
-------------------------------------*/
-/*Tabs v1*/
-.tab-v1 .nav-tabs { 
-  border: none;
-  background: none;
-  border-bottom: solid 2px #72c02c;   
-}
-
-.tab-v1 .nav-tabs a { 
-  font-size: 14px;
-  padding: 5px 15px; 
-}
-
-.tab-v1 .nav-tabs > .active > a, 
-.tab-v1 .nav-tabs > .active > a:hover, 
-.tab-v1 .nav-tabs > .active > a:focus { 
-  color: #fff;
-  border: none; 
-  background: #72c02c; 
-}
-
-.tab-v1 .nav-tabs > li > a { 
-  border: none;
-}
-.tab-v1 .nav-tabs > li > a:hover { 
-  color: #fff; 
-  background: #72c02c; 
-}
-
-.tab-v1 .tab-content { 
-  padding: 10px 0;
-  padding-top: 25px;
-}
-
-.tab-v1 .tab-content img {
-  margin-top: 4px;
-  margin-bottom: 15px; 
-}
-
-.tab-v1 .tab-content img.img-tab-space {
-  margin-top: 7px;
-}
-
-/*Tabs v2*/
-.tab-v2 .nav-tabs {
-  border-bottom: none;
-}
-
-.tab-v2 .nav-tabs li a {
-  padding: 9px 16px;
-  background: none;
-  border: none;
-}
-
-.tab-v2 .nav-tabs li.active a {
-  background: #fff;
-  padding: 7px 15px 9px;
-  border: solid 1px #eee;
-  border-top: solid 2px #72c02c;
-  border-bottom: none !important;
-}
-
-.tab-v2 .tab-content {
-  padding: 10px 16px;
-  border: solid 1px #eee;
-}
-
-/*Tabs v3*/
-.tab-v3 .nav-pills li a {
-  color: #777;
-  font-size: 17px;
-  padding: 4px 8px;
-  margin-bottom: 3px;
-  background: #fafafa;
-  border: solid 1px #eee;
-}
-
-.tab-v3 .nav-pills li a:hover,
-.tab-v3 .nav-pills li.active a {
-  color: #fff;
-  background: #72c02c;
-  border: solid 1px #68af28;
-}
-
-.tab-v3 .nav-pills li i {
-  width: 1.25em;
-  margin-right: 5px;
-  text-align: center;
-  display: inline-block;
-}
-
-.tab-v3 .tab-content {
-  padding: 15px;
-  background: #fafafa;
-  border: solid 1px #eee;
-}
-
-/*Accordions
-------------------------------------*/
-/*Accordion v1*/
-.acc-v1 .panel-heading {
-  padding: 0;
-  box-shadow: none;
-}
-
-.acc-v1 .panel-heading a {
-  display: block;
-  font-size: 14px;
-  padding: 5px 15px;
-  background: #fefefe;
-  color: #68af28;
-  text-decoration: none;
-}
-
-.acc-v1 .panel-heading:hover a {
-  color: coral;
-  text-decoration: underline;
-}
-
-
-.acc-icon a.accordion-toggle i {
-  color: #68af28;
-  margin-right: 8px;
-}
-.acc-icon a.accordion-toggle:hover i {
-  color: #68af28;
-}
-
-.fa-angle-right:before {
-    color: #72c02c;
-}
-
-.list-color {
-    color: #72c02c;
-}
-
-.list-color:hover {
-    color: coral;
-}
-
-.popular-padding {
-    padding-left: 0px !important;
-}
-
-.content {
-    padding-top: 20px;
-    padding-bottom: 0px;
-    padding-left: 8px;
-    padding-right: 8px;
+.panel-blue {
+    border-color: #585f69;
 }
 
 .box-content {
     padding: 15px !important;
+}
+
+.large-font {
+    font-size: 24px !important;
+}
+
+p {
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-size: 14px;
+    margin: 22px 0;
+    color: white;
+}
+
+.mission-text {
+    text-align: left !important;
+}
+
+.small-font {
+    font-size: 24px !important;
+}
+
+.mission-msg {
+    box-sizing: border-box !important;
+    float: left !important;
+    height: 100% !important;
+    padding-right: 30px !important;
+    position: relative !important;
+    width: 50% !important;
+    -webkit-box-sizing: border-box !important;
+    -moz-box-sizing: border-box !important;
+    -ms-box-sizing: border-box !important;
+}
+
+.mission {
+    padding-right: 80px!important;
+}
+
+.divider {
+    background: #fff !important;
+    bottom: 200px !important;
+    left: 50% !important;
+    position: absolute !important;
+    top: 150px !important;
+    width: 1px !important;
+}
+
+div {
+    display: block;
+}
+
+.content {
+    margin: 0 auto;
+    max-width: 1420px;
+    padding-left: 55px!important;
+    padding-top: 45px!important;
+    padding-bottom: 45px!important;
+    padding-right: 45px !important;
+    background: #3498db;
+}
+
+label {
+    color: white;
+    font-weight: normal;
+}
+
+.form-donation {
+    float: right !important;
+    padding-left: 30px !important;
+    width: 50% !important;
+    -webkit-box-sizing: border-box !important;
+    -moz-box-sizing: border-box !important;
+    -ms-box-sizing: border-box !important;
+    display: block !important;
+    font-size: 14px !important;
+}
+
+.btn-primary {
+    background-color: transparent;
+    border-color: white;
+}
+
+.btn-primary.active {
+    background-color: white;
+    border-color: white;
+    color: #3498db;
+}
+
+.btn-primary.hover {
+    background-color: transparent;
+    border-color: white;
+    color: white;
+}
+
+/*.btn-width-row1 {
+    padding: 10px 86px;
+}
+
+.btn-width-row2 {
+    padding: 10px 24px;
+}*/
+
+.btn-group {
+    padding-bottom: 15px;
+}
+
+.form-group {
+    margin-top: 0px;
+}
+
+#paypal {
+    margin-top: 30px;
+    color: white;
 }
